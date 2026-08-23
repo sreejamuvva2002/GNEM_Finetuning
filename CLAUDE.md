@@ -41,9 +41,9 @@ Maintain this block as work progresses:
 
 ```text
 PROTOCOL_STATUS: FROZEN
-CURRENT_PHASE: 3
-LAST_COMPLETED_PHASE: 2
-NEXT_PHASE: Phase 3 — Identity, split groups, and the train/dev/test split
+CURRENT_PHASE: 4
+LAST_COMPLETED_PHASE: 3
+NEXT_PHASE: Phase 5 — Build `gnem_v3.sqlite`
 TEST_STATUS: LOCKED_UNTIL_PHASE_40
 ```
 
