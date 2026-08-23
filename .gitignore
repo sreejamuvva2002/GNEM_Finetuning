@@ -7,3 +7,7 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
+
+# Repo-local Phase 6+ runtime environment. Never committed; the v2
+# repository's .venv-ft is deliberately NOT used (CLAUDE.md 7).
+.venv-v3/

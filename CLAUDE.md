@@ -41,9 +41,9 @@ Maintain this block as work progresses:
 
 ```text
 PROTOCOL_STATUS: FROZEN
-CURRENT_PHASE: 5
-LAST_COMPLETED_PHASE: 4
-NEXT_PHASE: Phase 6 — Context renderer and token budget
+CURRENT_PHASE: 6
+LAST_COMPLETED_PHASE: 5
+NEXT_PHASE: Phase 7 — SQL execution and grading
 TEST_STATUS: LOCKED_UNTIL_PHASE_40
 ```
 
