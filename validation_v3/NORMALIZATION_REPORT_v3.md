@@ -6,15 +6,15 @@ Phase 2 — clean, normalize, and freeze canonical records.
 
 ```text
 raw workbook        a8a4ca5c72211e7e2e32bbf418873f86677b7fb1264d2c657955b3fee008b034
-cleaning code       66523cc589e38e5029d42dcbdcc8331a7ca69f3fec6c6209d9f6497bff779b29
-canonical records   e593949736e09f9c64f2c443f72e77d68725d13d3ce70ef5a73e867c7a272b0f
+cleaning code       72ad2b52f4777b09b3cc585b783390311e426597b88a882e85a5d6362f5974a5
+canonical records   42851c0a2e93209ac5d37e73ce07447009e038b9db625004212722d7738e6488
 ```
 
 The source hash was re-verified against `SOURCE_MANIFEST_v3.json` before any artifact was produced.
 
 ## What changed
 
-**278 cells changed** across 154 of 205 rows. No row was added, dropped or reordered.
+**277 cells changed** across 154 of 205 rows. No row was added, dropped or reordered.
 
 | field | cells changed |
 |---|---|
@@ -26,7 +26,7 @@ The source hash was re-verified against `SOURCE_MANIFEST_v3.json` before any art
 | `primary_facility_type` | 11 |
 | `location` | 3 |
 | `category` | 3 |
-| `address` | 2 |
+| `address` | 1 |
 
 | change type | cells |
 |---|---|
@@ -37,7 +37,6 @@ The source hash was re-verified against `SOURCE_MANIFEST_v3.json` before any art
 | `facility_type_normalization` | 11 |
 | `sentinel_location` | 3 |
 | `category_normalization` | 3 |
-| `whitespace_trim` | 1 |
 | `sentinel_address` | 1 |
 
 Every changed cell is listed individually in `CLEANING_AUDIT_v3.csv` with its old value, new value, change type and the frozen rule that authorised it.
@@ -119,7 +118,7 @@ row 193  Volvo Group North America  location = Not applicable
 
 - **Multi-row companies were left untouched.** 9 companies occupy 21 rows. Conflict handling, `split_group` and identity grouping are Phase 3+.
 
-- **Whitespace trimming on single-value passthrough fields** affected 1 cell ({'address': 1}). Any such change is itemised in the audit CSV.
+- **No generic scalar normalization.** Fields with no explicit frozen rule preserve the exact workbook value, surrounding whitespace included. `strip()` is used only to detect an effectively-blank cell so its frozen sentinel rule can apply. Row 16 (AVS) therefore retains its trailing space in `address`, exactly as stored. A validation reconstructs every canonical value from source under the frozen rules alone and fails on any difference, so this class of defect cannot recur silently in another field.
 
 ## Validation
 
@@ -152,3 +151,6 @@ row 193  Volvo Group North America  location = Not applicable
 | `no_supplier_imputation` | PASS | no blank filled with a sibling-row value |
 | `no_city_county_materialized` | PASS | absent: ['city', 'county', 'latitude', 'longitude', 'split_group'] |
 | `no_unauthorized_company_normalization` | PASS | company == exact trimmed source value |
+| `only_authorized_transformations` | PASS | 0 unauthorized field transformation(s) |
+| `scalar_passthrough_byte_preserved` | PASS | 1789/1789 nonblank scalar cells identical to source |
+| `avs_row16_address_exact` | PASS | canonical == source ('6110 McFarland Station Dr, Alpharetta, GA 30004 ') |

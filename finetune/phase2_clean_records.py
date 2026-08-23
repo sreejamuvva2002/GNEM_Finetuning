@@ -101,6 +101,11 @@ COLUMN_TO_FIELD = [
 ]
 MULTIVALUE_FIELDS = ("processes", "services", "certifications")
 
+# Fields carrying an explicit, frozen Phase 2 normalization rule. Every OTHER
+# field is a passthrough scalar whose exact workbook value must survive cleaning.
+EXPLICITLY_NORMALIZED = ("row_id", "company", "employment", "certification_count",
+                         "category", "primary_facility_type") + MULTIVALUE_FIELDS
+
 # Rows named by the frozen protocol / Amendment A-001.
 VALEO_ROW = 187
 VOLVO_ROWS = (192, 193)
@@ -182,7 +187,6 @@ def main() -> int:
         raise Gate(f"expected {EXPECTED['row_count']} source rows, found {len(data)}")
 
     records = []
-    ws_trim_hits = Counter()
 
     for raw in data:
         row_id = raw[col["Record No."]]
@@ -201,7 +205,7 @@ def main() -> int:
 
         # -- Category ------------------------------------------------------
         cat = rec["category"]
-        cat_s = str(cat).strip() if not is_blank(cat) else ""
+        cat_s = "" if is_blank(cat) else str(cat)
         if cat_s in CATEGORY_MAP:
             new = CATEGORY_MAP[cat_s]
             record_change(row_id, company, "category", cat_s, new,
@@ -212,7 +216,7 @@ def main() -> int:
 
         # -- Primary Facility Type ----------------------------------------
         fac = rec["primary_facility_type"]
-        fac_s = str(fac).strip() if not is_blank(fac) else ""
+        fac_s = "" if is_blank(fac) else str(fac)
         if fac_s in FACILITY_MAP:
             new = FACILITY_MAP[fac_s]
             record_change(row_id, company, "primary_facility_type", fac_s, new,
@@ -249,21 +253,16 @@ def main() -> int:
         # -- Certification Count: validation-only, kept as stored ----------
         rec["certification_count"] = int(rec["certification_count"])
 
-        # -- Single-value passthrough fields: record trims transparently ---
+        # -- Single-value passthrough fields --------------------------------
+        # No frozen rule normalizes these, so the EXACT workbook value is
+        # preserved -- including any surrounding whitespace. `strip()` is used
+        # only to decide whether a cell is effectively blank and therefore
+        # subject to that field's frozen sentinel rule.
         for src, field in COLUMN_TO_FIELD:
-            if field in ("row_id", "company", "employment", "certification_count",
-                         "category", "primary_facility_type") + MULTIVALUE_FIELDS:
+            if field in EXPLICITLY_NORMALIZED:
                 continue
             v = rec[field]
-            if is_blank(v):
-                rec[field] = None  # sentinel decided below
-                continue
-            s = str(v).strip()
-            if s != str(v):
-                ws_trim_hits[field] += 1
-                record_change(row_id, company, field, str(v), s,
-                              "whitespace_trim", "surrounding whitespace removed")
-            rec[field] = s
+            rec[field] = None if is_blank(v) else v
 
         rec["_pre_sentinel_terms"] = pre_sentinel_terms
         records.append(rec)
@@ -432,6 +431,66 @@ def main() -> int:
           [r["company"] for r in records] == src_companies,
           "company == exact trimmed source value")
 
+    # Reconstruct every canonical value from the source under ONLY the frozen
+    # rules and compare. Anything that differs is an unauthorized transformation
+    # -- this is what catches a stray normalization in any field, not just the
+    # one that was found by review.
+    unauthorized = []
+    for rec, raw in zip(sorted(records, key=lambda r: r["row_id"]),
+                        sorted(data, key=lambda r: int(r[col["Record No."]]))):
+        for src, field in COLUMN_TO_FIELD:
+            v = raw[col[src]]
+            got = rec[field]
+            if field == "row_id":
+                exp = int(v)
+            elif field == "company":
+                exp = str(v).strip()                      # authorized: exact trimmed
+            elif field in ("employment", "certification_count"):
+                exp = int(v)
+            elif field == "category":
+                base = "" if is_blank(v) else str(v)
+                exp = CATEGORY_MAP.get(base, base)        # authorized: frozen map only
+            elif field == "primary_facility_type":
+                base = "" if is_blank(v) else str(v)
+                exp = FACILITY_MAP.get(base, base)        # authorized: frozen map only
+            elif field in MULTIVALUE_FIELDS:
+                exp = "; ".join(parse_terms(v))           # authorized: term-level canon
+                if field == "certifications" and exp == "":
+                    exp = NONE_IDENTIFIED                 # authorized: sentinel
+            elif is_blank(v):
+                # Passthrough scalar, blank -> must be a frozen sentinel. Which
+                # sentinel is correct is asserted by the dedicated checks above.
+                exp = got if got in (NOT_SPECIFIED, NOT_APPLICABLE, NONE_IDENTIFIED) \
+                      else "<frozen sentinel>"
+            else:
+                exp = v                                   # passthrough: EXACT source value
+            if got != exp:
+                unauthorized.append(
+                    f"row {rec['row_id']} {field}: source={v!r} canonical={got!r} "
+                    f"authorized={exp!r}")
+    check("only_authorized_transformations", not unauthorized,
+          f"{len(unauthorized)} unauthorized field transformation(s)"
+          + ("" if not unauthorized else f" -> {unauthorized[:5]}"))
+
+    scalars = [f for _, f in COLUMN_TO_FIELD if f not in EXPLICITLY_NORMALIZED]
+    exact_preserved = sum(
+        1 for rec, raw in zip(sorted(records, key=lambda r: r["row_id"]),
+                              sorted(data, key=lambda r: int(r[col["Record No."]])))
+        for src, field in COLUMN_TO_FIELD
+        if field in scalars and not is_blank(raw[col[src]])
+        and rec[field] == raw[col[src]])
+    total_nonblank = sum(
+        1 for raw in data for src, field in COLUMN_TO_FIELD
+        if field in scalars and not is_blank(raw[col[src]]))
+    check("scalar_passthrough_byte_preserved", exact_preserved == total_nonblank,
+          f"{exact_preserved}/{total_nonblank} nonblank scalar cells identical to source")
+
+    avs = next((r for r in records if r["row_id"] == 16), None)
+    avs_src = next((r[col["Address"]] for r in data
+                    if int(r[col["Record No."]]) == 16), None)
+    check("avs_row16_address_exact", avs is not None and avs["address"] == avs_src,
+          f"canonical == source ({avs['address']!r})" if avs else "row 16 missing")
+
     failed = [(n, d) for n, ok, d in checks if not ok]
     for name, ok, detail in checks:
         print(f"  [{'PASS' if ok else 'FAIL'}] {name}: {detail}")
@@ -523,7 +582,7 @@ def main() -> int:
                             encoding="utf-8")
 
     _write_report(records, audit, checks, cats, facs, by_field, by_type,
-                  actual_sha, code_sha, canonical_sha, ws_trim_hits)
+                  actual_sha, code_sha, canonical_sha)
 
     print(f"\nAll Phase 2 invariants passed.")
     print(f"  canonical records : {OUT_RECORDS.relative_to(ROOT)}  sha256 {canonical_sha}")
@@ -533,7 +592,7 @@ def main() -> int:
 
 
 def _write_report(records, audit, checks, cats, facs, by_field, by_type,
-                  src_sha, code_sha, canonical_sha, ws_trim_hits) -> None:
+                  src_sha, code_sha, canonical_sha) -> None:
     L = []
     L.append("# NORMALIZATION_REPORT_v3\n")
     L.append("Phase 2 — clean, normalize, and freeze canonical records.\n")
@@ -636,11 +695,14 @@ def _write_report(records, audit, checks, cats, facs, by_field, by_type,
              "blank, and the pattern is recorded here rather than acted on.\n")
     L.append("- **Multi-row companies were left untouched.** 9 companies occupy 21 rows. "
              "Conflict handling, `split_group` and identity grouping are Phase 3+.\n")
-    _n = sum(ws_trim_hits.values())
-    L.append(f"- **Whitespace trimming on single-value passthrough fields** affected "
-             f"{_n} cell{'' if _n == 1 else 's'}"
-             + (f" ({dict(ws_trim_hits)})" if ws_trim_hits else "")
-             + ". Any such change is itemised in the audit CSV.\n")
+    L.append("- **No generic scalar normalization.** Fields with no explicit frozen "
+             "rule preserve the exact workbook value, surrounding whitespace included. "
+             "`strip()` is used only to detect an effectively-blank cell so its frozen "
+             "sentinel rule can apply. Row 16 (AVS) therefore retains its trailing "
+             "space in `address`, exactly as stored. A validation reconstructs every "
+             "canonical value from source under the frozen rules alone and fails on any "
+             "difference, so this class of defect cannot recur silently in another "
+             "field.\n")
 
     L.append("## Validation\n")
     L.append("| check | result | detail |")

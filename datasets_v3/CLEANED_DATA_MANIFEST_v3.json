@@ -13,12 +13,12 @@
     },
     "2_cleaning_code": {
       "path": "finetune/phase2_clean_records.py",
-      "sha256": "66523cc589e38e5029d42dcbdcc8331a7ca69f3fec6c6209d9f6497bff779b29"
+      "sha256": "72ad2b52f4777b09b3cc585b783390311e426597b88a882e85a5d6362f5974a5"
     },
     "3_canonical_records": {
       "path": "datasets_v3/canonical_records_v3.jsonl",
-      "sha256": "e593949736e09f9c64f2c443f72e77d68725d13d3ce70ef5a73e867c7a272b0f",
-      "bytes": 160417,
+      "sha256": "42851c0a2e93209ac5d37e73ce07447009e038b9db625004212722d7738e6488",
+      "bytes": 160418,
       "record_count": 205
     }
   },
@@ -64,9 +64,9 @@
     "note": "No sentinel proves a real-world negative."
   },
   "changed_cells": {
-    "total": 278,
+    "total": 277,
     "by_field": {
-      "address": 2,
+      "address": 1,
       "category": 3,
       "certifications": 37,
       "location": 3,
@@ -84,8 +84,7 @@
       "sentinel_location": 3,
       "sentinel_none_identified": 34,
       "sentinel_primary_oems": 26,
-      "sentinel_supplier_affiliation": 26,
-      "whitespace_trim": 1
+      "sentinel_supplier_affiliation": 26
     },
     "audit": "validation_v3/CLEANING_AUDIT_v3.csv"
   },
@@ -219,10 +218,22 @@
     "no_unauthorized_company_normalization": {
       "pass": true,
       "detail": "company == exact trimmed source value"
+    },
+    "only_authorized_transformations": {
+      "pass": true,
+      "detail": "0 unauthorized field transformation(s)"
+    },
+    "scalar_passthrough_byte_preserved": {
+      "pass": true,
+      "detail": "1789/1789 nonblank scalar cells identical to source"
+    },
+    "avs_row16_address_exact": {
+      "pass": true,
+      "detail": "canonical == source ('6110 McFarland Station Dr, Alpharetta, GA 30004 ')"
     }
   },
   "generation_context": {
-    "git_commit": "0beb5b8c72f957fe9307497627c757c1f1ac7ac5",
+    "git_commit": "af99ae00b8d2fe290bc9bbca3403fc5a49095b60",
     "git_tree_dirty": true,
     "python": "3.12.3",
     "openpyxl": "3.1.5"
