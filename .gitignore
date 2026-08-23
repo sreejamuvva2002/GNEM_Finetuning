@@ -1,0 +1,9 @@
+# Python bytecode and tool caches. Nothing else is ignored yet: v3 artifact
+# roots (datasets_v3/, adapters_v3/, results_v3/, validation_v3/) are retained
+# and archived at Phase 42, so their tracking policy is a later decision and is
+# deliberately not pre-empted here.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
