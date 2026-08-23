@@ -1,0 +1,109 @@
+{
+  "manifest": "SOURCE_MANIFEST_v3",
+  "phase": 1,
+  "protocol": "README.md Phase 1 -- Freeze the source workbook",
+  "source_workbook": {
+    "path": "kb/GNEM_Final_Combined_Dataset.xlsx",
+    "sha256": "a8a4ca5c72211e7e2e32bbf418873f86677b7fb1264d2c657955b3fee008b034",
+    "bytes": 43402
+  },
+  "workbook_structure": {
+    "sheet_names": [
+      "GNEM Combined",
+      "Certification Key"
+    ],
+    "sheet_count": 2,
+    "sheets": [
+      {
+        "name": "GNEM Combined",
+        "effective_rows": 206,
+        "effective_columns": 18,
+        "openpyxl_max_row": 206,
+        "openpyxl_max_column": 18,
+        "has_any_value": true
+      },
+      {
+        "name": "Certification Key",
+        "effective_rows": 0,
+        "effective_columns": 0,
+        "openpyxl_max_row": 1,
+        "openpyxl_max_column": 1,
+        "has_any_value": false
+      }
+    ],
+    "active_sheet": "GNEM Combined",
+    "ignored_empty_sheet": "Certification Key"
+  },
+  "active_sheet": {
+    "name": "GNEM Combined",
+    "header_row_count": 1,
+    "data_row_count": 205,
+    "column_count": 18,
+    "column_names": [
+      "Record No.",
+      "Company",
+      "Category",
+      "Industry Group",
+      "Location",
+      "Address",
+      "Primary Facility Type",
+      "EV Supply Chain Role",
+      "Primary OEMs",
+      "Supplier or Affiliation Type",
+      "Employment",
+      "Product / Service",
+      "Processes",
+      "Services",
+      "EV / Battery Relevant",
+      "Classification Method",
+      "Certifications",
+      "Certification Count"
+    ]
+  },
+  "companies": {
+    "identity": "exact trimmed Company cell (CLAUDE.md 11); no suffix or case normalization",
+    "unique_company_count": 193,
+    "unique_raw_untrimmed": 193,
+    "unique_casefolded": 193,
+    "rows_requiring_trim": 0,
+    "blank_company_cells": 0,
+    "companies_on_multiple_rows": 9,
+    "rows_covered_by_multi_row_companies": 21
+  },
+  "validation": {
+    "row_count": {
+      "expected": 205,
+      "observed": 205,
+      "pass": true
+    },
+    "column_count": {
+      "expected": 18,
+      "observed": 18,
+      "pass": true
+    },
+    "unique_company_count": {
+      "expected": 193,
+      "observed": 193,
+      "pass": true
+    },
+    "certification_key_is_0x0": {
+      "expected": "0x0",
+      "observed": "0x0",
+      "pass": true
+    }
+  },
+  "phase_1_scope": {
+    "cleaning_applied": false,
+    "normalization_applied": false,
+    "transformation_applied": false,
+    "note": "Values read exactly as stored. Cleaning is Phase 2."
+  },
+  "generation_context": {
+    "git_commit": "70ce6881c88056fd6d20865fab167b022cde211e",
+    "git_tree_dirty": true,
+    "generator": "finetune/phase1_source_manifest.py",
+    "generator_sha256": "9694ad0b9000559fc3445c3388fc85c60e055a659d589f9099585f879a518259",
+    "python": "3.12.3",
+    "openpyxl": "3.1.5"
+  }
+}
