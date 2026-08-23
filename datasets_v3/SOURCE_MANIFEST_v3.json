@@ -99,10 +99,10 @@
     "note": "Values read exactly as stored. Cleaning is Phase 2."
   },
   "generation_context": {
-    "git_commit": "70ce6881c88056fd6d20865fab167b022cde211e",
+    "git_commit": "1aa43b26da457608c2661f7742835d5b2a431ff0",
     "git_tree_dirty": true,
     "generator": "finetune/phase1_source_manifest.py",
-    "generator_sha256": "9694ad0b9000559fc3445c3388fc85c60e055a659d589f9099585f879a518259",
+    "generator_sha256": "6a175c6c543f8d6c7491662a13018c344929d296be415c98b33e1823e8453ea4",
     "python": "3.12.3",
     "openpyxl": "3.1.5"
   }

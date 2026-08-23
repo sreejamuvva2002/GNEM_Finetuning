@@ -12,6 +12,9 @@ Cells are read exactly as stored; nothing is written back to the workbook.
 A mismatch is a Phase 1 GATE FAILURE: this script exits non-zero and writes no
 manifest, rather than recording a corrected number.
 
+Run with `--check` to re-verify the committed manifest against the workbook
+without writing anything.
+
 Provenance note: the chunked `sha256` helper is ported from the v2 reference
 (`finetune/validate/manifest.py` at v2-frozen-reference
 b18313ae593995e8d415880603b3d355dd695ebd). Nothing else is carried over -- v2
@@ -56,7 +59,7 @@ def git(*args: str) -> str:
     ).stdout.strip()
 
 
-def main() -> int:
+def main(check_only: bool = False) -> int:
     if not WORKBOOK.is_file():
         print(f"GATE FAILURE: source workbook not found: {WORKBOOK}", file=sys.stderr)
         return 1
@@ -176,6 +179,24 @@ def main() -> int:
         },
     }
 
+    if check_only:
+        # Re-verify without writing. `generation_context` is excluded by design:
+        # it records when/where the manifest was produced and necessarily moves
+        # with HEAD, while everything it guards -- the source facts -- must not.
+        if not OUT.is_file():
+            print(f"GATE FAILURE: {OUT.relative_to(ROOT)} missing", file=sys.stderr)
+            return 1
+        committed = json.loads(OUT.read_text(encoding="utf-8"))
+        drift = {k: (committed.get(k), v) for k, v in manifest.items()
+                 if k != "generation_context" and committed.get(k) != v}
+        if drift:
+            print(f"\nGATE FAILURE: manifest drifted from the workbook: {', '.join(drift)}", file=sys.stderr)
+            for k, (was, now) in drift.items():
+                print(f"  {k}: manifest={was!r} workbook={now!r}", file=sys.stderr)
+            return 1
+        print(f"\nAll Phase 1 checks passed. {OUT.relative_to(ROOT)} matches the workbook (nothing written).")
+        return 0
+
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(f"\nAll Phase 1 checks passed. Wrote {OUT.relative_to(ROOT)}")
@@ -183,4 +204,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(main(check_only="--check" in sys.argv[1:]))
