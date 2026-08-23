@@ -1,0 +1,206 @@
+row_id,company,split_group,split,split_group_origin,oem_reference_held_in
+1,JTEKT North America Corp.,JTEKT North America Corp.,train,exact_company,no
+2,Kautex Inc.,Kautex Inc.,train,exact_company,no
+3,Grudem,Grudem,train,exact_company,no
+4,Flambeau Inc.,Flambeau Inc.,dev,exact_company,no
+5,Arising Industries Inc.,Arising Industries Inc.,test,exact_company,no
+6,Dinex Emissions Inc.,Dinex Emissions Inc.,test,exact_company,no
+7,ACM Georgia LLC,ACM Georgia LLC,dev,exact_company,no
+8,Lark United Manufacturing Inc.,Lark United Manufacturing Inc.,train,exact_company,no
+9,FOX Factory,FOX Factory,train,exact_company,no
+10,Fouts Brothers Fire Equipment,Fouts Brothers Fire Equipment,train,exact_company,no
+11,Ascend Elements,Ascend Elements,train,exact_company,no
+12,Aspen Aerogels,Aspen Aerogels,train,exact_company,no
+13,Aurubis,Aurubis,test,exact_company,no
+14,Dongwon Autopart Technology Georgia LLC,Dongwon Autopart Technology Georgia LLC,train,exact_company,no
+15,Beaver Manufacturing Co. Inc.,Beaver Manufacturing Co. Inc.,train,exact_company,no
+16,AVS,AVS,dev,exact_company,no
+17,Blue Bird Corp.,Blue Bird Corp.,train,exact_company,yes
+18,Blue Ridge Manufacturing,Blue Ridge Manufacturing,train,exact_company,no
+19,Dorsett Industries Inc.,Dorsett Industries Inc.,dev,exact_company,no
+20,Boogook Industries,Boogook Industries,train,exact_company,no
+21,Down 2 Earth Trailers,Down 2 Earth Trailers,train,exact_company,no
+22,Bosch (Automotive Division),Bosch (Automotive Division),train,exact_company,no
+23,Bridgestone Bandag,Bridgestone Bandag,train,exact_company,no
+24,Lund International Inc.,lund_international,train,approved_collision,no
+25,Club Car LLC,Club Car LLC,train,exact_company,yes
+26,Constellium Automotive USA,Constellium Automotive USA,train,exact_company,no
+27,Mack Trucks,Mack Trucks,train,exact_company,no
+28,Mando America Corp.,Mando America Corp.,train,exact_company,no
+29,Big Tex Trailer Manufacturing Inc.,Big Tex Trailer Manufacturing Inc.,train,exact_company,no
+30,DAEHAN Solution Georgia LLC,DAEHAN Solution Georgia LLC,train,exact_company,no
+31,Daesol Ausys,Daesol Ausys,train,exact_company,no
+32,Bonnell Aluminum,Bonnell Aluminum,train,exact_company,no
+33,Bosal Industries Georgia,Bosal Industries Georgia,test,exact_company,no
+34,DAS Corp.,DAS Corp.,test,exact_company,no
+35,Duckyang,Duckyang,test,exact_company,no
+36,Eaton Corp.,Eaton Corp.,train,exact_company,no
+37,MAT Heavy Duty,MAT Heavy Duty,test,exact_company,no
+38,Carcoustics USA,Carcoustics USA,train,exact_company,no
+39,Archer Aviation Inc.,Archer Aviation Inc.,train,exact_company,yes
+40,Mercedes-Benz USA LLC,Mercedes-Benz USA LLC,train,exact_company,yes
+41,Ecoplastic America Corporation,ecoplastic,train,approved_collision,no
+42,Haering Precision USA LP,Haering Precision USA LP,train,exact_company,no
+43,Michelin Tread Technologies,Michelin Tread Technologies,train,exact_company,no
+44,Adient,Adient,train,exact_company,no
+45,Milliken & Co./Valway Plant,Milliken & Co./Valway Plant,train,exact_company,no
+46,Mobis Alabama LLC,Mobis Alabama LLC,test,exact_company,no
+47,Freudenberg-NOK,Freudenberg-NOK,test,exact_company,no
+48,Elan Technology Inc.,Elan Technology Inc.,train,exact_company,no
+49,Continental Automotive,Continental Automotive,train,exact_company,no
+50,Ecoplastic Corporation,ecoplastic,train,approved_collision,no
+51,Enchem America Inc.,Enchem America Inc.,train,exact_company,no
+52,EVCO Plastics,EVCO Plastics,test,exact_company,no
+53,F&P Georgia Manufacturing,F&P Georgia Manufacturing,train,exact_company,no
+54,Fanello Industries Inc.,Fanello Industries Inc.,train,exact_company,no
+55,First American Resources,First American Resources,train,exact_company,no
+56,ADVICS Manufacturing Georgia LLC,ADVICS Manufacturing Georgia LLC,train,exact_company,no
+57,Murata Electronics North America Inc.,Murata Electronics North America Inc.,train,exact_company,no
+58,Enplas USA Inc.,Enplas USA Inc.,test,exact_company,no
+59,Continental Tire the Americas LLC,Continental Tire the Americas LLC,train,exact_company,no
+60,Freudenberg-NOK,Freudenberg-NOK,test,exact_company,no
+61,Ajin Georgia,Ajin Georgia,test,exact_company,no
+62,Neaton Rome Inc.,Neaton Rome Inc.,train,exact_company,no
+63,Apache Mills Inc.,Apache Mills Inc.,test,exact_company,no
+64,Novelis Inc.,Novelis Inc.,train,exact_company,no
+65,DaeChang Seat Company,DaeChang Seat Company,test,exact_company,no
+66,ALBAform Inc.,ALBAform Inc.,train,exact_company,no
+67,Erdrich USA Inc.,Erdrich USA Inc.,train,exact_company,no
+68,FREYR Battery,FREYR Battery,train,exact_company,no
+69,GSC Steel Stamping LLC,GSC Steel Stamping LLC,train,exact_company,no
+70,Denso Manufacturing Georgia,Denso Manufacturing Georgia,train,exact_company,no
+71,Haering Precision USA LP,Haering Precision USA LP,train,exact_company,no
+72,Hanon Systems USA LLC,Hanon Systems USA LLC,train,exact_company,no
+73,GEDIA Georgia LLC,GEDIA Georgia LLC,train,exact_company,no
+74,Global Powertrain Systems LLC,Global Powertrain Systems LLC,train,exact_company,no
+75,Hitachi Astemo,hitachi_astemo,train,approved_collision,no
+76,Hitachi Astemo Americas Inc.,hitachi_astemo,train,approved_collision,no
+77,Hollingsworth & Vose Co.,Hollingsworth & Vose Co.,dev,exact_company,no
+78,Honda Development & Manufacturing,Honda Development & Manufacturing,train,exact_company,no
+79,Hwashin,Hwashin,dev,exact_company,no
+80,Hyundai & LG Energy Solution (LGES),Hyundai & LG Energy Solution (LGES),test,exact_company,no
+81,"Daesol Material Georgia, LLC","Daesol Material Georgia, LLC",dev,exact_company,no
+82,GLOVIS Georgia LLC,GLOVIS Georgia LLC,train,exact_company,no
+83,Hyundai Motor Group,Hyundai Motor Group,train,exact_company,yes
+84,Hyundai Transys Georgia Powertrain,Hyundai Transys Georgia Powertrain,train,exact_company,no
+85,Daimler Truck North America,Daimler Truck North America,train,exact_company,no
+86,IMMI,IMMI,train,exact_company,no
+87,IMS Gear Georgia Inc.,IMS Gear Georgia Inc.,test,exact_company,no
+88,NVH Korea,NVH Korea,train,exact_company,no
+89,JAC Products Inc.,JAC Products Inc.,train,exact_company,no
+90,Oneda Corp.,Oneda Corp.,train,exact_company,no
+91,Jefferson Southern Corporation,jefferson_southern,train,approved_collision,no
+92,"Joon Georgia, Inc.","Joon Georgia, Inc.",train,exact_company,no
+93,Hyundai Industrial Co.,Hyundai Industrial Co.,test,exact_company,no
+94,Anovion Technologies,Anovion Technologies,train,exact_company,no
+95,Kia Georgia Inc.,Kia Georgia Inc.,train,exact_company,yes
+96,KTX America Corporation,KTX America Corporation,test,exact_company,no
+97,Kumho Tire USA Inc.,Kumho Tire USA Inc.,train,exact_company,no
+98,Kyungshin America Corp.,Kyungshin America Corp.,test,exact_company,no
+99,Hyundai MOBIS (Georgia),Hyundai MOBIS (Georgia),train,exact_company,no
+100,Lear Corporation,Lear Corporation,train,exact_company,no
+101,Lehigh Technologies Inc.,Lehigh Technologies Inc.,train,exact_company,no
+102,Linde + Wiemann,Linde + Wiemann,dev,exact_company,no
+103,Decostar Industries,Decostar Industries,train,exact_company,no
+104,Lund International Inc./Ventshade Division,lund_international,train,approved_collision,no
+105,Lyle Industries Inc.,Lyle Industries Inc.,train,exact_company,no
+106,Lyle Industries Inc.,Lyle Industries Inc.,train,exact_company,no
+107,Goodyear Tire & Rubber Co.,Goodyear Tire & Rubber Co.,test,exact_company,no
+108,Magna International,Magna International,dev,exact_company,no
+109,Perkins Small Engines LLC,Perkins Small Engines LLC,test,exact_company,no
+110,Master Craft Engineering Inc.,Master Craft Engineering Inc.,train,exact_company,no
+111,Arising Industries Inc.,Arising Industries Inc.,test,exact_company,no
+112,Maxxis International USA,Maxxis International USA,test,exact_company,no
+113,Peterson Spring,Peterson Spring,dev,exact_company,no
+114,DeKalb Tool & Die Inc.,DeKalb Tool & Die Inc.,train,exact_company,no
+115,PIOLAX Corp.,PIOLAX Corp.,train,exact_company,no
+116,Minebea AccessSolutions USA Inc.,Minebea AccessSolutions USA Inc.,train,exact_company,no
+117,Pirelli Tire North America LLC,Pirelli Tire North America LLC,dev,exact_company,no
+118,MollerTech LLC,MollerTech LLC,train,exact_company,no
+119,Morgan Corp.,Morgan Corp.,train,exact_company,no
+120,HELLA Automotive Sales Inc.,HELLA Automotive Sales Inc.,train,exact_company,no
+121,Porsche Cars North America Inc.,Porsche Cars North America Inc.,train,exact_company,yes
+122,Nidec Elesys Americas Corp.,Nidec Elesys Americas Corp.,train,exact_company,no
+123,NIFCO KTW America Corp.,NIFCO KTW America Corp.,train,exact_company,no
+124,Nile Automotive,Nile Automotive,dev,exact_company,no
+125,Nisshinbo Automotive Manufacturing Inc.,Nisshinbo Automotive Manufacturing Inc.,train,exact_company,no
+126,Nivel Parts & Manufacturing Co. LLC,Nivel Parts & Manufacturing Co. LLC,train,exact_company,no
+127,Propex Operating Co. LLC,Propex Operating Co. LLC,train,exact_company,no
+128,Novelis Inc.,Novelis Inc.,train,exact_company,no
+129,Novelis Inc.,Novelis Inc.,train,exact_company,no
+130,Hyundai Transys Georgia Seating Systems,Hyundai Transys Georgia Seating Systems,train,exact_company,no
+131,RealTruck,RealTruck,train,exact_company,no
+132,OTR Wheel Engineering Inc.,OTR Wheel Engineering Inc.,dev,exact_company,no
+133,Paccar,Paccar,train,exact_company,no
+134,PAI Industries Inc.,PAI Industries Inc.,train,exact_company,no
+135,Pak-Lite Inc.,Pak-Lite Inc.,train,exact_company,no
+136,Panasonic Automotive Systems Co.,Panasonic Automotive Systems Co.,train,exact_company,no
+137,Panasonic Automotive Systems Co.,Panasonic Automotive Systems Co.,train,exact_company,no
+138,Panduit Corp.,Panduit Corp.,train,exact_company,no
+139,Peerless-Winsmith Inc.,Peerless-Winsmith Inc.,train,exact_company,no
+140,Great Dane LP,great_dane,train,approved_collision,no
+141,Die-Tech Industries Inc.,Die-Tech Industries Inc.,train,exact_company,no
+142,PHA Body Systems LLC,PHA Body Systems LLC,train,exact_company,no
+143,Piedmont Automotive Products Inc.,Piedmont Automotive Products Inc.,train,exact_company,no
+144,Robert Bosch LLC,Robert Bosch LLC,test,exact_company,no
+145,Inalfa Roof Systems Inc.,Inalfa Roof Systems Inc.,train,exact_company,no
+146,Great Dane Trailers,great_dane,train,approved_collision,no
+147,PPG Industries Inc.,PPG Industries Inc.,train,exact_company,no
+148,Sewon America Inc.,Sewon America Inc.,train,exact_company,no
+149,QSR Inc.,QSR Inc.,test,exact_company,no
+150,Racemark International LLC,Racemark International LLC,test,exact_company,no
+151,Sewon America Inc.,Sewon America Inc.,train,exact_company,no
+152,Rivian Automotive,Rivian Automotive,train,exact_company,yes
+153,SHIROKI North America Inc,SHIROKI North America Inc,train,exact_company,no
+154,SAFT America Inc.,SAFT America Inc.,train,exact_company,no
+155,Sejong Georgia LLC,Sejong Georgia LLC,train,exact_company,no
+156,Seohan Auto USA,Seohan Auto USA,test,exact_company,no
+157,Seoyon E-HWA,seoyon_ehwa,train,approved_collision,no
+158,Seoyon E-Hwa Interior Systems,seoyon_ehwa,train,approved_collision,no
+159,Solvay Specialty Polymers USA LLC,Solvay Specialty Polymers USA LLC,test,exact_company,no
+160,Denkai America,Denkai America,train,exact_company,no
+161,Sewon America Inc.,Sewon America Inc.,train,exact_company,no
+162,HEXPOL Compounding Corp.,HEXPOL Compounding Corp.,train,exact_company,no
+163,SK Battery America,SK Battery America,train,exact_company,yes
+164,SKF USA Inc.,SKF USA Inc.,test,exact_company,no
+165,Jefferson Southern Corp.,jefferson_southern,train,approved_collision,no
+166,Southern Switches Corp.,Southern Switches Corp.,test,exact_company,no
+167,SRG Global Inc.,SRG Global Inc.,train,exact_company,no
+168,Stryten Energy,Stryten Energy,train,exact_company,no
+169,Suhner Manufacturing Corp.,Suhner Manufacturing Corp.,train,exact_company,no
+170,SungEel Recycling Park Georgia,SungEel Recycling Park Georgia,dev,exact_company,no
+171,Superior Essex Inc.,Superior Essex Inc.,test,exact_company,no
+172,Suzuki Manufacturing of America Corp.,Suzuki Manufacturing of America Corp.,train,exact_company,no
+173,TCI Powder Coatings,TCI Powder Coatings,dev,exact_company,no
+174,TDK Components USA Inc.,TDK Components USA Inc.,train,exact_company,no
+175,TE Connectivity,TE Connectivity,train,exact_company,no
+176,Teklas USA,Teklas USA,train,exact_company,no
+177,Textron Specialized Vehicles,Textron Specialized Vehicles,train,exact_company,yes
+178,Thermal Ceramics Inc.,Thermal Ceramics Inc.,train,exact_company,no
+179,Thomson Plastics Inc.,Thomson Plastics Inc.,train,exact_company,no
+180,TI Fluid Systems,TI Fluid Systems,test,exact_company,no
+181,TI Fluid Systems,TI Fluid Systems,test,exact_company,no
+182,Tie Down Engineering,Tie Down Engineering,test,exact_company,no
+183,TN Americas Holding Inc.,TN Americas Holding Inc.,train,exact_company,no
+184,Toyota Industries Group (TACG-TICA),Toyota Industries Group (TACG-TICA),train,exact_company,no
+185,Trenton Pressing,trenton_pressing,train,approved_collision,no
+186,Trenton Pressing Inc.,trenton_pressing,train,approved_collision,no
+187,Valeo,Valeo,train,exact_company,no
+188,Vanguard National Trailer Corp.,Vanguard National Trailer Corp.,train,exact_company,no
+189,Vernay,Vernay,train,exact_company,no
+190,Vista Metals Corp.,Vista Metals Corp.,train,exact_company,no
+191,Voestalpine Automotive Body Parts Inc.,Voestalpine Automotive Body Parts Inc.,train,exact_company,no
+192,Volvo Cars USA,Volvo Cars USA,test,exact_company,no
+193,Volvo Group North America,Volvo Group North America,train,exact_company,no
+194,Wabash National Corp.,Wabash National Corp.,dev,exact_company,no
+195,Wheelabrator Group Inc.,Wheelabrator Group Inc.,train,exact_company,no
+196,WIKA USA,WIKA USA,train,exact_company,no
+197,Woodbridge Foam Corp.,Woodbridge Foam Corp.,test,exact_company,no
+198,Woory Industrial Co.,Woory Industrial Co.,train,exact_company,no
+199,Yachiyo Manufacturing of America LLC,Yachiyo Manufacturing of America LLC,train,exact_company,no
+200,Yamaha Motor Manufacturing Corp.,Yamaha Motor Manufacturing Corp.,train,exact_company,yes
+201,Yazaki North America,Yazaki North America,dev,exact_company,no
+202,YKK USA Inc.,YKK USA Inc.,train,exact_company,no
+203,ZF Gainesville LLC,ZF Gainesville LLC,test,exact_company,no
+204,ZF Gainesville LLC,ZF Gainesville LLC,test,exact_company,no
+205,ZF Gainesville LLC,ZF Gainesville LLC,test,exact_company,no

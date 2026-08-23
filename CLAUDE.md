@@ -41,9 +41,9 @@ Maintain this block as work progresses:
 
 ```text
 PROTOCOL_STATUS: FROZEN
-CURRENT_PHASE: 2
-LAST_COMPLETED_PHASE: 1
-NEXT_PHASE: Phase 2 — Clean, normalize, and freeze canonical records
+CURRENT_PHASE: 3
+LAST_COMPLETED_PHASE: 2
+NEXT_PHASE: Phase 3 — Identity, split groups, and the train/dev/test split
 TEST_STATUS: LOCKED_UNTIL_PHASE_40
 ```
 
