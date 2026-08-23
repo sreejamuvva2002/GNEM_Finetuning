@@ -1,0 +1,230 @@
+{
+  "manifest": "CLEANED_DATA_MANIFEST_v3",
+  "phase": 2,
+  "protocol": "README.md Phase 2 -- Clean, normalize, and freeze canonical records",
+  "amendments_applied": [
+    "A-001 (geographic semantics)"
+  ],
+  "hash_chain": {
+    "1_source_workbook": {
+      "path": "kb/GNEM_Final_Combined_Dataset.xlsx",
+      "sha256": "a8a4ca5c72211e7e2e32bbf418873f86677b7fb1264d2c657955b3fee008b034",
+      "verified_against": "datasets_v3/SOURCE_MANIFEST_v3.json"
+    },
+    "2_cleaning_code": {
+      "path": "finetune/phase2_clean_records.py",
+      "sha256": "66523cc589e38e5029d42dcbdcc8331a7ca69f3fec6c6209d9f6497bff779b29"
+    },
+    "3_canonical_records": {
+      "path": "datasets_v3/canonical_records_v3.jsonl",
+      "sha256": "e593949736e09f9c64f2c443f72e77d68725d13d3ce70ef5a73e867c7a272b0f",
+      "bytes": 160417,
+      "record_count": 205
+    }
+  },
+  "schema": {
+    "fields": [
+      "row_id",
+      "company",
+      "category",
+      "industry_group",
+      "location",
+      "address",
+      "primary_facility_type",
+      "ev_supply_chain_role",
+      "primary_oems",
+      "supplier_or_affiliation_type",
+      "employment",
+      "product_or_service",
+      "processes",
+      "services",
+      "ev_battery_relevant",
+      "classification_method",
+      "certifications",
+      "certification_count"
+    ],
+    "field_count": 18,
+    "identity": {
+      "row_id": "Record No. (int)",
+      "company": "exact trimmed Company; no suffix stripping"
+    },
+    "not_materialized": [
+      "city",
+      "county",
+      "latitude",
+      "longitude",
+      "split_group"
+    ],
+    "note": "city/county derivation belongs to the Phase 4 loader (A-001)."
+  },
+  "sentinels": {
+    "Not specified": "source value unknown/unprovided",
+    "Not applicable": "field structurally does not apply",
+    "None identified after search": "no credential evidence identified",
+    "note": "No sentinel proves a real-world negative."
+  },
+  "changed_cells": {
+    "total": 278,
+    "by_field": {
+      "address": 2,
+      "category": 3,
+      "certifications": 37,
+      "location": 3,
+      "primary_facility_type": 11,
+      "primary_oems": 26,
+      "processes": 134,
+      "services": 36,
+      "supplier_or_affiliation_type": 26
+    },
+    "by_change_type": {
+      "category_normalization": 3,
+      "facility_type_normalization": 11,
+      "multivalue_canonical_order": 173,
+      "sentinel_address": 1,
+      "sentinel_location": 3,
+      "sentinel_none_identified": 34,
+      "sentinel_primary_oems": 26,
+      "sentinel_supplier_affiliation": 26,
+      "whitespace_trim": 1
+    },
+    "audit": "validation_v3/CLEANING_AUDIT_v3.csv"
+  },
+  "distributions": {
+    "category": {
+      "OEM": 12,
+      "OEM (Footprint)": 8,
+      "OEM Supply Chain": 17,
+      "Tier 1": 77,
+      "Tier 1/2": 18,
+      "Tier 2/3": 73
+    },
+    "primary_facility_type": {
+      "Corporate operations": 2,
+      "Engineering / Operations": 3,
+      "Headquarters": 1,
+      "Manufacturing": 4,
+      "Manufacturing / Engineering": 3,
+      "Manufacturing / OEM operations": 1,
+      "Manufacturing Plant": 187,
+      "North American Headquarters": 2,
+      "R&D": 1,
+      "Regional corporate operations": 1
+    }
+  },
+  "validation": {
+    "canonical_row_count": {
+      "pass": true,
+      "detail": "205 == 205"
+    },
+    "row_id_unique": {
+      "pass": true,
+      "detail": "205 unique == 205"
+    },
+    "no_rows_dropped": {
+      "pass": true,
+      "detail": "row_id set == source set"
+    },
+    "category::OEM Footprint": {
+      "pass": true,
+      "detail": "0 == 0"
+    },
+    "category::OEM (Footprint)": {
+      "pass": true,
+      "detail": "8 == 8"
+    },
+    "facility::Manufacturing plant": {
+      "pass": true,
+      "detail": "0 == 0"
+    },
+    "facility::Manufacturing Plant": {
+      "pass": true,
+      "detail": "187 == 187"
+    },
+    "facility::Manufacturing": {
+      "pass": true,
+      "detail": "4 == 4"
+    },
+    "facility::Engineering / Manufacturing": {
+      "pass": true,
+      "detail": "0 == 0"
+    },
+    "processes_canonically_ordered": {
+      "pass": true,
+      "detail": "0 non-canonical"
+    },
+    "services_canonically_ordered": {
+      "pass": true,
+      "detail": "0 non-canonical"
+    },
+    "certifications_canonically_ordered": {
+      "pass": true,
+      "detail": "0 non-canonical"
+    },
+    "certification_count_matches_pre_sentinel_parse": {
+      "pass": true,
+      "detail": "validated on 205/205 rows, 0 mismatches"
+    },
+    "cert_sentinel_means_zero_terms": {
+      "pass": true,
+      "detail": "0 sentinel rows with nonzero count"
+    },
+    "employment_populated": {
+      "pass": true,
+      "detail": "205/205 populated"
+    },
+    "employment_values_preserved": {
+      "pass": true,
+      "detail": "byte-equal to source"
+    },
+    "employment_no_zero_imputation": {
+      "pass": true,
+      "detail": "0 zero values"
+    },
+    "valeo_location_not_specified": {
+      "pass": true,
+      "detail": "'Not specified'"
+    },
+    "valeo_address_not_specified": {
+      "pass": true,
+      "detail": "'Not specified'"
+    },
+    "volvo_192_location_not_applicable": {
+      "pass": true,
+      "detail": "'Not applicable'"
+    },
+    "volvo_192_address_preserved": {
+      "pass": true,
+      "detail": "'1800 Volvo Place, Mahwah, NJ 07430'"
+    },
+    "volvo_193_location_not_applicable": {
+      "pass": true,
+      "detail": "'Not applicable'"
+    },
+    "volvo_193_address_preserved": {
+      "pass": true,
+      "detail": "'7900 National Service Rd, Greensboro, NC 27409'"
+    },
+    "supplier_blanks_all_not_specified": {
+      "pass": true,
+      "detail": "26/26 blanks -> Not specified"
+    },
+    "no_supplier_imputation": {
+      "pass": true,
+      "detail": "no blank filled with a sibling-row value"
+    },
+    "no_city_county_materialized": {
+      "pass": true,
+      "detail": "absent: ['city', 'county', 'latitude', 'longitude', 'split_group']"
+    },
+    "no_unauthorized_company_normalization": {
+      "pass": true,
+      "detail": "company == exact trimmed source value"
+    }
+  },
+  "generation_context": {
+    "git_commit": "0beb5b8c72f957fe9307497627c757c1f1ac7ac5",
+    "git_tree_dirty": true,
+    "python": "3.12.3",
+    "openpyxl": "3.1.5"
+  }
+}
