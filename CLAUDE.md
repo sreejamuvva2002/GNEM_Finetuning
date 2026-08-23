@@ -41,9 +41,9 @@ Maintain this block as work progresses:
 
 ```text
 PROTOCOL_STATUS: FROZEN
-CURRENT_PHASE: 4
-LAST_COMPLETED_PHASE: 3
-NEXT_PHASE: Phase 5 — Build `gnem_v3.sqlite`
+CURRENT_PHASE: 5
+LAST_COMPLETED_PHASE: 4
+NEXT_PHASE: Phase 6 — Context renderer and token budget
 TEST_STATUS: LOCKED_UNTIL_PHASE_40
 ```
 
