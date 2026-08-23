@@ -41,9 +41,9 @@ Maintain this block as work progresses:
 
 ```text
 PROTOCOL_STATUS: FROZEN
-CURRENT_PHASE: 1
-LAST_COMPLETED_PHASE: 0
-NEXT_PHASE: Phase 1 — Freeze the source workbook
+CURRENT_PHASE: 2
+LAST_COMPLETED_PHASE: 1
+NEXT_PHASE: Phase 2 — Clean, normalize, and freeze canonical records
 TEST_STATUS: LOCKED_UNTIL_PHASE_40
 ```
 

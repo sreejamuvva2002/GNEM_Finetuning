@@ -22,6 +22,56 @@ before moving on. Validation numbers were verified against the workbook and the 
 
 ---
 
+# Protocol amendments
+
+Amendments to this frozen protocol are numbered, dated, and recorded here. Each states what changed,
+why, and when relative to the experimental timeline. `PROVENANCE_v3.md` carries the same record.
+
+## A-001 — Geographic semantics: real non-Georgia locations are valid geographic data
+
+**Approved:** 2026-08-23 · **Status:** ACTIVE · **Supersedes:** the geographic clause of Phase 2 and
+the `city`/`county` parsing clause of Phase 4.
+
+**Timing.** Made **before Phase 2 was frozen** and before any canonical records existed — and before
+any model result, test or Q42 inference, holdout selection, or downstream evaluation had been
+observed. Test and Q42 remain sealed (`LOCKED_UNTIL_PHASE_40`). No measured outcome informed it.
+
+**Problem.** The original wording made derived `city`/`county` conditional on a location being *a
+real Georgia location*, conflating **reality** with **Georgia-ness**: a real non-Georgia `Location`
+would have been discarded as geographic data purely for being out of state. It also left a genuinely
+unknown `Location` — blank `Location` *and* blank `Address` — with no defined sentinel, since the
+only named exception was Volvo.
+
+**The amended rule.**
+
+| `Location` | `Location` value | derived `city`/`county` |
+|---|---|---|
+| real (Georgia **or** non-Georgia) | preserved as-is | derived only as the rule below allows |
+| missing / unknown | `Not specified` | SQL `NULL` |
+| structurally inapplicable | `Not applicable` | SQL `NULL` |
+
+**Derived geography is read, never inferred.** Derived `city`/`county` may be populated **only from
+geographic information explicitly represented in the canonical `Location` value**. They are never
+inferred from `Address`, external geocoding, company knowledge, or any other field. If a `Location`
+names a real city but does not explicitly provide a county, `county` remains `NULL`. `Address`
+remains an independent factual field and is **never** substituted for `Location`. The sentinel never
+enters the `city`/`county` field.
+
+**Consequences for the two named cases.**
+
+- **Valeo** (`row_id` 187) — `Location` blank and `Address` blank: `Location` = `Not specified`,
+  `Address` = `Not specified`, derived `city`/`county` = `NULL`.
+- **Volvo** (`row_id` 192, 193) — the frozen exception is retained on the amended basis: the real
+  NJ/NC `Address` values are preserved as factual `Address`, `Location` remains `Not applicable`, and
+  derived facility `city`/`county` remain `NULL`.
+
+**Scope limit.** A-001 changes geographic semantics only. It does **not** reinstate any retired v3
+component — no latitude/longitude, no geocoding, no geo training or evaluation, no
+distance/radius/nearest logic, no `probe_geo`, no geo SQL prompts. Those remain retired per
+`CLAUDE.md` §32.
+
+---
+
 # Part I — Data foundation (Phases 0–5)
 
 ## Phase 0 — Freeze the v3 specification
@@ -110,8 +160,15 @@ file alone does not catch that, so the **cleaned** representation is frozen and 
 stays distinct. For `Processes`, `Services`, `Certifications`: split on `;`, trim, drop empties,
 dedupe, case-insensitive sort, rejoin. Apply sentinels — `Not applicable` (structurally
 inapplicable), `Not specified` (unknown), `None identified after search` (no credential found).
-Derived `city`/`county` become SQL `NULL` when the location is not a real Georgia location; the
-sentinel never enters the county field. Volvo's real NJ/NC addresses are preserved.
+Derived `city`/`county` follow **Amendment A-001**: a **real** `Location` — Georgia or
+non-Georgia — is preserved; a **missing** `Location` becomes `Not specified` and a
+**structurally inapplicable** `Location` becomes `Not applicable`, both yielding
+`city`/`county` = SQL `NULL`. Derived `city`/`county` may be populated only from geographic
+information explicitly represented in the canonical `Location` value — never inferred from
+`Address`, external geocoding, company knowledge or any other field — and where a `Location`
+names a city but no county, `county` remains `NULL`. The sentinel never enters the
+`city`/`county` field. Volvo's real NJ/NC addresses are preserved as factual `Address`, with
+`Location` = `Not applicable`.
 
 **Order matters.** Validate `Certification Count` against the **pre-sentinel** parse, then insert the
 sentinel.
@@ -174,8 +231,9 @@ unmapped collision (**build fails**) · dev set non-empty · stratification audi
 
 **We do.** Map all 18 columns, including `processes`, `services`, `certifications`,
 `certification_count`. Remove any `latitude`/`longitude` requirement. Keep employment as recorded and
-assert populated. Load `certification_count` for validation only. Parse `city`/`county` only from
-real location values.
+assert populated. Load `certification_count` for validation only. Parse `city`/`county` only
+from geographic information explicitly present in a real `Location` value — never from
+`Address`, geocoding or any other field (Amendment A-001).
 
 **Three named KB scopes — the core anti-leakage contract.** Every generator and grader declares which
 scope it reads. There is no unscoped accessor.

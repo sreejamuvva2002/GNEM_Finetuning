@@ -172,3 +172,105 @@ the only place where configuration decisions are made, and every dev-driven deci
 **Phase 0 gate: PASS.**
 
 ---
+
+## Amendment A-001 — geographic semantics
+
+**Recorded:** 2026-08-23
+**Approved by:** the user, explicitly, as a formal protocol amendment.
+**Status:** ACTIVE.
+
+### Timing — why this amendment is legitimate
+
+A-001 was made **before Phase 2 was frozen**, before any canonical records existed, and **before any
+model result, test or Q42 inference, holdout selection, or downstream evaluation had been observed**.
+
+Repository state when the amendment was approved:
+
+```text
+Phase 0 freeze commit  3d6505d98436a1035c25f4a08ad7939fd19b9e3f
+HEAD before amendment  64c8f2fc4b3719c2b68eb1b43eb4c1e50b53c56d  (Phase 1 complete)
+TEST_STATUS            LOCKED_UNTIL_PHASE_40
+Phases completed       0, 1
+Phases not started     2 onward
+```
+
+At that point the repository contained the frozen protocol, the execution contract, the source
+workbook, and the Phase 1 source manifest — and nothing else. No cleaned records, no splits, no
+holdouts, no datasets, no adapters, no predictions, no scores. No measured outcome could have
+informed this amendment, and none did.
+
+### Problem
+
+The original Phase 2 clause made derived `city`/`county` conditional on a location being *a real
+Georgia location*, conflating two separate properties — whether a `Location` is **real**, and whether
+it is **in Georgia**. A real non-Georgia `Location` would have been discarded as geographic data
+purely for being out of state.
+
+It also left a genuinely unknown `Location` undefined. The workbook has three blank-`Location` rows
+which are not alike:
+
+```text
+row_id 187  Valeo                      Location blank, Address blank
+row_id 192  Volvo Cars USA             Location blank, Address 1800 Volvo Place, Mahwah, NJ 07430
+row_id 193  Volvo Group North America  Location blank, Address 7900 National Service Rd, Greensboro, NC 27409
+```
+
+Valeo's location is *unknown*; Volvo's is *structurally inapplicable*, because a real non-Georgia
+address exists and so a Georgia location does not apply. The original wording named only Volvo and
+had no sentinel for the Valeo case.
+
+### The amended rule
+
+```text
+real Location (Georgia or non-Georgia)   preserve the Location value
+                                         derived city/county only as permitted below
+
+missing / unknown Location               Location = Not specified
+                                         derived city/county = SQL NULL
+
+structurally inapplicable Location       Location = Not applicable
+                                         derived city/county = SQL NULL
+```
+
+**Derived geography is read, never inferred.** Derived `city`/`county` may be populated only from
+geographic information **explicitly represented in the canonical `Location` value**. They are never
+inferred from `Address`, external geocoding, company knowledge, or any other field. If a `Location`
+names a real city but does not explicitly provide a county, `county` remains `NULL`. `Address`
+remains an independent factual field and is never substituted for `Location`. The sentinel never
+enters the `city`/`county` field.
+
+### Consequences for the named cases
+
+```text
+Valeo  (row_id 187)   Location = Not specified
+                      Address  = Not specified
+                      derived city/county = NULL
+
+Volvo  (row_id 192)   Location = Not applicable
+                      Address  = 1800 Volvo Place, Mahwah, NJ 07430      (preserved)
+                      derived city/county = NULL
+
+Volvo  (row_id 193)   Location = Not applicable
+                      Address  = 7900 National Service Rd, Greensboro, NC 27409  (preserved)
+                      derived city/county = NULL
+```
+
+### Clauses superseded
+
+```text
+README.md  Phase 2  geographic clause                  (was: "not a real Georgia location")
+README.md  Phase 4  city/county parsing clause         (was: "only from real location values")
+```
+
+The full amendment text is recorded in `README.md` under `# Protocol amendments`, section A-001.
+
+### Scope limit
+
+A-001 changes geographic semantics only. It does **not** reinstate any retired v3 component — no
+latitude/longitude, no geocoding, no geo training or evaluation, no distance/radius/nearest logic,
+no `probe_geo`, no geo SQL prompts. Those remain retired under `CLAUDE.md` §32. No training arm,
+seed policy, KB scope, holdout rule, comparison hierarchy, or grading rule was altered.
+
+Phase 2 does **not** materialize `city`/`county`. Derivation belongs to the Phase 4 loader.
+
+---
