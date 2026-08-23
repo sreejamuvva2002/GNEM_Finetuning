@@ -41,9 +41,9 @@ Maintain this block as work progresses:
 
 ```text
 PROTOCOL_STATUS: FROZEN
-CURRENT_PHASE: 0
-LAST_COMPLETED_PHASE: none
-NEXT_PHASE: Phase 0 closure
+CURRENT_PHASE: 1
+LAST_COMPLETED_PHASE: 0
+NEXT_PHASE: Phase 1 — Freeze the source workbook
 TEST_STATUS: LOCKED_UNTIL_PHASE_40
 ```
 
