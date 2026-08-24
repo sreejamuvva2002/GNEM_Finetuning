@@ -1,12 +1,10 @@
 {
   "arms": {
     "A": {
-      "artifact": "datasets_v3/train_A_cpt_v3.jsonl",
-      "exposure_count": 0,
-      "phase": 10,
-      "scanned": true,
-      "sha256": "4e5f005d29106bad4dd86b3cc684abaaa72f8c89f358634e81af1b520db58fd2",
-      "strings_scanned": 148
+      "artifact": null,
+      "exposure_count": null,
+      "scanned": false,
+      "sha256": null
     },
     "B": {
       "artifact": null,
