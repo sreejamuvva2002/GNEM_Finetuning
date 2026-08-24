@@ -9,35 +9,49 @@ an unknown string, a case variant and a non-string all raise ScopeError. There
 is no unscoped convenience path and no implicit full_kb.
 
 MODEL SQL STAYS SCOPE-NEUTRAL. The model writes `SELECT ... FROM companies`.
-The executor -- not the model -- chooses which rows are visible, by binding the
-four logical names to the selected scope's Phase 5 views as connection-local
-TEMP views. Physical names like `train_kb_companies` are infrastructure and are
-never taught to a model.
+The executor -- not the model -- chooses which rows are visible. Physical names
+like `train_kb_companies` are infrastructure and are never taught to a model.
+
+TWO DISTINCT ROLES, deliberately separated:
+
+    Phase 5 scoped views   authoritative source of scope MEMBERSHIP
+    Phase 7 TEMP tables    execution ISOLATION surface
+
+During trusted connection initialization the selected scoped rows are read from
+the Phase 5 scoped view and MATERIALIZED into connection-local TEMP logical
+tables -- `companies`, `certifications`, `processes`, `services`. Model and gold
+SQL then execute against those TEMP tables only. After initialization, any read
+from the `main` schema is structurally denied.
 
 Initialization order matters and is fixed:
 
     1. open the frozen DB with mode=ro
-    2. create the four TEMP logical scope bindings
+    2. materialize the four TEMP logical tables from the Phase 5 scoped views
+       (the only point at which `main` is read, and it is trusted setup)
     3. PRAGMA query_only = ON
     4. install the structural authorizer
-    5. execute the model/gold SQL
+    5. execute the model/gold SQL -- TEMP only
 
-query_only is set AFTER the TEMP views, because creating them is itself a write
-to the temp schema.
+query_only is set AFTER materialization, because populating the TEMP tables is
+itself a write to the temp schema.
 
 STRUCTURAL AUTHORIZATION IS THE PRIMARY DEFENCE. `sqlite3.Connection.
 set_authorizer` inspects every object the prepared statement actually touches,
 so it cannot be fooled by aliases, quoting, CTEs, subqueries, comments or
-formatting. The discriminator, verified empirically:
+formatting. Because a legitimate query reads only materialized TEMP tables, the
+rule is one forgery-proof condition:
 
-    direct base-table bypass   READ arg1='companies'  db='main'  source=None
-    legitimate TEMP read       READ arg1='companies'  db=None    source=None
-    internal view expansion    READ ...               source=<view name>
+    legitimate read    READ  db=None    (TEMP logical table)   allow
+    ANY bypass         READ  db='main'                         DENY
 
-so a direct `main.companies` read is distinguishable from the authorized
-internal reads the TEMP views require. Out-of-scope physical views are denied by
-their appearance as an authorizing `source`. Lexical validation is kept as
-defence in depth only, never as the primary layer.
+SOURCE CALLBACK NAMES ARE NOT TRUSTED AS AUTHORIZATION IDENTITY. A superseded
+design keyed on `source in LOGICAL_TABLES` as proof that a read came from a
+trusted binding. That was unsound: SQLite reports a user-defined CTE named
+`companies` with `source == "companies"`, identically to a trusted binding, so
+the check was forgeable by naming a CTE after a logical table. `source` is now
+never consulted; authorization keys on the schema an object lives in, which a
+query cannot forge by naming. Lexical validation is kept as defence in depth
+only, never as the primary layer.
 
 NO RESULT CAP. Complete results always. README permits a safety ceiling only if
 it raises; none is authorized, so none is introduced -- and none is smuggled in
@@ -176,13 +190,15 @@ def structural_precheck(con: sqlite3.Connection, sql: str, scope: str) -> None:
     not delete). Recording those events lets the decision be made across the
     whole statement, which a stateless per-object callback cannot do.
 
-    The distinguishing signal, established empirically: reaching a physical view
-    legitimately (through a TEMP binding) emits
+    The invariant enforced here:
 
-        READ  arg1=<physical view>  source=<logical name>
+        trusted setup    may read `main`, but only while materializing the
+                         selected Phase 5 scoped views into TEMP tables
+        model/gold SQL   reads the TEMP logical tables
+        user-time read   of the `main` schema -> denied
 
-    whereas naming that physical view directly does not. Both otherwise produce
-    identical per-object events, so this pairing is what separates them.
+    `source` is not consulted: a user CTE can carry the same source name as a
+    trusted binding, so it is not an authorization identity.
     """
     events: list[tuple] = []
 
@@ -198,11 +214,6 @@ def structural_precheck(con: sqlite3.Connection, sql: str, scope: str) -> None:
     finally:
         con.set_authorizer(_make_authorizer(scope))
 
-    # A legitimate statement ENTERS through a TEMP binding, which SQLite reports
-    # as at least one read whose source is a logical table name. Phase 5's child
-    # views themselves join the scoped companies view, so an in-scope physical
-    # view may legitimately expand deeper in the chain; what distinguishes a
-    # bypass is that it never entered through a binding at all.
     for action, arg1, _a2, db_name, _source in events:
         name = (arg1 or "").lower()
         if action not in (sqlite3.SQLITE_SELECT, sqlite3.SQLITE_READ,
@@ -261,7 +272,8 @@ def open_scoped_connection(scope, db_path) -> sqlite3.Connection:
     # definition of what each scope contains and nothing is re-derived here.
     #
     # The rows are MATERIALIZED into temp tables rather than exposed through a
-    # temp VIEW over the physical view. That is a deliberate security property,
+    # temp VIEW over the physical view (the SUPERSEDED design). That is a
+    # deliberate security property,
     # not an optimization: afterwards a legitimate query reads ONLY the temp
     # schema and never touches `main`, which makes authorization independent of
     # `source`. `source` is not a trustworthy identity -- SQLite reports a user

@@ -6,7 +6,7 @@ Phase 7 — SQL execution and grading. README: this gate **blocks the canonical 
 
 ```text
 datasets_v3/gnem_v3.sqlite   7437c746cb118f3d5bb9edcc34f500e0c9f764358a19fa05766dc526d63bb08b
-finetune/sqlexec_v3.py       2825c2a30c0d8a0691f3f4231c47d592967232e85e881044989d0519d3687e84   (sqlexec_v3.0)
+finetune/sqlexec_v3.py       a6c06b71dd97541997bedc2202e1980ab2e4cdd721aaf20ff43eacfda876c461   (sqlexec_v3.0)
 finetune/grade_v3.py         619b9350e38ac976ad5ce9d4ba377fdcc4504e00b9ac34ef49fa47f6931b4cbd   (grade_v3.0)
 ```
 
@@ -27,19 +27,29 @@ Valid scopes: `train_kb`, `train_dev_kb`, `full_kb`. `run_sql(sql, scope, *, db_
 
 ## Scope binding
 
-Model and gold SQL stay **scope-neutral** — `SELECT ... FROM companies`. The executor binds the four logical names to the selected scope's Phase 5 views as connection-local TEMP views, so the model never emits, and is never taught, a physical name like `train_kb_companies`.
+Model and gold SQL stay **scope-neutral** — `SELECT ... FROM companies`. The model never emits, and is never taught, a physical name like `train_kb_companies`.
+
+Two roles are deliberately separated:
+
+| component | role |
+|---|---|
+| Phase 5 scoped views | authoritative source of scope **membership** |
+| Phase 7 TEMP logical tables | execution **isolation** surface |
+
+During trusted connection initialization the selected scoped rows are read from the Phase 5 scoped view and **materialized into connection-local TEMP logical tables** (`companies`, `certifications`, `processes`, `services`). Model and gold SQL then execute against those TEMP tables only, and after initialization any read of the `main` schema is structurally denied.
 
 Initialization order is fixed:
 
 ```text
 1. open frozen DB with mode=ro
-2. create the four TEMP logical scope bindings
+2. materialize the four TEMP logical tables from the Phase 5 scoped views
+   (the only point at which `main` is read -- trusted setup)
 3. PRAGMA query_only = ON
 4. install the structural authorizer
-5. execute model/gold SQL
+5. execute model/gold SQL -- TEMP only
 ```
 
-`query_only` is set **after** the TEMP views, because creating them is itself a write to the temp schema.
+`query_only` is set **after** materialization, because populating the TEMP tables is itself a write to the temp schema.
 
 ## Structural authorization (primary defence)
 
@@ -48,11 +58,13 @@ Initialization order is fixed:
 Scoped rows are **materialized into temp tables**, populated from the Phase 5 scoped views. That is a security property, not an optimization: afterwards a legitimate query reads only the temp schema and never touches `main`, so the rule reduces to one forgery-proof condition:
 
 ```text
-legitimate read    READ arg1='companies'  db=None    (temp binding)   allow
-ANY bypass         READ ...               db='main'                    DENY
+legitimate read    READ  db=None    (materialized TEMP logical table)  allow
+ANY bypass         READ  db='main'                                      DENY
 ```
 
-**`source` is deliberately never consulted.** An earlier design keyed on `source in LOGICAL_TABLES` as evidence that a read came from the trusted binding. That is unsound: SQLite reports a user-defined CTE named `companies` with `source == "companies"`, identically to the trusted binding, so the check was forgeable by naming a CTE after a logical table. Review found a working structural-only bypass, `WITH companies AS (SELECT * FROM train_kb_companies) SELECT COUNT(*) FROM companies`, which returned 148 instead of being denied. The mechanism was redesigned rather than patched: the schema an object lives in cannot be forged by naming, so authorization now keys on it alone.
+**Source callback names are not trusted as authorization identity.** A superseded design keyed on `source in LOGICAL_TABLES` as evidence that a read came from a trusted binding. That is unsound: SQLite reports a user-defined CTE named `companies` with `source == "companies"`, identically to the trusted binding, so the check was forgeable by naming a CTE after a logical table. Review found a working structural-only bypass, `WITH companies AS (SELECT * FROM train_kb_companies) SELECT COUNT(*) FROM companies`, which returned 148 instead of being denied. The mechanism was redesigned rather than patched: the schema an object lives in cannot be forged by naming, so authorization now keys on it alone.
+
+**The earlier Phase 7 audit overstated the structural guarantee.** It claimed every bypass was blocked with lexical validation disabled; that held for the vectors then tested, but the CTE-name-collision class was untested and would have passed. This record is kept deliberately — the audit should show what was wrong, not only what is now right.
 
 Materialization preserves the data exactly — all 12 scope x table combinations are row- and column-identical to their Phase 5 views, including NULL city/county and the AVS trailing-space address.
 
