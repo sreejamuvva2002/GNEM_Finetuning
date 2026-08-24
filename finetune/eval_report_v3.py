@@ -16,6 +16,12 @@ adding a v3 probe family requires no edit to a hard-coded report order. v2's
 
 DEV-FACING ONLY. Nothing in this module accepts an unseal parameter, so it is
 structurally incapable of reading sealed test/Q42 output.
+
+The seal boundary is enforced at INGRESS, in `eval_records_v3.load_dev_results`,
+which classifies an artifact from the trusted registry before opening it. These
+functions are pure computations over records that were already authorized, so
+they deliberately do NOT re-derive sealing from record content -- inferring it
+from `family` strings is exactly the unsound check this replaced.
 """
 
 from __future__ import annotations
@@ -39,10 +45,6 @@ class DenominatorError(ValueError):
 def summarize(records, *, expected_count: int) -> dict:
     """Summary with exact denominators and every failure status counted."""
     recs = list(records)
-    if any(R.classify_result_set(r.family) == R.SEALED_KIND for r in recs):
-        raise R.SealError(
-            "dev-facing summarization refused: records contain a sealed family")
-
     status_counts = Counter(r.status for r in recs)
     # Exactly-one-status accounting: each record contributes to exactly one bin.
     scored = status_counts["correct"] + status_counts["incorrect"]
@@ -119,9 +121,6 @@ def error_analysis(records) -> dict:
     nothing more.
     """
     recs = list(records)
-    if any(R.classify_result_set(r.family) == R.SEALED_KIND for r in recs):
-        raise R.SealError("dev-facing error analysis refused on sealed records")
-
     failures = [r for r in recs if r.status != "correct"]
     by_status, by_family, by_answer_type = (defaultdict(list), defaultdict(Counter),
                                             defaultdict(Counter))

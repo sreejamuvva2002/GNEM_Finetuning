@@ -10,16 +10,40 @@ Phase 8 populates these with synthetic fixtures, but the schema is the one real
 evaluation records will use. Nothing here decides metadata that Phase 9 owns.
 
 THE SEALED-TEST BOUNDARY. Test and Q42 outputs must be unreadable by ordinary
-dev-facing reporting until Phase 40. The design deliberately avoids a reusable
-boolean backdoor:
+dev-facing reporting until Phase 40.
+
+THE SEALING DECISION ATTACHES TO THE ARTIFACT, NOT TO WHAT THE ARTIFACT SAYS
+ABOUT ITSELF. A superseded design inferred sealing from `family` strings inside
+the records. Review demonstrated three failures of that approach:
+
+    1. a sealed artifact whose records declared `family = factual_recall` was
+       accepted by the dev loader
+    2. an unknown future family (`brand_new_future_family`) silently defaulted
+       to dev-accessible
+    3. `sealed_metadata` parsed sealed records to compute `families` and
+       `conditions`, exceeding the pre-Phase-40 metadata boundary
+
+Content cannot be trusted to classify itself, and an unknown artifact must not
+default open. The corrected flow is:
+
+    identify artifact (resolved canonical path)
+        -> trusted registry lookup + integrity hash
+        -> classification: dev | sealed | unknown
+        -> sealed or unknown  -> REFUSE
+        -> only an authorized dev artifact is opened and parsed
+
+Classification therefore happens BEFORE any record is read. `family`,
+`condition`, `status`, filename keywords and record contents take no part in
+the security decision.
 
     dev-facing reporting      cannot request unseal -- the parameter does not
                               exist on any dev API
     this library              CANNOT read sealed content at all. There is no
                               `load_results(path, unseal=True)`, because such a
                               switch would also work on real sealed output
-    sealed_metadata(path)     count / hash / path / provenance ONLY -- never
-                              example text, answers, errors or scores
+    sealed_metadata(...)      trusted-manifest fields ONLY. It never opens the
+                              result file, so it cannot disclose families,
+                              conditions, statuses, scores, errors or examples
     Phase 40 entry point      owns the real unblind authority (CLAUDE.md 23:
                               "an explicit Phase-40-only `--unseal` control")
 
@@ -46,10 +70,9 @@ STATUSES = G.STATUSES
 SUCCESS_STATUS = "correct"
 FAILURE_STATUSES = tuple(s for s in STATUSES if s not in ("correct", "incorrect"))
 
-# Result-set classification. `sealed` covers everything the protocol keeps
-# blind until Phase 40.
-DEV_KIND, SEALED_KIND = "dev", "sealed"
-SEALED_FAMILY_MARKERS = ("test", "q42", "probe_42")
+# Artifact classification. UNKNOWN is the default for anything not explicitly
+# registered, and it refuses -- an unregistered artifact never becomes dev.
+DEV_KIND, SEALED_KIND, UNKNOWN_KIND = "dev", "sealed", "unknown"
 
 
 class SealError(RuntimeError):
@@ -117,56 +140,125 @@ def sha256_file(path: Path) -> str:
     return h.hexdigest()
 
 
-def classify_result_set(family: str) -> str:
-    """Sealed unless demonstrably a dev family. Fail closed, not open."""
-    low = (family or "").lower()
-    return SEALED_KIND if any(m in low for m in SEALED_FAMILY_MARKERS) else DEV_KIND
+@dataclass(frozen=True)
+class ArtifactRegistration:
+    """A trusted, content-blind classification of one result artifact.
 
-
-def load_dev_results(path) -> list[EvalRecord]:
-    """Load a DEV result set.
-
-    There is deliberately no `unseal` parameter. A sealed result set raises,
-    and no argument to this function can change that -- a generic boolean
-    switch would also unlock real test/Q42 output before Phase 40.
+    Every field is provenance about the artifact. None of it is derived by
+    reading the evaluation records, and `item_count` is PREDECLARED here rather
+    than counted from the file, so metadata never requires opening sealed
+    content.
     """
-    path = Path(path)
-    raw = [json.loads(l) for l in path.read_text(encoding="utf-8").splitlines() if l.strip()]
-    sealed = sorted({r.get("family", "") for r in raw
-                     if classify_result_set(r.get("family", "")) == SEALED_KIND})
-    if sealed:
+    artifact_id: str
+    canonical_path: str        # os.path.realpath, so symlinks and relative
+                               # spellings resolve to one identity
+    artifact_kind: str         # DEV_KIND | SEALED_KIND
+    sha256: str
+    schema_version: str
+    item_count: int
+    provenance: str
+
+    def __post_init__(self):
+        if self.artifact_kind not in (DEV_KIND, SEALED_KIND):
+            raise ValueError(f"artifact_kind {self.artifact_kind!r} invalid")
+
+
+class ArtifactRegistry:
+    """The trusted manifest. Classification comes from here, never from content.
+
+    Lookup is by RESOLVED canonical path, so a relative spelling, an absolute
+    spelling and a symlink all resolve to the same registration. A file whose
+    bytes no longer match its registered hash, or that is not registered at
+    all, classifies as UNKNOWN -- which refuses.
+    """
+
+    def __init__(self, registrations=()):
+        self._by_path: dict[str, ArtifactRegistration] = {}
+        for r in registrations:
+            self.register(r)
+
+    def register(self, reg: ArtifactRegistration) -> None:
+        self._by_path[str(Path(reg.canonical_path))] = reg
+
+    @staticmethod
+    def canonicalize(path) -> str:
+        # realpath resolves symlinks AND relative segments to one identity.
+        return str(Path(path).resolve())
+
+    def classify(self, path) -> tuple[str, ArtifactRegistration | None]:
+        """(kind, registration). Unregistered or altered -> UNKNOWN, which refuses."""
+        canonical = self.canonicalize(path)
+        reg = self._by_path.get(canonical)
+        if reg is None:
+            return UNKNOWN_KIND, None
+        p = Path(canonical)
+        if not p.is_file() or sha256_file(p) != reg.sha256:
+            # Registered identity, but the bytes are not the registered bytes.
+            return UNKNOWN_KIND, None
+        return reg.artifact_kind, reg
+
+    def manifest(self) -> list[dict]:
+        return [asdict(r) for r in
+                sorted(self._by_path.values(), key=lambda r: r.artifact_id)]
+
+
+def load_dev_results(path, registry: ArtifactRegistry) -> list[EvalRecord]:
+    """Load an authorized DEV artifact.
+
+    CLASSIFY BEFORE PARSE. The authorization decision is made from the trusted
+    registry before the file is opened, so a sealed artifact is never read --
+    not even to discover what it contains.
+
+    There is deliberately no `unseal` parameter. A sealed or unknown artifact
+    raises, and no argument can change that: a generic boolean switch would also
+    unlock real test/Q42 output before Phase 40.
+    """
+    kind, reg = registry.classify(path)          # <-- before any read
+    if kind == SEALED_KIND:
         raise SealError(
-            f"{path} contains sealed families {sealed}; dev-facing loading is "
-            f"refused. Sealed results are readable only through the Phase 40 "
-            f"unblind entry point, which does not exist yet. Use "
-            f"sealed_metadata() for counts and hashes.")
+            f"artifact {reg.artifact_id!r} is registered SEALED; dev-facing "
+            f"loading is refused and the file was not opened. Sealed results "
+            f"are readable only through the Phase 40 unblind entry point, "
+            f"which does not exist yet.")
+    if kind != DEV_KIND:
+        raise SealError(
+            "artifact is not a registered dev artifact (unregistered, moved, "
+            "copied, or its bytes no longer match the registered hash). "
+            "Classification fails closed: unknown is refused, never treated "
+            "as dev.")
+    raw = [json.loads(l) for l in
+           Path(reg.canonical_path).read_text(encoding="utf-8").splitlines()
+           if l.strip()]
+    if len(raw) != reg.item_count:
+        raise SealError(
+            f"artifact {reg.artifact_id!r} holds {len(raw)} records but the "
+            f"trusted manifest predeclares {reg.item_count}")
     return [from_dict(r) for r in raw]
 
 
-def sealed_metadata(path) -> dict:
-    """Metadata for a sealed result set: count / hash / path / provenance ONLY.
+def sealed_metadata(path, registry: ArtifactRegistry) -> dict:
+    """Non-content integrity/provenance for a sealed artifact.
 
-    Deliberately returns no example text, question, answer, gold, error detail
-    or score -- the point is that a pre-Phase-40 audit can confirm a file
-    exists and is unchanged without learning anything about its contents.
+    This function NEVER OPENS THE RESULT FILE. Every value comes from the
+    trusted manifest, so it is structurally incapable of disclosing families,
+    conditions, statuses, scores, error types, questions, answers, SQL or
+    execution results. `item_count` is the manifest's predeclared count, not a
+    count of parsed records.
     """
-    path = Path(path)
-    lines = [l for l in path.read_text(encoding="utf-8").splitlines() if l.strip()]
-    families, conditions = set(), set()
-    for line in lines:
-        rec = json.loads(line)
-        families.add(rec.get("family", ""))
-        conditions.add(rec.get("condition", ""))
+    kind, reg = registry.classify(path)
+    if kind != SEALED_KIND:
+        raise SealError(
+            f"sealed_metadata is only defined for a registered sealed "
+            f"artifact; this one classifies as {kind!r}")
     return {
-        "path": str(path),
-        "item_count": len(lines),
-        "sha256": sha256_file(path),
-        "families": sorted(families),
-        "conditions": sorted(conditions),
-        "kind": SEALED_KIND,
-        "contents_disclosed": False,
-        "note": ("counts, hashes and provenance only; no example text, gold, "
-                 "prediction, error detail or score is read or returned"),
+        "artifact_id": reg.artifact_id,
+        "artifact_path": reg.canonical_path,
+        "sha256": reg.sha256,
+        "item_count": reg.item_count,
+        "schema_version": reg.schema_version,
+        "provenance": reg.provenance,
+        "artifact_kind": SEALED_KIND,
+        "records_parsed": False,
     }
 
 
