@@ -4,6 +4,21 @@ Phase 9 — the Holdout Registry and Fact Exposure Ledger, frozen **before any t
 
 > Filename is a Phase 9 provenance convention; README names `HOLDOUT_REGISTRY_v3.json`, `FACT_EXPOSURE_LEDGER_v3.json` and `VALUE_HOLDOUT_COST_v3.csv`, which are the protocol artifacts.
 
+## Policy revision (v3.0 -> v3.1)
+
+This registry was first frozen as `holdout_v3.0` and **revised the same day** after independent review. The earlier version is not hidden.
+
+| changed | from | to |
+|---|---|---|
+| split minima | train>=2, test>=1 | train>=2, **dev>=1**, test>=1 (all mandatory) |
+| objective | maximise total test support | **minimize union of train rows lost** |
+| tie-breaks | train rows, dev rows, name | **exact-company union, summed dev support, lexicographic** |
+| test support | objective | **eligibility only** |
+
+**Why.** Selecting holdouts to maximise test support optimises the pre-registration against test-side properties of the KB. No model outcome is involved, so it was not a blinding breach, but it is test-informed selection and a weaker posture than deciding purely on train-side collateral. The revised objective is test-blind by construction and also cheaper: union train-row loss falls from 17 to 6 (processes), 11 to 2 (services).
+
+**Provenance.** v3.0 implemented the configuration approved in the decision-analysis round, which specified 'maximise total test support' with minima train>=2/test>=1 and no dev minimum. v3.1 is therefore a deliberate POLICY REVISION directed after independent review, not a correction of an implementation that had deviated from its approval. Both facts are recorded so the pre-registration history stays accurate.
+
 ## Frozen inputs
 
 ```text
@@ -25,31 +40,69 @@ min test support             1
 attribute coverage floor     85.0%
 per-value threshold          85.0%
 holdout counts               {'processes': 4, 'services': 3, 'certifications': 2}
-objective                    maximise total test support
-tie-breaks                   fewest train rows lost -> fewest dev rows lost -> lexicographic value name
+objective                    minimize union of train rows losing the attribute
+tie-breaks                   minimize union of exact train companies affected -> maximize total dev support (sum of per-value dev ROW support) -> lexicographically smallest sorted canonical value tuple
 ```
 
 ## Selected value holdouts
 
 | attribute | value | rows | train | dev | test | companies | train rows lost | coverage after |
 |---|---|--:|--:|--:|--:|--:|--:|--:|
+| certifications | `AS9100` | 10 | 6 | 3 | 1 | 10 | 6 | 95.12% |
+| certifications | `ASI Chain of Custody` | 3 | 3 | 0 | 0 | 2 | 3 | 97.56% |
+| certifications | `Ford Q1` | 3 | 3 | 0 | 0 | 3 | 3 | 97.56% |
 | certifications | `ISO 22301` | 3 | 2 | 0 | 1 | 3 | 2 | 98.37% |
+| certifications | `ISO 26262` | 7 | 7 | 0 | 0 | 6 | 7 | 94.31% |
+| certifications | `ISO/IEC 17025` | 10 | 8 | 1 | 1 | 10 | 8 | 93.5% |
+| certifications | `ISO/SAE 21434` | 7 | 6 | 1 | 0 | 6 | 6 | 95.12% |
 | certifications | `OHSAS 18001` | 8 | 5 | 0 | 3 | 8 | 5 | 95.93% |
+| processes | `Battery Installation` | 3 | 2 | 1 | 0 | 3 | 2 | 98.65% |
 | processes | `Battery Module Assembly` | 8 | 3 | 1 | 4 | 8 | 3 | 97.97% |
 | processes | `Battery Pack Assembly` | 7 | 2 | 1 | 4 | 7 | 2 | 98.65% |
+| processes | `Battery Recycling Logistics` | 5 | 2 | 1 | 2 | 5 | 2 | 98.65% |
+| processes | `Cell Assembly` | 5 | 4 | 0 | 1 | 5 | 4 | 97.3% |
 | processes | `Cell Testing` | 10 | 5 | 1 | 4 | 10 | 5 | 96.62% |
+| processes | `Composite Layup` | 8 | 7 | 1 | 0 | 8 | 7 | 95.27% |
+| processes | `Composite Manufacturing` | 8 | 7 | 1 | 0 | 8 | 7 | 95.27% |
+| processes | `Converter Manufacturing` | 3 | 0 | 0 | 3 | 1 | 0 | 100.0% |
+| processes | `Drive Unit Assembly` | 4 | 2 | 1 | 1 | 4 | 2 | 98.65% |
+| processes | `Electroplating` | 3 | 2 | 0 | 1 | 3 | 2 | 98.65% |
+| processes | `End-of-Line Testing` | 14 | 12 | 1 | 1 | 14 | 12 | 91.89% |
+| processes | `Formation Cycling` | 5 | 4 | 0 | 1 | 5 | 4 | 97.3% |
+| processes | `Grinding` | 14 | 10 | 2 | 2 | 14 | 10 | 93.24% |
+| processes | `Inverter Manufacturing` | 3 | 0 | 0 | 3 | 1 | 0 | 100.0% |
+| processes | `Material Blending` | 4 | 1 | 2 | 1 | 4 | 1 | 99.32% |
+| processes | `Milling` | 15 | 12 | 0 | 3 | 15 | 12 | 91.89% |
+| processes | `Powder Coating` | 6 | 4 | 1 | 1 | 6 | 4 | 97.3% |
+| processes | `Powertrain Installation` | 14 | 12 | 1 | 1 | 14 | 12 | 91.89% |
+| processes | `Refining` | 6 | 3 | 1 | 2 | 6 | 3 | 97.97% |
+| processes | `Rolling` | 6 | 4 | 0 | 2 | 6 | 4 | 97.3% |
+| processes | `Sensor Integration` | 6 | 4 | 1 | 1 | 6 | 4 | 97.3% |
+| processes | `Turning` | 15 | 11 | 2 | 2 | 15 | 11 | 92.57% |
 | processes | `Welding` | 15 | 11 | 1 | 3 | 15 | 11 | 92.57% |
+| processes | `Wire Harness Manufacturing` | 5 | 3 | 0 | 2 | 5 | 3 | 97.97% |
+| processes | `Wiring Harness Installation` | 5 | 3 | 0 | 2 | 5 | 3 | 97.97% |
+| services | `Asset Management` | 6 | 5 | 0 | 1 | 6 | 5 | 96.62% |
 | services | `Battery Collection` | 5 | 2 | 1 | 2 | 5 | 2 | 98.65% |
 | services | `Battery Engineering` | 15 | 9 | 2 | 4 | 15 | 9 | 93.92% |
 | services | `Battery Repurposing` | 5 | 2 | 1 | 2 | 5 | 2 | 98.65% |
+| services | `Circular Economy Consulting` | 5 | 2 | 1 | 2 | 5 | 2 | 98.65% |
+| services | `Customer Support` | 6 | 5 | 0 | 1 | 6 | 5 | 96.62% |
+| services | `Embedded Software Development` | 5 | 2 | 1 | 2 | 4 | 2 | 98.65% |
+| services | `Inventory Management` | 6 | 5 | 0 | 1 | 6 | 5 | 96.62% |
+| services | `Supplier Management` | 3 | 3 | 0 | 0 | 3 | 3 | 97.97% |
+| services | `Systems Integration Engineering` | 5 | 3 | 1 | 1 | 5 | 3 | 97.97% |
+| services | `Thermal Modeling` | 3 | 2 | 1 | 0 | 3 | 2 | 98.65% |
+| services | `Vehicle Engineering` | 15 | 12 | 1 | 2 | 15 | 12 | 91.89% |
+| services | `Warehousing` | 6 | 5 | 0 | 1 | 6 | 5 | 96.62% |
 
 ### Cumulative attribute-level floor (union, not sum)
 
-| attribute | pool | train rows | lost | remaining coverage | companies remaining |
-|---|--:|--:|--:|--:|--:|
-| processes | 20 | 148 | 17 | **88.51%** | 87.94% |
-| services | 11 | 148 | 11 | **92.57%** | 92.2% |
-| certifications | 4 | 123 | 6 | **95.12%** | 94.83% |
+| attribute | row-band pool | eligible after minima | train rows | lost | remaining coverage | companies remaining |
+|---|--:|--:|--:|--:|--:|--:|
+| processes | 26 | 13 | 148 | 6 | **95.95%** | 95.74% |
+| services | 13 | 7 | 148 | 2 | **98.65%** | 98.58% |
+| certifications | 8 | 2 | 123 | 13 | **89.43%** | 88.79% |
 
 A row carrying two held-out values is lost once, so the cumulative cost is the union of affected rows rather than the sum.
 
@@ -82,28 +135,37 @@ Arity 2, one held-out set: **{certifications, processes}**, chosen by lowest tra
 | check | result | detail |
 |---|---|---|
 | `frozen_inputs_unchanged` | PASS | canonical, split and DB hashes match |
-| `readme_candidate_count_processes` | PASS | 26 == 26 (row unit) |
-| `readme_candidate_count_services` | PASS | 13 == 13 (row unit) |
-| `readme_candidate_count_certifications` | PASS | 8 == 8 (row unit) |
-| `count_processes` | PASS | 4 == 4: Battery Module Assembly, Battery Pack Assembly, Cell Testing, Welding |
+| `initial_row_band_candidate_count_processes` | PASS | 26 == 26 (README stage-1 row-band pool) |
+| `post_split_filter_eligible_count_processes` | PASS | 13 eligible after split minima (distinct from the 26 row-band candidates) |
+| `initial_row_band_candidate_count_services` | PASS | 13 == 13 (README stage-1 row-band pool) |
+| `post_split_filter_eligible_count_services` | PASS | 7 eligible after split minima (distinct from the 13 row-band candidates) |
+| `initial_row_band_candidate_count_certifications` | PASS | 8 == 8 (README stage-1 row-band pool) |
+| `post_split_filter_eligible_count_certifications` | PASS | 2 eligible after split minima (distinct from the 8 row-band candidates) |
+| `count_processes` | PASS | 4 == 4: Battery Module Assembly, Battery Pack Assembly, Battery Recycling Logistics, Refining |
 | `band_processes` | PASS | all within (3, 15) |
 | `min_train_support_processes` | PASS | all train >= 2 |
-| `min_test_support_processes` | PASS | all test >= 1 (a value with no test support measures nothing) |
-| `coverage_floor_processes` | PASS | 88.51% >= 85.0% |
+| `min_dev_support_processes` | PASS | all dev >= 1 (mandatory) |
+| `min_test_support_processes` | PASS | all test >= 1 (eligibility only) |
+| `selection_is_collateral_minimal_processes` | PASS | no feasible combination has smaller union train-row loss |
+| `coverage_floor_processes` | PASS | 95.95% >= 85.0% |
 | `per_value_threshold_processes` | PASS | every value individually >= 85.0% |
 | `multi_company_support_processes` | PASS | no held-out value lives in a single company |
-| `count_services` | PASS | 3 == 3: Battery Collection, Battery Engineering, Battery Repurposing |
+| `count_services` | PASS | 3 == 3: Battery Collection, Battery Repurposing, Circular Economy Consulting |
 | `band_services` | PASS | all within (3, 15) |
 | `min_train_support_services` | PASS | all train >= 2 |
-| `min_test_support_services` | PASS | all test >= 1 (a value with no test support measures nothing) |
-| `coverage_floor_services` | PASS | 92.57% >= 85.0% |
+| `min_dev_support_services` | PASS | all dev >= 1 (mandatory) |
+| `min_test_support_services` | PASS | all test >= 1 (eligibility only) |
+| `selection_is_collateral_minimal_services` | PASS | no feasible combination has smaller union train-row loss |
+| `coverage_floor_services` | PASS | 98.65% >= 85.0% |
 | `per_value_threshold_services` | PASS | every value individually >= 85.0% |
 | `multi_company_support_services` | PASS | no held-out value lives in a single company |
-| `count_certifications` | PASS | 2 == 2: ISO 22301, OHSAS 18001 |
+| `count_certifications` | PASS | 2 == 2: AS9100, ISO/IEC 17025 |
 | `band_certifications` | PASS | all within (3, 15) |
 | `min_train_support_certifications` | PASS | all train >= 2 |
-| `min_test_support_certifications` | PASS | all test >= 1 (a value with no test support measures nothing) |
-| `coverage_floor_certifications` | PASS | 95.12% >= 85.0% |
+| `min_dev_support_certifications` | PASS | all dev >= 1 (mandatory) |
+| `min_test_support_certifications` | PASS | all test >= 1 (eligibility only) |
+| `selection_is_collateral_minimal_certifications` | PASS | no feasible combination has smaller union train-row loss |
+| `coverage_floor_certifications` | PASS | 89.43% >= 85.0% |
 | `per_value_threshold_certifications` | PASS | every value individually >= 85.0% |
 | `multi_company_support_certifications` | PASS | no held-out value lives in a single company |
 | `composition_arity` | PASS | ['certifications', 'processes'] |

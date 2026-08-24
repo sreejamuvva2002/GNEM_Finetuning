@@ -208,76 +208,127 @@
       "processes": 4,
       "services": 3
     },
+    "min_dev_support": 1,
     "min_test_support": 1,
     "min_train_support": 2,
     "per_value_coverage_threshold_pct": 85.0,
-    "selection_objective": "maximise total test support",
+    "selection_objective": "minimize union of train rows losing the attribute",
+    "split_minima_role": "eligibility ONLY; once a candidate clears the minima, split support plays no part in ranking",
     "support_band": [
       3,
       15
     ],
+    "test_support_role": "eligibility only -- never an objective and never a tie-break. Optimising selection on test support would tune the pre-registration against test-side properties of the KB; the objective is decided purely on train-side collateral and is test-blind by construction",
+    "tie2_dev_support_definition": "sum over selected values of that value's dev ROW-occurrence support; a summed count, deliberately not a union, so a value adding dev breadth is rewarded even when it shares dev rows with another selected value",
     "tie_breaks": [
-      "fewest train rows lost",
-      "fewest dev rows lost",
-      "lexicographic value name"
+      "minimize union of exact train companies affected",
+      "maximize total dev support (sum of per-value dev ROW support)",
+      "lexicographically smallest sorted canonical value tuple"
     ]
   },
   "phase": 9,
-  "policy_version": "holdout_v3.0",
+  "policy_revision": {
+    "changed": [
+      "split minima: dev >= 1 added and made mandatory alongside train >= 2 and test >= 1",
+      "selection objective: 'maximise total test support' replaced by 'minimize union of train rows losing the attribute'",
+      "tie-breaks: now (1) minimize union of exact train companies, (2) maximize summed dev support, (3) lexicographic tuple",
+      "test support demoted to eligibility-only; it can no longer influence ranking",
+      "candidate-pool terminology split into initial_row_band_candidate_count and post_split_filter_eligible_count"
+    ],
+    "date": "2026-08-24",
+    "effect_on_selection": "processes and services selections changed; certifications changed because ISO 22301 and OHSAS 18001 both have dev_support 0 and are ineligible under the mandatory dev minimum",
+    "provenance_note": "v3.0 implemented the configuration approved in the decision-analysis round, which specified 'maximise total test support' with minima train>=2/test>=1 and no dev minimum. v3.1 is therefore a deliberate POLICY REVISION directed after independent review, not a correction of an implementation that had deviated from its approval. Both facts are recorded so the pre-registration history stays accurate.",
+    "supersedes": "holdout_v3.0",
+    "version": "holdout_v3.1",
+    "why": "Selecting holdouts to maximise test support optimises the pre-registration against test-side properties of the KB. No model outcome is involved, so it was not a blinding breach, but it is test-informed selection and a weaker posture than deciding purely on train-side collateral. The revised objective is test-blind by construction and also cheaper: union train-row loss falls from 17 to 6 (processes), 11 to 2 (services)."
+  },
+  "policy_version": "holdout_v3.1",
   "registry": "HOLDOUT_REGISTRY_v3",
   "support_unit_provenance": {
     "eligibility_unit": "row_occurrences",
     "note": "README's frozen 26/13/8 table is reproduced by ROW-OCCURRENCE support; `supporting_companies` separately reports exact trimmed company counts (README:700). The distinction is recorded, never hidden.",
-    "readme_candidate_table": {
+    "readme_initial_row_band_candidate_table": {
       "certifications": 8,
       "processes": 26,
       "services": 13
     },
     "reproduced_by": "row-occurrence support (verified cell-by-cell)",
+    "stage_note": "README's 26/13/8 is the STAGE-1 row-band pool. The post-split-filter eligible pool is smaller and is reported separately per attribute; the two are never conflated under one name.",
     "supporting_companies_unit": "exact trimmed company names"
   },
   "timestamp_note": "the authoritative freeze timestamp is the git commit date; a runtime timestamp is deliberately not embedded because it would break the determinism gate",
   "value_holdouts": {
     "certifications": {
-      "candidate_pool_size": 4,
-      "remaining_attribute_coverage_companies_pct": 94.83,
-      "remaining_attribute_coverage_rows_pct": 95.12,
-      "selected": [
-        "ISO 22301",
-        "OHSAS 18001"
+      "initial_row_band_candidate_count": 8,
+      "post_split_filter_eligible_count": 2,
+      "post_split_filter_eligible_values": [
+        "AS9100",
+        "ISO/IEC 17025"
       ],
-      "train_companies_lost": 6,
+      "remaining_attribute_coverage_companies_pct": 88.79,
+      "remaining_attribute_coverage_rows_pct": 89.43,
+      "selected": [
+        "AS9100",
+        "ISO/IEC 17025"
+      ],
+      "train_companies_lost": 13,
       "train_companies_total": 116,
-      "train_rows_lost": 6,
+      "train_rows_lost": 13,
       "train_rows_total": 123
     },
     "processes": {
-      "candidate_pool_size": 20,
-      "remaining_attribute_coverage_companies_pct": 87.94,
-      "remaining_attribute_coverage_rows_pct": 88.51,
+      "initial_row_band_candidate_count": 26,
+      "post_split_filter_eligible_count": 13,
+      "post_split_filter_eligible_values": [
+        "Battery Module Assembly",
+        "Battery Pack Assembly",
+        "Battery Recycling Logistics",
+        "Cell Testing",
+        "Drive Unit Assembly",
+        "End-of-Line Testing",
+        "Grinding",
+        "Powder Coating",
+        "Powertrain Installation",
+        "Refining",
+        "Sensor Integration",
+        "Turning",
+        "Welding"
+      ],
+      "remaining_attribute_coverage_companies_pct": 95.74,
+      "remaining_attribute_coverage_rows_pct": 95.95,
       "selected": [
         "Battery Module Assembly",
         "Battery Pack Assembly",
-        "Cell Testing",
-        "Welding"
+        "Battery Recycling Logistics",
+        "Refining"
       ],
-      "train_companies_lost": 17,
+      "train_companies_lost": 6,
       "train_companies_total": 141,
-      "train_rows_lost": 17,
+      "train_rows_lost": 6,
       "train_rows_total": 148
     },
     "services": {
-      "candidate_pool_size": 11,
-      "remaining_attribute_coverage_companies_pct": 92.2,
-      "remaining_attribute_coverage_rows_pct": 92.57,
-      "selected": [
+      "initial_row_band_candidate_count": 13,
+      "post_split_filter_eligible_count": 7,
+      "post_split_filter_eligible_values": [
         "Battery Collection",
         "Battery Engineering",
-        "Battery Repurposing"
+        "Battery Repurposing",
+        "Circular Economy Consulting",
+        "Embedded Software Development",
+        "Systems Integration Engineering",
+        "Vehicle Engineering"
       ],
-      "train_companies_lost": 11,
+      "remaining_attribute_coverage_companies_pct": 98.58,
+      "remaining_attribute_coverage_rows_pct": 98.65,
+      "selected": [
+        "Battery Collection",
+        "Battery Repurposing",
+        "Circular Economy Consulting"
+      ],
+      "train_companies_lost": 2,
       "train_companies_total": 141,
-      "train_rows_lost": 11,
+      "train_rows_lost": 2,
       "train_rows_total": 148
     }
   }

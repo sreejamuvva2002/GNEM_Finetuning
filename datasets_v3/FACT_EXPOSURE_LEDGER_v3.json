@@ -51,24 +51,24 @@
   ],
   "held_out_values": {
     "certifications": [
-      "ISO 22301",
-      "OHSAS 18001"
+      "AS9100",
+      "ISO/IEC 17025"
     ],
     "processes": [
       "Battery Module Assembly",
       "Battery Pack Assembly",
-      "Cell Testing",
-      "Welding"
+      "Battery Recycling Logistics",
+      "Refining"
     ],
     "services": [
       "Battery Collection",
-      "Battery Engineering",
-      "Battery Repurposing"
+      "Battery Repurposing",
+      "Circular Economy Consulting"
     ]
   },
   "ledger": "FACT_EXPOSURE_LEDGER_v3",
   "note": "initialised at Phase 9 before any dataset exists. Each dataset phase re-runs the scanner on its final rendered strings and updates its arm entry; every arm must reach exposure_count 0.",
   "phase": 9,
-  "policy_version": "holdout_v3.0",
-  "registry_sha256": "6334628f3b39c2e5ab28e244864702ce3a036526412b030044b395c6ec6665e8"
+  "policy_version": "holdout_v3.1",
+  "registry_sha256": "d18cc70ec42e595e2500e8d89cbbcaa135671e6950721d34843ec7c4852d138e"
 }

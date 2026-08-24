@@ -55,10 +55,11 @@ def build():
             raise Gate(f"{rel} drifted: {got}")
 
     recs, split = H.load_kb()
-    rows, cos, train_rows = H.support_tables(recs, split)
+    rows, cos, train_rows, train_cos = H.support_tables(recs, split)
     tot_rows, tot_cos = H.attribute_totals(recs, split)
 
-    selected = {f: H.select_values(rows, train_rows, tot_rows, f)
+    selected = {f: H.select_values(rows, train_rows, tot_rows, f,
+                                   train_cos=train_cos)
                 for f in H.MULTIVALUED}
     comp = H.select_composition(recs, split)
 
@@ -70,18 +71,32 @@ def build():
     cost_rows, per_field = [], {}
     for f in H.MULTIVALUED:
         lost = set().union(*(train_rows[f][v] for v in selected[f]))
+        lost_co = set().union(*(train_cos[f][v] for v in selected[f]))
         cov = 100.0 * (tot_rows[f] - len(lost)) / tot_rows[f]
-        lost_co = {r["company"] for r in recs if r["row_id"] in lost}
         cov_co = 100.0 * (tot_cos[f] - len(lost_co)) / tot_cos[f]
+        band = H.row_band_candidates(rows, f)
+        elig = H.eligible_values(rows, f)
         per_field[f] = {
             "train_rows_total": tot_rows[f], "train_companies_total": tot_cos[f],
             "train_rows_lost": len(lost), "train_companies_lost": len(lost_co),
             "remaining_attribute_coverage_rows_pct": round(cov, 2),
             "remaining_attribute_coverage_companies_pct": round(cov_co, 2),
-            "candidate_pool_size": len(H.eligible_values(rows, f)),
+            # Two clearly distinct stages, never conflated into one number.
+            "initial_row_band_candidate_count": len(band),
+            "post_split_filter_eligible_count": len(elig),
+            "post_split_filter_eligible_values": elig,
         }
-        for v in selected[f]:
+        # The ledger keeps EVERY row-band candidate, including those the split
+        # minima later reject, so the rejection is auditable rather than invisible.
+        for v in band:
             r_lost = len(train_rows[f][v])
+            reasons = []
+            if rows[f][v]["train"] < H.MIN_TRAIN_SUPPORT:
+                reasons.append(f"train<{H.MIN_TRAIN_SUPPORT}")
+            if rows[f][v]["dev"] < H.MIN_DEV_SUPPORT:
+                reasons.append(f"dev<{H.MIN_DEV_SUPPORT}")
+            if rows[f][v]["test"] < H.MIN_TEST_SUPPORT:
+                reasons.append(f"test<{H.MIN_TEST_SUPPORT}")
             cost_rows.append({
                 "value": v, "attribute_type": f,
                 "supporting_companies": len(cos[f][v]["ALL"]),
@@ -92,9 +107,14 @@ def build():
                 "test_support": rows[f][v]["test"],
                 "train_companies": len(cos[f][v]["train"]),
                 "test_companies": len(cos[f][v]["test"]),
+                "in_row_band": True,
+                "split_minima_eligible": v in elig,
+                "ineligibility_reason": ";".join(reasons),
+                "selected": v in selected[f],
                 "removed_train_items": r_lost,
                 "removed_A_fields": r_lost,
                 "removed_B_items": r_lost,
+                "removed_train_companies": len(train_cos[f][v]),
                 "remaining_attribute_coverage": round(
                     100.0 * (tot_rows[f] - r_lost) / tot_rows[f], 2),
             })
@@ -106,13 +126,18 @@ def build():
         "policy_version": H.POLICY_VERSION,
         "frozen_date": H.FROZEN_DATE,
         "frozen_by": "explicit user authorization after read-only decision analysis",
+        "policy_revision": H.POLICY_REVISION,
         "timestamp_note": ("the authoritative freeze timestamp is the git commit "
                            "date; a runtime timestamp is deliberately not embedded "
                            "because it would break the determinism gate"),
         "frozen_inputs": {k: H.sha256_file(ROOT / k) for k in FROZEN_INPUTS},
         "support_unit_provenance": {
             "eligibility_unit": H.SUPPORT_UNIT,
-            "readme_candidate_table": README_CANDIDATE_COUNTS,
+            "readme_initial_row_band_candidate_table": README_CANDIDATE_COUNTS,
+            "stage_note": ("README's 26/13/8 is the STAGE-1 row-band pool. The "
+                           "post-split-filter eligible pool is smaller and is "
+                           "reported separately per attribute; the two are never "
+                           "conflated under one name."),
             "reproduced_by": "row-occurrence support (verified cell-by-cell)",
             "supporting_companies_unit": "exact trimmed company names",
             "note": ("README's frozen 26/13/8 table is reproduced by ROW-OCCURRENCE "
@@ -123,13 +148,22 @@ def build():
         "parameters": {
             "support_band": list(H.SUPPORT_BAND),
             "min_train_support": H.MIN_TRAIN_SUPPORT,
+            "min_dev_support": H.MIN_DEV_SUPPORT,
             "min_test_support": H.MIN_TEST_SUPPORT,
+            "split_minima_role": ("eligibility ONLY; once a candidate clears the "
+                                  "minima, split support plays no part in ranking"),
             "attribute_coverage_floor_pct": H.COVERAGE_FLOOR_PCT,
             "per_value_coverage_threshold_pct": H.PER_VALUE_COVERAGE_THRESHOLD_PCT,
             "holdout_counts": H.HOLDOUT_COUNTS,
-            "selection_objective": "maximise total test support",
-            "tie_breaks": ["fewest train rows lost", "fewest dev rows lost",
-                           "lexicographic value name"],
+            "selection_objective": H.SELECTION_OBJECTIVE,
+            "tie_breaks": list(H.SELECTION_TIE_BREAKS),
+            "tie2_dev_support_definition": H.TIE2_DEV_SUPPORT_DEFINITION,
+            "test_support_role": ("eligibility only -- never an objective and "
+                                  "never a tie-break. Optimising selection on "
+                                  "test support would tune the pre-registration "
+                                  "against test-side properties of the KB; the "
+                                  "objective is decided purely on train-side "
+                                  "collateral and is test-blind by construction"),
         },
         "entity_holdouts": {
             "source": "frozen Phase 3 split; nothing re-decided here",
@@ -227,12 +261,29 @@ def build():
                  "phase re-runs the scanner on its final rendered strings and "
                  "updates its arm entry; every arm must reach exposure_count 0."),
     }
-    return (recs, split, rows, cos, train_rows, tot_rows, tot_cos,
+    return (recs, split, rows, cos, train_rows, train_cos, tot_rows, tot_cos,
             selected, comp, ent, cost_rows, per_field, registry, ledger)
 
 
+def _is_optimal(rows, train_rows, train_cos, tot, f, sel) -> bool:
+    """Independently confirm the chosen set is the policy optimum."""
+    import itertools
+    pool = H.eligible_values(rows, f)
+    k = H.HOLDOUT_COUNTS[f]
+    best = None
+    for c in itertools.combinations(pool, k):
+        lost = set().union(*(train_rows[f][v] for v in c))
+        if 100.0 * (tot[f] - len(lost)) / tot[f] < H.COVERAGE_FLOOR_PCT:
+            continue
+        key = (len(lost), len(set().union(*(train_cos[f][v] for v in c))),
+               -sum(rows[f][v]["dev"] for v in c), tuple(sorted(c)))
+        if best is None or key < best:
+            best = key
+    return best is not None and best[3] == tuple(sorted(sel))
+
+
 def main() -> int:
-    (recs, split, rows, cos, train_rows, tot_rows, tot_cos,
+    (recs, split, rows, cos, train_rows, train_cos, tot_rows, tot_cos,
      selected, comp, ent, cost_rows, per_field, registry, ledger) = build()
 
     checks: list[tuple[str, bool, str]] = []
@@ -244,9 +295,13 @@ def main() -> int:
 
     # README's published candidate counts must be reproduced by the frozen unit
     for f, exp in README_CANDIDATE_COUNTS.items():
-        lo, hi = H.SUPPORT_BAND
-        got = sum(1 for v in rows[f] if lo <= rows[f][v]["ALL"] <= hi)
-        check(f"readme_candidate_count_{f}", got == exp, f"{got} == {exp} (row unit)")
+        got = len(H.row_band_candidates(rows, f))
+        check(f"initial_row_band_candidate_count_{f}", got == exp,
+              f"{got} == {exp} (README stage-1 row-band pool)")
+        elig = len(H.eligible_values(rows, f))
+        check(f"post_split_filter_eligible_count_{f}", elig <= got,
+              f"{elig} eligible after split minima (distinct from the {got} "
+              f"row-band candidates)")
 
     for f in H.MULTIVALUED:
         sel = selected[f]
@@ -258,10 +313,15 @@ def main() -> int:
         check(f"min_train_support_{f}",
               all(rows[f][v]["train"] >= H.MIN_TRAIN_SUPPORT for v in sel),
               f"all train >= {H.MIN_TRAIN_SUPPORT}")
+        check(f"min_dev_support_{f}",
+              all(rows[f][v]["dev"] >= H.MIN_DEV_SUPPORT for v in sel),
+              f"all dev >= {H.MIN_DEV_SUPPORT} (mandatory)")
         check(f"min_test_support_{f}",
               all(rows[f][v]["test"] >= H.MIN_TEST_SUPPORT for v in sel),
-              f"all test >= {H.MIN_TEST_SUPPORT} (a value with no test support "
-              f"measures nothing)")
+              f"all test >= {H.MIN_TEST_SUPPORT} (eligibility only)")
+        check(f"selection_is_collateral_minimal_{f}",
+              _is_optimal(rows, train_rows, train_cos, tot_rows, f, sel),
+              "no feasible combination has smaller union train-row loss")
         cov = per_field[f]["remaining_attribute_coverage_rows_pct"]
         check(f"coverage_floor_{f}", cov >= H.COVERAGE_FLOOR_PCT,
               f"{cov}% >= {H.COVERAGE_FLOOR_PCT}%")
@@ -361,6 +421,17 @@ def _audit(reg, cost_rows, per_field, checks, comp, selected):
          "> Filename is a Phase 9 provenance convention; README names "
          "`HOLDOUT_REGISTRY_v3.json`, `FACT_EXPOSURE_LEDGER_v3.json` and "
          "`VALUE_HOLDOUT_COST_v3.csv`, which are the protocol artifacts.\n",
+         "## Policy revision (v3.0 -> v3.1)\n",
+         "This registry was first frozen as `holdout_v3.0` and **revised the same "
+         "day** after independent review. The earlier version is not hidden.\n",
+         "| changed | from | to |", "|---|---|---|",
+         "| split minima | train>=2, test>=1 | train>=2, **dev>=1**, test>=1 (all mandatory) |",
+         "| objective | maximise total test support | **minimize union of train rows lost** |",
+         "| tie-breaks | train rows, dev rows, name | **exact-company union, summed dev support, lexicographic** |",
+         "| test support | objective | **eligibility only** |",
+         "",
+         "**Why.** " + H.POLICY_REVISION["why"] + "\n",
+         "**Provenance.** " + H.POLICY_REVISION["provenance_note"] + "\n",
          "## Frozen inputs\n", "```text"]
     for k, v in reg["frozen_inputs"].items():
         L.append(f"{k:44} {v}")
@@ -388,10 +459,11 @@ def _audit(reg, cost_rows, per_field, checks, comp, selected):
                  f"{r['supporting_companies']} | {r['removed_train_items']} | "
                  f"{r['remaining_attribute_coverage']}% |")
     L += ["", "### Cumulative attribute-level floor (union, not sum)\n",
-          "| attribute | pool | train rows | lost | remaining coverage | companies remaining |",
-          "|---|--:|--:|--:|--:|--:|"]
+          "| attribute | row-band pool | eligible after minima | train rows | lost | remaining coverage | companies remaining |",
+          "|---|--:|--:|--:|--:|--:|--:|"]
     for f, d in per_field.items():
-        L.append(f"| {f} | {d['candidate_pool_size']} | {d['train_rows_total']} | "
+        L.append(f"| {f} | {d['initial_row_band_candidate_count']} | "
+                 f"{d['post_split_filter_eligible_count']} | {d['train_rows_total']} | "
                  f"{d['train_rows_lost']} | **{d['remaining_attribute_coverage_rows_pct']}%** | "
                  f"{d['remaining_attribute_coverage_companies_pct']}% |")
     L += ["",
