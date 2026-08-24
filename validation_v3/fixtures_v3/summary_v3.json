@@ -1,0 +1,100 @@
+{
+  "correct": 8,
+  "denominator_invariant": {
+    "expected": 18,
+    "holds": true,
+    "scored_plus_failed": 18
+  },
+  "expected_item_count": 18,
+  "failed": 6,
+  "families": {
+    "factual_recall": {
+      "correct": 3,
+      "denominator": 7,
+      "failed": 2,
+      "incorrect": 2,
+      "n_items": 7,
+      "rendered": "3 / 7 = 42.9%",
+      "status_counts": {
+        "correct": 3,
+        "generation_failure": 1,
+        "incorrect": 2,
+        "invalid_output": 1
+      },
+      "strict_result_schema_accuracy": 0.7142857142857143,
+      "task_result_correctness": 0.42857142857142855
+    },
+    "no_match": {
+      "correct": 1,
+      "denominator": 1,
+      "failed": 0,
+      "incorrect": 0,
+      "n_items": 1,
+      "rendered": "1 / 1 = 100.0%",
+      "status_counts": {
+        "correct": 1
+      },
+      "strict_result_schema_accuracy": 1.0,
+      "task_result_correctness": 1.0
+    },
+    "structured_heldin": {
+      "correct": 3,
+      "denominator": 9,
+      "failed": 4,
+      "incorrect": 2,
+      "n_items": 9,
+      "rendered": "3 / 9 = 33.3%",
+      "status_counts": {
+        "SQL_error": 1,
+        "correct": 3,
+        "incorrect": 2,
+        "parse_failure": 1,
+        "timeout": 1,
+        "truncated_output": 1
+      },
+      "strict_result_schema_accuracy": 0.4444444444444444,
+      "task_result_correctness": 0.3333333333333333
+    },
+    "structured_paraphrase": {
+      "correct": 1,
+      "denominator": 1,
+      "failed": 0,
+      "incorrect": 0,
+      "n_items": 1,
+      "rendered": "1 / 1 = 100.0%",
+      "status_counts": {
+        "correct": 1
+      },
+      "strict_result_schema_accuracy": 1.0,
+      "task_result_correctness": 1.0
+    }
+  },
+  "incorrect": 4,
+  "provenance": "synthetic validation fixture; not experimental results",
+  "report_version": "eval_report_v3.0",
+  "scored": 12,
+  "status_counts": {
+    "SQL_error": 1,
+    "correct": 8,
+    "generation_failure": 1,
+    "incorrect": 4,
+    "invalid_output": 1,
+    "parse_failure": 1,
+    "timeout": 1,
+    "truncated_output": 1
+  },
+  "strict_result_schema_accuracy": {
+    "denominator": 18,
+    "numerator": 11.0,
+    "rendered": "11 / 18 = 61.1%",
+    "role": "secondary",
+    "value": 0.6111111111111112
+  },
+  "task_result_correctness": {
+    "denominator": 18,
+    "numerator": 8.0,
+    "rendered": "8 / 18 = 44.4%",
+    "role": "primary",
+    "value": 0.4444444444444444
+  }
+}

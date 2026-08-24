@@ -1,0 +1,68 @@
+{
+  "by_answer_type": {
+    "set": {
+      "SQL_error": 1,
+      "generation_failure": 1,
+      "incorrect": 3,
+      "invalid_output": 1,
+      "parse_failure": 1,
+      "timeout": 1,
+      "truncated_output": 1
+    },
+    "top_k": {
+      "incorrect": 1
+    }
+  },
+  "by_family": {
+    "factual_recall": {
+      "generation_failure": 1,
+      "incorrect": 2,
+      "invalid_output": 1
+    },
+    "structured_heldin": {
+      "SQL_error": 1,
+      "incorrect": 2,
+      "parse_failure": 1,
+      "timeout": 1,
+      "truncated_output": 1
+    }
+  },
+  "by_status": {
+    "SQL_error": [
+      "fx11_sql_error"
+    ],
+    "generation_failure": [
+      "fx09_generation_failure"
+    ],
+    "incorrect": [
+      "fx05_set_incorrect",
+      "fx06_topk_order_wrong",
+      "fx08_task_wrong_schema_ok",
+      "fx16_seed33"
+    ],
+    "invalid_output": [
+      "fx14_invalid_output"
+    ],
+    "parse_failure": [
+      "fx10_parse_failure"
+    ],
+    "timeout": [
+      "fx12_timeout"
+    ],
+    "truncated_output": [
+      "fx13_truncated_output"
+    ]
+  },
+  "distinguished_classes": {
+    "SQL_error": 1,
+    "generation_failure": 1,
+    "incorrect_valid_prediction": 4,
+    "invalid_output": 1,
+    "parse_failure": 1,
+    "timeout": 1,
+    "truncated_output": 1
+  },
+  "n_failures": 10,
+  "provenance": "synthetic validation fixture; not experimental results",
+  "report_version": "eval_report_v3.0"
+}
