@@ -41,9 +41,9 @@ Maintain this block as work progresses:
 
 ```text
 PROTOCOL_STATUS: FROZEN
-CURRENT_PHASE: 6
-LAST_COMPLETED_PHASE: 5
-NEXT_PHASE: Phase 7 — SQL execution and grading
+CURRENT_PHASE: 7
+LAST_COMPLETED_PHASE: 6
+NEXT_PHASE: Phase 8 — Build the v3 evaluation and reporting stack
 TEST_STATUS: LOCKED_UNTIL_PHASE_40
 ```
 
