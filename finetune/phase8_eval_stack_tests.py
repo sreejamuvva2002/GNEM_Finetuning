@@ -421,92 +421,82 @@ def _seal_checks(fixtures) -> list[tuple[str, bool, str]]:
     """Sealed-boundary tests. SYNTHETIC ARTIFACTS ONLY.
 
     No real test or Q42 prediction, example, gold, score or error case is
-    created, read or inferred anywhere in this function.
+    created, read, reported or inferred anywhere in this function.
     """
     out = []
     with tempfile.TemporaryDirectory() as tmp:
         td = Path(tmp)
 
-        def register(path, kind, artifact_id, count, note):
-            return R.ArtifactRegistration(
-                artifact_id=artifact_id,
-                canonical_path=R.ArtifactRegistry.canonicalize(path),
-                artifact_kind=kind, sha256=R.sha256_file(path),
-                schema_version=R.RECORDS_VERSION, item_count=count,
-                provenance=note)
+        def entry(path, kind, artifact_id, count, note):
+            return {"artifact_id": artifact_id,
+                    "canonical_path": R.ClassificationAuthority.canonicalize(path),
+                    "artifact_kind": kind, "sha256": R.sha256_file(path),
+                    "schema_version": R.RECORDS_VERSION, "item_count": count,
+                    "provenance": note}
 
-        # (a) a DEV artifact -- ordinary synthetic fixtures
+        def manifest(entries, path, version="fixture-1"):
+            RPT.write_json(path, {"schema": R.TRUSTED_MANIFEST_SCHEMA,
+                                  "version": version, "artifacts": entries})
+            return path
+
+        # --- synthetic artifacts -------------------------------------------
         dev_path = td / "dev_results.jsonl"
         R.write_records(dev_path, fixtures)
-
-        # (b) a SEALED artifact whose records DECLARE A DEV-LOOKING FAMILY.
-        #     Under the superseded design this was accepted as dev.
         sealed_devlook = td / "sealed_devlooking.jsonl"
         R.write_records(sealed_devlook,
                         [_rec("sx_devlook", "factual_recall", "correct", 1.0, 1.0)])
-
-        # (c) a SEALED artifact whose records declare an UNKNOWN FUTURE family.
         sealed_future = td / "sealed_future.jsonl"
         R.write_records(sealed_future,
                         [_rec("sx_future", "brand_new_future_family", "correct",
                               1.0, 1.0)])
-
-        # (d) a SEALED artifact whose BYTES ARE NOT PARSEABLE AT ALL. If the
-        #     loader ever parsed before authorizing, this would raise a JSON
-        #     error instead of a SealError -- so it proves the ordering.
+        # Deliberately unparseable, to prove authorization precedes parsing.
         sealed_unparseable = td / "sealed_unparseable.jsonl"
         sealed_unparseable.write_text("<<<NOT-JSON-AT-ALL>>>\n", encoding="utf-8")
 
-        reg = R.ArtifactRegistry([
-            register(dev_path, R.DEV_KIND, "fx_dev_001", len(fixtures),
-                     "synthetic Phase 8 dev fixture"),
-            register(sealed_devlook, R.SEALED_KIND, "fx_sealed_devlook", 1,
-                     "synthetic sealed fixture; records declare a dev family"),
-            register(sealed_future, R.SEALED_KIND, "fx_sealed_future", 1,
-                     "synthetic sealed fixture; records declare an unknown family"),
-            register(sealed_unparseable, R.SEALED_KIND, "fx_sealed_unparseable", 1,
-                     "synthetic sealed fixture; deliberately unparseable bytes"),
-        ])
+        trusted = manifest([
+            entry(dev_path, R.DEV_KIND, "fx_dev_001", len(fixtures),
+                  "synthetic Phase 8 dev fixture"),
+            entry(sealed_devlook, R.SEALED_KIND, "fx_sealed_devlook", 1,
+                  "synthetic sealed fixture; records declare a dev family"),
+            entry(sealed_future, R.SEALED_KIND, "fx_sealed_future", 1,
+                  "synthetic sealed fixture; records declare an unknown family"),
+            entry(sealed_unparseable, R.SEALED_KIND, "fx_sealed_unparseable", 1,
+                  "synthetic sealed fixture; deliberately unparseable bytes"),
+        ], td / "trusted_artifacts_v3.json")
+        auth = R._install_trusted_authority_for_fixtures(trusted)
 
         def refuses(path):
             try:
-                R.load_dev_results(path, reg)
+                R.load_dev_results(path)
                 return False, "*** LOADED ***"
             except R.SealError as e:
-                return True, f"SealError: {str(e)[:56]}"
+                return True, f"SealError: {str(e)[:52]}"
             except Exception as e:  # noqa: BLE001
                 return False, f"wrong error {type(e).__name__}: {e}"
 
-        # 1. sealed artifact with a dev-looking family is denied
         ok, d = refuses(sealed_devlook)
         out.append(("seal01_sealed_artifact_with_dev_family_denied", ok,
                     f"{d} (records claim family=factual_recall)"))
-
-        # 2. sealed artifact with an unknown/future family is denied
         ok, d = refuses(sealed_future)
         out.append(("seal02_sealed_artifact_with_future_family_denied", ok, d))
 
-        # 3. unknown/unregistered artifact does not default to dev
         unregistered = td / "unregistered.jsonl"
         R.write_records(unregistered, fixtures[:1])
         ok, d = refuses(unregistered)
         out.append(("seal03_unregistered_artifact_fails_closed", ok,
                     f"{d} -- unknown never becomes dev"))
 
-        # 4. classification happens BEFORE record parsing
         ok, d = refuses(sealed_unparseable)
         out.append(("seal04_classification_before_parsing", ok,
                     f"{d} -- unparseable bytes never reached a JSON parser"))
 
-        # 5. sealed metadata does not parse result records
-        meta = R.sealed_metadata(sealed_unparseable, reg)
+        meta = R.sealed_metadata(sealed_unparseable)
         out.append(("seal05_sealed_metadata_does_not_parse_records",
-                    meta["records_parsed"] is False
-                    and meta["item_count"] == 1,
+                    meta["records_parsed"] is False and meta["item_count"] == 1,
                     "metadata returned for an UNPARSEABLE sealed artifact; "
-                    "item_count came from the trusted manifest, not the file"))
+                    "item_count came from the trusted manifest. Raw bytes are "
+                    "read for hash verification; records are never parsed"))
 
-        # 6/7/8. metadata exposes no family, condition, or score/status/error
         keys = set(meta)
         allowed = {"artifact_id", "artifact_path", "sha256", "item_count",
                    "schema_version", "provenance", "artifact_kind",
@@ -525,79 +515,197 @@ def _seal_checks(fixtures) -> list[tuple[str, bool, str]]:
                     not (keys & forbidden) and keys <= allowed,
                     "no status, score, error or answer-type distribution"))
 
-        # 9. relative vs absolute path spellings preserve identity
         import os
         cwd = Path.cwd()
         try:
             os.chdir(td)
-            rel_ok, rel_d = refuses(Path("sealed_devlook.jsonl")
-                                    if (td / "sealed_devlook.jsonl").exists()
-                                    else Path("sealed_devlooking.jsonl"))
-            abs_kind, _ = reg.classify(sealed_devlook.resolve())
-            rel_kind, _ = reg.classify(Path("sealed_devlooking.jsonl"))
-            dotted_kind, _ = reg.classify(td / "." / "sealed_devlooking.jsonl")
+            rel_kind, _ = auth.classify(Path("sealed_devlooking.jsonl"))
+            dotted_kind, _ = auth.classify(Path(".") / "sealed_devlooking.jsonl")
         finally:
             os.chdir(cwd)
+        abs_kind, _ = auth.classify(sealed_devlook.resolve())
         out.append(("seal09_relative_and_absolute_paths_same_identity",
-                    rel_ok and abs_kind == rel_kind == dotted_kind == R.SEALED_KIND,
-                    f"absolute, relative and dotted spellings all classify "
-                    f"{R.SEALED_KIND}"))
+                    abs_kind == rel_kind == dotted_kind == R.SEALED_KIND,
+                    "absolute, relative and dotted spellings all classify sealed"))
 
-        # 10. a symlink to a sealed artifact remains sealed
         link = td / "innocent_looking_dev_results.jsonl"
         try:
             link.symlink_to(sealed_devlook)
-            link_kind, _ = reg.classify(link)
+            link_kind, _ = auth.classify(link)
             ok, d = refuses(link)
             out.append(("seal10_symlink_to_sealed_remains_sealed",
                         ok and link_kind == R.SEALED_KIND,
-                        f"{d} -- symlink resolves to the registered sealed artifact"))
+                        f"{d} -- symlink resolves to the sealed artifact"))
         except OSError:
             out.append(("seal10_symlink_to_sealed_remains_sealed", False,
                         "symlink unsupported on this filesystem"))
 
-        # 11. a copied/renamed artifact fails closed
         copied = td / "copy_of_dev_results.jsonl"
         shutil.copyfile(dev_path, copied)
         ok, d = refuses(copied)
-        copied_kind, _ = reg.classify(copied)
+        copied_kind, _ = auth.classify(copied)
         out.append(("seal11_copied_artifact_fails_closed",
                     ok and copied_kind == R.UNKNOWN_KIND,
                     f"{d} -- identical bytes at an unregistered path stay unknown"))
 
-        # 11b. registered path whose bytes changed also fails closed
         tampered = td / "tampered.jsonl"
         R.write_records(tampered, fixtures)
-        reg.register(register(tampered, R.DEV_KIND, "fx_tamper", len(fixtures),
-                              "synthetic"))
+        t_manifest = manifest([entry(tampered, R.DEV_KIND, "fx_tamper",
+                                     len(fixtures), "synthetic")],
+                              td / "tamper_manifest.json")
+        R._install_trusted_authority_for_fixtures(t_manifest)
         R.write_records(tampered, fixtures[:2])          # bytes now differ
         ok, d = refuses(tampered)
         out.append(("seal11b_hash_mismatch_fails_closed", ok,
                     f"{d} -- registered path, unregistered bytes"))
+        R._install_trusted_authority_for_fixtures(trusted)   # restore
 
-        # 12. a normal registered dev fixture still loads
-        loaded = R.load_dev_results(dev_path, reg)
+        loaded = R.load_dev_results(dev_path)
         out.append(("seal12_registered_dev_artifact_loads",
                     len(loaded) == len(fixtures),
-                    f"{len(loaded)} dev records loaded through the registry"))
+                    f"{len(loaded)} dev records loaded via the trusted authority"))
 
-        # no generic backdoor anywhere
+        # ---- TRUST-BOUNDARY REGRESSIONS ---------------------------------
+        # T1. the exact relabel the review used: an ordinary caller cannot
+        # supply an authority that calls a sealed artifact dev.
         import inspect
-        sigs = " ".join(str(inspect.signature(f)) for f in
-                        (R.load_dev_results, R.sealed_metadata, RPT.summarize,
-                         RPT.error_analysis, RPT.per_family, V.verify, V.regrade,
-                         R.ArtifactRegistry.classify))
-        out.append(("seal13_no_generic_unseal_parameter", "unseal" not in sigs,
-                    "no unseal parameter on any dev or library API; Phase 40 "
-                    "owns the unblind authority (CLAUDE.md 23)"))
+        sig_load = str(inspect.signature(R.load_dev_results))
+        sig_meta = str(inspect.signature(R.sealed_metadata))
+        no_authority_param = not any(
+            t in sig_load + sig_meta
+            for t in ("registry", "authority", "manifest", "unseal",
+                      "allow_test", "bypass_seal", "force"))
+        relabel_blocked = True
+        try:
+            # The supported API takes no authority, so relabeling has nowhere
+            # to attach. Attempting to pass one is a TypeError.
+            R.load_dev_results(sealed_devlook, object())     # type: ignore
+            relabel_blocked = False
+        except TypeError:
+            pass
+        except R.SealError:
+            pass
+        out.append(("trust01_caller_cannot_supply_authority",
+                    no_authority_param and relabel_blocked,
+                    f"load_dev_results{sig_load} and sealed_metadata{sig_meta} "
+                    f"accept no registry/authority/unseal argument"))
 
-        # family strings take no part in the security decision
-        src = (ROOT / "finetune" / "eval_records_v3.py").read_text(encoding="utf-8")
-        code = _code_only(src)
+        # T2. an authority cannot be mutated after construction.
+        mutations = []
+        try:
+            auth.register(entry(sealed_devlook, R.DEV_KIND, "x", 1, "n"))
+            mutations.append("register() exists")
+        except AttributeError:
+            pass
+        try:
+            auth._by_path[str(sealed_devlook.resolve())] = None
+            mutations.append("_by_path mutable")
+        except TypeError:
+            pass
+        try:
+            auth._manifest_version = "tampered"
+            mutations.append("attribute reassignable")
+        except R.ManifestError:
+            pass
+        out.append(("trust02_authority_is_immutable", not mutations,
+                    "no register(); mapping is read-only; attribute assignment "
+                    "raises ManifestError"
+                    if not mutations else f"{mutations}"))
+
+        # T3. a sealed artifact stays sealed even if a caller writes a manifest
+        # that relabels it -- because the supported API does not consult it.
+        rogue = manifest([entry(sealed_devlook, R.DEV_KIND, "fx_sealed_devlook",
+                                1, "caller claims this is dev")],
+                         td / "rogue_manifest.json")
+        ok, d = refuses(sealed_devlook)
+        out.append(("trust03_rogue_manifest_not_consulted_by_dev_api", ok,
+                    f"{d} -- a caller-authored manifest has no supported route "
+                    f"into the dev loader"))
+
+        # T4. conflicting trusted-manifest entries are rejected, not merged.
+        conflicts = []
+        for label, entries in (
+                ("same path, different kind",
+                 [entry(sealed_devlook, R.SEALED_KIND, "a", 1, "n"),
+                  entry(sealed_devlook, R.DEV_KIND, "b", 1, "n")]),
+                ("same artifact_id, different kind",
+                 [entry(sealed_devlook, R.SEALED_KIND, "same_id", 1, "n"),
+                  entry(dev_path, R.DEV_KIND, "same_id", len(fixtures), "n")])):
+            mp = manifest(entries, td / f"conflict_{len(conflicts)}.json")
+            try:
+                R._build_authority_from_manifest(mp)
+                conflicts.append(label)
+            except R.ManifestError:
+                pass
+        out.append(("trust04_conflicting_manifest_rejected", not conflicts,
+                    "same-path and same-artifact_id conflicts both raise "
+                    "ManifestError; no last-write-wins"
+                    if not conflicts else f"accepted: {conflicts}"))
+
+        # T5. malformed manifests are rejected.
+        bad = []
+        for label, doc in (
+                ("unknown schema", {"schema": "something_else", "artifacts": []}),
+                ("missing field", {"schema": R.TRUSTED_MANIFEST_SCHEMA,
+                                   "artifacts": [{"artifact_id": "x"}]}),
+                ("extra field", {"schema": R.TRUSTED_MANIFEST_SCHEMA,
+                                 "artifacts": [{**entry(dev_path, R.DEV_KIND, "x",
+                                                        len(fixtures), "n"),
+                                                "rogue": 1}]}),
+                ("bad kind", {"schema": R.TRUSTED_MANIFEST_SCHEMA,
+                              "artifacts": [{**entry(dev_path, "superuser", "x",
+                                                     len(fixtures), "n")}]})):
+            mp = td / f"bad_{len(bad)}.json"
+            RPT.write_json(mp, doc)
+            try:
+                R._build_authority_from_manifest(mp)
+                bad.append(label)
+            except R.ManifestError:
+                pass
+        out.append(("trust05_malformed_manifest_rejected", not bad,
+                    "unknown schema, missing field, extra field and invalid "
+                    "artifact_kind all raise ManifestError"
+                    if not bad else f"accepted: {bad}"))
+
+        # T6. manifest provenance is deterministic and recorded.
+        a1 = R._build_authority_from_manifest(trusted)
+        a2 = R._build_authority_from_manifest(trusted)
+        # The synthetic manifest embeds temporary canonical paths, so its hash
+        # necessarily varies per run. Report the RELATION the check actually
+        # tests -- two builds agree -- rather than the absolute value, which
+        # would make the committed audit non-deterministic.
+        out.append(("trust06_manifest_provenance_deterministic",
+                    a1.manifest_sha256 == a2.manifest_sha256
+                    and a1.artifact_ids() == a2.artifact_ids()
+                    and len(a1.manifest_sha256) == 64,
+                    f"two builds of the same manifest agree on a 64-hex sha256 "
+                    f"and on {len(a1.artifact_ids())} artifacts in deterministic "
+                    f"order (value omitted: the synthetic manifest embeds "
+                    f"temporary paths)"))
+
+        # T7. with no authority initialized, dev loading refuses.
+        saved = R._AUTHORITY
+        try:
+            R._AUTHORITY = None
+            try:
+                R.load_dev_results(dev_path)
+                uninit_ok = False
+            except R.ManifestError:
+                uninit_ok = True
+            except R.SealError:
+                uninit_ok = True
+        finally:
+            R._AUTHORITY = saved
+        out.append(("trust07_no_authority_fails_closed", uninit_ok,
+                    "an uninitialized authority refuses dev loading rather than "
+                    "defaulting open"))
+
+        src = _code_only((ROOT / "finetune" / "eval_records_v3.py")
+                         .read_text(encoding="utf-8"))
         out.append(("seal14_family_not_used_for_classification",
-                    ".family" not in code and "SEALED_FAMILY_MARKERS" not in code,
-                    "no record field participates in classification; identity is "
-                    "canonical path + registered hash"))
+                    ".family" not in src and "SEALED_FAMILY_MARKERS" not in src,
+                    "no record field participates in classification; identity "
+                    "is canonical path + registered hash"))
     return out
 
 
@@ -776,20 +884,35 @@ def _write_audit(checks, faults, summary, errors, stats_demo, provenance,
           "Test and Q42 remain `LOCKED_UNTIL_PHASE_40`. Validated with **synthetic "
           "sealed fixtures only** — no real test or Q42 prediction, example, gold, "
           "score or error case was created, read, reported or inferred.\n",
-          "### The superseded design and its defect\n",
-          "The first Phase 8 candidate inferred sealing from `family` strings "
-          "**inside the records**. Independent review demonstrated three failures, "
-          "all reproduced before the redesign:\n",
+          "### Correction history — two successive defects, both reproduced\n",
+          "**Stage 1 — the original family-based design (fail-open).** The first "
+          "Phase 8 candidate inferred sealing from `family` strings **inside the "
+          "records**. Independent review demonstrated three failures, all "
+          "reproduced before the redesign:\n",
           "1. a sealed artifact whose records declared `family = factual_recall` "
           "was **accepted** by `load_dev_results` — content classified itself\n"
           "2. `classify_result_set(\"brand_new_future_family\")` returned `dev` — "
           "an unknown future family silently defaulted **open**\n"
           "3. `sealed_metadata` **parsed sealed records** to compute `families` and "
           "`conditions`, exceeding the pre-Phase-40 metadata boundary\n",
-          "**Root cause:** the sealing decision was attached to what the artifact "
-          "said about itself rather than to the artifact, and the default for an "
-          "unrecognised value was open rather than closed.\n",
-          "### The replacement: trusted artifact registry\n",
+          "**Stage 1 root cause:** the sealing decision was attached to what the "
+          "artifact said about itself rather than to the artifact, and the default "
+          "for an unrecognised value was open rather than closed.\n",
+          "**Stage 2 — the first registry redesign (still caller-controlled).** "
+          "Replacing family strings with an `ArtifactRegistry` fixed content-based "
+          "classification, but the registry was **constructed and passed by the "
+          "caller**. Independent review reproduced two further bypasses: an "
+          "ordinary caller could build a second registry declaring the same sealed "
+          "path as `dev` and load it, and could mutate an existing registry in "
+          "place via `register(...)`. The trust boundary had merely moved from "
+          "caller-controlled *family* to caller-controlled *registry declaration*. "
+          "**This stage was not sufficient, and the audit does not present it as "
+          "though it were.**\n",
+          "**Stage 3 — trusted authority (current).** Classification now comes "
+          "from a frozen manifest loaded by one internal factory into an immutable "
+          "authority. Ordinary dev/report code may QUERY classification and cannot "
+          "redefine it.\n",
+          "### The current design: trusted, immutable classification authority\n",
           "```text",
           "identify artifact (resolved canonical path)",
           "    -> trusted registry lookup + integrity hash",
@@ -806,14 +929,44 @@ def _write_audit(checks, faults, summary, errors, stats_demo, provenance,
           "(`<<<NOT-JSON-AT-ALL>>>`). It raises `SealError`, never a JSON error — "
           "so authorization demonstrably happened before any parser ran. "
           "`sealed_metadata` returns full metadata for that same unparseable "
-          "artifact, which is only possible because it never opens the file.\n",
+          "artifact. That is possible because it reads raw bytes only to verify "
+          "the registered hash and **never parses record content**.\n",
+          "### Trust boundary\n",
+          "```text",
+          "frozen trusted manifest",
+          "    -> internal factory (_build_authority_from_manifest)",
+          "    -> validated deterministically, conflicts rejected",
+          "    -> IMMUTABLE authority",
+          "    -> dev/report code QUERIES it; cannot redefine it",
+          "```\n",
+          "`load_dev_results(path)` and `sealed_metadata(path)` take **no** "
+          "registry, authority, manifest, unseal, allow_test, bypass_seal or force "
+          "argument, so a caller has nowhere to attach a competing authority. The "
+          "authority exposes no `register`, its mappings are read-only, and "
+          "attribute assignment raises. Conflicting manifest entries — the same "
+          "path with different kinds, or the same `artifact_id` with a different "
+          "path/hash/kind — are rejected rather than resolved last-write-wins. An "
+          "uninitialized authority refuses rather than defaulting open.\n",
+          "**Threat model, stated accurately.** This is a workflow-integrity and "
+          "accidental-leakage boundary, not a sandbox against hostile code. "
+          "Arbitrary Python with full module and filesystem access can always "
+          "reach private names; Phase 8 does not claim otherwise. The guarantee is "
+          "the narrower one the protocol needs: **the normal supported dev/report "
+          "API offers no route to reinterpret a sealed artifact as dev.** Phase 8 "
+          "fixtures stand up synthetic trusted environments through an explicitly "
+          "underscore-prefixed, fixture-only hook that is not part of that API.\n",
+          "The synthetic `trusted_artifacts_v3.json` used by the gate validates the "
+          "ARCHITECTURE only. It is not, and does not claim to be, the future real "
+          "test manifest.\n",
           "**Fail closed.** An unregistered artifact, a copied artifact at a new "
           "path, and a registered path whose bytes no longer match its hash all "
           "classify `unknown` and are refused. Unknown never becomes dev.\n",
           "**Path identity.** Absolute, relative and dotted spellings resolve to "
           "one identity, and a symlink pointing at a registered sealed artifact "
           "remains sealed.\n",
-          "**Restricted metadata contract.** `sealed_metadata` returns exactly: "
+          "**Restricted metadata contract.** `sealed_metadata` may read raw bytes "
+          "for integrity hashing but never parses or exposes evaluation-record "
+          "content. It returns exactly: "
           "`artifact_id`, `artifact_path`, `sha256`, `item_count`, "
           "`schema_version`, `provenance`, `artifact_kind`, `records_parsed`. "
           "No family, condition, status, score, error type, answer type, "

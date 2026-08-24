@@ -18,11 +18,11 @@ finetune/phase7_grader_tests.py    fefbd447694a96c25c30e90438e2a24cf1638e8e1ef64
 ## Stack modules
 
 ```text
-finetune/eval_records_v3.py               ed22faf37309e64925398609a1c23d05b65e04817990cfe879cc24b809aff40d
+finetune/eval_records_v3.py               b874fb900e20854efe40bffa72a881a653b1e6bd31262926b3a3e339d9fcf1e0
 finetune/eval_stats_v3.py                 28add5267e6d77abd589243ab52dcdbbddaa612d7b8b1e733289af08132f9f24
 finetune/eval_report_v3.py                addab678db3b5d27c310563d8fc2504b21d6ca3a8ff14ffd30ad321cf9ecd03b
 finetune/eval_verify_v3.py                89d5b3359638e470757f70a2f10a9601aef92f8ffae18dc28ee0fc24d3dabf09
-finetune/phase8_eval_stack_tests.py       e04cbe5f8dc10d71fe4d2138ed558079b6b114df49d792034f04bfb756e3e09c
+finetune/phase8_eval_stack_tests.py       0a6268421320ef56a16a5351eed6648466e33afbdfa9ec316b00ea41e02b8ba2
 ```
 
 Rebuilt v3-native rather than ported. v2's stack is 4,213 lines and `report.py` alone carries 111 retired-concept references; README Phase 8 warns that recreating it "would add risk rather than remove it". Only the statistical METHODS were carried across as concepts, reimplemented against the v3 schema — no v2 file was copied.
@@ -152,17 +152,21 @@ Verify checks expected count, unique `example_id`, exactly-one-status, required 
 
 Test and Q42 remain `LOCKED_UNTIL_PHASE_40`. Validated with **synthetic sealed fixtures only** — no real test or Q42 prediction, example, gold, score or error case was created, read, reported or inferred.
 
-### The superseded design and its defect
+### Correction history — two successive defects, both reproduced
 
-The first Phase 8 candidate inferred sealing from `family` strings **inside the records**. Independent review demonstrated three failures, all reproduced before the redesign:
+**Stage 1 — the original family-based design (fail-open).** The first Phase 8 candidate inferred sealing from `family` strings **inside the records**. Independent review demonstrated three failures, all reproduced before the redesign:
 
 1. a sealed artifact whose records declared `family = factual_recall` was **accepted** by `load_dev_results` — content classified itself
 2. `classify_result_set("brand_new_future_family")` returned `dev` — an unknown future family silently defaulted **open**
 3. `sealed_metadata` **parsed sealed records** to compute `families` and `conditions`, exceeding the pre-Phase-40 metadata boundary
 
-**Root cause:** the sealing decision was attached to what the artifact said about itself rather than to the artifact, and the default for an unrecognised value was open rather than closed.
+**Stage 1 root cause:** the sealing decision was attached to what the artifact said about itself rather than to the artifact, and the default for an unrecognised value was open rather than closed.
 
-### The replacement: trusted artifact registry
+**Stage 2 — the first registry redesign (still caller-controlled).** Replacing family strings with an `ArtifactRegistry` fixed content-based classification, but the registry was **constructed and passed by the caller**. Independent review reproduced two further bypasses: an ordinary caller could build a second registry declaring the same sealed path as `dev` and load it, and could mutate an existing registry in place via `register(...)`. The trust boundary had merely moved from caller-controlled *family* to caller-controlled *registry declaration*. **This stage was not sufficient, and the audit does not present it as though it were.**
+
+**Stage 3 — trusted authority (current).** Classification now comes from a frozen manifest loaded by one internal factory into an immutable authority. Ordinary dev/report code may QUERY classification and cannot redefine it.
+
+### The current design: trusted, immutable classification authority
 
 ```text
 identify artifact (resolved canonical path)
@@ -174,13 +178,29 @@ identify artifact (resolved canonical path)
 
 `family`, `condition`, `status`, filename keywords and record contents take **no part** in the security decision. Identity is the resolved canonical path plus the registered SHA256; the manifest predeclares `item_count`, so metadata never requires opening sealed content.
 
-**Classify-before-parse is proved, not asserted.** One synthetic sealed fixture contains deliberately unparseable bytes (`<<<NOT-JSON-AT-ALL>>>`). It raises `SealError`, never a JSON error — so authorization demonstrably happened before any parser ran. `sealed_metadata` returns full metadata for that same unparseable artifact, which is only possible because it never opens the file.
+**Classify-before-parse is proved, not asserted.** One synthetic sealed fixture contains deliberately unparseable bytes (`<<<NOT-JSON-AT-ALL>>>`). It raises `SealError`, never a JSON error — so authorization demonstrably happened before any parser ran. `sealed_metadata` returns full metadata for that same unparseable artifact. That is possible because it reads raw bytes only to verify the registered hash and **never parses record content**.
+
+### Trust boundary
+
+```text
+frozen trusted manifest
+    -> internal factory (_build_authority_from_manifest)
+    -> validated deterministically, conflicts rejected
+    -> IMMUTABLE authority
+    -> dev/report code QUERIES it; cannot redefine it
+```
+
+`load_dev_results(path)` and `sealed_metadata(path)` take **no** registry, authority, manifest, unseal, allow_test, bypass_seal or force argument, so a caller has nowhere to attach a competing authority. The authority exposes no `register`, its mappings are read-only, and attribute assignment raises. Conflicting manifest entries — the same path with different kinds, or the same `artifact_id` with a different path/hash/kind — are rejected rather than resolved last-write-wins. An uninitialized authority refuses rather than defaulting open.
+
+**Threat model, stated accurately.** This is a workflow-integrity and accidental-leakage boundary, not a sandbox against hostile code. Arbitrary Python with full module and filesystem access can always reach private names; Phase 8 does not claim otherwise. The guarantee is the narrower one the protocol needs: **the normal supported dev/report API offers no route to reinterpret a sealed artifact as dev.** Phase 8 fixtures stand up synthetic trusted environments through an explicitly underscore-prefixed, fixture-only hook that is not part of that API.
+
+The synthetic `trusted_artifacts_v3.json` used by the gate validates the ARCHITECTURE only. It is not, and does not claim to be, the future real test manifest.
 
 **Fail closed.** An unregistered artifact, a copied artifact at a new path, and a registered path whose bytes no longer match its hash all classify `unknown` and are refused. Unknown never becomes dev.
 
 **Path identity.** Absolute, relative and dotted spellings resolve to one identity, and a symlink pointing at a registered sealed artifact remains sealed.
 
-**Restricted metadata contract.** `sealed_metadata` returns exactly: `artifact_id`, `artifact_path`, `sha256`, `item_count`, `schema_version`, `provenance`, `artifact_kind`, `records_parsed`. No family, condition, status, score, error type, answer type, question, gold, SQL or execution result — and no per-family or score distribution.
+**Restricted metadata contract.** `sealed_metadata` may read raw bytes for integrity hashing but never parses or exposes evaluation-record content. It returns exactly: `artifact_id`, `artifact_path`, `sha256`, `item_count`, `schema_version`, `provenance`, `artifact_kind`, `records_parsed`. No family, condition, status, score, error type, answer type, question, gold, SQL or execution result — and no per-family or score distribution.
 
 **No pre-Phase-40 unseal capability.** There is no `unseal` parameter on any dev or library API; a generic boolean switch would also unlock real sealed output later. The real unblind authority belongs to the Phase 40 entry point (`CLAUDE.md` §23) and is deliberately not created here.
 
@@ -219,20 +239,26 @@ None of 15 retired concepts appear in the stack, and no v2 repository path or v2
 | `regrade_reproduces_metrics` | PASS | status distribution identical after regrade |
 | `sql_fixtures_use_phase7_executor` | PASS | SQL fixture path calls the approved Phase 7 executor (train_kb=148); no second execution implementation exists |
 | `no_duplicate_sql_execution_in_stack` | PASS | no module in the reporting stack opens its own database connection |
-| `seal01_sealed_artifact_with_dev_family_denied` | PASS | SealError: artifact 'fx_sealed_devlook' is registered SEALED; dev-f (records claim family=factual_recall) |
-| `seal02_sealed_artifact_with_future_family_denied` | PASS | SealError: artifact 'fx_sealed_future' is registered SEALED; dev-fa |
-| `seal03_unregistered_artifact_fails_closed` | PASS | SealError: artifact is not a registered dev artifact (unregistered, -- unknown never becomes dev |
-| `seal04_classification_before_parsing` | PASS | SealError: artifact 'fx_sealed_unparseable' is registered SEALED; d -- unparseable bytes never reached a JSON parser |
-| `seal05_sealed_metadata_does_not_parse_records` | PASS | metadata returned for an UNPARSEABLE sealed artifact; item_count came from the trusted manifest, not the file |
+| `seal01_sealed_artifact_with_dev_family_denied` | PASS | SealError: artifact 'fx_sealed_devlook' is classified SEALED by (records claim family=factual_recall) |
+| `seal02_sealed_artifact_with_future_family_denied` | PASS | SealError: artifact 'fx_sealed_future' is classified SEALED by  |
+| `seal03_unregistered_artifact_fails_closed` | PASS | SealError: artifact is not a registered dev artifact (unregiste -- unknown never becomes dev |
+| `seal04_classification_before_parsing` | PASS | SealError: artifact 'fx_sealed_unparseable' is classified SEALE -- unparseable bytes never reached a JSON parser |
+| `seal05_sealed_metadata_does_not_parse_records` | PASS | metadata returned for an UNPARSEABLE sealed artifact; item_count came from the trusted manifest. Raw bytes are read for hash verification; records are never parsed |
 | `seal06_metadata_exposes_no_family` | PASS | keys: ['artifact_id', 'artifact_kind', 'artifact_path', 'item_count', 'provenance', 'records_parsed', 'schema_version', 'sha256'] |
 | `seal07_metadata_exposes_no_condition` | PASS | no condition field |
 | `seal08_metadata_exposes_no_score_status_error` | PASS | no status, score, error or answer-type distribution |
 | `seal09_relative_and_absolute_paths_same_identity` | PASS | absolute, relative and dotted spellings all classify sealed |
-| `seal10_symlink_to_sealed_remains_sealed` | PASS | SealError: artifact 'fx_sealed_devlook' is registered SEALED; dev-f -- symlink resolves to the registered sealed artifact |
-| `seal11_copied_artifact_fails_closed` | PASS | SealError: artifact is not a registered dev artifact (unregistered, -- identical bytes at an unregistered path stay unknown |
-| `seal11b_hash_mismatch_fails_closed` | PASS | SealError: artifact is not a registered dev artifact (unregistered, -- registered path, unregistered bytes |
-| `seal12_registered_dev_artifact_loads` | PASS | 18 dev records loaded through the registry |
-| `seal13_no_generic_unseal_parameter` | PASS | no unseal parameter on any dev or library API; Phase 40 owns the unblind authority (CLAUDE.md 23) |
+| `seal10_symlink_to_sealed_remains_sealed` | PASS | SealError: artifact 'fx_sealed_devlook' is classified SEALED by -- symlink resolves to the sealed artifact |
+| `seal11_copied_artifact_fails_closed` | PASS | SealError: artifact is not a registered dev artifact (unregiste -- identical bytes at an unregistered path stay unknown |
+| `seal11b_hash_mismatch_fails_closed` | PASS | SealError: artifact is not a registered dev artifact (unregiste -- registered path, unregistered bytes |
+| `seal12_registered_dev_artifact_loads` | PASS | 18 dev records loaded via the trusted authority |
+| `trust01_caller_cannot_supply_authority` | PASS | load_dev_results(path) -> 'list[EvalRecord]' and sealed_metadata(path) -> 'dict' accept no registry/authority/unseal argument |
+| `trust02_authority_is_immutable` | PASS | no register(); mapping is read-only; attribute assignment raises ManifestError |
+| `trust03_rogue_manifest_not_consulted_by_dev_api` | PASS | SealError: artifact 'fx_sealed_devlook' is classified SEALED by -- a caller-authored manifest has no supported route into the dev loader |
+| `trust04_conflicting_manifest_rejected` | PASS | same-path and same-artifact_id conflicts both raise ManifestError; no last-write-wins |
+| `trust05_malformed_manifest_rejected` | PASS | unknown schema, missing field, extra field and invalid artifact_kind all raise ManifestError |
+| `trust06_manifest_provenance_deterministic` | PASS | two builds of the same manifest agree on a 64-hex sha256 and on 4 artifacts in deterministic order (value omitted: the synthetic manifest embeds temporary paths) |
+| `trust07_no_authority_fails_closed` | PASS | an uninitialized authority refuses dev loading rather than defaulting open |
 | `seal14_family_not_used_for_classification` | PASS | no record field participates in classification; identity is canonical path + registered hash |
 | `no_retired_component_dependency` | PASS | none of 15 retired concepts appear in executable code; mentioned only in prose explaining their avoidance: ['REPORT_ORDER'] |
 | `no_v2_runtime_path` | PASS | no v2 repository path and no v2 database fallback |

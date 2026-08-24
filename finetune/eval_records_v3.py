@@ -36,14 +36,17 @@ Classification therefore happens BEFORE any record is read. `family`,
 `condition`, `status`, filename keywords and record contents take no part in
 the security decision.
 
-    dev-facing reporting      cannot request unseal -- the parameter does not
-                              exist on any dev API
+    dev-facing reporting      cannot request unseal, and cannot supply or
+                              replace the classification authority -- neither
+                              parameter exists on any dev API
     this library              CANNOT read sealed content at all. There is no
                               `load_results(path, unseal=True)`, because such a
                               switch would also work on real sealed output
-    sealed_metadata(...)      trusted-manifest fields ONLY. It never opens the
-                              result file, so it cannot disclose families,
-                              conditions, statuses, scores, errors or examples
+    sealed_metadata(...)      trusted-manifest fields ONLY. It may read raw
+                              bytes to verify the registered hash, but it never
+                              PARSES record content, so it cannot disclose
+                              families, conditions, statuses, scores, errors or
+                              examples
     Phase 40 entry point      owns the real unblind authority (CLAUDE.md 23:
                               "an explicit Phase-40-only `--unseal` control")
 
@@ -59,6 +62,7 @@ import hashlib
 import json
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
+from types import MappingProxyType
 
 import grade_v3 as G
 
@@ -144,14 +148,13 @@ def sha256_file(path: Path) -> str:
 class ArtifactRegistration:
     """A trusted, content-blind classification of one result artifact.
 
-    Every field is provenance about the artifact. None of it is derived by
-    reading the evaluation records, and `item_count` is PREDECLARED here rather
-    than counted from the file, so metadata never requires opening sealed
-    content.
+    Every field is provenance ABOUT the artifact. None is derived by reading
+    evaluation records, and `item_count` is PREDECLARED so metadata never
+    requires parsing sealed content.
     """
     artifact_id: str
-    canonical_path: str        # os.path.realpath, so symlinks and relative
-                               # spellings resolve to one identity
+    canonical_path: str        # resolved, so symlinks and relative spellings
+                               # collapse to one identity
     artifact_kind: str         # DEV_KIND | SEALED_KIND
     sha256: str
     schema_version: str
@@ -160,72 +163,186 @@ class ArtifactRegistration:
 
     def __post_init__(self):
         if self.artifact_kind not in (DEV_KIND, SEALED_KIND):
-            raise ValueError(f"artifact_kind {self.artifact_kind!r} invalid")
+            raise ManifestError(f"artifact_kind {self.artifact_kind!r} invalid")
 
 
-class ArtifactRegistry:
-    """The trusted manifest. Classification comes from here, never from content.
+class ManifestError(ValueError):
+    """The trusted manifest is malformed, conflicting, or unreadable."""
 
-    Lookup is by RESOLVED canonical path, so a relative spelling, an absolute
-    spelling and a symlink all resolve to the same registration. A file whose
-    bytes no longer match its registered hash, or that is not registered at
-    all, classifies as UNKNOWN -- which refuses.
+
+class ClassificationAuthority:
+    """IMMUTABLE classification authority built from the trusted manifest.
+
+    There is deliberately no `register`, no setter and no post-construction
+    mutation: an authority cannot be edited after it is built, and ordinary
+    code cannot construct a competing one through the supported API.
     """
 
-    def __init__(self, registrations=()):
-        self._by_path: dict[str, ArtifactRegistration] = {}
-        for r in registrations:
-            self.register(r)
+    __slots__ = ("_by_path", "_by_id", "_manifest_sha256", "_manifest_version",
+                 "_frozen")
 
-    def register(self, reg: ArtifactRegistration) -> None:
-        self._by_path[str(Path(reg.canonical_path))] = reg
+    def __init__(self, registrations, *, manifest_sha256: str,
+                 manifest_version: str):
+        by_path, by_id = {}, {}
+        for reg in registrations:
+            key = str(Path(reg.canonical_path))
+            # Conflicts are errors, never last-write-wins.
+            prior = by_path.get(key)
+            if prior is not None and prior != reg:
+                raise ManifestError(
+                    f"conflicting entries for path {key}: "
+                    f"{prior.artifact_id}/{prior.artifact_kind} vs "
+                    f"{reg.artifact_id}/{reg.artifact_kind}")
+            prior_id = by_id.get(reg.artifact_id)
+            if prior_id is not None and prior_id != reg:
+                raise ManifestError(
+                    f"artifact_id {reg.artifact_id!r} declared twice with "
+                    f"different path/hash/kind")
+            by_path[key], by_id[reg.artifact_id] = reg, reg
+        object.__setattr__(self, "_by_path", MappingProxyType(by_path))
+        object.__setattr__(self, "_by_id", MappingProxyType(by_id))
+        object.__setattr__(self, "_manifest_sha256", manifest_sha256)
+        object.__setattr__(self, "_manifest_version", manifest_version)
+        object.__setattr__(self, "_frozen", True)
+
+    def __setattr__(self, name, value):
+        raise ManifestError(
+            "the classification authority is immutable; artifact_kind, path "
+            "identity and hash identity cannot be reassigned after loading")
+
+    def __delattr__(self, name):
+        raise ManifestError("the classification authority is immutable")
 
     @staticmethod
     def canonicalize(path) -> str:
-        # realpath resolves symlinks AND relative segments to one identity.
+        # resolve() collapses symlinks AND relative segments to one identity.
         return str(Path(path).resolve())
 
     def classify(self, path) -> tuple[str, ArtifactRegistration | None]:
-        """(kind, registration). Unregistered or altered -> UNKNOWN, which refuses."""
+        """(kind, registration). Unregistered or altered -> UNKNOWN, which refuses.
+
+        Reads raw bytes to verify the registered hash. It never parses records.
+        """
         canonical = self.canonicalize(path)
         reg = self._by_path.get(canonical)
         if reg is None:
             return UNKNOWN_KIND, None
         p = Path(canonical)
         if not p.is_file() or sha256_file(p) != reg.sha256:
-            # Registered identity, but the bytes are not the registered bytes.
             return UNKNOWN_KIND, None
         return reg.artifact_kind, reg
 
-    def manifest(self) -> list[dict]:
-        return [asdict(r) for r in
-                sorted(self._by_path.values(), key=lambda r: r.artifact_id)]
+    @property
+    def manifest_sha256(self) -> str:
+        return self._manifest_sha256
+
+    @property
+    def manifest_version(self) -> str:
+        return self._manifest_version
+
+    def artifact_ids(self) -> tuple[str, ...]:
+        return tuple(sorted(self._by_id))
 
 
-def load_dev_results(path, registry: ArtifactRegistry) -> list[EvalRecord]:
+TRUSTED_MANIFEST_SCHEMA = "trusted_artifacts_v3"
+_MANIFEST_FIELDS = ("artifact_id", "canonical_path", "artifact_kind", "sha256",
+                    "schema_version", "item_count", "provenance")
+
+# Module-level authority. Built once, by the internal factory, from the trusted
+# manifest. Ordinary dev/report code queries it and cannot replace it.
+_AUTHORITY: ClassificationAuthority | None = None
+
+
+def _build_authority_from_manifest(manifest_path) -> ClassificationAuthority:
+    """INTERNAL trusted factory. Validates deterministically, then freezes.
+
+    Rejects unknown schema, missing fields, and any conflicting entry. There is
+    no last-write-wins path.
+    """
+    manifest_path = Path(manifest_path)
+    if not manifest_path.is_file():
+        raise ManifestError(f"trusted manifest not found: {manifest_path}")
+    doc = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if doc.get("schema") != TRUSTED_MANIFEST_SCHEMA:
+        raise ManifestError(
+            f"unsupported manifest schema {doc.get('schema')!r}; expected "
+            f"{TRUSTED_MANIFEST_SCHEMA!r}")
+    entries = doc.get("artifacts")
+    if not isinstance(entries, list):
+        raise ManifestError("manifest 'artifacts' must be a list")
+    regs = []
+    for e in entries:
+        missing = [f for f in _MANIFEST_FIELDS if f not in e]
+        if missing:
+            raise ManifestError(f"manifest entry missing {missing}")
+        extra = [k for k in e if k not in _MANIFEST_FIELDS]
+        if extra:
+            raise ManifestError(f"manifest entry carries unsupported {extra}")
+        regs.append(ArtifactRegistration(**e))
+    # Deterministic ordering, independent of manifest order.
+    regs.sort(key=lambda r: (r.artifact_id, r.canonical_path))
+    return ClassificationAuthority(
+        regs, manifest_sha256=sha256_file(manifest_path),
+        manifest_version=str(doc.get("version", "unversioned")))
+
+
+def trusted_authority() -> ClassificationAuthority:
+    """The classification authority for ordinary dev/report code.
+
+    Read-only. Callers may QUERY classification; they cannot redefine it, and
+    no supported dev API accepts an authority argument.
+    """
+    if _AUTHORITY is None:
+        raise ManifestError(
+            "no trusted artifact authority has been initialized; dev-facing "
+            "loading is refused. Classification comes from the trusted "
+            "manifest, never from the caller.")
+    return _AUTHORITY
+
+
+def _install_trusted_authority_for_fixtures(manifest_path):
+    """FIXTURE/TEST-ONLY trusted initialization. NOT part of the dev API.
+
+    Phase 8 validates the architecture with synthetic manifests under temporary
+    paths, which requires a way to stand up a synthetic trusted environment.
+    This underscore-prefixed hook is that mechanism and is used only by the
+    Phase 8 gate.
+
+    THREAT MODEL, stated accurately: this is a workflow-integrity and
+    accidental-leakage boundary, not a sandbox against hostile code. Arbitrary
+    Python with full module and filesystem access can always reach private
+    names. What the design guarantees is narrower and is the property the
+    protocol needs -- the NORMAL SUPPORTED dev/report API offers no route to
+    reinterpret a sealed artifact as dev.
+    """
+    global _AUTHORITY
+    _AUTHORITY = _build_authority_from_manifest(manifest_path)
+    return _AUTHORITY
+
+
+def load_dev_results(path) -> list[EvalRecord]:
     """Load an authorized DEV artifact.
 
-    CLASSIFY BEFORE PARSE. The authorization decision is made from the trusted
-    registry before the file is opened, so a sealed artifact is never read --
-    not even to discover what it contains.
+    CLASSIFY BEFORE PARSE. Authorization is decided from the trusted authority
+    before the file is parsed, so a sealed artifact's records are never read.
 
-    There is deliberately no `unseal` parameter. A sealed or unknown artifact
-    raises, and no argument can change that: a generic boolean switch would also
-    unlock real test/Q42 output before Phase 40.
+    There is deliberately NO authority parameter and NO `unseal` parameter. A
+    caller cannot supply, replace or relabel the classification authority
+    through this API, and no argument can turn a sealed artifact into a dev one.
     """
-    kind, reg = registry.classify(path)          # <-- before any read
+    authority = trusted_authority()      # internal; never caller-supplied
+    kind, reg = authority.classify(path)  # before any record is parsed
     if kind == SEALED_KIND:
         raise SealError(
-            f"artifact {reg.artifact_id!r} is registered SEALED; dev-facing "
-            f"loading is refused and the file was not opened. Sealed results "
-            f"are readable only through the Phase 40 unblind entry point, "
-            f"which does not exist yet.")
+            f"artifact {reg.artifact_id!r} is classified SEALED by the trusted "
+            f"authority; dev-facing loading is refused and no record was "
+            f"parsed. Sealed results are readable only through the Phase 40 "
+            f"unblind entry point, which does not exist yet.")
     if kind != DEV_KIND:
         raise SealError(
             "artifact is not a registered dev artifact (unregistered, moved, "
             "copied, or its bytes no longer match the registered hash). "
-            "Classification fails closed: unknown is refused, never treated "
-            "as dev.")
+            "Classification fails closed: unknown is refused, never dev.")
     raw = [json.loads(l) for l in
            Path(reg.canonical_path).read_text(encoding="utf-8").splitlines()
            if l.strip()]
@@ -236,20 +353,21 @@ def load_dev_results(path, registry: ArtifactRegistry) -> list[EvalRecord]:
     return [from_dict(r) for r in raw]
 
 
-def sealed_metadata(path, registry: ArtifactRegistry) -> dict:
+def sealed_metadata(path) -> dict:
     """Non-content integrity/provenance for a sealed artifact.
 
-    This function NEVER OPENS THE RESULT FILE. Every value comes from the
-    trusted manifest, so it is structurally incapable of disclosing families,
-    conditions, statuses, scores, error types, questions, answers, SQL or
-    execution results. `item_count` is the manifest's predeclared count, not a
-    count of parsed records.
+    It may read RAW BYTES to verify the registered SHA256, but it never parses
+    or exposes evaluation-record content. Every returned value comes from the
+    trusted manifest, so it cannot disclose families, conditions, statuses,
+    scores, error types, questions, answers, SQL or execution results.
+    `item_count` is the manifest's predeclared count, not a count of records.
     """
-    kind, reg = registry.classify(path)
+    authority = trusted_authority()
+    kind, reg = authority.classify(path)
     if kind != SEALED_KIND:
         raise SealError(
-            f"sealed_metadata is only defined for a registered sealed "
-            f"artifact; this one classifies as {kind!r}")
+            f"sealed_metadata is only defined for an artifact the trusted "
+            f"authority classifies as sealed; this one classifies as {kind!r}")
     return {
         "artifact_id": reg.artifact_id,
         "artifact_path": reg.canonical_path,
