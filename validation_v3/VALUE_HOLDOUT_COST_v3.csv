@@ -1,0 +1,10 @@
+value,attribute_type,supporting_companies,supporting_rows,total_support,train_support,dev_support,test_support,train_companies,test_companies,removed_train_items,removed_A_fields,removed_B_items,remaining_attribute_coverage
+ISO 22301,certifications,3,3,3,2,0,1,2,1,2,2,2,98.37
+OHSAS 18001,certifications,8,8,8,5,0,3,5,3,5,5,5,95.93
+Battery Module Assembly,processes,8,8,8,3,1,4,3,4,3,3,3,97.97
+Battery Pack Assembly,processes,7,7,7,2,1,4,2,4,2,2,2,98.65
+Cell Testing,processes,10,10,10,5,1,4,5,4,5,5,5,96.62
+Welding,processes,15,15,15,11,1,3,11,3,11,11,11,92.57
+Battery Collection,services,5,5,5,2,1,2,2,2,2,2,2,98.65
+Battery Engineering,services,15,15,15,9,2,4,9,4,9,9,9,93.92
+Battery Repurposing,services,5,5,5,2,1,2,2,2,2,2,2,98.65

@@ -1,0 +1,74 @@
+{
+  "arms": {
+    "A": {
+      "artifact": null,
+      "exposure_count": null,
+      "scanned": false,
+      "sha256": null
+    },
+    "B": {
+      "artifact": null,
+      "exposure_count": null,
+      "scanned": false,
+      "sha256": null
+    },
+    "BC": {
+      "artifact": null,
+      "exposure_count": null,
+      "scanned": false,
+      "sha256": null
+    },
+    "BD": {
+      "artifact": null,
+      "exposure_count": null,
+      "scanned": false,
+      "sha256": null
+    },
+    "C": {
+      "artifact": null,
+      "exposure_count": null,
+      "scanned": false,
+      "sha256": null
+    },
+    "D": {
+      "artifact": null,
+      "exposure_count": null,
+      "scanned": false,
+      "sha256": null
+    }
+  },
+  "frozen_date": "2026-08-24",
+  "held_out_compositions": [
+    [
+      "certifications",
+      "processes"
+    ]
+  ],
+  "held_out_operations": [
+    "argmax_topk",
+    "group_by",
+    "limit_only"
+  ],
+  "held_out_values": {
+    "certifications": [
+      "ISO 22301",
+      "OHSAS 18001"
+    ],
+    "processes": [
+      "Battery Module Assembly",
+      "Battery Pack Assembly",
+      "Cell Testing",
+      "Welding"
+    ],
+    "services": [
+      "Battery Collection",
+      "Battery Engineering",
+      "Battery Repurposing"
+    ]
+  },
+  "ledger": "FACT_EXPOSURE_LEDGER_v3",
+  "note": "initialised at Phase 9 before any dataset exists. Each dataset phase re-runs the scanner on its final rendered strings and updates its arm entry; every arm must reach exposure_count 0.",
+  "phase": 9,
+  "policy_version": "holdout_v3.0",
+  "registry_sha256": "6334628f3b39c2e5ab28e244864702ce3a036526412b030044b395c6ec6665e8"
+}

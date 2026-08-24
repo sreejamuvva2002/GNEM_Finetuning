@@ -1,0 +1,284 @@
+{
+  "answer_type_conventions": {
+    "answer_types": [
+      "set",
+      "scalar",
+      "top_k",
+      "multi_part"
+    ],
+    "frozen_by": "Phase 7 grade_v3 semantics",
+    "multi_part_note": "A multi_part task carries parts: [{part_id, answer_type, target_columns}], and `target_columns` remains the flattened ordered union so the frozen Phase 7 grader keeps working unchanged. Phase 7's stand-in treated each target column as one part, which cannot express a multi-part question whose parts are different OPERATIONS (a count and a set); this serialization can.",
+    "multi_part_serialization": "parts_list_v1",
+    "target_columns": "non-empty ordered list[str]; scalar requires exactly 1"
+  },
+  "composition_holdouts": {
+    "arity": 2,
+    "collateral_scope": "structured-task exclusion only. Individual component literals remain independently train-visible unless separately selected on the VALUE axis. An unseen COMBINATION is not an unseen VALUE.",
+    "families": [
+      [
+        "processes",
+        "services"
+      ],
+      [
+        "processes",
+        "certifications"
+      ],
+      [
+        "services",
+        "certifications"
+      ]
+    ],
+    "held_out_sets": [
+      [
+        "certifications",
+        "processes"
+      ]
+    ],
+    "min_test_rows": 10,
+    "min_train_rows": 20,
+    "superset_rule": "for held-out H and training set T: assert not H subset-of T"
+  },
+  "entity_holdouts": {
+    "counts": {
+      "dev": 17,
+      "test": 35,
+      "train": 141
+    },
+    "dev_companies": [
+      "ACM Georgia LLC",
+      "AVS",
+      "Daesol Material Georgia, LLC",
+      "Dorsett Industries Inc.",
+      "Flambeau Inc.",
+      "Hollingsworth & Vose Co.",
+      "Hwashin",
+      "Linde + Wiemann",
+      "Magna International",
+      "Nile Automotive",
+      "OTR Wheel Engineering Inc.",
+      "Peterson Spring",
+      "Pirelli Tire North America LLC",
+      "SungEel Recycling Park Georgia",
+      "TCI Powder Coatings",
+      "Wabash National Corp.",
+      "Yazaki North America"
+    ],
+    "source": "frozen Phase 3 split; nothing re-decided here",
+    "test_companies": [
+      "Ajin Georgia",
+      "Apache Mills Inc.",
+      "Arising Industries Inc.",
+      "Aurubis",
+      "Bosal Industries Georgia",
+      "DAS Corp.",
+      "DaeChang Seat Company",
+      "Dinex Emissions Inc.",
+      "Duckyang",
+      "EVCO Plastics",
+      "Enplas USA Inc.",
+      "Freudenberg-NOK",
+      "Goodyear Tire & Rubber Co.",
+      "Hyundai & LG Energy Solution (LGES)",
+      "Hyundai Industrial Co.",
+      "IMS Gear Georgia Inc.",
+      "KTX America Corporation",
+      "Kyungshin America Corp.",
+      "MAT Heavy Duty",
+      "Maxxis International USA",
+      "Mobis Alabama LLC",
+      "Perkins Small Engines LLC",
+      "QSR Inc.",
+      "Racemark International LLC",
+      "Robert Bosch LLC",
+      "SKF USA Inc.",
+      "Seohan Auto USA",
+      "Solvay Specialty Polymers USA LLC",
+      "Southern Switches Corp.",
+      "Superior Essex Inc.",
+      "TI Fluid Systems",
+      "Tie Down Engineering",
+      "Volvo Cars USA",
+      "Woodbridge Foam Corp.",
+      "ZF Gainesville LLC"
+    ]
+  },
+  "exposure_policy": {
+    "arms": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "BC",
+      "BD"
+    ],
+    "invariant": "exposure_count == 0 for every held-out item, every arm",
+    "omit_policy": "omit the item, never truncate the truth -- A omits the whole field from that row's passage, B generates no QA for that (company, attribute), C/D emit no structured supervision using the value",
+    "scan_point": "final rendered strings, after chat-template rendering, system-prompt and catalogue insertion, few-shot insertion and target rendering",
+    "surfaces": [
+      "cpt_passages",
+      "system_prompts",
+      "user_messages",
+      "assistant_targets",
+      "sql_text",
+      "schema_text",
+      "value_catalogues",
+      "fewshot_text",
+      "combined_renderings",
+      "repeat_renderings"
+    ]
+  },
+  "fewshot_eligibility": {
+    "conditions": [
+      "every referenced row is train-side",
+      "contains no held-out value literal anywhere",
+      "operation_family not held out and no held-out construct present",
+      "component set C contains no held-out set H (not H subset-of C)",
+      "logical_fingerprint collides with no probe item",
+      "no held-out entity literal",
+      "any shipped schema text or value catalogue is filtered to training-visible values",
+      "eligibility is checked on FINAL RENDERED chat messages"
+    ],
+    "rule": "fail closed -- unprovable eligibility means ineligible"
+  },
+  "frozen_by": "explicit user authorization after read-only decision analysis",
+  "frozen_date": "2026-08-24",
+  "frozen_inputs": {
+    "datasets_v3/canonical_records_v3.jsonl": "42851c0a2e93209ac5d37e73ce07447009e038b9db625004212722d7738e6488",
+    "datasets_v3/company_split_groups_v3.csv": "a59d673ac9acafd1f70f60cf560491c32d8d11bacdab3c9bc5d77016b536b701",
+    "datasets_v3/gnem_v3.sqlite": "7437c746cb118f3d5bb9edcc34f500e0c9f764358a19fa05766dc526d63bb08b"
+  },
+  "logical_fingerprint": {
+    "canonicalisation": "json sort_keys, separators (,:), lists sorted",
+    "construction": "lfp1: + sha256(canonical utf-8)[:32]",
+    "excluded": [
+      "question wording",
+      "SQL formatting",
+      "alias spelling",
+      "column order",
+      "example_id",
+      "dataset path",
+      "split",
+      "split_group",
+      "condition",
+      "seed"
+    ],
+    "semantic_fields": [
+      "operation_family",
+      "fields_used",
+      "values_used",
+      "target_columns",
+      "answer_type",
+      "join_arity",
+      "required_constructs",
+      "entity_dependent"
+    ],
+    "version": "lfp1"
+  },
+  "operation_holdouts": {
+    "applied_to_real_pool_at": "Phase 12",
+    "basis": "README Phase 22 requires GROUP BY, LIMIT and argmax/top-k to appear 0 times in training gold, so all three are held out",
+    "constructs": {
+      "argmax_topk": [
+        "ORDER BY",
+        "LIMIT"
+      ],
+      "group_by": [
+        "GROUP BY"
+      ],
+      "limit_only": [
+        "LIMIT"
+      ]
+    },
+    "held_out_families": [
+      "argmax_topk",
+      "group_by",
+      "limit_only"
+    ],
+    "multi_family_rule": "exactly one operation_family per task by precedence; a task matching more than one HELD-OUT family is excluded from training entirely (fail closed)",
+    "precedence": [
+      "argmax_topk",
+      "group_by",
+      "limit_only"
+    ]
+  },
+  "parameters": {
+    "attribute_coverage_floor_pct": 85.0,
+    "holdout_counts": {
+      "certifications": 2,
+      "processes": 4,
+      "services": 3
+    },
+    "min_test_support": 1,
+    "min_train_support": 2,
+    "per_value_coverage_threshold_pct": 85.0,
+    "selection_objective": "maximise total test support",
+    "support_band": [
+      3,
+      15
+    ],
+    "tie_breaks": [
+      "fewest train rows lost",
+      "fewest dev rows lost",
+      "lexicographic value name"
+    ]
+  },
+  "phase": 9,
+  "policy_version": "holdout_v3.0",
+  "registry": "HOLDOUT_REGISTRY_v3",
+  "support_unit_provenance": {
+    "eligibility_unit": "row_occurrences",
+    "note": "README's frozen 26/13/8 table is reproduced by ROW-OCCURRENCE support; `supporting_companies` separately reports exact trimmed company counts (README:700). The distinction is recorded, never hidden.",
+    "readme_candidate_table": {
+      "certifications": 8,
+      "processes": 26,
+      "services": 13
+    },
+    "reproduced_by": "row-occurrence support (verified cell-by-cell)",
+    "supporting_companies_unit": "exact trimmed company names"
+  },
+  "timestamp_note": "the authoritative freeze timestamp is the git commit date; a runtime timestamp is deliberately not embedded because it would break the determinism gate",
+  "value_holdouts": {
+    "certifications": {
+      "candidate_pool_size": 4,
+      "remaining_attribute_coverage_companies_pct": 94.83,
+      "remaining_attribute_coverage_rows_pct": 95.12,
+      "selected": [
+        "ISO 22301",
+        "OHSAS 18001"
+      ],
+      "train_companies_lost": 6,
+      "train_companies_total": 116,
+      "train_rows_lost": 6,
+      "train_rows_total": 123
+    },
+    "processes": {
+      "candidate_pool_size": 20,
+      "remaining_attribute_coverage_companies_pct": 87.94,
+      "remaining_attribute_coverage_rows_pct": 88.51,
+      "selected": [
+        "Battery Module Assembly",
+        "Battery Pack Assembly",
+        "Cell Testing",
+        "Welding"
+      ],
+      "train_companies_lost": 17,
+      "train_companies_total": 141,
+      "train_rows_lost": 17,
+      "train_rows_total": 148
+    },
+    "services": {
+      "candidate_pool_size": 11,
+      "remaining_attribute_coverage_companies_pct": 92.2,
+      "remaining_attribute_coverage_rows_pct": 92.57,
+      "selected": [
+        "Battery Collection",
+        "Battery Engineering",
+        "Battery Repurposing"
+      ],
+      "train_companies_lost": 11,
+      "train_companies_total": 141,
+      "train_rows_lost": 11,
+      "train_rows_total": 148
+    }
+  }
+}

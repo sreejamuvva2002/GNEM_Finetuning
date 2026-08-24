@@ -41,9 +41,9 @@ Maintain this block as work progresses:
 
 ```text
 PROTOCOL_STATUS: FROZEN
-CURRENT_PHASE: 8
-LAST_COMPLETED_PHASE: 7
-NEXT_PHASE: Phase 9 — Freeze the Holdout Registry and Fact Exposure Ledger
+CURRENT_PHASE: 9
+LAST_COMPLETED_PHASE: 8
+NEXT_PHASE: Phase 10 — `train_A_cpt_v3.jsonl`
 TEST_STATUS: LOCKED_UNTIL_PHASE_40
 ```
 
