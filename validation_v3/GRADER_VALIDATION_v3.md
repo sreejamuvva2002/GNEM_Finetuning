@@ -6,7 +6,7 @@ Phase 7 — SQL execution and grading. README: this gate **blocks the canonical 
 
 ```text
 datasets_v3/gnem_v3.sqlite   7437c746cb118f3d5bb9edcc34f500e0c9f764358a19fa05766dc526d63bb08b
-finetune/sqlexec_v3.py       fe6e2619f3cf0057ee3806f548217b8f53a142b6ab0c05f100e77d54bc06f14c   (sqlexec_v3.0)
+finetune/sqlexec_v3.py       2825c2a30c0d8a0691f3f4231c47d592967232e85e881044989d0519d3687e84   (sqlexec_v3.0)
 finetune/grade_v3.py         619b9350e38ac976ad5ce9d4ba377fdcc4504e00b9ac34ef49fa47f6931b4cbd   (grade_v3.0)
 ```
 
@@ -45,16 +45,16 @@ Initialization order is fixed:
 
 `sqlite3.Connection.set_authorizer` inspects every object the prepared statement actually touches, so it cannot be evaded by aliases, quoting, CTEs, subqueries, comments or formatting. Lexical validation is retained as **defence in depth only**.
 
-The discriminator, established empirically:
+Scoped rows are **materialized into temp tables**, populated from the Phase 5 scoped views. That is a security property, not an optimization: afterwards a legitimate query reads only the temp schema and never touches `main`, so the rule reduces to one forgery-proof condition:
 
 ```text
-direct base-table bypass   READ arg1='companies'  db='main'  source=None   DENY
-legitimate TEMP read       READ arg1='companies'  db=None    source=None   allow
-internal view expansion    READ ...               source=<in-scope view>   allow
-out-of-scope view          any action             source=<other scope view> DENY
+legitimate read    READ arg1='companies'  db=None    (temp binding)   allow
+ANY bypass         READ ...               db='main'                    DENY
 ```
 
-Only *known physical view* sources are judged, because `source` is also how SQLite reports CTE and subquery names — judging unrecognized sources would reject valid model SQL. This was caught by a legitimate-CTE test during development.
+**`source` is deliberately never consulted.** An earlier design keyed on `source in LOGICAL_TABLES` as evidence that a read came from the trusted binding. That is unsound: SQLite reports a user-defined CTE named `companies` with `source == "companies"`, identically to the trusted binding, so the check was forgeable by naming a CTE after a logical table. Review found a working structural-only bypass, `WITH companies AS (SELECT * FROM train_kb_companies) SELECT COUNT(*) FROM companies`, which returned 148 instead of being denied. The mechanism was redesigned rather than patched: the schema an object lives in cannot be forged by naming, so authorization now keys on it alone.
+
+Materialization preserves the data exactly — all 12 scope x table combinations are row- and column-identical to their Phase 5 views, including NULL city/county and the AVS trailing-space address.
 
 ### Deny surface
 
@@ -65,7 +65,9 @@ Only *known physical view* sources are judged, because `source` is also how SQLi
 - `ATTACH` / `DETACH` and every write verb
 - quoted, schema-qualified, comment-obfuscated and CTE-wrapped variants
 
-**27 bypass vectors tested; all blocked** — and all still blocked with the lexical layer disabled, proving the authorizer is the primary defence rather than a backstop.
+- CTE-name collisions wrapping every physical view
+
+**46 bypass vectors tested; all blocked** — including **19 CTE-name-collision vectors** covering all four logical names against every scope's physical views, plus nested, quoted, aliased, subquery-wrapped, joined and comment-obfuscated forms. All remain blocked with the lexical layer disabled, so the structural layer is the primary defence and not a backstop.
 
 ## Scope results
 
@@ -168,8 +170,9 @@ Every item receives exactly one status from the frozen vocabulary: `correct`, `i
 | `child_membership_train_dev_kb` | PASS | all child row_ids within 165 scoped parents |
 | `child_membership_full_kb` | PASS | all child row_ids within 205 scoped parents |
 | `train_kb_excludes_dev_and_test` | PASS | train 148 ⊂ train_dev 165 ⊂ full 205; 0 of 40 test rows visible in train_kb |
-| `full_bypass_matrix_blocked` | PASS | 27 vectors blocked (4 base tables, 12 physical views, 4 schema tables, pragma TVFs, PRAGMA/ATTACH, quoted/CTE/comment forms) |
-| `structural_layers_alone_block_all_bypasses` | PASS | lexical layer disabled; 27 vectors still denied by the EXPLAIN pre-check + per-object authorizer |
+| `full_bypass_matrix_blocked` | PASS | 46 vectors blocked (4 base tables, 12 physical views, 19 CTE-name collisions, 4 schema tables, pragma TVFs, PRAGMA/ATTACH, quoted/comment forms) |
+| `cte_name_collision_blocked_structurally` | PASS | 19 CTE-name-collision vectors denied by the structural layer with lexical validation disabled |
+| `structural_layers_alone_block_all_bypasses` | PASS | lexical layer disabled; 46 vectors still denied by the EXPLAIN pre-check + per-object authorizer |
 | `structural_layers_allow_legitimate_sql` | PASS | bare/alias/CTE/nested-CTE/subquery/quoted/3-table-join all permitted |
 | `all_write_operations_rejected` | PASS | 10 mutating operations rejected |
 | `db_sha_unchanged_after_write_attempts` | PASS | 7437c746cb118f3d5bb9edcc34f500e0c9f764358a19fa05766dc526d63bb08b |

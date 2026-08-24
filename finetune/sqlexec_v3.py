@@ -142,38 +142,26 @@ def validate_sql_lexically(sql: str) -> None:
 # Structural authorization -- PRIMARY defence
 # ---------------------------------------------------------------------------
 def _make_authorizer(scope: str):
-    in_scope_views = set(PHYSICAL_VIEWS[scope])
-    out_of_scope_views = set(ALL_PHYSICAL_VIEWS) - in_scope_views
+    """Per-object structural authorization.
+
+    THE RULE: a legitimate query reads only the materialized temp bindings, so
+    ANY read of the `main` schema is a bypass -- a raw base table, a physical
+    scoped view of any scope, or either hidden behind a CTE, alias or subquery.
+    `source` is deliberately never consulted, because a user CTE can be named
+    after a logical table and forge it.
+    """
+    del scope  # membership is already materialized into the temp bindings
 
     def authorizer(action, arg1, arg2, db_name, source):
-        # Only reads and selects. PRAGMA (and therefore every pragma_* table
-        # valued function), ATTACH/DETACH and every write action are refused.
-        if action in (sqlite3.SQLITE_SELECT, sqlite3.SQLITE_FUNCTION):
-            pass
-        elif action == sqlite3.SQLITE_READ:
-            pass
-        else:
+        # Reads only. PRAGMA (hence every pragma_* table-valued function),
+        # ATTACH/DETACH and every write action are refused outright.
+        if action not in (sqlite3.SQLITE_SELECT, sqlite3.SQLITE_FUNCTION,
+                          sqlite3.SQLITE_READ):
             return sqlite3.SQLITE_DENY
-
-        # Only *known physical view* sources are judged: `source` is also how
-        # SQLite reports CTE and subquery names, and those are legitimate and
-        # arbitrary, so denying an unrecognized source would reject valid model
-        # SQL (a legitimate-CTE test caught exactly that).
-        if source is not None and source in out_of_scope_views:
-            return sqlite3.SQLITE_DENY
-
-        if action == sqlite3.SQLITE_READ and arg1:
-            name = arg1.lower()
-            if name in INTROSPECTION_TABLES:
+        if action == sqlite3.SQLITE_READ:
+            if db_name == "main":
                 return sqlite3.SQLITE_DENY
-            # Direct reference to a physical scoped view.
-            if name in ALL_PHYSICAL_VIEWS and source is None:
-                return sqlite3.SQLITE_DENY
-            # Direct reference to a raw base table in main. Reads performed by
-            # the TEMP bindings carry source == the logical view name; a read of
-            # the TEMP view itself reports no database. Only an unsourced
-            # main-schema read is a direct bypass.
-            if name in LOGICAL_TABLES and source is None and db_name == "main":
+            if arg1 and arg1.lower() in INTROSPECTION_TABLES:
                 return sqlite3.SQLITE_DENY
         return sqlite3.SQLITE_OK
 
@@ -215,12 +203,8 @@ def structural_precheck(con: sqlite3.Connection, sql: str, scope: str) -> None:
     # views themselves join the scoped companies view, so an in-scope physical
     # view may legitimately expand deeper in the chain; what distinguishes a
     # bypass is that it never entered through a binding at all.
-    entered_via_binding = any(
-        source in LOGICAL_TABLES for _a, _arg1, _a2, _db, source in events)
-    for action, arg1, _a2, db_name, source in events:
+    for action, arg1, _a2, db_name, _source in events:
         name = (arg1 or "").lower()
-        src = (source or "").lower() if source else None
-
         if action not in (sqlite3.SQLITE_SELECT, sqlite3.SQLITE_READ,
                           sqlite3.SQLITE_FUNCTION):
             raise SQLPolicyError(
@@ -228,17 +212,15 @@ def structural_precheck(con: sqlite3.Connection, sql: str, scope: str) -> None:
         if name in INTROSPECTION_TABLES:
             raise SQLPolicyError(
                 f"schema introspection via {name!r} is not permitted")
-        if src and src in ALL_PHYSICAL_VIEWS and not entered_via_binding:
+        # Forgery-proof: legitimate queries read only the materialized temp
+        # bindings, so any `main`-schema read is a bypass regardless of how it
+        # is wrapped or what any CTE is named.
+        if action == sqlite3.SQLITE_READ and db_name == "main":
+            kind = ("physical scoped view" if name in ALL_PHYSICAL_VIEWS
+                    else "raw base table")
             raise SQLPolicyError(
-                f"physical scoped view {src!r} was named directly; it is "
-                f"infrastructure. Use the logical table name instead.")
-        if src and src in (ALL_PHYSICAL_VIEWS - set(PHYSICAL_VIEWS[scope])):
-            raise SQLPolicyError(
-                f"physical view {src!r} lies outside scope {scope!r}")
-        if (action == sqlite3.SQLITE_READ and name in LOGICAL_TABLES
-                and source is None and db_name == "main"):
-            raise SQLPolicyError(
-                f"direct read of raw base table main.{name} is not permitted")
+                f"query reads {kind} main.{name}; only the scope-bound logical "
+                f"tables ({', '.join(LOGICAL_TABLES)}) may be read")
 
 
 def resolve_db_path(db_path) -> Path:
@@ -275,10 +257,19 @@ def open_scoped_connection(scope, db_path) -> sqlite3.Connection:
     con = sqlite3.connect(f"file:{path.as_posix()}?mode=ro", uri=True)
     # 2. TEMP scope bindings (before query_only -- creating them writes to temp).
     #
-    # Bound over the Phase 5 scoped views, so those views remain the single
+    # Populated FROM the Phase 5 scoped views, so those views remain the single
     # definition of what each scope contains and nothing is re-derived here.
+    #
+    # The rows are MATERIALIZED into temp tables rather than exposed through a
+    # temp VIEW over the physical view. That is a deliberate security property,
+    # not an optimization: afterwards a legitimate query reads ONLY the temp
+    # schema and never touches `main`, which makes authorization independent of
+    # `source`. `source` is not a trustworthy identity -- SQLite reports a user
+    # CTE named `companies` with source == "companies", exactly as it reports
+    # the trusted binding -- so any rule keyed on the source NAME is forgeable
+    # by naming a CTE after a logical table.
     for logical, physical in zip(LOGICAL_TABLES, PHYSICAL_VIEWS[scope]):
-        con.execute(f"CREATE TEMP VIEW {logical} AS SELECT * FROM {physical}")
+        con.execute(f"CREATE TEMP TABLE {logical} AS SELECT * FROM {physical}")
     # 3. query_only, 4. per-object structural authorizer
     con.execute("PRAGMA query_only = ON")
     con.set_authorizer(_make_authorizer(scope))

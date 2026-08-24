@@ -120,6 +120,42 @@ def main() -> int:
     for t in ("sqlite_master", "sqlite_schema", "sqlite_temp_master",
               "sqlite_temp_schema"):
         bypasses.append((t, f"SELECT COUNT(*) FROM {t}"))
+    # CTE-NAME-COLLISION MATRIX. A user CTE may be named after a logical table,
+    # so `source == "companies"` is NOT proof that a read came from the trusted
+    # binding. Every logical name x every scope's physical view, plus nested,
+    # quoted, aliased and subquery wrappings.
+    cte_collisions = []
+    for scope in X.KB_SCOPES:
+        for logical, physical in zip(X.LOGICAL_TABLES, X.PHYSICAL_VIEWS[scope]):
+            cte_collisions.append((
+                f"CTE {logical} <- {physical}",
+                f"WITH {logical} AS (SELECT * FROM {physical}) "
+                f"SELECT COUNT(*) FROM {logical}"))
+    cte_collisions += [
+        ("CTE nested chain",
+         "WITH companies AS (SELECT * FROM train_kb_companies), "
+         "x AS (SELECT * FROM companies) SELECT COUNT(*) FROM x"),
+        ("CTE quoted",
+         'WITH "companies" AS (SELECT * FROM "train_kb_companies") '
+         'SELECT COUNT(*) FROM "companies"'),
+        ("CTE aliased",
+         "WITH companies AS (SELECT * FROM train_kb_companies AS z) "
+         "SELECT COUNT(*) FROM companies c"),
+        ("CTE over subquery",
+         "WITH companies AS (SELECT * FROM (SELECT * FROM full_kb_companies)) "
+         "SELECT COUNT(*) FROM companies"),
+        ("CTE over main base table",
+         "WITH companies AS (SELECT * FROM main.companies) "
+         "SELECT COUNT(*) FROM companies"),
+        ("CTE join collision",
+         "WITH companies AS (SELECT * FROM train_kb_companies), "
+         "processes AS (SELECT * FROM train_kb_processes) "
+         "SELECT COUNT(*) FROM companies c JOIN processes p ON c.row_id=p.row_id"),
+        ("CTE comment obfuscated",
+         "WITH companies AS (SELECT * /*x*/ FROM train_kb_companies) "
+         "SELECT COUNT(*) FROM companies"),
+    ]
+    bypasses += cte_collisions
     bypasses += [
         ("pragma_table_info", "SELECT * FROM pragma_table_info('companies')"),
         ("pragma_database_list", "SELECT * FROM pragma_database_list"),
@@ -133,7 +169,8 @@ def main() -> int:
               if _executes(sql, "train_kb")]
     check("full_bypass_matrix_blocked", not leaked,
           f"{len(bypasses)} vectors blocked (4 base tables, 12 physical views, "
-          f"4 schema tables, pragma TVFs, PRAGMA/ATTACH, quoted/CTE/comment forms)"
+          f"{len(cte_collisions)} CTE-name collisions, 4 schema tables, pragma "
+          f"TVFs, PRAGMA/ATTACH, quoted/comment forms)"
           if not leaked else f"LEAKED: {leaked}")
 
     # authorizer alone, with lexical validation bypassed
@@ -172,6 +209,13 @@ def main() -> int:
                 auth_legit.append(label)
     finally:
         con.close()
+    cte_leaked = [n for n, sql in cte_collisions
+                  if _survives_structural(sql)]
+    check("cte_name_collision_blocked_structurally", not cte_leaked,
+          f"{len(cte_collisions)} CTE-name-collision vectors denied by the "
+          f"structural layer with lexical validation disabled"
+          if not cte_leaked else f"LEAKED: {cte_leaked}")
+
     check("structural_layers_alone_block_all_bypasses", not auth_leaked,
           f"lexical layer disabled; {len(bypasses)} vectors still denied by the "
           f"EXPLAIN pre-check + per-object authorizer"
@@ -277,11 +321,25 @@ def main() -> int:
     if failed:
         raise Gate(f"{len(failed)} gate(s) failed: {failed}")
 
-    _write_audit(db_sha, checks, battery_rows, sem_detail, bypasses)
+    _write_audit(db_sha, checks, battery_rows, sem_detail, bypasses,
+                 cte_collisions)
     print(f"\nAll Phase 7 gates passed ({len(checks)} checks).")
     print(f"  executor {X.EXECUTOR_VERSION}  sha256 {sha256_file(srcs[0])}")
     print(f"  grader   {G.GRADER_VERSION}  sha256 {sha256_file(srcs[1])}")
     return 0
+
+
+def _survives_structural(sql: str, scope: str = "train_kb") -> bool:
+    """True if the statement runs with the LEXICAL layer disabled."""
+    c = X.open_scoped_connection(scope, DB)
+    try:
+        X.structural_precheck(c, sql, scope)
+        c.execute(sql).fetchall()
+        return True
+    except Exception:  # noqa: BLE001
+        return False
+    finally:
+        c.close()
 
 
 def _executes(sql: str, scope: str) -> bool:
@@ -442,7 +500,8 @@ def _degenerate_battery():
     return out, rows
 
 
-def _write_audit(db_sha, checks, battery_rows, sem_detail, bypasses) -> None:
+def _write_audit(db_sha, checks, battery_rows, sem_detail, bypasses,
+                 cte_collisions) -> None:
     ex = sha256_file(ROOT / "finetune" / "sqlexec_v3.py")
     gr = sha256_file(ROOT / "finetune" / "grade_v3.py")
     L = ["# GRADER_VALIDATION_v3\n",
@@ -486,16 +545,28 @@ def _write_audit(db_sha, checks, battery_rows, sem_detail, bypasses) -> None:
          "statement actually touches, so it cannot be evaded by aliases, quoting, "
          "CTEs, subqueries, comments or formatting. Lexical validation is retained "
          "as **defence in depth only**.\n",
-         "The discriminator, established empirically:\n", "```text",
-         "direct base-table bypass   READ arg1='companies'  db='main'  source=None   DENY",
-         "legitimate TEMP read       READ arg1='companies'  db=None    source=None   allow",
-         "internal view expansion    READ ...               source=<in-scope view>   allow",
-         "out-of-scope view          any action             source=<other scope view> DENY",
+         "Scoped rows are **materialized into temp tables**, populated from the "
+         "Phase 5 scoped views. That is a security property, not an optimization: "
+         "afterwards a legitimate query reads only the temp schema and never "
+         "touches `main`, so the rule reduces to one forgery-proof condition:\n",
+         "```text",
+         "legitimate read    READ arg1='companies'  db=None    (temp binding)   allow",
+         "ANY bypass         READ ...               db='main'                    DENY",
          "```\n",
-         "Only *known physical view* sources are judged, because `source` is also "
-         "how SQLite reports CTE and subquery names — judging unrecognized sources "
-         "would reject valid model SQL. This was caught by a legitimate-CTE test "
-         "during development.\n",
+         "**`source` is deliberately never consulted.** An earlier design keyed on "
+         "`source in LOGICAL_TABLES` as evidence that a read came from the trusted "
+         "binding. That is unsound: SQLite reports a user-defined CTE named "
+         "`companies` with `source == \"companies\"`, identically to the trusted "
+         "binding, so the check was forgeable by naming a CTE after a logical "
+         "table. Review found a working structural-only bypass, "
+         "`WITH companies AS (SELECT * FROM train_kb_companies) SELECT COUNT(*) "
+         "FROM companies`, which returned 148 instead of being denied. The "
+         "mechanism was redesigned rather than patched: the schema an object "
+         "lives in cannot be forged by naming, so authorization now keys on it "
+         "alone.\n",
+         "Materialization preserves the data exactly — all 12 scope x table "
+         "combinations are row- and column-identical to their Phase 5 views, "
+         "including NULL city/county and the AVS trailing-space address.\n",
          "### Deny surface\n",
          f"- all 4 raw base tables via `main.`\n"
          f"- all 12 Phase 5 physical scoped views\n"
@@ -504,9 +575,13 @@ def _write_audit(db_sha, checks, battery_rows, sem_detail, bypasses) -> None:
          f"- `pragma_*` table-valued functions and direct `PRAGMA`\n"
          f"- `ATTACH` / `DETACH` and every write verb\n"
          f"- quoted, schema-qualified, comment-obfuscated and CTE-wrapped variants\n",
-         f"**{len(bypasses)} bypass vectors tested; all blocked** — and all still "
-         "blocked with the lexical layer disabled, proving the authorizer is the "
-         "primary defence rather than a backstop.\n",
+         f"- CTE-name collisions wrapping every physical view\n",
+         f"**{len(bypasses)} bypass vectors tested; all blocked** — including "
+         f"**{len(cte_collisions)} CTE-name-collision vectors** covering all four "
+         "logical names against every scope's physical views, plus nested, "
+         "quoted, aliased, subquery-wrapped, joined and comment-obfuscated "
+         "forms. All remain blocked with the lexical layer disabled, so the "
+         "structural layer is the primary defence and not a backstop.\n",
          "## Scope results\n",
          "| scope | logical `companies` rows | child tables |", "|---|---|---|"]
     for s, n in EXPECTED_SCOPE_ROWS.items():
