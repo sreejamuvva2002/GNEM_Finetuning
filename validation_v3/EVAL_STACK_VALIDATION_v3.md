@@ -18,11 +18,11 @@ finetune/phase7_grader_tests.py    bcdbdbb67211321c8ebd50e2d5a8eeb6908c5fb7b7b69
 ## Stack modules
 
 ```text
-finetune/eval_records_v3.py               46e4f4502f7cd02ede534069704a4273adf07ad33175a8dfa89aae590065b8e2
+finetune/eval_records_v3.py               2b92d82a49ccd3d8a3a901ce14b33569c665c255ef9120c3fb302cc2f83058f9
 finetune/eval_stats_v3.py                 28add5267e6d77abd589243ab52dcdbbddaa612d7b8b1e733289af08132f9f24
 finetune/eval_report_v3.py                75113c4372dd2ae76b2e146a5e51774886b5df22cafcda56f09d46b5ec7799fa
 finetune/eval_verify_v3.py                839a04a04e17f293060385b38a48f7dfc293d2a0d1801dbade4d846c5629f665
-finetune/phase8_eval_stack_tests.py       8829672643c2be2039581d9da906228d65e159bf4d05731179a892c99cc9d5fd
+finetune/phase8_eval_stack_tests.py       61cbce89309d458450d0040193df17b00a42a64d24865f0ffe4ffeb8dda3d414
 ```
 
 Rebuilt v3-native rather than ported. v2's stack is 4,213 lines and `report.py` alone carries 111 retired-concept references; README Phase 8 warns that recreating it "would add risk rather than remove it". Only the statistical METHODS were carried across as concepts, reimplemented against the v3 schema — no v2 file was copied.
@@ -304,6 +304,7 @@ None of 15 retired concepts appear in the stack, and no v2 repository path or v2
 | `assert_fully_regraded_accepts_current_regrader` | PASS | a record genuinely produced by the current regrade() build passes (assert_fully_regraded returns None / does not raise) |
 | `fresh_grading_rejects_duplicate_part_id` | PASS | fresh grading correctly refuses a duplicate declared part_id |
 | `regrade_rejects_duplicate_part_id_same_as_fresh_grading` | PASS | a duplicate declared part_id must fail closed on regrade exactly as it does on fresh grading, not silently compare the same retained evidence twice and certify it correct: status=invalid_output task=0.0 |
+| `evalrecord_rejects_recomputed_without_regrader_sha256` | PASS | RecordSchemaError: regrade_outcome is 'recomputed' but regrader_sha256 is None -- a record cannot c |
 
 ## Fault tests
 

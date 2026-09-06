@@ -144,6 +144,17 @@ class EvalRecord:
             raise RecordSchemaError(
                 f"regrade_outcome {self.regrade_outcome!r} not in "
                 f"{(None, *REGRADE_OUTCOMES)}")
+        # A record claiming "recomputed" without naming WHICH regrader build
+        # produced it is the same category of gap the third correction round
+        # found and closed one level up (assert_fully_regraded checking
+        # grader identity but not regrader identity) -- closed here too, at
+        # construction time, so a record can never claim genuine
+        # recomputation without carrying the evidence for it.
+        if self.regrade_outcome == "recomputed" and self.regrader_sha256 is None:
+            raise RecordSchemaError(
+                "regrade_outcome is 'recomputed' but regrader_sha256 is None "
+                "-- a record cannot claim genuine recomputation without "
+                "naming which regrader build produced it")
 
     def to_dict(self) -> dict:
         return asdict(self)

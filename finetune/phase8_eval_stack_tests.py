@@ -1174,6 +1174,21 @@ def _regrade_correction_checks() -> list[tuple[str, bool, str]]:
         f"retained evidence twice and certify it correct: "
         f"status={rg_dup.status} task={rg_dup.task_result_correctness}")
 
+    # ---- self-directed sweep, applying the same bug category one level up:
+    # a record cannot claim regrade_outcome="recomputed" without naming
+    # WHICH regrader build produced it -- the same "claims a state without
+    # the evidence for it" pattern every audit round has found, closed here
+    # at EvalRecord construction time itself, not just in assert_fully_regraded.
+    try:
+        _rec("fx_recomputed_without_regrader_sha256", "structured_heldin",
+            "correct", 1.0, 1.0, regrade_outcome="recomputed")
+        rec("evalrecord_rejects_recomputed_without_regrader_sha256", False,
+            "*** NOT RAISED -- a hand-constructed record could claim genuine "
+            "recomputation with no evidence of which regrader produced it ***")
+    except R.RecordSchemaError as e:
+        rec("evalrecord_rejects_recomputed_without_regrader_sha256", True,
+            f"RecordSchemaError: {str(e)[:80]}")
+
     return out
 
 
