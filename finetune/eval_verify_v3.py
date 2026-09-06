@@ -214,6 +214,26 @@ def _regrade_multipart(r: R.EvalRecord, grader_sha256: str) -> R.EvalRecord:
     if not r.parts:
         return _replace(r, regrade_outcome="insufficient_evidence")
 
+    # Each part's OWN metadata must be validated before it's ever compared --
+    # reproduced as a live bug: regrading a retained record whose declared
+    # part carried target_columns=[] silently reused compare_results with
+    # zero projected columns, certifying 999 as "correct" against gold 1.
+    # Fresh grading (grade_multipart) already validates this; regrade must
+    # apply the identical check, not a looser one.
+    for p in r.parts:
+        try:
+            G.validate_item_metadata(
+                {"answer_type": p.get("answer_type"),
+                 "target_columns": p.get("target_columns")})
+        except G.GraderMetadataError as e:
+            return _replace(
+                r, status="invalid_output", task_result_correctness=0.0,
+                strict_result_schema_accuracy=0.0,
+                error_type="GraderMetadataError",
+                error_detail=f"part {p.get('part_id')!r}: {e}",
+                grader_version=G.GRADER_VERSION, grader_sha256=grader_sha256,
+                regrade_outcome="recomputed")
+
     pred_parts = (r.execution_result or {}).get("parts", {}) \
         if isinstance(r.execution_result, dict) else {}
     gold_parts = (r.gold or {}).get("parts", {}) if isinstance(r.gold, dict) else {}
@@ -236,14 +256,22 @@ def _regrade_multipart(r: R.EvalRecord, grader_sha256: str) -> R.EvalRecord:
         # verified.
         return _replace(r, regrade_outcome="insufficient_evidence")
 
-    all_correct = all(gr.status == "correct" for _, gr in outcomes)
     # extra_present must be retained alongside "parts" (grade_v3.grade_multipart
     # sets it in GradeResult.metrics) so regrade can reproduce the SAME
     # strict-schema penalty an extra undeclared statement earns at fresh
     # grading time -- regrade never re-parses raw_output, so without this the
-    # penalty would silently disappear on regrade.
-    extra_present = bool((r.execution_result or {}).get("extra_present", False)) \
-        if isinstance(r.execution_result, dict) else False
+    # penalty would silently disappear on regrade. Reproduced as a live bug:
+    # a MISSING or explicitly null "extra_present" defaulted to False,
+    # meaning "confirmed no extra statement" -- but absent evidence proves
+    # nothing either way, so it must make the whole item insufficient, not a
+    # confident pass. Only an actual bool value is trusted.
+    exec_result = r.execution_result if isinstance(r.execution_result, dict) else {}
+    extra_present_raw = exec_result.get("extra_present")
+    if not isinstance(extra_present_raw, bool):
+        return _replace(r, regrade_outcome="insufficient_evidence")
+    extra_present = extra_present_raw
+
+    all_correct = all(gr.status == "correct" for _, gr in outcomes)
     strict_ok = (all(gr.strict_result_schema_accuracy == 1.0 for _, gr in outcomes)
                 and not extra_present)
     summary = "; ".join(f"{pid}:{gr.status}" for pid, gr in outcomes)

@@ -829,10 +829,13 @@ def _regrade_correction_checks() -> list[tuple[str, bool, str]]:
     fx19 = _rec("fx19_multipart_regrade_recomputes", "structured_paraphrase",
                "correct", 1.0, 1.0, answer_type="multi_part",
                target_columns=("n", "company"), parts=mp_parts,
+               # extra_present must be explicit -- a prediction with no extra
+               # statement is honestly False, not merely absent.
                result={"parts": {
                    "count": {"columns": ["n"], "rows": [[2]]},
                    "companies": {"columns": ["company"],
-                                "rows": [["A"], ["WRONG"]]}}},
+                                "rows": [["A"], ["WRONG"]]}},
+                      "extra_present": False},
                gold={"parts": {
                    "count": {"columns": ["n"], "rows": [[2]]},
                    "companies": {"columns": ["company"],
@@ -967,10 +970,26 @@ def _regrade_correction_checks() -> list[tuple[str, bool, str]]:
     # grader IDENTITY, not merely count recomputed==total (reproduced: a
     # record regraded under a STALE grader build previously rendered "fully
     # regraded under the current grader").
+    # MUST carry real retained evidence -- reproduced as a test-quality bug:
+    # a fixture with execution_result=None regrades to "insufficient_evidence"
+    # regardless of grader_sha256, so the earlier version of this test passed
+    # for the wrong reason (any non-"recomputed" outcome fails the gate) and
+    # never actually isolated stale-grader-IDENTITY rejection specifically.
     stale_grader_rec = _rec("stale_grader_fx", "structured_heldin", "correct",
-                           1.0, 1.0, grader_version="grade_v3.0",
+                           1.0, 1.0,
+                           raw="SELECT company FROM companies WHERE row_id = 3",
+                           sql="SELECT company FROM companies WHERE row_id = 3",
+                           result={"columns": ["company"], "rows": [["X"]]},
+                           gold={"columns": ["company"], "rows": [["X"]]},
+                           grader_version="grade_v3.0",
                            grader_sha256="STALE_OLD_GRADER_SHA")
     stale_regraded = V.regrade([stale_grader_rec], grader_sha256="STALE_OLD_GRADER_SHA")
+    rec("stale_grader_fixture_actually_recomputed",
+        stale_regraded[0].regrade_outcome == "recomputed",
+        f"the fixture must reach regrade_outcome='recomputed' (real evidence "
+        f"present) so the certification check below isolates grader-IDENTITY "
+        f"rejection specifically, not merely insufficient-evidence rejection: "
+        f"got {stale_regraded[0].regrade_outcome!r}")
     rpt_summary_stale = RPT.summarize(
         stale_regraded, expected_count=1,
         expected_grader_sha256=current_sha)
@@ -1033,6 +1052,56 @@ def _regrade_correction_checks() -> list[tuple[str, bool, str]]:
         f"alongside per-part evidence) reproduces the SAME strict-schema "
         f"penalty fresh grading applied: task={regraded_extra.task_result_correctness} "
         f"schema={regraded_extra.strict_result_schema_accuracy}")
+
+    # ---- third independent-audit round: reproduced-and-fixed bugs ---------
+    for label, exec_extra in (
+            ("absent", {}),
+            ("null", {"extra_present": None}),
+    ):
+        fx = _rec(f"fx_extra_present_{label}", "structured_paraphrase",
+                 "correct", 1.0, 1.0, answer_type="multi_part",
+                 target_columns=("n",), parts=tuple(mp_item_extra["parts"]),
+                 result={"parts": {"p1": {"columns": ["n"], "rows": [[1]]}},
+                        **exec_extra},
+                 gold={"parts": {"p1": {"columns": ["n"], "rows": [[1]]}}})
+        rg = V.regrade([fx], grader_sha256=current_sha)[0]
+        rec(f"missing_extra_present_flag_{label}_is_insufficient_not_a_pass",
+            rg.regrade_outcome == "insufficient_evidence",
+            f"an {label} extra_present flag proves nothing about whether an "
+            f"extra statement was present at original grading time -- it "
+            f"must never default to 'confirmed no extra statement': "
+            f"got regrade_outcome={rg.regrade_outcome!r}")
+
+    mp_bad_part_item = {"answer_type": "multi_part", "target_columns": ["n"],
+                        "parts": [{"part_id": "p1", "answer_type": "set",
+                                  "target_columns": []}]}
+    fx_bad_part = _rec("fx_regrade_validates_part_metadata", "structured_heldin",
+                       "incorrect", 0.0, 0.0, answer_type="multi_part",
+                       target_columns=("n",), parts=tuple(mp_bad_part_item["parts"]),
+                       result={"parts": {"p1": {"columns": ["n"], "rows": [[999]]}}},
+                       gold={"parts": {"p1": {"columns": ["n"], "rows": [[1]]}}})
+    rg_bad = V.regrade([fx_bad_part], grader_sha256=current_sha)[0]
+    rec("regrade_validates_per_part_metadata_before_comparing",
+        rg_bad.status == "invalid_output" and rg_bad.task_result_correctness == 0.0
+        and rg_bad.regrade_outcome == "recomputed",
+        f"a declared part with empty target_columns must fail closed on "
+        f"regrade exactly as it does on fresh grading, not silently project "
+        f"zero columns and certify 999=='correct' against gold 1: "
+        f"status={rg_bad.status} task={rg_bad.task_result_correctness}")
+    vres_bad = V.verify([rg_bad], expected_count=1)
+    rec("regrade_validated_failure_still_passes_structural_verify",
+        vres_bad["passed"],
+        "an invalid_output outcome is still a structurally valid record "
+        "(exactly one frozen status, required fields present)")
+    summary_bad = RPT.summarize([rg_bad], expected_count=1,
+                                expected_grader_sha256=current_sha)
+    rec("report_does_not_falsely_certify_invalid_multipart_regrade",
+        summary_bad["fully_regraded_certified"] is True
+        and summary_bad["status_counts"]["invalid_output"] == 1,
+        "the record IS genuinely recomputed (recomputed correctly to an "
+        "explicit invalid_output failure, not silently passed as correct) -- "
+        "certification here correctly reflects a real, honest recomputation "
+        f"outcome, not a false 'correct': {summary_bad['status_counts']}")
 
     return out
 

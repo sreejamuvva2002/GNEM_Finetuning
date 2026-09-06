@@ -586,10 +586,23 @@ def _validate_logical_components(node) -> None:
                 f"actual operands")
         for o in operands:
             _validate_logical_components(o)
-    elif len(node) < 2:
-        raise HoldoutError(
-            f"logical_components leaf node with op={op!r} carries no "
-            f"predicate content (e.g. field/value) beyond 'op' -- fails closed")
+    else:
+        # A comparison-predicate leaf requires BOTH 'field' and 'value' -- not
+        # merely ">= 2 keys total". Reproduced as a live bug:
+        # {"op": "eq", "field": "county"} (no 'value') passed the old ">= 2
+        # keys" check and still produced a fingerprint for a predicate that
+        # can never actually be evaluated (an equality with nothing to
+        # compare against). This is a stated implementation choice, not a
+        # frozen protocol requirement: every leaf predicate this repository
+        # currently represents needs both a field and a value, so both are
+        # required uniformly rather than defining a per-operator schema for
+        # predicate shapes the protocol has not itself enumerated.
+        missing = [k for k in ("field", "value") if k not in node]
+        if missing:
+            raise HoldoutError(
+                f"logical_components leaf node with op={op!r} is missing "
+                f"required field(s) {missing} -- fails closed rather than "
+                f"hashing a predicate that could never actually be evaluated")
 
 
 def _canon_logical_components(node):
@@ -1056,13 +1069,27 @@ def scan_strings(strings, reg=None) -> dict:
             f"scan_strings expects list[str], got {type(strings).__name__} -- "
             "wrap a single string in a list; for a part_id-keyed dict use "
             "list(d.values())")
+    strings = list(strings)
+    # Every entry must be a genuine string -- an empty string "" is a
+    # legitimate "nothing rendered here" value, but None/other types are not
+    # silently skipped: reproduced as a live bug, a list mixing one real
+    # string with a None entry passed a "verified" zero-exposure certificate
+    # while the None slot was never actually examined for anything.
+    bad = [i for i, s in enumerate(strings) if s is not None and not isinstance(s, str)]
+    if bad:
+        raise TypeError(
+            f"scan_strings: entr(y/ies) at index {bad[:5]} are not strings -- "
+            f"every entry must be a real rendered string (or None is also "
+            f"rejected below), not silently skipped")
+    if any(s is None for s in strings):
+        raise HoldoutError(
+            "scan_strings: a None entry means a slot was never actually "
+            "rendered -- it cannot be silently treated as 'nothing to scan' "
+            "for a slot that was supposed to carry model-visible text")
     reg = _require_verified_registry(reg) or load_registry()
     hv = held_out_values(reg)
-    norm_strings = [(_normalize_for_exposure(s) if s else "") for s in strings]
-    # Evidence count is the number of genuinely non-empty entries actually
-    # examined, not the raw list length -- a list of [None, None] previously
-    # reported "2 strings scanned" and passed as verified-zero evidence.
-    real_evidence_count = sum(1 for s in strings if s)
+    norm_strings = [_normalize_for_exposure(s) for s in strings]
+    real_evidence_count = len(strings)
     counts, hits = {}, []
     for f, vals in hv.items():
         for v in vals:
@@ -1087,19 +1114,31 @@ def scan_operations(sql_texts, reg=None) -> dict:
             f"scan_operations expects list[str], got {type(sql_texts).__name__} "
             "-- for a part_id-keyed multi-part gold_sql dict, use "
             "scan_operations_multipart")
+    sql_texts = list(sql_texts)
+    # Every entry must be a genuine string, for the same reason as
+    # scan_strings: reproduced as a live bug, scan_operations_multipart with
+    # one declared part's SQL set to None silently dropped that part from
+    # sql_scanned entirely -- a held-out construct hiding in the untested
+    # part would never have been caught.
+    bad = [i for i, s in enumerate(sql_texts)
+          if s is not None and not isinstance(s, str)]
+    if bad:
+        raise TypeError(
+            f"scan_operations: entr(y/ies) at index {bad[:5]} are not strings")
+    if any(s is None for s in sql_texts):
+        raise HoldoutError(
+            "scan_operations: a None entry means a declared part's SQL was "
+            "never actually supplied -- it cannot be silently dropped from "
+            "the scan rather than failing closed")
     reg = _require_verified_registry(reg) or load_registry()
     held = set(reg["operation_holdouts"]["held_out_families"])
     counts = {f: 0 for f in sorted(held)}
-    real_evidence_count = 0
     for s in sql_texts:
-        if not s:
-            continue
-        real_evidence_count += 1
         for fam in operation_families_present(s) & held:
             counts[fam] += 1
     return {"operation_exposure_counts": counts,
             "total_exposures": sum(counts.values()),
-            "sql_scanned": real_evidence_count}
+            "sql_scanned": len(sql_texts)}
 
 
 def scan_operations_multipart(gold_sql: dict, reg=None) -> dict:
@@ -1122,10 +1161,18 @@ def scan_operations_multipart(gold_sql: dict, reg=None) -> dict:
 
 def scan_compositions(component_sets, reg=None) -> dict:
     """Superset rule: for held-out H and training set T, assert not H subset-of T."""
-    if isinstance(component_sets, dict):
+    if isinstance(component_sets, (str, bytes, dict)):
+        # Reproduced as a live bug: a bare string is iterable, so
+        # scan_compositions("certifications processes", reg) silently treated
+        # each CHARACTER as one "component set" -- 24 characters reported as
+        # "24 component sets scanned", with the real intended set never
+        # actually checked.
         raise TypeError(
-            "scan_compositions expects list[iterable[str]] -- for a multi-part "
-            "task's component sets, use scan_compositions_multipart")
+            f"scan_compositions expects list[iterable[str]], got "
+            f"{type(component_sets).__name__} -- wrap a single component set "
+            f"in a list: [component_set], not the bare set/string itself; "
+            f"for a multi-part task's component sets, use "
+            f"scan_compositions_multipart")
     reg = _require_verified_registry(reg) or load_registry()
     held = [set(h) for h in reg["composition_holdouts"]["held_out_sets"]]
     violations = []

@@ -498,14 +498,15 @@ def main() -> int:
                 "a hash-only approval record (no approved_commit/approved_date) "
                 "must be rejected as incomplete")
 
-    r_none = H.scan_strings([None, None, None], reg)
-    expect("none_entries_are_not_real_scan_evidence",
-                lambda: H.assert_value_scan_verified(r_none), H.HoldoutError,
-                "an all-None input must not certify as a real zero-exposure scan")
-    r_none_op = H.scan_operations([None, None], reg)
-    expect("none_sql_entries_are_not_real_scan_evidence",
-                lambda: H.assert_operation_scan_verified(r_none_op), H.HoldoutError,
-                "an all-None SQL input must not certify as a real operation scan")
+    # Strengthened in the third audit round: scan_strings/scan_operations now
+    # reject a None entry immediately (fail fast) rather than silently
+    # counting it as zero evidence for assert_*_verified to catch downstream.
+    expect("none_entries_rejected_immediately_by_scan_strings",
+                lambda: H.scan_strings([None, None, None], reg), H.HoldoutError,
+                "an all-None input must be rejected by the scan itself")
+    expect("none_sql_entries_rejected_immediately_by_scan_operations",
+                lambda: H.scan_operations([None, None], reg), H.HoldoutError,
+                "an all-None SQL input must be rejected by the scan itself")
 
     expect("multipart_composition_scan_rejects_zero_parts",
                 lambda: H.scan_compositions_multipart({}, reg), H.HoldoutError,
@@ -547,6 +548,39 @@ def main() -> int:
     rec("fingerprint_accepts_well_formed_leaf",
         bool(H.logical_fingerprint(dict(base, logical_components=fp_base_leaf))),
         "a genuinely complete leaf node still produces a fingerprint")
+
+    # ---- 17. third independent-audit round: reproduced-and-fixed bugs -----
+    expect("fingerprint_leaf_requires_value_not_just_two_keys",
+          lambda: H.logical_fingerprint(
+              dict(base, logical_components={"op": "eq", "field": "county"})),
+          H.HoldoutError,
+          "an 'eq' leaf with a field but no value must fail closed -- it can "
+          "never actually be evaluated as a predicate")
+    expect("fingerprint_leaf_requires_field_not_just_two_keys",
+          lambda: H.logical_fingerprint(
+              dict(base, logical_components={"op": "eq", "value": "Hall County",
+                                             "note": "x"})),
+          H.HoldoutError,
+          "an 'eq' leaf with a value but no field must equally fail closed")
+
+    expect("scan_strings_rejects_none_mixed_with_valid_entries",
+          lambda: H.scan_strings(["harmless", None], reg), H.HoldoutError,
+          "a None entry mixed with a valid string must not be silently "
+          "skipped -- the slot it represents was never actually examined")
+    expect("scan_operations_rejects_none_mixed_with_valid_entries",
+          lambda: H.scan_operations(["SELECT 1", None], reg), H.HoldoutError,
+          "same for scan_operations")
+    expect("scan_operations_multipart_rejects_none_part",
+          lambda: H.scan_operations_multipart(
+              {"p1": "SELECT company FROM companies LIMIT 5", "p2": None}, reg),
+          H.HoldoutError,
+          "a declared part with SQL=None must not be silently dropped from "
+          "the scan -- a held-out construct hiding there would never be caught")
+    expect("scan_compositions_rejects_bare_string",
+          lambda: H.scan_compositions("certifications processes", reg),
+          TypeError,
+          "a bare string is iterable -- it must not be silently scanned "
+          "character-by-character as if each character were a component set")
 
     for n, ok, d in out:
         print(f"  [{'PASS' if ok else 'FAIL'}] fault:{n}: {d}")

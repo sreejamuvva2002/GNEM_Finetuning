@@ -21,8 +21,8 @@ finetune/phase7_grader_tests.py    bcdbdbb67211321c8ebd50e2d5a8eeb6908c5fb7b7b69
 finetune/eval_records_v3.py               96bec72a4e9ebf55848e397f35d4251e1b87d9114e8eead69f33b5a391d021d2
 finetune/eval_stats_v3.py                 28add5267e6d77abd589243ab52dcdbbddaa612d7b8b1e733289af08132f9f24
 finetune/eval_report_v3.py                6eef354458a756cca78eb80554702dcec7efb60d500deeaf6bdfc5e9bad42930
-finetune/eval_verify_v3.py                8f990edec50ad741fb36a5d894e7f50854d2c58337ee8c379723ca6a29b045da
-finetune/phase8_eval_stack_tests.py       b91f0d567a28561bbed2aa8e5ec034adcb36ca2e411bf00d2ba90810fbc63a74
+finetune/eval_verify_v3.py                d746e63468d0ae960458916192abc21272e1c54a9cae14720a6dca7fee055556
+finetune/phase8_eval_stack_tests.py       c7eb808c9d88756299310c14a80f4e27f5d0e60d54d41029f0561b4bb40772f6
 ```
 
 Rebuilt v3-native rather than ported. v2's stack is 4,213 lines and `report.py` alone carries 111 retired-concept references; README Phase 8 warns that recreating it "would add risk rather than remove it". Only the statistical METHODS were carried across as concepts, reimplemented against the v3 schema — no v2 file was copied.
@@ -288,12 +288,18 @@ None of 15 retired concepts appear in the stack, and no v2 repository path or v2
 | `full_path_verify_passes_structurally` | PASS | structural verification passes on the regraded mixed batch (verify does not itself judge regrade completeness) |
 | `full_path_report_shows_mixed_coverage` | PASS | {'recomputed': 2, 'insufficient_evidence': 2, 'not_yet_regraded': 0, 'total': 4} |
 | `full_path_cannot_certify_fully_regraded` | PASS | VerificationError: 2 record(s) are not fully regraded under the current grader (1051a161a |
+| `stale_grader_fixture_actually_recomputed` | PASS | the fixture must reach regrade_outcome='recomputed' (real evidence present) so the certification check below isolates grader-IDENTITY rejection specifically, not merely insufficient-evidence rejection: got 'recomputed' |
 | `report_certification_checks_grader_identity_not_just_counts` | PASS | a record 'recomputed' under a stale grader build must NOT certify as fully regraded under the current one: fully_regraded_certified=False |
 | `report_renders_not_fully_regraded_for_stale_grader` | PASS | the rendered report text must say NOT fully regraded, not falsely claim certification |
 | `report_certifies_when_genuinely_fully_regraded` | PASS | a record recomputed under the actual current grader build correctly certifies as fully regraded |
 | `report_omits_certification_when_not_requested` | PASS | omitting expected_grader_sha256 makes no fully-regraded claim either way (safer default than assuming completeness) |
 | `fresh_grading_penalizes_extra_statement` | PASS | task=1.0 schema=0.0 |
 | `regrade_preserves_extra_statement_penalty` | PASS | regrading from retained evidence (with extra_present retained alongside per-part evidence) reproduces the SAME strict-schema penalty fresh grading applied: task=1.0 schema=0.0 |
+| `missing_extra_present_flag_absent_is_insufficient_not_a_pass` | PASS | an absent extra_present flag proves nothing about whether an extra statement was present at original grading time -- it must never default to 'confirmed no extra statement': got regrade_outcome='insufficient_evidence' |
+| `missing_extra_present_flag_null_is_insufficient_not_a_pass` | PASS | an null extra_present flag proves nothing about whether an extra statement was present at original grading time -- it must never default to 'confirmed no extra statement': got regrade_outcome='insufficient_evidence' |
+| `regrade_validates_per_part_metadata_before_comparing` | PASS | a declared part with empty target_columns must fail closed on regrade exactly as it does on fresh grading, not silently project zero columns and certify 999=='correct' against gold 1: status=invalid_output task=0.0 |
+| `regrade_validated_failure_still_passes_structural_verify` | PASS | an invalid_output outcome is still a structurally valid record (exactly one frozen status, required fields present) |
+| `report_does_not_falsely_certify_invalid_multipart_regrade` | PASS | the record IS genuinely recomputed (recomputed correctly to an explicit invalid_output failure, not silently passed as correct) -- certification here correctly reflects a real, honest recomputation outcome, not a false 'correct': {'correct': 0, 'incorrect': 0, 'generation_failure': 0, 'parse_failure': 0, 'SQL_error': 0, 'timeout': 0, 'truncated_output': 0, 'invalid_output': 1} |
 
 ## Fault tests
 
