@@ -66,7 +66,19 @@ from types import MappingProxyType
 
 import grade_v3 as G
 
-RECORDS_VERSION = "eval_records_v3.0"
+RECORDS_VERSION = "eval_records_v3.1"
+
+# Fields added after the original schema was frozen (Phase 9 correction).
+# They carry defaults so an old serialized record (predating them) still
+# loads via from_dict -- they are backfilled to None, never treated as
+# missing-required.
+NEW_OPTIONAL_FIELDS = ("parts", "regrade_outcome")
+
+# Valid values for `regrade_outcome`. None means "never regraded". This is a
+# separate, NON-AUTHORITATIVE field from `status` -- it never joins the
+# frozen 8-value status vocabulary (CLAUDE.md 25's closed status enum and its
+# scored+failed==expected_probe_size assertion are untouched by this field).
+REGRADE_OUTCOMES = ("recomputed", "insufficient_evidence")
 
 # Frozen status vocabulary. Sourced from the Phase 7 grader rather than
 # redeclared, so the two can never drift apart.
@@ -112,6 +124,9 @@ class EvalRecord:
     seed: int | None            # None for deterministic baselines
     grader_version: str
     grader_sha256: str
+    # -- added after the original schema was frozen (Phase 9 correction) --
+    parts: tuple | None = None            # multi_part metadata, mirrors item["parts"]
+    regrade_outcome: str | None = None    # None | "recomputed" | "insufficient_evidence"
 
     def __post_init__(self):
         if self.status not in STATUSES:
@@ -124,12 +139,17 @@ class EvalRecord:
         if self.status != SUCCESS_STATUS and self.task_result_correctness == 1.0:
             raise RecordSchemaError(
                 f"status {self.status!r} must not carry a perfect task score")
+        if self.regrade_outcome is not None and self.regrade_outcome not in REGRADE_OUTCOMES:
+            raise RecordSchemaError(
+                f"regrade_outcome {self.regrade_outcome!r} not in "
+                f"{(None, *REGRADE_OUTCOMES)}")
 
     def to_dict(self) -> dict:
         return asdict(self)
 
 
-REQUIRED_FIELDS = tuple(EvalRecord.__dataclass_fields__)
+ALL_FIELDS = tuple(EvalRecord.__dataclass_fields__)
+REQUIRED_FIELDS = tuple(f for f in ALL_FIELDS if f not in NEW_OPTIONAL_FIELDS)
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -384,12 +404,17 @@ def from_dict(d: dict) -> EvalRecord:
     missing = [f for f in REQUIRED_FIELDS if f not in d]
     if missing:
         raise RecordSchemaError(f"record missing required field(s): {missing}")
-    unknown = [k for k in d if k not in REQUIRED_FIELDS]
+    unknown = [k for k in d if k not in ALL_FIELDS]
     if unknown:
         raise RecordSchemaError(
             f"record carries unsupported field(s) {unknown}; the schema is "
             f"versioned ({RECORDS_VERSION}) and stale records must not be "
             f"silently accepted")
+    d = dict(d)
+    for f in NEW_OPTIONAL_FIELDS:
+        d.setdefault(f, None)
+    if d.get("parts") is not None:
+        d["parts"] = tuple(d["parts"])
     return EvalRecord(**d)
 
 

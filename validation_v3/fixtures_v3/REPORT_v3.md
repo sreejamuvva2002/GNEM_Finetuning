@@ -10,13 +10,13 @@
 
 ```text
 phase                        8 (synthetic fixture validation)
-records_module               eval_records_v3.0
+records_module               eval_records_v3.1
 stats_module                 eval_stats_v3.0
-report_module                eval_report_v3.0
-verify_module                eval_verify_v3.0
-grader                       grade_v3.0 619b9350e38ac976…
+report_module                eval_report_v3.1
+verify_module                eval_verify_v3.1
+grader                       grade_v3.1 8c49e8566a8b8808…
 executor                     sqlexec_v3.0 a6c06b71dd975419…
-fixture_records_sha256       14610bb2e7d76a34f6cc617ab918b9d50a7b6048dae4e6cde1ee37ad38958e27
+fixture_records_sha256       c55d7f2b783739136fb2ba2e39e3478bd342c27ca1d54f07ac62d629e69ebdb0
 ```
 
 ## Item accounting (synthetic)
@@ -72,6 +72,18 @@ Families are discovered from the records, so adding a v3 family requires no edit
 | `timeout` | 1 |
 | `truncated_output` | 1 |
 | `invalid_output` | 1 |
+
+## Regrade coverage (synthetic)
+
+```text
+recomputed             0
+insufficient_evidence  0
+not_yet_regraded       18
+total                  18
+```
+
+**This result set is NOT fully regraded** -- some records carry historical, unverified scores rather than a fresh recomputation under the current grader. See `eval_verify_v3.assert_fully_regraded`; headline numbers above are not certified as freshly re-verified.
+
 
 ## Statistical plumbing (synthetic inputs)
 

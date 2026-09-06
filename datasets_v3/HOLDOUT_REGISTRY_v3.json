@@ -1,4 +1,193 @@
 {
+  "allowed_operations_per_field": {
+    "basis": "candidate-generation-time heuristic; the authoritative training-eligibility gate is always the real SQL-construct scanner (operation_families_present) run against a task's actual rendered gold_sql, not this map",
+    "field_semantic_operations": {
+      "address": [
+        "filter"
+      ],
+      "category": [
+        "aggregation",
+        "filter",
+        "group_by"
+      ],
+      "certifications": [
+        "aggregation",
+        "filter",
+        "group_by"
+      ],
+      "city": [
+        "aggregation",
+        "filter",
+        "group_by"
+      ],
+      "classification_method": [
+        "aggregation",
+        "filter"
+      ],
+      "company": [
+        "filter"
+      ],
+      "county": [
+        "aggregation",
+        "filter",
+        "group_by"
+      ],
+      "employment": [
+        "aggregation",
+        "argmax_topk",
+        "filter"
+      ],
+      "ev_battery_relevant": [
+        "aggregation",
+        "filter"
+      ],
+      "ev_supply_chain_role": [
+        "aggregation",
+        "filter",
+        "group_by"
+      ],
+      "industry_group": [
+        "aggregation",
+        "filter",
+        "group_by"
+      ],
+      "location": [
+        "filter"
+      ],
+      "primary_facility_type": [
+        "aggregation",
+        "filter",
+        "group_by"
+      ],
+      "primary_oems": [
+        "filter"
+      ],
+      "processes": [
+        "aggregation",
+        "filter",
+        "group_by"
+      ],
+      "product_or_service": [
+        "semantic_filter"
+      ],
+      "row_id": [
+        "filter",
+        "join"
+      ],
+      "services": [
+        "aggregation",
+        "filter",
+        "group_by"
+      ],
+      "supplier_or_affiliation_type": [
+        "aggregation",
+        "filter",
+        "group_by"
+      ]
+    },
+    "field_specific_restrictions": {
+      "address": {
+        "basis": "README:538 -- `Address` gets no structured aggregation",
+        "excludes": [
+          "aggregation",
+          "group_by",
+          "argmax_topk"
+        ]
+      },
+      "primary_oems": {
+        "basis": "README:537-538 -- `Primary OEMs` excluded from group-by and ranking; composite strings like `Hyundai Kia Rivian`",
+        "excludes": [
+          "group_by",
+          "argmax_topk"
+        ]
+      },
+      "row_id": {
+        "basis": "README:541-543 -- SQL may join on row_id, but gold SQL must not filter by row_id unless the question explicitly names a record, otherwise the model learns an artificial record-index shortcut",
+        "conditional": {
+          "filter": "only when the question explicitly names a record (README:541-543); join is unconditionally allowed"
+        }
+      }
+    },
+    "field_training_eligible_operations": {
+      "address": [
+        "filter"
+      ],
+      "category": [
+        "aggregation",
+        "filter"
+      ],
+      "certifications": [
+        "aggregation",
+        "filter"
+      ],
+      "city": [
+        "aggregation",
+        "filter"
+      ],
+      "classification_method": [
+        "aggregation",
+        "filter"
+      ],
+      "company": [
+        "filter"
+      ],
+      "county": [
+        "aggregation",
+        "filter"
+      ],
+      "employment": [
+        "aggregation",
+        "filter"
+      ],
+      "ev_battery_relevant": [
+        "aggregation",
+        "filter"
+      ],
+      "ev_supply_chain_role": [
+        "aggregation",
+        "filter"
+      ],
+      "industry_group": [
+        "aggregation",
+        "filter"
+      ],
+      "location": [
+        "filter"
+      ],
+      "primary_facility_type": [
+        "aggregation",
+        "filter"
+      ],
+      "primary_oems": [
+        "filter"
+      ],
+      "processes": [
+        "aggregation",
+        "filter"
+      ],
+      "product_or_service": [
+        "semantic_filter"
+      ],
+      "row_id": [
+        "filter",
+        "join"
+      ],
+      "services": [
+        "aggregation",
+        "filter"
+      ],
+      "supplier_or_affiliation_type": [
+        "aggregation",
+        "filter"
+      ]
+    },
+    "query_level_constructs": [
+      "argmax_topk",
+      "group_by",
+      "limit_only"
+    ],
+    "taxonomy_provenance": "traced against every operation-shaped mention in README Phases 12, 14, 18-26, 41 ('aggregation' and 'join' are the document's own words -- README:264,539,541); independently cross-checked against v2-frozen-reference:finetune/taxonomy.py, which uses FILTER_LIST, AGGREGATE (count/sum/group-by/argmax/top-k) and SEMANTIC_FILTER for free-text columns -- the two sources converge on the same core names."
+  },
   "answer_type_conventions": {
     "answer_types": [
       "set",
@@ -7,8 +196,10 @@
       "multi_part"
     ],
     "frozen_by": "Phase 7 grade_v3 semantics",
-    "multi_part_note": "A multi_part task carries parts: [{part_id, answer_type, target_columns}], and `target_columns` remains the flattened ordered union so the frozen Phase 7 grader keeps working unchanged. Phase 7's stand-in treated each target column as one part, which cannot express a multi-part question whose parts are different OPERATIONS (a count and a set); this serialization can.",
+    "multi_part_note": "A multi_part task carries parts: [{part_id, answer_type, target_columns}], and `target_columns` remains the flattened ordered union so the frozen Phase 7 grader keeps working unchanged. Phase 7's stand-in treated each target column as one part, which cannot express a multi-part question whose parts are different OPERATIONS (a count and a set); this serialization can. The grading/execution REPRESENTATION for a rendered multi_part task is frozen separately as MULTIPART_RESULT_REPRESENTATION below: a part_id-keyed collection of independently-executed, independently-typed per-part results -- not one shared rectangular table.",
     "multi_part_serialization": "parts_list_v1",
+    "multipart_result_note": "gold_sql for a multi_part task is a dict keyed by part_id, one independently normal SQL string per declared part, each executed on its own producing its own natural SQLResult (own columns, own types, own row count). The model's predicted SQL is a sequence of statements, split on top-level ';' with the same comment/quote-aware lexer used for operation detection, paired positionally: predicted statement N belongs to declared part N (parts[] order is authoritative). Every declared part is required; an omitted statement is a parse_failure for that part. Grading calls the existing, unmodified compare_results once per declared part -- no shared schema, no discriminator column, no casting.",
+    "multipart_result_representation_version": "multipart_result_v1",
     "target_columns": "non-empty ordered list[str]; scalar requires exactly 1"
   },
   "composition_holdouts": {
@@ -36,6 +227,7 @@
     ],
     "min_test_rows": 10,
     "min_train_rows": 20,
+    "multipart_note": "for a multi-part task, T is the UNION of every declared part's component usage, not each part checked in isolation -- a multi-part task is one logical training item",
     "superset_rule": "for held-out H and training set T: assert not H subset-of T"
   },
   "entity_holdouts": {
@@ -112,8 +304,34 @@
       "BD"
     ],
     "invariant": "exposure_count == 0 for every held-out item, every arm",
+    "normalization": "NFKC compatibility-normalize, casefold, collapse internal whitespace, then substring match -- NFC alone does not fold fullwidth Unicode forms (verified: NFC('ＡＳ９１００') != 'AS9100', NFKC(...) == 'AS9100'). Biased toward over-detection: a false positive costs one extra row to inspect, a false negative is an actual leak.",
     "omit_policy": "omit the item, never truncate the truth -- A omits the whole field from that row's passage, B generates no QA for that (company, attribute), C/D emit no structured supervision using the value",
+    "report_schemas": {
+      "composition_scan": [
+        "composition_violations",
+        "violations",
+        "sets_scanned"
+      ],
+      "operation_scan": [
+        "operation_exposure_counts",
+        "total_exposures",
+        "sql_scanned"
+      ],
+      "value_scan": [
+        "exposure_counts",
+        "total_exposures",
+        "strings_scanned",
+        "hits"
+      ],
+      "verified_states": [
+        "pending (scanned:false, count:null)",
+        "verified-zero (scanned:true, evidence counter > 0, exposure_count 0, internally consistent)",
+        "exposure-detected (fails)",
+        "malformed (fails)"
+      ]
+    },
     "scan_point": "final rendered strings, after chat-template rendering, system-prompt and catalogue insertion, few-shot insertion and target rendering",
+    "scope_boundary": "applies to model-visible FINE-TUNING text only. The shared runtime value catalogue used by baselines (base_sql, base_sql_5shot) at INFERENCE legitimately contains every value, held-out included, per this same policy -- the scanner must never be run against that catalogue and must never flag it as a violation",
     "surfaces": [
       "cpt_passages",
       "system_prompts",
@@ -148,8 +366,8 @@
     "datasets_v3/gnem_v3.sqlite": "7437c746cb118f3d5bb9edcc34f500e0c9f764358a19fa05766dc526d63bb08b"
   },
   "logical_fingerprint": {
-    "canonicalisation": "json sort_keys, separators (,:), lists sorted",
-    "construction": "lfp1: + sha256(canonical utf-8)[:32]",
+    "canonicalisation": "json sort_keys, separators (,:), lists sorted; logical_components: commutative (AND/OR) operands sorted before hashing, operator and differing predicates/values still distinguish",
+    "construction": "lfp2: + sha256(canonical utf-8)[:32]",
     "excluded": [
       "question wording",
       "SQL formatting",
@@ -170,9 +388,10 @@
       "answer_type",
       "join_arity",
       "required_constructs",
-      "entity_dependent"
+      "entity_dependent",
+      "logical_components"
     ],
-    "version": "lfp1"
+    "version": "lfp2"
   },
   "operation_holdouts": {
     "applied_to_real_pool_at": "Phase 12",
@@ -189,6 +408,7 @@
         "LIMIT"
       ]
     },
+    "detection": "comment/quote-aware lexer over the actual rendered SQL text -- comments and string/identifier literals are replaced with a single space (never deleted) before keyword-boundary matching, so a lexical trick like GROUP/**/BY cannot evade detection",
     "held_out_families": [
       "argmax_topk",
       "group_by",
@@ -227,6 +447,23 @@
     ]
   },
   "phase": 9,
+  "phase9_correction": {
+    "changed": [
+      "added allowed_operations_per_field (README-required, previously absent)",
+      "operation-construct detection: comment/quote-aware lexer replacing raw substring matching (closes a GROUP/**/BY-style evasion)",
+      "registry loading: two-function split -- load_candidate_registry_for_phase9_audit() (recompute-and-compare, usable pre-approval) and load_registry() (requires an external PHASE9_APPROVAL.json anchor, raises Phase9NotApproved otherwise)",
+      "registry wrapper is deeply immutable (stores canonical JSON text, every accessor returns a fresh parse)",
+      "scan_strings/scan_operations/scan_compositions: list-only, raise on a bare str/dict instead of silently mis-iterating it",
+      "exposure-report assertions: three typed functions (assert_value_scan_verified/assert_operation_scan_verified/assert_composition_scan_verified), each requiring real scan evidence (a nonzero scanned-count), not just total_exposures == 0",
+      "exposure normalization: NFKC compatibility-normalize + casefold + whitespace-collapse (NFC alone does not fold fullwidth Unicode forms)",
+      "logical_fingerprint: lfp1 -> lfp2, folds canonicalized logical_components into the hash (closes an AND/OR collision)",
+      "scan_operations_multipart / scan_compositions_multipart: scan every part of a multi-part task, not a dict's keys (a live, reproduced bug in the original multi-part design) and check compositional holdouts against the whole task's component union, not per part"
+    ],
+    "corrects": "holdout_v3.1 (selected values and selection algorithm UNCHANGED)",
+    "date": "2026-09-06",
+    "registry_schema_revision": "phase9_registry_schema_r2",
+    "why": "Independent audit found real gaps in the supporting code and registry completeness. None touch select_values/select_composition; the nine selected holdout values and the v3.1 objective/tie-breaks are unchanged. Full independent recomputation (a standalone script importing nothing from this module) confirmed the same nine values are still optimal under the frozen objective after these fixes."
+  },
   "policy_revision": {
     "changed": [
       "split minima: dev >= 1 added and made mandatory alongside train >= 2 and test >= 1",

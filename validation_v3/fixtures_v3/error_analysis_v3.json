@@ -64,5 +64,5 @@
   },
   "n_failures": 10,
   "provenance": "synthetic validation fixture; not experimental results",
-  "report_version": "eval_report_v3.0"
+  "report_version": "eval_report_v3.1"
 }

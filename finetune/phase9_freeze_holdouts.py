@@ -12,6 +12,10 @@ commit date, which is external to the file. Embedding a runtime timestamp would
 break the determinism gate every phase in this repository is held to, so the
 artifacts carry a frozen policy date and input hashes instead.
 
+`--check`: a genuine read-only verification mode. Recomputes expected state and
+compares it to the committed artifacts; performs NO writes; exits nonzero on
+drift. Use this to re-verify a frozen registry without regenerating it.
+
 No dataset, probe, prediction or Q42 content is created or read.
 """
 
@@ -43,6 +47,19 @@ FROZEN_INPUTS = {
 # README Phase 21's published candidate counts, reproduced by ROW support.
 README_CANDIDATE_COUNTS = {"processes": 26, "services": 13, "certifications": 8}
 
+# The chronology text used to say "before any dataset exists" without
+# qualification, imprecise once Phase 10 was briefly generated (from v3.0)
+# and fully reverted before v3.1 was frozen. Corrected here (the one
+# generator function whose output ends up in both HOLDOUT_FREEZE_v3.md and
+# FACT_EXPOSURE_LEDGER_v3.json's "note" field) so both downstream artifacts
+# inherit the accurate wording rather than each needing separate fixing.
+CHRONOLOGY_NOTE = (
+    "v3.0 was frozen before any training dataset existed. Phase 10 "
+    "(train_A_cpt_v3.jsonl) was then generated from v3.0 and fully reverted. "
+    "v3.1 was frozen after that correction, before any training dataset was "
+    "ever built from it. No model training or evaluation ever used "
+    "v3.0-derived data.")
+
 
 class Gate(Exception):
     """A Phase 9 invariant failed. No artifact is written."""
@@ -54,38 +71,13 @@ def build():
         if got != exp:
             raise Gate(f"{rel} drifted: {got}")
 
-    recs, split = H.load_kb()
-    rows, cos, train_rows, train_cos = H.support_tables(recs, split)
-    tot_rows, tot_cos = H.attribute_totals(recs, split)
+    (recs, split, rows, cos, train_rows, train_cos, tot_rows, tot_cos,
+     selected, comp, ent, per_field, registry) = H.build_registry_bundle()
 
-    selected = {f: H.select_values(rows, train_rows, tot_rows, f,
-                                   train_cos=train_cos)
-                for f in H.MULTIVALUED}
-    comp = H.select_composition(recs, split)
-
-    # entity holdouts derive from the frozen Phase 3 split -- nothing new decided
-    ent = {"train": sorted({r["company"] for r in recs if split[r["row_id"]] == "train"}),
-           "dev": sorted({r["company"] for r in recs if split[r["row_id"]] == "dev"}),
-           "test": sorted({r["company"] for r in recs if split[r["row_id"]] == "test"})}
-
-    cost_rows, per_field = [], {}
+    cost_rows = []
     for f in H.MULTIVALUED:
-        lost = set().union(*(train_rows[f][v] for v in selected[f]))
-        lost_co = set().union(*(train_cos[f][v] for v in selected[f]))
-        cov = 100.0 * (tot_rows[f] - len(lost)) / tot_rows[f]
-        cov_co = 100.0 * (tot_cos[f] - len(lost_co)) / tot_cos[f]
         band = H.row_band_candidates(rows, f)
         elig = H.eligible_values(rows, f)
-        per_field[f] = {
-            "train_rows_total": tot_rows[f], "train_companies_total": tot_cos[f],
-            "train_rows_lost": len(lost), "train_companies_lost": len(lost_co),
-            "remaining_attribute_coverage_rows_pct": round(cov, 2),
-            "remaining_attribute_coverage_companies_pct": round(cov_co, 2),
-            # Two clearly distinct stages, never conflated into one number.
-            "initial_row_band_candidate_count": len(band),
-            "post_split_filter_eligible_count": len(elig),
-            "post_split_filter_eligible_values": elig,
-        }
         # The ledger keeps EVERY row-band candidate, including those the split
         # minima later reject, so the rejection is auditable rather than invisible.
         for v in band:
@@ -111,140 +103,20 @@ def build():
                 "split_minima_eligible": v in elig,
                 "ineligibility_reason": ";".join(reasons),
                 "selected": v in selected[f],
-                "removed_train_items": r_lost,
-                "removed_A_fields": r_lost,
-                "removed_B_items": r_lost,
-                "removed_train_companies": len(train_cos[f][v]),
+                # Renamed from removed_* (Phase 9 correction, finding 9D):
+                # these are Phase-9-time row-occurrence PROJECTIONS computed
+                # before any A/B dataset exists, not measured post-generation
+                # outcomes. The est_ prefix says so; the CSV never claims more
+                # precision than it has.
+                "est_removed_train_items": r_lost,
+                "est_removed_A_fields": r_lost,
+                "est_removed_B_items": r_lost,
+                "est_removed_train_companies": len(train_cos[f][v]),
                 "remaining_attribute_coverage": round(
                     100.0 * (tot_rows[f] - r_lost) / tot_rows[f], 2),
             })
     cost_rows.sort(key=lambda d: (d["attribute_type"], d["value"]))
 
-    registry = {
-        "registry": "HOLDOUT_REGISTRY_v3",
-        "phase": 9,
-        "policy_version": H.POLICY_VERSION,
-        "frozen_date": H.FROZEN_DATE,
-        "frozen_by": "explicit user authorization after read-only decision analysis",
-        "policy_revision": H.POLICY_REVISION,
-        "timestamp_note": ("the authoritative freeze timestamp is the git commit "
-                           "date; a runtime timestamp is deliberately not embedded "
-                           "because it would break the determinism gate"),
-        "frozen_inputs": {k: H.sha256_file(ROOT / k) for k in FROZEN_INPUTS},
-        "support_unit_provenance": {
-            "eligibility_unit": H.SUPPORT_UNIT,
-            "readme_initial_row_band_candidate_table": README_CANDIDATE_COUNTS,
-            "stage_note": ("README's 26/13/8 is the STAGE-1 row-band pool. The "
-                           "post-split-filter eligible pool is smaller and is "
-                           "reported separately per attribute; the two are never "
-                           "conflated under one name."),
-            "reproduced_by": "row-occurrence support (verified cell-by-cell)",
-            "supporting_companies_unit": "exact trimmed company names",
-            "note": ("README's frozen 26/13/8 table is reproduced by ROW-OCCURRENCE "
-                     "support; `supporting_companies` separately reports exact "
-                     "trimmed company counts (README:700). The distinction is "
-                     "recorded, never hidden."),
-        },
-        "parameters": {
-            "support_band": list(H.SUPPORT_BAND),
-            "min_train_support": H.MIN_TRAIN_SUPPORT,
-            "min_dev_support": H.MIN_DEV_SUPPORT,
-            "min_test_support": H.MIN_TEST_SUPPORT,
-            "split_minima_role": ("eligibility ONLY; once a candidate clears the "
-                                  "minima, split support plays no part in ranking"),
-            "attribute_coverage_floor_pct": H.COVERAGE_FLOOR_PCT,
-            "per_value_coverage_threshold_pct": H.PER_VALUE_COVERAGE_THRESHOLD_PCT,
-            "holdout_counts": H.HOLDOUT_COUNTS,
-            "selection_objective": H.SELECTION_OBJECTIVE,
-            "tie_breaks": list(H.SELECTION_TIE_BREAKS),
-            "tie2_dev_support_definition": H.TIE2_DEV_SUPPORT_DEFINITION,
-            "test_support_role": ("eligibility only -- never an objective and "
-                                  "never a tie-break. Optimising selection on "
-                                  "test support would tune the pre-registration "
-                                  "against test-side properties of the KB; the "
-                                  "objective is decided purely on train-side "
-                                  "collateral and is test-blind by construction"),
-        },
-        "entity_holdouts": {
-            "source": "frozen Phase 3 split; nothing re-decided here",
-            "counts": {k: len(v) for k, v in ent.items()},
-            "dev_companies": ent["dev"], "test_companies": ent["test"],
-        },
-        "value_holdouts": {
-            f: {"selected": list(selected[f]), **per_field[f]}
-            for f in H.MULTIVALUED
-        },
-        "operation_holdouts": {
-            "held_out_families": list(H.HELD_OUT_OPERATIONS),
-            "precedence": list(H.OPERATION_PRECEDENCE),
-            "constructs": {k: list(v) for k, v in H.OPERATION_CONSTRUCTS.items()},
-            "basis": ("README Phase 22 requires GROUP BY, LIMIT and argmax/top-k to "
-                      "appear 0 times in training gold, so all three are held out"),
-            "multi_family_rule": ("exactly one operation_family per task by "
-                                  "precedence; a task matching more than one "
-                                  "HELD-OUT family is excluded from training "
-                                  "entirely (fail closed)"),
-            "applied_to_real_pool_at": "Phase 12",
-        },
-        "composition_holdouts": {
-            "arity": H.COMPOSITION_ARITY,
-            "families": [list(p) for p in H.COMPOSITION_FAMILIES],
-            "held_out_sets": [list(comp)],
-            "superset_rule": "for held-out H and training set T: assert not H subset-of T",
-            "collateral_scope": ("structured-task exclusion only. Individual "
-                                 "component literals remain independently "
-                                 "train-visible unless separately selected on the "
-                                 "VALUE axis. An unseen COMBINATION is not an "
-                                 "unseen VALUE."),
-            "min_train_rows": H.COMPOSITION_MIN_TRAIN_ROWS,
-            "min_test_rows": H.COMPOSITION_MIN_TEST_ROWS,
-        },
-        "answer_type_conventions": {
-            "answer_types": list(H.ANSWER_TYPES),
-            "frozen_by": "Phase 7 grade_v3 semantics",
-            "target_columns": "non-empty ordered list[str]; scalar requires exactly 1",
-            "multi_part_serialization": H.MULTI_PART_SERIALIZATION,
-            "multi_part_note": H.MULTI_PART_NOTE,
-        },
-        "logical_fingerprint": {
-            "version": H.FINGERPRINT_VERSION,
-            "semantic_fields": list(H.FINGERPRINT_SEMANTIC_FIELDS),
-            "excluded": ["question wording", "SQL formatting", "alias spelling",
-                         "column order", "example_id", "dataset path", "split",
-                         "split_group", "condition", "seed"],
-            "canonicalisation": "json sort_keys, separators (,:), lists sorted",
-            "construction": "lfp1: + sha256(canonical utf-8)[:32]",
-        },
-        "fewshot_eligibility": {
-            "rule": "fail closed -- unprovable eligibility means ineligible",
-            "conditions": [
-                "every referenced row is train-side",
-                "contains no held-out value literal anywhere",
-                "operation_family not held out and no held-out construct present",
-                "component set C contains no held-out set H (not H subset-of C)",
-                "logical_fingerprint collides with no probe item",
-                "no held-out entity literal",
-                "any shipped schema text or value catalogue is filtered to "
-                "training-visible values",
-                "eligibility is checked on FINAL RENDERED chat messages",
-            ],
-        },
-        "exposure_policy": {
-            "invariant": "exposure_count == 0 for every held-out item, every arm",
-            "arms": ["A", "B", "C", "D", "BC", "BD"],
-            "scan_point": ("final rendered strings, after chat-template "
-                           "rendering, system-prompt and catalogue insertion, "
-                           "few-shot insertion and target rendering"),
-            "surfaces": ["cpt_passages", "system_prompts", "user_messages",
-                         "assistant_targets", "sql_text", "schema_text",
-                         "value_catalogues", "fewshot_text",
-                         "combined_renderings", "repeat_renderings"],
-            "omit_policy": ("omit the item, never truncate the truth -- A omits the "
-                            "whole field from that row's passage, B generates no QA "
-                            "for that (company, attribute), C/D emit no structured "
-                            "supervision using the value"),
-        },
-    }
     ledger = {
         "ledger": "FACT_EXPOSURE_LEDGER_v3",
         "phase": 9,
@@ -257,7 +129,7 @@ def build():
         "arms": {a: {"scanned": False, "exposure_count": None,
                      "artifact": None, "sha256": None}
                  for a in ["A", "B", "C", "D", "BC", "BD"]},
-        "note": ("initialised at Phase 9 before any dataset exists. Each dataset "
+        "note": ("initialised at Phase 9. " + CHRONOLOGY_NOTE + " Each dataset "
                  "phase re-runs the scanner on its final rendered strings and "
                  "updates its arm entry; every arm must reach exposure_count 0."),
     }
@@ -282,7 +154,10 @@ def _is_optimal(rows, train_rows, train_cos, tot, f, sel) -> bool:
     return best is not None and best[3] == tuple(sorted(sel))
 
 
-def main() -> int:
+def run_gates():
+    """Build the registry and run every Phase 9 gate. Returns
+    (checks, artifacts_tuple). Raises Gate on any failed check. Performs NO
+    writes -- callers decide whether to persist."""
     (recs, split, rows, cos, train_rows, train_cos, tot_rows, tot_cos,
      selected, comp, ent, cost_rows, per_field, registry, ledger) = build()
 
@@ -293,7 +168,6 @@ def main() -> int:
 
     check("frozen_inputs_unchanged", True, "canonical, split and DB hashes match")
 
-    # README's published candidate counts must be reproduced by the frozen unit
     for f, exp in README_CANDIDATE_COUNTS.items():
         got = len(H.row_band_candidates(rows, f))
         check(f"initial_row_band_candidate_count_{f}", got == exp,
@@ -351,10 +225,15 @@ def main() -> int:
            "argmax_topk", {"argmax_topk"}),
           ("SELECT company FROM companies LIMIT 3", "limit_only", {"limit_only"}),
           ("SELECT county, COUNT(*) c FROM companies GROUP BY county ORDER BY c DESC LIMIT 1",
-           "argmax_topk", {"argmax_topk", "group_by"})]
+           "argmax_topk", {"argmax_topk", "group_by"}),
+          # The reproduced evasion: a comment splitting the keyword must not
+          # defeat detection.
+          ("SELECT county, COUNT(*) FROM companies GROUP/**/BY county",
+           "group_by", {"group_by"})]
     check("operation_classification_deterministic",
           all(H.classify_operation(s) == e for s, e, _ in fx),
-          "one family per task by frozen precedence")
+          "one family per task by frozen precedence, including the "
+          "GROUP/**/BY evasion attempt")
     check("operation_multi_family_detected",
           H.operation_families_present(fx[4][0]) == {"argmax_topk", "group_by"},
           "a GROUP BY + ORDER BY/LIMIT task is seen as two held-out families and "
@@ -363,14 +242,37 @@ def main() -> int:
           set(H.HELD_OUT_OPERATIONS) == {"argmax_topk", "group_by", "limit_only"},
           "README Phase 22 requires all three constructs at 0 occurrences")
 
-    # fingerprint -- synthetic
+    # allowed operations per field -- README-required contract, previously absent
+    aopf = registry["allowed_operations_per_field"]
+    check("allowed_operations_per_field_present",
+          "field_semantic_operations" in aopf and "field_training_eligible_operations" in aopf,
+          "README:388 'allowed operations per field' contract is frozen in the registry")
+    eligible_ops = aopf["field_training_eligible_operations"]
+    check("training_eligible_is_semantic_minus_heldout",
+          all(set(eligible_ops[f]) == H.FIELD_SEMANTIC_OPERATIONS[f] - H.QUERY_LEVEL_CONSTRUCTS
+              for f in H.FIELD_SEMANTIC_OPERATIONS),
+          "field_training_eligible_operations[f] == field_semantic_operations[f] "
+          "- HELD_OUT_OPERATIONS for every field (exact set equality)")
+    check("no_held_out_family_ever_training_eligible",
+          all(not (set(v) & set(H.HELD_OUT_OPERATIONS)) for v in eligible_ops.values()),
+          "no field's training-eligible set contains a held-out family")
+    check("named_field_restrictions_sourced_from_readme",
+          set(aopf["field_specific_restrictions"]) == {"primary_oems", "address", "row_id"},
+          "Primary OEMs / Address / row_id restrictions frozen verbatim from README")
+
+    # fingerprint -- synthetic, lfp2 (logical_components required)
+    leaf_a = {"op": "eq", "field": "certifications", "value": "AS9100"}
+    leaf_b = {"op": "eq", "field": "processes", "value": "Refining"}
     t1 = {"operation_family": "filter", "fields_used": ["county"],
           "values_used": ["Hall County"], "target_columns": ["company"],
           "answer_type": "set", "join_arity": 1, "required_constructs": [],
-          "entity_dependent": False}
+          "entity_dependent": False,
+          "logical_components": {"op": "AND", "operands": [leaf_a, leaf_b]}}
     t2 = dict(t1, target_columns=["company"], fields_used=["county"])
     t3 = dict(t1, values_used=["Cobb County"])
     t4 = dict(t1, answer_type="scalar", target_columns=["n"])
+    t5 = dict(t1, logical_components={"op": "OR", "operands": [leaf_a, leaf_b]})
+    t6 = dict(t1, logical_components={"op": "AND", "operands": [leaf_b, leaf_a]})
     check("fingerprint_same_for_equivalent",
           H.logical_fingerprint(t1) == H.logical_fingerprint(t2),
           "wording/format-insensitive")
@@ -378,16 +280,46 @@ def main() -> int:
           H.logical_fingerprint(t1) != H.logical_fingerprint(t3), "values_used differs")
     check("fingerprint_differs_on_answer_type",
           H.logical_fingerprint(t1) != H.logical_fingerprint(t4), "answer_type differs")
+    check("fingerprint_differs_on_and_vs_or",
+          H.logical_fingerprint(t1) != H.logical_fingerprint(t5),
+          "lfp2 correction: AND and OR over the same predicates must differ "
+          "(lfp1 collided these)")
+    check("fingerprint_same_on_commutative_reorder",
+          H.logical_fingerprint(t1) == H.logical_fingerprint(t6),
+          "reordered AND operands hash identically (same logical task)")
+
+    def _missing_components():
+        H.logical_fingerprint(dict(t1, logical_components=None))
+    try:
+        _missing_components()
+        check("fingerprint_missing_components_fails_closed", False, "*** NOT RAISED ***")
+    except H.HoldoutError:
+        check("fingerprint_missing_components_fails_closed", True,
+              "missing logical_components raises rather than hashing a weaker skeleton")
 
     check("multi_part_serialization_frozen",
           H.MULTI_PART_SERIALIZATION == "parts_list_v1",
           "explicit parts[]; Phase 7 stand-in could not express multi-operation parts")
+    check("multipart_result_representation_frozen",
+          H.MULTIPART_RESULT_REPRESENTATION_VERSION == "multipart_result_v1",
+          "keyed independent per-part execution results, not a shared "
+          "discriminator-column table")
 
     failed = [n for n, ok, _ in checks if not ok]
     for n, ok, d in checks:
         print(f"  [{'PASS' if ok else 'FAIL'}] {n}: {d}")
     if failed:
         raise Gate(f"{len(failed)} gate(s) failed: {failed}")
+
+    artifacts = (recs, split, rows, cos, train_rows, train_cos, tot_rows, tot_cos,
+                selected, comp, ent, cost_rows, per_field, registry, ledger)
+    return checks, artifacts
+
+
+def main() -> int:
+    checks, artifacts = run_gates()
+    (recs, split, rows, cos, train_rows, train_cos, tot_rows, tot_cos,
+     selected, comp, ent, cost_rows, per_field, registry, ledger) = artifacts
 
     # ---- write artifacts -------------------------------------------------
     OUT_REG.parent.mkdir(parents=True, exist_ok=True)
@@ -412,10 +344,55 @@ def main() -> int:
     return 0
 
 
+def check_only() -> int:
+    """Genuine read-only --check: recompute expected state, compare to the
+    committed artifacts, report drift, exit nonzero on mismatch. NO writes."""
+    reg_path_before = OUT_REG.stat().st_mtime_ns if OUT_REG.is_file() else None
+    ledger_path_before = OUT_LEDGER.stat().st_mtime_ns if OUT_LEDGER.is_file() else None
+    cost_path_before = OUT_COST.stat().st_mtime_ns if OUT_COST.is_file() else None
+
+    problems = []
+    try:
+        candidate = H.load_candidate_registry_for_phase9_audit()
+        print("  [PASS] registry matches deterministic recomputation from "
+              "frozen inputs (recompute-and-compare)")
+    except H.HoldoutError as e:
+        problems.append(str(e))
+        print(f"  [FAIL] registry recomputation check: {e}")
+
+    try:
+        checks, _ = run_gates()
+        failed = [n for n, ok, _ in checks if not ok]
+        if failed:
+            problems.append(f"gates failed: {failed}")
+        else:
+            print(f"  [PASS] all {len(checks)} Phase 9 gates re-verified")
+    except Gate as e:
+        problems.append(str(e))
+        print(f"  [FAIL] gate re-verification: {e}")
+
+    # Prove --check performed no writes.
+    reg_path_after = OUT_REG.stat().st_mtime_ns if OUT_REG.is_file() else None
+    ledger_path_after = OUT_LEDGER.stat().st_mtime_ns if OUT_LEDGER.is_file() else None
+    cost_path_after = OUT_COST.stat().st_mtime_ns if OUT_COST.is_file() else None
+    if (reg_path_before, ledger_path_before, cost_path_before) != \
+       (reg_path_after, ledger_path_after, cost_path_after):
+        problems.append("BUG: --check modified a file's mtime -- it must be read-only")
+
+    if problems:
+        print(f"\nPHASE 9 --check FAILED: {len(problems)} problem(s)", file=sys.stderr)
+        for p in problems:
+            print(f"  - {p}", file=sys.stderr)
+        return 1
+    print("\nPhase 9 --check: all clear, zero writes performed.")
+    return 0
+
+
 def _audit(reg, cost_rows, per_field, checks, comp, selected):
+    aopf = reg["allowed_operations_per_field"]
     L = ["# HOLDOUT_FREEZE_v3\n",
-         "Phase 9 — the Holdout Registry and Fact Exposure Ledger, frozen **before "
-         "any training dataset exists**. README Phase 9: *\"If holdouts are chosen "
+         "Phase 9 — the Holdout Registry and Fact Exposure Ledger. " +
+         CHRONOLOGY_NOTE + " README Phase 9: *\"If holdouts are chosen "
          "after seeing the generated data, the holdout that gets picked is the one "
          "the data happens to support.\"*\n",
          "> Filename is a Phase 9 provenance convention; README names "
@@ -432,6 +409,14 @@ def _audit(reg, cost_rows, per_field, checks, comp, selected):
          "",
          "**Why.** " + H.POLICY_REVISION["why"] + "\n",
          "**Provenance.** " + H.POLICY_REVISION["provenance_note"] + "\n",
+         "## Phase 9 correction (registry/code hardening, post-v3.1)\n",
+         "Independent audit found real gaps in the supporting code and registry "
+         "completeness after v3.1 was frozen. **The nine selected values and the "
+         "selection algorithm above are unchanged** -- full independent "
+         "recomputation (a standalone script importing nothing from "
+         "`holdout_v3.py`) confirms the same nine values remain optimal under "
+         "the frozen objective. What changed:\n",
+         "- " + "\n- ".join(H.PHASE9_CORRECTION["changed"]) + "\n",
          "## Frozen inputs\n", "```text"]
     for k, v in reg["frozen_inputs"].items():
         L.append(f"{k:44} {v}")
@@ -450,14 +435,31 @@ def _audit(reg, cost_rows, per_field, checks, comp, selected):
           f"holdout counts               {reg['parameters']['holdout_counts']}",
           f"objective                    {reg['parameters']['selection_objective']}",
           f"tie-breaks                   {' -> '.join(reg['parameters']['tie_breaks'])}",
-          "```\n", "## Selected value holdouts\n",
-          "| attribute | value | rows | train | dev | test | companies | train rows lost | coverage after |",
-          "|---|---|--:|--:|--:|--:|--:|--:|--:|"]
+          "```\n",
+          "## Candidate pool (all row-band values, selected and rejected)\n",
+          "Every value in the 3-15 row-support band, whether or not it was "
+          "selected -- kept so a rejection is auditable rather than invisible. "
+          "**This table is the full candidate pool, not the selection** (Phase "
+          "9 correction, finding 9A: an earlier version of this document named "
+          "this table 'Selected value holdouts', which was misleading since it "
+          "listed all candidates). See the next section for the actual 9 "
+          "selected values.\n",
+          "| attribute | value | selected? | rows | train | dev | test | companies | est. train rows lost | coverage after |",
+          "|---|---|:--:|--:|--:|--:|--:|--:|--:|--:|"]
     for r in cost_rows:
-        L.append(f"| {r['attribute_type']} | `{r['value']}` | {r['total_support']} | "
+        L.append(f"| {r['attribute_type']} | `{r['value']}` | "
+                 f"{'**YES**' if r['selected'] else 'no'} | {r['total_support']} | "
                  f"{r['train_support']} | {r['dev_support']} | {r['test_support']} | "
-                 f"{r['supporting_companies']} | {r['removed_train_items']} | "
+                 f"{r['supporting_companies']} | {r['est_removed_train_items']} | "
                  f"{r['remaining_attribute_coverage']}% |")
+    L += ["", "## Selected value holdouts (the actual 9)\n",
+          "| attribute | value | rows | train | dev | test | companies |",
+          "|---|---|--:|--:|--:|--:|--:|"]
+    for r in cost_rows:
+        if r["selected"]:
+            L.append(f"| {r['attribute_type']} | `{r['value']}` | {r['total_support']} | "
+                     f"{r['train_support']} | {r['dev_support']} | {r['test_support']} | "
+                     f"{r['supporting_companies']} |")
     L += ["", "### Cumulative attribute-level floor (union, not sum)\n",
           "| attribute | row-band pool | eligible after minima | train rows | lost | remaining coverage | companies remaining |",
           "|---|--:|--:|--:|--:|--:|--:|"]
@@ -469,12 +471,19 @@ def _audit(reg, cost_rows, per_field, checks, comp, selected):
     L += ["",
           "A row carrying two held-out values is lost once, so the cumulative cost is "
           "the union of affected rows rather than the sum.\n",
-          "**Recorded selection characteristic:** maximising test support "
-          "concentrates the processes/services selection in the battery/EV cluster, "
-          "because battery values are test-heavy in the frozen split. This is an "
-          "artefact of the deterministic objective, not cherry-picking, and it means "
-          "the value axis measures slot transfer mostly within one domain. Recorded "
-          "here so the final report can state it.\n",
+          "**Recorded selection characteristic, corrected (Phase 9 correction, "
+          "finding 9B).** An earlier version of this document attributed the "
+          "processes/services selection landing in the battery/EV cluster to "
+          "\"maximising test support\" -- that was the v3.0 objective, and the "
+          "sentence survived describing v3.1 numbers by mistake. The true v3.1 "
+          "mechanism: these values are selected because they independently "
+          "carry the LOWEST union train-row collateral among eligible "
+          "candidates under the frozen minimize-collateral objective. Test "
+          "support plays no causal role in v3.1 -- it is eligibility-only. "
+          "That the collateral-minimal values also cluster in the battery/EV "
+          "domain is a property of this frozen KB (those values happen to have "
+          "low train support alongside adequate dev support), not a "
+          "consequence of the selection objective.\n",
           "## Operation holdouts\n",
           f"Held out: {', '.join(f'`{o}`' for o in reg['operation_holdouts']['held_out_families'])} — "
           "README Phase 22 requires all three defining constructs to appear **0 times** "
@@ -482,24 +491,51 @@ def _audit(reg, cost_rows, per_field, checks, comp, selected):
           "Exactly one `operation_family` per task by precedence "
           f"({' > '.join(reg['operation_holdouts']['precedence'])}); a task matching "
           "more than one held-out family is **excluded from training entirely** so the "
-          "zero-occurrence assertion stays unambiguous. Validated on synthetic "
+          "zero-occurrence assertion stays unambiguous. Detection is comment/quote-aware "
+          "(Phase 9 correction): comments and string/identifier literals are replaced "
+          "with a single space before keyword matching, so a lexical trick like "
+          "`GROUP/**/BY` cannot evade it. Validated on synthetic "
           "fixtures — Phase 12 applies this frozen policy to the real task pool.\n",
+          "## Allowed operations per field (Phase 9 correction: previously absent)\n",
+          "README requires this contract to be frozen at Phase 9; it was missing "
+          "until this correction. Four layers: semantic validity (what's meaningful "
+          "for a field, including held-out operations where meaningful -- needed by "
+          "the Phase 22 operation-heldout probe), the three query-level held-out "
+          "constructs, named field-specific restrictions sourced verbatim from "
+          "README, and the derived training-eligible set (semantic minus held-out, "
+          "a literal set difference). This map is a candidate-generation-time "
+          "heuristic; the authoritative training-eligibility gate is always the "
+          "real SQL-construct scanner run against a task's actual rendered SQL.\n",
+          "```text",
+          f"query-level constructs (held out everywhere): {aopf['query_level_constructs']}",
+          f"named restrictions: {sorted(aopf['field_specific_restrictions'])}",
+          "```\n",
           "## Compositional holdout\n",
           f"Arity {reg['composition_holdouts']['arity']}, one held-out set: "
           f"**{{{', '.join(comp)}}}**, chosen by lowest train support then "
           "lexicographic.\n",
           "**Collateral scope (frozen):** " +
           reg["composition_holdouts"]["collateral_scope"] + "\n",
+          "**Multi-part tasks (Phase 9 correction):** " +
+          reg["composition_holdouts"]["multipart_note"] + "\n",
           "## Conventions frozen here\n",
           f"- `logical_fingerprint` **{reg['logical_fingerprint']['version']}** over "
-          f"{len(reg['logical_fingerprint']['semantic_fields'])} semantic fields\n"
-          f"- multi-part serialization **{reg['answer_type_conventions']['multi_part_serialization']}**\n"
+          f"{len(reg['logical_fingerprint']['semantic_fields'])} semantic fields "
+          "(Phase 9 correction: lfp1 -> lfp2, folds canonicalized "
+          "`logical_components` into the hash so AND/OR predicate structure is no "
+          "longer invisible to it)\n"
+          f"- multi-part serialization **{reg['answer_type_conventions']['multi_part_serialization']}**, "
+          f"result representation **{reg['answer_type_conventions']['multipart_result_representation_version']}** "
+          "(keyed independent per-part results, not a shared discriminator table)\n"
           f"- few-shot eligibility: fail closed, "
           f"{len(reg['fewshot_eligibility']['conditions'])} conditions\n",
           "## Exposure policy\n",
           f"`exposure_count == 0` for every held-out item across "
           f"{', '.join(reg['exposure_policy']['arms'])}, scanned on "
           f"{reg['exposure_policy']['scan_point']}.\n",
+          "**Normalization (Phase 9 correction):** " +
+          reg["exposure_policy"]["normalization"] + "\n",
+          "**Scope boundary:** " + reg["exposure_policy"]["scope_boundary"] + "\n",
           "## Validation\n", "| check | result | detail |", "|---|---|---|"]
     for n, ok, d in checks:
         L.append(f"| `{n}` | {'PASS' if ok else 'FAIL'} | {d} |")
@@ -509,6 +545,8 @@ def _audit(reg, cost_rows, per_field, checks, comp, selected):
 
 if __name__ == "__main__":
     try:
+        if "--check" in sys.argv[1:]:
+            raise SystemExit(check_only())
         raise SystemExit(main())
     except (Gate, H.HoldoutError) as e:
         print(f"\nPHASE 9 GATE FAILURE: {e}", file=sys.stderr)

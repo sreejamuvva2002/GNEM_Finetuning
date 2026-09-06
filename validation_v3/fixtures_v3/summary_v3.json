@@ -71,7 +71,13 @@
   },
   "incorrect": 4,
   "provenance": "synthetic validation fixture; not experimental results",
-  "report_version": "eval_report_v3.0",
+  "regrade_coverage": {
+    "insufficient_evidence": 0,
+    "not_yet_regraded": 18,
+    "recomputed": 0,
+    "total": 18
+  },
+  "report_version": "eval_report_v3.1",
   "scored": 12,
   "status_counts": {
     "SQL_error": 1,

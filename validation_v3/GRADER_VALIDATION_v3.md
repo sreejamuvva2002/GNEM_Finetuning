@@ -7,7 +7,7 @@ Phase 7 — SQL execution and grading. README: this gate **blocks the canonical 
 ```text
 datasets_v3/gnem_v3.sqlite   7437c746cb118f3d5bb9edcc34f500e0c9f764358a19fa05766dc526d63bb08b
 finetune/sqlexec_v3.py       a6c06b71dd97541997bedc2202e1980ab2e4cdd721aaf20ff43eacfda876c461   (sqlexec_v3.0)
-finetune/grade_v3.py         619b9350e38ac976ad5ce9d4ba377fdcc4504e00b9ac34ef49fa47f6931b4cbd   (grade_v3.0)
+finetune/grade_v3.py         8c49e8566a8b88085070f6fd88929309c7a379bd708cb31350dd88c0cc98a147   (grade_v3.1)
 ```
 
 ## Scope contract
@@ -128,9 +128,20 @@ Also proven absent from the Phase 7 paths: the v2 geo registration, the `max_row
 | `top_k` | order and length preserved; **never** set-deduped |
 | `multi_part` | every required part correct; partial is not correct |
 
-### Multi-part encoding is NOT frozen here
+### Multi-part encoding (Phase 9 correction: now frozen)
 
-README freezes multi-part SEMANTICS (every required part must be correct) but not a serialization for declaring parts. This grader treats each entry of target_columns as one required part -- the minimal reading consistent with the frozen semantics. This is deliberately NOT a permanent generator format; freezing that representation belongs to the phase that owns task metadata, not to Phase 7.
+Phase 9 froze both the metadata serialization (parts_list_v1: parts=[{part_id, answer_type, target_columns}]) and the execution/grading representation (multipart_result_v1: gold_sql is a part_id-keyed dict of independently-normal SQL strings, each producing its own naturally-typed SQLResult; the model's prediction is a sequence of statements paired POSITIONALLY to parts[] order -- parts[] order is authoritative, predicted statement N belongs to declared part N). compare_results's original flattened multi_part branch (each target_columns entry as one part of ONE shared result) remains for direct callers using the older, simpler contract; grade_structured dispatches to the new grade_multipart path whenever gold_sql is a dict.
+
+### Multi-part battery (real DB execution)
+
+| case | expected | status | task_result_correctness |
+|---|---|---|---|
+| scalar+set, both correct | `correct` | `correct` | 1.0 |
+| scalar correct, set wrong | `incorrect` | `incorrect` | 0.0 |
+| second statement omitted | `parse_failure` | `parse_failure` | 0.0 |
+| whole response truncated | `truncated_output` | `truncated_output` | 0.0 |
+| extra undeclared statement | `correct/schema-fail` | `correct` | 1.0 |
+| statements emitted out of declared order | `graded positionally (likely fails)` | `incorrect` | 0.0 |
 
 ## Two metrics, genuinely distinct
 
@@ -233,3 +244,12 @@ Every item receives exactly one status from the frozen vocabulary: `correct`, `i
 | `valid_query_empty_result_still_graded` | PASS | status=correct -- a real query is graded, not short-circuited |
 | `truncated_output_never_parsed` | PASS | status=truncated_output: truncated_output: prediction not parsed or executed |
 | `every_status_in_frozen_vocabulary` | PASS | 13 outcomes, all within 8 frozen statuses |
+| `multipart_heterogeneous_all_correct` | PASS | multi_part: count:correct; companies:correct |
+| `multipart_one_part_wrong_is_incorrect` | PASS | multi_part: count:correct; companies:incorrect |
+| `multipart_omitted_statement_is_parse_failure` | PASS | multi_part part 'companies' failed with parse_failure: omitted required statement (all parts: count:correct; companies:parse_failure) |
+| `multipart_truncation_checked_before_any_split_or_execution` | PASS | truncated_output: prediction not parsed or executed (whole-response check, before any part is split or any executor is called) |
+| `multipart_extra_statement_correct_but_schema_fails` | PASS | multi_part: count:correct; companies:correct (extra undeclared statement(s) present -- fails strict schema only) |
+| `multipart_missing_parts_metadata_fails_closed` | PASS | GraderMetadataError: multi_part item is missing required 'parts' metadata -- fail |
+| `multipart_positional_pairing_is_literal_not_smart` | PASS | swapped statement order grades against the wrong declared part rather than being silently reordered: status=incorrect |
+| `multipart_duplicate_part_id_fails_closed` | PASS | GraderMetadataError: duplicate part_id(s) in declared parts: ['count', 'count'] |
+| `multipart_semicolon_in_literal_not_a_boundary` | PASS | quote-aware statement splitting confirmed |

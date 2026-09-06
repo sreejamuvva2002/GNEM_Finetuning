@@ -31,8 +31,9 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 import eval_records_v3 as R
+import eval_verify_v3 as V
 
-REPORT_VERSION = "eval_report_v3.0"
+REPORT_VERSION = "eval_report_v3.1"
 
 SYNTHETIC_BANNER = (
     "SYNTHETIC VALIDATION FIXTURE — NOT EXPERIMENTAL RESULTS")
@@ -84,6 +85,15 @@ def summarize(records, *, expected_count: int) -> dict:
             "value": schema / n, "numerator": schema, "denominator": n,
             "rendered": f"{schema:g} / {n} = {schema / n:.1%}", "role": "secondary"},
         "families": per_family(recs),
+        # Phase 9 correction (D.21): explicit regrade-coverage breakdown,
+        # computed ALONGSIDE the denominator accounting above without
+        # changing it -- an insufficient-evidence record still counts in
+        # scored/failed exactly per its retained status; this breakdown only
+        # says whether that status was freshly re-verified under the current
+        # grader or is being carried forward unverified. This report does
+        # NOT by itself certify "fully regraded" -- see
+        # eval_verify_v3.assert_fully_regraded for that gate.
+        "regrade_coverage": V.regrade_coverage(recs),
     }
 
 
@@ -214,6 +224,23 @@ def render_report_skeleton(summary: dict, errors: dict, *, stats_demo: dict,
     for k, v in errors["distinguished_classes"].items():
         if v:
             L.append(f"| `{k}` | {v} |")
+    cov = summary.get("regrade_coverage")
+    if cov is not None:
+        fully_regraded = cov["recomputed"] == cov["total"] and cov["total"] > 0
+        L += ["",
+              "## Regrade coverage (synthetic)\n", "```text",
+              f"recomputed             {cov['recomputed']}",
+              f"insufficient_evidence  {cov['insufficient_evidence']}",
+              f"not_yet_regraded       {cov['not_yet_regraded']}",
+              f"total                  {cov['total']}",
+              "```\n",
+              ("This result set is **fully regraded** under the current grader."
+               if fully_regraded else
+               "**This result set is NOT fully regraded** -- some records carry "
+               "historical, unverified scores rather than a fresh recomputation "
+               "under the current grader. See `eval_verify_v3.assert_fully_regraded`; "
+               "headline numbers above are not certified as freshly re-verified."),
+              ""]
     L += ["",
           "## Statistical plumbing (synthetic inputs)\n",
           "Exercised to prove the functions behave. **No significance claim is "

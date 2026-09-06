@@ -11,18 +11,18 @@ Phase 8 — build the v3 evaluation and reporting stack.
 ```text
 datasets_v3/gnem_v3.sqlite         7437c746cb118f3d5bb9edcc34f500e0c9f764358a19fa05766dc526d63bb08b
 finetune/sqlexec_v3.py             a6c06b71dd97541997bedc2202e1980ab2e4cdd721aaf20ff43eacfda876c461
-finetune/grade_v3.py               619b9350e38ac976ad5ce9d4ba377fdcc4504e00b9ac34ef49fa47f6931b4cbd
-finetune/phase7_grader_tests.py    fefbd447694a96c25c30e90438e2a24cf1638e8e1ef643f63c76dcb7de0f2692
+finetune/grade_v3.py               8c49e8566a8b88085070f6fd88929309c7a379bd708cb31350dd88c0cc98a147
+finetune/phase7_grader_tests.py    52e78e63f8cb91aa755576913ad834827060fe141793b520ecc3d5d757952b45
 ```
 
 ## Stack modules
 
 ```text
-finetune/eval_records_v3.py               b874fb900e20854efe40bffa72a881a653b1e6bd31262926b3a3e339d9fcf1e0
+finetune/eval_records_v3.py               96bec72a4e9ebf55848e397f35d4251e1b87d9114e8eead69f33b5a391d021d2
 finetune/eval_stats_v3.py                 28add5267e6d77abd589243ab52dcdbbddaa612d7b8b1e733289af08132f9f24
-finetune/eval_report_v3.py                addab678db3b5d27c310563d8fc2504b21d6ca3a8ff14ffd30ad321cf9ecd03b
-finetune/eval_verify_v3.py                89d5b3359638e470757f70a2f10a9601aef92f8ffae18dc28ee0fc24d3dabf09
-finetune/phase8_eval_stack_tests.py       0a6268421320ef56a16a5351eed6648466e33afbdfa9ec316b00ea41e02b8ba2
+finetune/eval_report_v3.py                4fd8c0d7d65b3b61c9f48551dbb643db163a6290182f6d87d853bdfffc487025
+finetune/eval_verify_v3.py                96f85aaee5398e3cd4d3ead75b05b89296e9fca51436d54e39efaa1823551513
+finetune/phase8_eval_stack_tests.py       f0fbfdff4755bcaa57b336470efb4e78a21e18b9fb90f011bda44cac263455bd
 ```
 
 Rebuilt v3-native rather than ported. v2's stack is 4,213 lines and `report.py` alone carries 111 retired-concept references; README Phase 8 warns that recreating it "would add risk rather than remove it". Only the statistical METHODS were carried across as concepts, reimplemented against the v3 schema — no v2 file was copied.
@@ -30,11 +30,11 @@ Rebuilt v3-native rather than ported. v2's stack is 4,213 lines and `report.py` 
 ## Fixture manifest
 
 ```text
-validation_v3/fixtures_v3/fixture_records_v3.jsonl   14610bb2e7d76a34f6cc617ab918b9d50a7b6048dae4e6cde1ee37ad38958e27
-validation_v3/fixtures_v3/fixtures_manifest_v3.json  f0b3d7f8d5278292afb51d0fdfddbbab784b2136fe4210f4b95c115f199e38c9
-validation_v3/fixtures_v3/summary_v3.json            bb0d2c7af020499940dde16bd3aa591208846d452b287c081f6b0a953022abde
-validation_v3/fixtures_v3/error_analysis_v3.json     f6f78983bc021a80901d1c20a01fa9f2231b0be097eb139352d1b9a9e0d53368
-validation_v3/fixtures_v3/REPORT_v3.md               cb05ce52925afbb4dd9694ca9f20c0771d6fec85fdd980455d630f02390c700e
+validation_v3/fixtures_v3/fixture_records_v3.jsonl   c55d7f2b783739136fb2ba2e39e3478bd342c27ca1d54f07ac62d629e69ebdb0
+validation_v3/fixtures_v3/fixtures_manifest_v3.json  1e875487d1e31fcbfc2124ec7e2e644f00bd18663fdf12638113fd8cccc12f38
+validation_v3/fixtures_v3/summary_v3.json            267f95a33687bf95219c4281d0b3ac1bd5e9aa5b21a7b26952cb8657e9f6dd1d
+validation_v3/fixtures_v3/error_analysis_v3.json     a662aaa3ba75d440eae83ccbc613c08e072ac608688f155c9650eb8e75a95216
+validation_v3/fixtures_v3/REPORT_v3.md               e6ef35a65a78750cca92147cf1a21dd5a0e7981d7f5fd9643a39bb4aac924467
 fixture item count                                   18
 families                                             factual_recall, no_match, structured_heldin, structured_paraphrase
 ```
@@ -235,7 +235,7 @@ None of 15 retired concepts appear in the stack, and no v2 repository path or v2
 | `stats_split_group_weighting_cited` | PASS | average within split_group then across groups; aggregate item excluded as undefined (CLAUDE.md:847-854) |
 | `stats_hierarchical_bootstrap_deferred` | PASS | not implemented: absent from the live protocol, so deferred not invented |
 | `regrade_preserves_raw_and_gold` | PASS | raw prediction, gold and question carried through untouched |
-| `regrade_records_grader_provenance` | PASS | every regraded record stamped grade_v3.0 |
+| `regrade_records_grader_provenance` | PASS | every regraded record stamped grade_v3.1 |
 | `regrade_reproduces_metrics` | PASS | status distribution identical after regrade |
 | `sql_fixtures_use_phase7_executor` | PASS | SQL fixture path calls the approved Phase 7 executor (train_kb=148); no second execution implementation exists |
 | `no_duplicate_sql_execution_in_stack` | PASS | no module in the reporting stack opens its own database connection |
@@ -270,8 +270,24 @@ None of 15 retired concepts appear in the stack, and no v2 repository path or v2
 | `fault_status_score_contradiction` | PASS | RecordSchemaError: status 'incorrect' must not carry a perfect task score |
 | `fault_missing_required_field` | PASS | RecordSchemaError: record missing required field(s): ['family', 'condition' |
 | `fault_stale_result_schema` | PASS | RecordSchemaError: record carries unsupported field(s) ['legacy_v2_field']; |
-| `fault_mismatched_grader_provenance` | PASS | VerificationError: records graded by a different grader build: ['619b9350e3 |
+| `fault_mismatched_grader_provenance` | PASS | VerificationError: records graded by a different grader build: ['8c49e8566a |
 | `fault_corrupted_record_missing_provenance` | PASS | VerificationError: fx01_set_correct: missing required field 'prompt_hash' |
+| `pre_regrade_all_start_unregraded` | PASS | no record carries a regrade_outcome before regrade() runs |
+| `regrade_recomputes_and_disagrees_with_stale_score` | PASS | stale score was 'correct'; genuine recomputation from retained evidence (WRONG_COMPANY vs RIGHT_COMPANY) now correctly says 'incorrect' -- proves regrade recomputes rather than re-stamping |
+| `insufficient_evidence_preserves_status_and_scores` | PASS | status/scores byte-identical to pre-regrade despite no retained execution_result/gold |
+| `insufficient_evidence_preserves_grader_provenance` | PASS | grader_version/grader_sha256 NOT re-stamped to the current build -- a record must never claim to originate from a grader that never actually evaluated it |
+| `insufficient_evidence_outcome_flagged` | PASS | regrade_outcome correctly distinguishes this from a real recompute |
+| `multipart_regrade_recomputes_and_disagrees` | PASS | one part's retained evidence disagrees (WRONG vs B); multi-part regrade correctly recomputes to 'incorrect' |
+| `multipart_missing_one_part_is_insufficient_not_partial` | PASS | a single part lacking retained evidence makes the WHOLE item insufficient_evidence, never a partial recompute; original score preserved untouched |
+| `assert_fully_regraded_rejects_mixed_batch` | PASS | VerificationError: 2 record(s) are not fully regraded under the current grader (8c49e8566 |
+| `assert_fully_regraded_accepts_genuine_full_coverage` | PASS | a batch where every record is genuinely recomputed under the current grader passes |
+| `assert_fully_regraded_rejects_never_regraded` | PASS | VerificationError: 1 record(s) are not fully regraded under the current grader (8c49e8566 |
+| `assert_fully_regraded_rejects_stale_grader_build` | PASS | VerificationError: 1 record(s) are not fully regraded under the current grader (8c49e8566 |
+| `regrade_coverage_accounts_for_every_record` | PASS | {'recomputed': 2, 'insufficient_evidence': 2, 'not_yet_regraded': 0, 'total': 4} |
+| `full_path_reload_preserves_records` | PASS | serialized/reloaded records are unregraded, matching what was written |
+| `full_path_verify_passes_structurally` | PASS | structural verification passes on the regraded mixed batch (verify does not itself judge regrade completeness) |
+| `full_path_report_shows_mixed_coverage` | PASS | {'recomputed': 2, 'insufficient_evidence': 2, 'not_yet_regraded': 0, 'total': 4} |
+| `full_path_cannot_certify_fully_regraded` | PASS | VerificationError: 2 record(s) are not fully regraded under the current grader (8c49e8566 |
 
 ## Fault tests
 
@@ -285,5 +301,5 @@ None of 15 retired concepts appear in the stack, and no v2 repository path or v2
 | `fault_status_score_contradiction` | yes | RecordSchemaError: status 'incorrect' must not carry a perfect task score |
 | `fault_missing_required_field` | yes | RecordSchemaError: record missing required field(s): ['family', 'condition' |
 | `fault_stale_result_schema` | yes | RecordSchemaError: record carries unsupported field(s) ['legacy_v2_field']; |
-| `fault_mismatched_grader_provenance` | yes | VerificationError: records graded by a different grader build: ['619b9350e3 |
+| `fault_mismatched_grader_provenance` | yes | VerificationError: records graded by a different grader build: ['8c49e8566a |
 | `fault_corrupted_record_missing_provenance` | yes | VerificationError: fx01_set_correct: missing required field 'prompt_hash' |

@@ -1,4 +1,4 @@
-value,attribute_type,supporting_companies,supporting_rows,total_support,train_support,dev_support,test_support,train_companies,test_companies,in_row_band,split_minima_eligible,ineligibility_reason,selected,removed_train_items,removed_A_fields,removed_B_items,removed_train_companies,remaining_attribute_coverage
+value,attribute_type,supporting_companies,supporting_rows,total_support,train_support,dev_support,test_support,train_companies,test_companies,in_row_band,split_minima_eligible,ineligibility_reason,selected,est_removed_train_items,est_removed_A_fields,est_removed_B_items,est_removed_train_companies,remaining_attribute_coverage
 AS9100,certifications,10,10,10,6,3,1,6,1,True,True,,True,6,6,6,6,95.12
 ASI Chain of Custody,certifications,2,3,3,3,0,0,2,0,True,False,dev<1;test<1,False,3,3,3,2,97.56
 Ford Q1,certifications,3,3,3,3,0,0,3,0,True,False,dev<1;test<1,False,3,3,3,3,97.56

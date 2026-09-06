@@ -67,8 +67,8 @@
     ]
   },
   "ledger": "FACT_EXPOSURE_LEDGER_v3",
-  "note": "initialised at Phase 9 before any dataset exists. Each dataset phase re-runs the scanner on its final rendered strings and updates its arm entry; every arm must reach exposure_count 0.",
+  "note": "initialised at Phase 9. v3.0 was frozen before any training dataset existed. Phase 10 (train_A_cpt_v3.jsonl) was then generated from v3.0 and fully reverted. v3.1 was frozen after that correction, before any training dataset was ever built from it. No model training or evaluation ever used v3.0-derived data. Each dataset phase re-runs the scanner on its final rendered strings and updates its arm entry; every arm must reach exposure_count 0.",
   "phase": 9,
   "policy_version": "holdout_v3.1",
-  "registry_sha256": "d18cc70ec42e595e2500e8d89cbbcaa135671e6950721d34843ec7c4852d138e"
+  "registry_sha256": "b0a29b197e7e08ccacc58560fcb538f1ad8d5b47fa31c0ed2799986d15da796f"
 }

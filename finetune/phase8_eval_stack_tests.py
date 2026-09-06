@@ -39,10 +39,16 @@ FROZEN = {
         "7437c746cb118f3d5bb9edcc34f500e0c9f764358a19fa05766dc526d63bb08b",
     "finetune/sqlexec_v3.py":
         "a6c06b71dd97541997bedc2202e1980ab2e4cdd721aaf20ff43eacfda876c461",
+    # Updated for the Phase 9 correction (multi-part grading, D.9/D.17/D.20).
+    # Only these two are actually pinned here as an executable preflight gate
+    # -- eval_records_v3.py/eval_verify_v3.py are pinned separately, only in
+    # the STACK_MODULES hash table below (self-updating documentation, not an
+    # executable gate); an earlier version of this comment/plan conflated the
+    # two lists.
     "finetune/grade_v3.py":
-        "619b9350e38ac976ad5ce9d4ba377fdcc4504e00b9ac34ef49fa47f6931b4cbd",
+        "8c49e8566a8b88085070f6fd88929309c7a379bd708cb31350dd88c0cc98a147",
     "finetune/phase7_grader_tests.py":
-        "fefbd447694a96c25c30e90438e2a24cf1638e8e1ef643f63c76dcb7de0f2692",
+        "52e78e63f8cb91aa755576913ad834827060fe141793b520ecc3d5d757952b45",
 }
 
 # Retired concepts that must appear nowhere in the active Phase 8 stack.
@@ -66,19 +72,29 @@ def _rec(example_id, family, status, task, schema, *, answer_type="set",
          target_columns=("company",), condition="fixture_condition",
          raw="SELECT company FROM companies", parsed=None, sql=None,
          result=None, gold=("A",), error_type=None, error_detail=None,
-         seed=None, adapter=None) -> R.EvalRecord:
+         seed=None, adapter=None, parts=None, regrade_outcome=None,
+         grader_version=None, grader_sha256=None) -> R.EvalRecord:
+    # `gold`: either the legacy bare-list retention shape (kept for existing
+    # fixtures) or, when regrade-recomputation evidence is needed (Phase 9
+    # correction), a {"columns":[...], "rows":[...]} dict -- passed through
+    # unchanged when it's already a dict. `result` (execution_result) was
+    # always passed through as-is.
+    gold_val = gold if (gold is None or isinstance(gold, dict)) else list(gold)
     return R.EvalRecord(
         example_id=example_id, family=family, condition=condition,
         question=f"synthetic fixture question for {example_id}",
         raw_output=raw, parsed_output=parsed, generated_sql=sql,
-        execution_result=result, gold=list(gold) if gold is not None else None,
+        execution_result=result, gold=gold_val,
         answer_type=answer_type,
         target_columns=list(target_columns) if target_columns else None,
         task_result_correctness=task, strict_result_schema_accuracy=schema,
         status=status, error_type=error_type, error_detail=error_detail,
         prompt_hash=hashlib.sha256(example_id.encode()).hexdigest()[:16],
         adapter_hash=adapter, seed=seed,
-        grader_version=G.GRADER_VERSION, grader_sha256=FROZEN["finetune/grade_v3.py"])
+        grader_version=grader_version or G.GRADER_VERSION,
+        grader_sha256=grader_sha256 or FROZEN["finetune/grade_v3.py"],
+        parts=tuple(parts) if parts else None,
+        regrade_outcome=regrade_outcome)
 
 
 def build_fixtures() -> list[R.EvalRecord]:
@@ -133,6 +149,13 @@ def build_fixtures() -> list[R.EvalRecord]:
                       "correct" if i < 2 else "incorrect",
                       1.0 if i < 2 else 0.0, 1.0,
                       condition="B_facts", seed=seed, adapter=f"ad{seed:04d}"))
+
+    # Regrade-recomputation fixtures (fx17-fx20) live ONLY in
+    # _regrade_correction_checks(), not in this shared list: they're built
+    # with retained evidence that deliberately DISAGREES with their recorded
+    # status, which would break this list's `regrade_reproduces_metrics`
+    # check (a legitimate invariant for these 16 ordinary fixtures, none of
+    # which carry disagreeing retained evidence).
     return f
 
 
@@ -299,6 +322,11 @@ def main() -> int:
     # ---- faults -----------------------------------------------------------
     faults = _fault_checks(fixtures, expected_count)
     for name, ok, detail in faults:
+        check(name, ok, detail)
+
+    # ---- Phase 9 correction: regrade recomputation + insufficient-evidence
+    regrade_checks = _regrade_correction_checks()
+    for name, ok, detail in regrade_checks:
         check(name, ok, detail)
 
     for name, ok, detail in checks:
@@ -758,6 +786,183 @@ def _fault_checks(fixtures, expected_count) -> list[tuple[str, bool, str]]:
                  lambda: V.verify([corrupted] + fixtures[1:],
                                   expected_count=expected_count),
                  V.VerificationError, "record without prompt hash accepted")
+    return out
+
+
+def _regrade_correction_checks() -> list[tuple[str, bool, str]]:
+    """Phase 9 correction (D.12/D.21): prove regrade genuinely recomputes from
+    retained evidence, prove insufficient evidence preserves historical
+    provenance byte-identically, and exercise the full serialize -> reload ->
+    regrade -> verify -> report path on a MIXED batch containing one
+    insufficient-evidence record.
+    """
+    out = []
+
+    def rec(name, ok, detail):
+        out.append((name, bool(ok), detail))
+
+    def expect_raise(name, fn, exc, detail):
+        try:
+            fn()
+            out.append((name, False, f"*** NOT RAISED *** {detail}"))
+        except exc as e:
+            out.append((name, True, f"{type(e).__name__}: {str(e)[:70]}"))
+        except Exception as e:  # noqa: BLE001
+            out.append((name, False, f"wrong error {type(e).__name__}: {e}"))
+
+    fx17 = _rec("fx17_regrade_disagrees_with_stale_score", "structured_heldin",
+               "correct", 1.0, 1.0,
+               raw="SELECT company FROM companies WHERE row_id = 1",
+               sql="SELECT company FROM companies WHERE row_id = 1",
+               result={"columns": ["company"], "rows": [["WRONG_COMPANY"]]},
+               gold={"columns": ["company"], "rows": [["RIGHT_COMPANY"]]})
+    fx18 = _rec("fx18_insufficient_evidence_preserves_old_provenance",
+               "structured_heldin", "correct", 1.0, 1.0,
+               raw="SELECT company FROM companies WHERE row_id = 2",
+               sql="SELECT company FROM companies WHERE row_id = 2",
+               result=None, gold=None,
+               grader_version="grade_v3.0", grader_sha256="deadbeef" * 8)
+    mp_parts = ({"part_id": "count", "answer_type": "scalar",
+                "target_columns": ["n"]},
+               {"part_id": "companies", "answer_type": "set",
+                "target_columns": ["company"]})
+    fx19 = _rec("fx19_multipart_regrade_recomputes", "structured_paraphrase",
+               "correct", 1.0, 1.0, answer_type="multi_part",
+               target_columns=("n", "company"), parts=mp_parts,
+               result={"parts": {
+                   "count": {"columns": ["n"], "rows": [[2]]},
+                   "companies": {"columns": ["company"],
+                                "rows": [["A"], ["WRONG"]]}}},
+               gold={"parts": {
+                   "count": {"columns": ["n"], "rows": [[2]]},
+                   "companies": {"columns": ["company"],
+                                "rows": [["A"], ["B"]]}}})
+    fx20 = _rec("fx20_multipart_missing_one_part_evidence",
+               "structured_paraphrase", "correct", 1.0, 1.0,
+               answer_type="multi_part", target_columns=("n", "company"),
+               parts=mp_parts,
+               result={"parts": {"count": {"columns": ["n"], "rows": [[2]]}}},
+               gold={"parts": {"count": {"columns": ["n"], "rows": [[2]]}}})
+
+    mixed_batch = [fx17, fx18, fx19, fx20]
+    rec("pre_regrade_all_start_unregraded",
+        all(r.regrade_outcome is None for r in mixed_batch),
+        "no record carries a regrade_outcome before regrade() runs")
+
+    current_sha = FROZEN["finetune/grade_v3.py"]
+    regraded = V.regrade(mixed_batch, grader_sha256=current_sha)
+    by_id = {r.example_id: r for r in regraded}
+
+    r17 = by_id["fx17_regrade_disagrees_with_stale_score"]
+    rec("regrade_recomputes_and_disagrees_with_stale_score",
+        r17.status == "incorrect" and r17.task_result_correctness == 0.0
+        and r17.regrade_outcome == "recomputed"
+        and r17.grader_sha256 == current_sha,
+        f"stale score was 'correct'; genuine recomputation from retained "
+        f"evidence (WRONG_COMPANY vs RIGHT_COMPANY) now correctly says "
+        f"'{r17.status}' -- proves regrade recomputes rather than re-stamping")
+
+    r18 = by_id["fx18_insufficient_evidence_preserves_old_provenance"]
+    rec("insufficient_evidence_preserves_status_and_scores",
+        r18.status == "correct" and r18.task_result_correctness == 1.0
+        and r18.strict_result_schema_accuracy == 1.0,
+        "status/scores byte-identical to pre-regrade despite no retained "
+        "execution_result/gold")
+    rec("insufficient_evidence_preserves_grader_provenance",
+        r18.grader_version == "grade_v3.0" and r18.grader_sha256 == "deadbeef" * 8,
+        "grader_version/grader_sha256 NOT re-stamped to the current build -- "
+        "a record must never claim to originate from a grader that never "
+        "actually evaluated it")
+    rec("insufficient_evidence_outcome_flagged",
+        r18.regrade_outcome == "insufficient_evidence",
+        "regrade_outcome correctly distinguishes this from a real recompute")
+
+    r19 = by_id["fx19_multipart_regrade_recomputes"]
+    rec("multipart_regrade_recomputes_and_disagrees",
+        r19.status == "incorrect" and r19.task_result_correctness == 0.0
+        and r19.regrade_outcome == "recomputed",
+        f"one part's retained evidence disagrees (WRONG vs B); multi-part "
+        f"regrade correctly recomputes to '{r19.status}'")
+
+    r20 = by_id["fx20_multipart_missing_one_part_evidence"]
+    rec("multipart_missing_one_part_is_insufficient_not_partial",
+        r20.regrade_outcome == "insufficient_evidence"
+        and r20.status == "correct" and r20.task_result_correctness == 1.0,
+        "a single part lacking retained evidence makes the WHOLE item "
+        "insufficient_evidence, never a partial recompute; original score "
+        "preserved untouched")
+
+    # assert_fully_regraded: strict whitelist, not a blacklist
+    expect_raise("assert_fully_regraded_rejects_mixed_batch",
+                lambda: V.assert_fully_regraded(regraded,
+                                                expected_grader_sha256=current_sha),
+                V.VerificationError,
+                "a batch containing insufficient_evidence records must not "
+                "be certifiable as fully regraded")
+
+    fully_recomputable = [fx17, fx19]
+    fully_regraded = V.regrade(fully_recomputable, grader_sha256=current_sha)
+    try:
+        V.assert_fully_regraded(fully_regraded, expected_grader_sha256=current_sha)
+        rec("assert_fully_regraded_accepts_genuine_full_coverage", True,
+            "a batch where every record is genuinely recomputed under the "
+            "current grader passes")
+    except V.VerificationError as e:
+        rec("assert_fully_regraded_accepts_genuine_full_coverage", False,
+            f"wrongly rejected: {e}")
+
+    never_regraded = [fx17]
+    expect_raise("assert_fully_regraded_rejects_never_regraded",
+                lambda: V.assert_fully_regraded(never_regraded,
+                                                expected_grader_sha256=current_sha),
+                V.VerificationError,
+                "regrade_outcome is None (never regraded) must not pass -- "
+                "a whitelist rejects this, not only the known-bad blacklist value")
+
+    stale_stamped = V.regrade([fx17], grader_sha256="stale_build_sha")
+    expect_raise("assert_fully_regraded_rejects_stale_grader_build",
+                lambda: V.assert_fully_regraded(stale_stamped,
+                                                expected_grader_sha256=current_sha),
+                V.VerificationError,
+                "'recomputed' under a DIFFERENT (stale) grader build must not "
+                "pass as fresh under the CURRENT one")
+
+    cov = V.regrade_coverage(regraded)
+    rec("regrade_coverage_accounts_for_every_record",
+        cov == {"recomputed": 2, "insufficient_evidence": 2,
+               "not_yet_regraded": 0, "total": 4},
+        f"{cov}")
+
+    # ---- full path: serialize -> reload -> regrade -> verify -> report ----
+    with tempfile.TemporaryDirectory() as td:
+        path = Path(td) / "mixed_batch.jsonl"
+        R.write_records(path, mixed_batch)
+        reloaded = [R.from_dict(json.loads(line))
+                   for line in path.read_text(encoding="utf-8").splitlines()]
+        rec("full_path_reload_preserves_records",
+            len(reloaded) == 4
+            and all(r.regrade_outcome is None for r in reloaded),
+            "serialized/reloaded records are unregraded, matching what was written")
+
+        reloaded_regraded = V.regrade(reloaded, grader_sha256=current_sha)
+        vres = V.verify(reloaded_regraded, expected_count=4)
+        rec("full_path_verify_passes_structurally", vres["passed"],
+            "structural verification passes on the regraded mixed batch "
+            "(verify does not itself judge regrade completeness)")
+
+        rpt_summary = RPT.summarize(reloaded_regraded, expected_count=4)
+        rec("full_path_report_shows_mixed_coverage",
+            rpt_summary["regrade_coverage"] == {
+                "recomputed": 2, "insufficient_evidence": 2,
+                "not_yet_regraded": 0, "total": 4},
+            f"{rpt_summary['regrade_coverage']}")
+        expect_raise("full_path_cannot_certify_fully_regraded",
+                    lambda: V.assert_fully_regraded(
+                        reloaded_regraded, expected_grader_sha256=current_sha),
+                    V.VerificationError,
+                    "end-to-end: a report built from this reloaded, regraded, "
+                    "mixed batch still cannot claim full regrade coverage")
+
     return out
 
 

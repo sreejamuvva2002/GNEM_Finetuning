@@ -315,6 +315,11 @@ def main() -> int:
     for name, ok, detail in battery:
         check(name, ok, detail)
 
+    # ================= multi-part grading (multipart_result_v1) ==========
+    multipart, multipart_rows = _multipart_battery()
+    for name, ok, detail in multipart:
+        check(name, ok, detail)
+
     for name, ok, detail in checks:
         print(f"  [{'PASS' if ok else 'FAIL'}] {name}: {detail}")
     failed = [n for n, ok, _ in checks if not ok]
@@ -322,7 +327,7 @@ def main() -> int:
         raise Gate(f"{len(failed)} gate(s) failed: {failed}")
 
     _write_audit(db_sha, checks, battery_rows, sem_detail, bypasses,
-                 cte_collisions)
+                 cte_collisions, multipart_rows)
     print(f"\nAll Phase 7 gates passed ({len(checks)} checks).")
     print(f"  executor {X.EXECUTOR_VERSION}  sha256 {sha256_file(srcs[0])}")
     print(f"  grader   {G.GRADER_VERSION}  sha256 {sha256_file(srcs[1])}")
@@ -500,8 +505,117 @@ def _degenerate_battery():
     return out, rows
 
 
+def _multipart_battery():
+    """Real, heterogeneous multi-part grading against the frozen DB --
+    scalar + set parts as independent keyed results, per multipart_result_v1.
+    """
+    out, rows = [], []
+    item = {
+        "answer_type": "multi_part",
+        "target_columns": ["n", "company"],
+        "parts": [
+            {"part_id": "count", "answer_type": "scalar", "target_columns": ["n"]},
+            {"part_id": "companies", "answer_type": "set", "target_columns": ["company"]},
+        ],
+    }
+    gold_sql = {
+        "count": "SELECT COUNT(*) AS n FROM certifications "
+                "WHERE standard_family = 'ISO 26262'",
+        "companies": "SELECT company FROM certifications "
+                    "WHERE standard_family = 'ISO 26262'",
+    }
+    good = gold_sql["count"] + "; " + gold_sql["companies"]
+
+    r = G.grade_structured(item, good, gold_sql, "train_kb", db_path=DB)
+    out.append(("multipart_heterogeneous_all_correct",
+               r.status == "correct" and r.task_result_correctness == 1.0
+               and r.strict_result_schema_accuracy == 1.0,
+               r.detail))
+    rows.append(("scalar+set, both correct", "correct", r.status,
+                r.task_result_correctness))
+
+    wrong_second = gold_sql["count"] + "; SELECT company FROM certifications " \
+                                       "WHERE standard_family = 'AS9100'"
+    r = G.grade_structured(item, wrong_second, gold_sql, "train_kb", db_path=DB)
+    out.append(("multipart_one_part_wrong_is_incorrect",
+               r.status == "incorrect" and r.task_result_correctness == 0.0
+               and r.strict_result_schema_accuracy == 1.0,
+               r.detail))
+    rows.append(("scalar correct, set wrong", "incorrect", r.status,
+                r.task_result_correctness))
+
+    r = G.grade_structured(item, gold_sql["count"], gold_sql, "train_kb", db_path=DB)
+    out.append(("multipart_omitted_statement_is_parse_failure",
+               r.status == "parse_failure" and r.task_result_correctness == 0.0,
+               r.detail))
+    rows.append(("second statement omitted", "parse_failure", r.status,
+                r.task_result_correctness))
+
+    r = G.grade_structured(item, good, gold_sql, "train_kb", db_path=DB,
+                           stopped_at_max_new_tokens=True)
+    out.append(("multipart_truncation_checked_before_any_split_or_execution",
+               r.status == "truncated_output"
+               and "before any part is split" in r.detail,
+               r.detail))
+    rows.append(("whole response truncated", "truncated_output", r.status,
+                r.task_result_correctness))
+
+    extra = good + "; SELECT 1"
+    r = G.grade_structured(item, extra, gold_sql, "train_kb", db_path=DB)
+    out.append(("multipart_extra_statement_correct_but_schema_fails",
+               r.status == "correct" and r.task_result_correctness == 1.0
+               and r.strict_result_schema_accuracy == 0.0,
+               r.detail))
+    rows.append(("extra undeclared statement", "correct/schema-fail", r.status,
+                r.task_result_correctness))
+
+    try:
+        G.grade_structured({"answer_type": "multi_part", "target_columns": ["n"]},
+                          good, gold_sql, "train_kb", db_path=DB)
+        out.append(("multipart_missing_parts_metadata_fails_closed", False,
+                   "*** NOT RAISED ***"))
+    except G.GraderMetadataError as e:
+        out.append(("multipart_missing_parts_metadata_fails_closed", True,
+                   f"GraderMetadataError: {str(e)[:60]}"))
+
+    # D.20 positional pairing: out-of-order statements grade against the
+    # WRONG declared part (parts[] order is authoritative, not content-matched)
+    swapped = gold_sql["companies"] + "; " + gold_sql["count"]
+    r = G.grade_structured(item, swapped, gold_sql, "train_kb", db_path=DB)
+    out.append(("multipart_positional_pairing_is_literal_not_smart",
+               r.status in ("SQL_error", "incorrect", "invalid_output"),
+               f"swapped statement order grades against the wrong declared "
+               f"part rather than being silently reordered: status={r.status}"))
+    rows.append(("statements emitted out of declared order",
+                "graded positionally (likely fails)", r.status,
+                r.task_result_correctness))
+
+    # duplicate part_id in declared metadata is a task-authoring error
+    dup_item = dict(item, parts=[item["parts"][0], item["parts"][0]])
+    try:
+        G.grade_structured(dup_item, good, gold_sql, "train_kb", db_path=DB)
+        out.append(("multipart_duplicate_part_id_fails_closed", False,
+                   "*** NOT RAISED ***"))
+    except G.GraderMetadataError as e:
+        out.append(("multipart_duplicate_part_id_fails_closed", True,
+                   f"GraderMetadataError: {str(e)[:60]}"))
+
+    # a genuine semicolon inside a quoted string must not be mistaken for a
+    # statement boundary
+    lit_cases = [
+        ("SELECT 1; SELECT 2", ["SELECT 1", "SELECT 2"]),
+        ("SELECT 'a;b'; SELECT 2", ["SELECT 'a;b'", "SELECT 2"]),
+    ]
+    lit_ok = all(G.split_top_level_statements(sql) == expected
+                for sql, expected in lit_cases)
+    out.append(("multipart_semicolon_in_literal_not_a_boundary", lit_ok,
+               "quote-aware statement splitting confirmed"))
+
+    return out, rows
+
+
 def _write_audit(db_sha, checks, battery_rows, sem_detail, bypasses,
-                 cte_collisions) -> None:
+                 cte_collisions, multipart_rows) -> None:
     ex = sha256_file(ROOT / "finetune" / "sqlexec_v3.py")
     gr = sha256_file(ROOT / "finetune" / "grade_v3.py")
     L = ["# GRADER_VALIDATION_v3\n",
@@ -644,8 +758,14 @@ def _write_audit(db_sha, checks, battery_rows, sem_detail, bypasses,
           "| `top_k` | order and length preserved; **never** set-deduped |",
           "| `multi_part` | every required part correct; partial is not correct |",
           "",
-          "### Multi-part encoding is NOT frozen here\n",
+          "### Multi-part encoding (Phase 9 correction: now frozen)\n",
           f"{G.MULTI_PART_ENCODING_NOTE}\n",
+          "### Multi-part battery (real DB execution)\n",
+          "| case | expected | status | task_result_correctness |",
+          "|---|---|---|---|"]
+    for label, expected, status, score in multipart_rows:
+        L.append(f"| {label} | `{expected}` | `{status}` | {score} |")
+    L += ["",
           "## Two metrics, genuinely distinct\n",
           f"- **`task_result_correctness`** (primary)\n"
           f"- **`strict_result_schema_accuracy`** (secondary)\n",

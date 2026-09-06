@@ -6,6 +6,6 @@
   "generated_by": "finetune/phase8_eval_stack_tests.py",
   "item_count": 18,
   "provenance": "SYNTHETIC VALIDATION FIXTURE — NOT EXPERIMENTAL RESULTS",
-  "schema_version": "eval_records_v3.0",
-  "sha256": "14610bb2e7d76a34f6cc617ab918b9d50a7b6048dae4e6cde1ee37ad38958e27"
+  "schema_version": "eval_records_v3.1",
+  "sha256": "c55d7f2b783739136fb2ba2e39e3478bd342c27ca1d54f07ac62d629e69ebdb0"
 }

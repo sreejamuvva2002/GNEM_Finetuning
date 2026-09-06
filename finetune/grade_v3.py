@@ -21,21 +21,33 @@ own explicit status first.
 SCOPE-PAIR INVARIANT. Grading executes prediction and gold through one scope
 argument (sqlexec_v3.execute_pair). A mismatch raises before any score exists.
 
-PHASE BOUNDARY -- MULTI-PART ENCODING IS NOT FROZEN HERE. README fixes the
-*semantics* ("multi-part questions require every part") but does not freeze a
-serialization for how parts are declared. This module therefore treats each
-entry of `target_columns` as one required part, which is the minimal reading
-that satisfies the frozen semantics, and does NOT establish a permanent
-generator format. Phase 9/12 owns that decision; see MULTI_PART_ENCODING_NOTE.
+PHASE BOUNDARY -- MULTI-PART ENCODING WAS NOT FROZEN HERE. README fixes the
+*semantics* ("multi-part questions require every part") but Phase 7 did not
+freeze a serialization for how parts are declared or executed. Phase 9 has
+since frozen both: `parts: [{part_id, answer_type, target_columns}]`
+(`parts_list_v1`) and the execution/grading representation
+(`multipart_result_v1`, see `grade_multipart` below) -- a part_id-keyed
+collection of independently-executed, independently-typed per-part results,
+not one shared rectangular table. `compare_results`'s original flattened
+`multi_part` branch (each `target_columns` entry treated as one part of ONE
+shared result) is kept EXACTLY as it was for any caller that invokes it
+directly with a plain tuple of columns -- that is a different, lower-level
+entry point than `grade_structured`/`grade_multipart`, so old and new callers
+are naturally disjoint rather than needing an explicit legacy allowlist: a
+caller that builds a `dict` `gold_sql` and goes through `grade_structured`
+always gets the new keyed path and always requires real `parts` metadata
+(fails closed if absent); a caller that calls `compare_results` directly with
+a flat `target_columns` tuple is explicitly using the old, simpler contract.
 """
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 
 import sqlexec_v3 as X
 
-GRADER_VERSION = "grade_v3.0"
+GRADER_VERSION = "grade_v3.1"
 
 # Frozen answer types (README Phase 7).
 ANSWER_TYPES = ("set", "scalar", "top_k", "multi_part")
@@ -45,12 +57,17 @@ STATUSES = ("correct", "incorrect", "generation_failure", "parse_failure",
             "SQL_error", "timeout", "truncated_output", "invalid_output")
 
 MULTI_PART_ENCODING_NOTE = (
-    "README freezes multi-part SEMANTICS (every required part must be correct) "
-    "but not a serialization for declaring parts. This grader treats each entry "
-    "of target_columns as one required part -- the minimal reading consistent "
-    "with the frozen semantics. This is deliberately NOT a permanent generator "
-    "format; freezing that representation belongs to the phase that owns task "
-    "metadata, not to Phase 7."
+    "Phase 9 froze both the metadata serialization (parts_list_v1: "
+    "parts=[{part_id, answer_type, target_columns}]) and the execution/"
+    "grading representation (multipart_result_v1: gold_sql is a part_id-"
+    "keyed dict of independently-normal SQL strings, each producing its own "
+    "naturally-typed SQLResult; the model's prediction is a sequence of "
+    "statements paired POSITIONALLY to parts[] order -- parts[] order is "
+    "authoritative, predicted statement N belongs to declared part N). "
+    "compare_results's original flattened multi_part branch (each "
+    "target_columns entry as one part of ONE shared result) remains for "
+    "direct callers using the older, simpler contract; grade_structured "
+    "dispatches to the new grade_multipart path whenever gold_sql is a dict."
 )
 
 # A scalar result must be a single scalar-compatible cell.
@@ -139,9 +156,16 @@ def classify_prediction_text(text, *, stopped_at_max_new_tokens: bool = False) -
     return None
 
 
-def grade_structured(item: dict, prediction_text, gold_sql: str, scope, *,
+def grade_structured(item: dict, prediction_text, gold_sql, scope, *,
                      db_path=None, stopped_at_max_new_tokens: bool = False) -> GradeResult:
-    """Grade one structured item. Prediction and gold execute in ONE scope."""
+    """Grade one structured item. `gold_sql` is a single SQL string for an
+    ordinary item, or a part_id-keyed dict for a multi_part item -- routed to
+    `grade_multipart` automatically. Prediction and gold execute in ONE scope."""
+    if isinstance(gold_sql, dict):
+        return grade_multipart(
+            item, prediction_text, gold_sql, scope, db_path=db_path,
+            stopped_at_max_new_tokens=stopped_at_max_new_tokens)
+
     answer_type, target_columns = validate_item_metadata(item)
 
     status = classify_prediction_text(
@@ -166,6 +190,144 @@ def grade_structured(item: dict, prediction_text, gold_sql: str, scope, *,
 
     X.assert_same_scope(pred_res, gold_res)
     return compare_results(pred_res, gold_res, answer_type, target_columns)
+
+
+# ---------------------------------------------------------------------------
+# Multi-part grading (multipart_result_v1) -- a part_id-keyed collection of
+# independently-executed, independently-typed per-part results. No shared
+# schema, no discriminator column, no casting: each part is graded through
+# the existing, unmodified `compare_results` using its own answer_type/
+# target_columns.
+# ---------------------------------------------------------------------------
+_NOISE_MASK_RE = re.compile(
+    r"""
+    --[^\n]*                     |
+    /\*.*?\*/                    |
+    '(?:[^']|'')*'                |
+    "(?:[^"]|"")*"                |
+    `(?:[^`]|``)*`
+    """,
+    re.VERBOSE | re.DOTALL,
+)
+
+
+def split_top_level_statements(sql: str) -> list[str]:
+    """Split on top-level ';' using a comment/quote-aware scan, so a semicolon
+    inside a string literal or comment is never mistaken for a statement
+    boundary. An interior empty fragment (from ';;') is preserved as '' so the
+    caller can classify it as an omitted/parse-failed part rather than it
+    silently disappearing; a single trailing empty fragment (a lone final ';')
+    is dropped."""
+    mask = _NOISE_MASK_RE.sub(lambda m: "_" * len(m.group(0)), sql)
+    raw, start = [], 0
+    for i, ch in enumerate(mask):
+        if ch == ";":
+            raw.append(sql[start:i])
+            start = i + 1
+    raw.append(sql[start:])
+    parts = [p.strip() for p in raw]
+    while parts and parts[-1] == "":
+        parts.pop()
+    return parts
+
+
+def grade_multipart(item: dict, prediction_text, gold_sql: dict, scope, *,
+                    db_path=None, stopped_at_max_new_tokens: bool = False) -> GradeResult:
+    """Grade one multi_part item against the multipart_result_v1 contract.
+
+    Whole-response degeneracy (including truncation) is checked ONCE, before
+    any statement-splitting or execution -- mirroring the single-query
+    contract exactly ("partial or degenerate output is NEVER parsed or
+    executed"): a truncated/degenerate response results in ZERO executor
+    calls across every declared part.
+    """
+    parts_meta = item.get("parts")
+    if not parts_meta:
+        raise GraderMetadataError(
+            "multi_part item is missing required 'parts' metadata -- fails "
+            "closed rather than falling back to legacy per-column grading")
+    part_ids = [p["part_id"] for p in parts_meta]
+    if len(part_ids) != len(set(part_ids)):
+        raise GraderMetadataError(f"duplicate part_id(s) in declared parts: {part_ids}")
+
+    status = classify_prediction_text(
+        prediction_text, stopped_at_max_new_tokens=stopped_at_max_new_tokens)
+    if status is not None:
+        return GradeResult(
+            status, 0.0, 0.0,
+            f"{status}: prediction not parsed or executed (whole-response "
+            f"check, before any part is split or any executor is called)")
+
+    pred_statements = split_top_level_statements(str(prediction_text).strip())
+
+    # (part_id, failure_status_or_None, detail, GradeResult_or_None)
+    part_outcomes: list[tuple[str, str | None, str, GradeResult | None]] = []
+    for i, p in enumerate(parts_meta):
+        pid = p["part_id"]
+        p_answer_type = p["answer_type"]
+        p_target_columns = tuple(p["target_columns"])
+
+        if i >= len(pred_statements) or not pred_statements[i]:
+            part_outcomes.append((pid, "parse_failure",
+                                  "omitted required statement", None))
+            continue
+        stmt = pred_statements[i]
+        if not (stmt.lower().startswith("select") or stmt.lower().startswith("with")):
+            part_outcomes.append((pid, "parse_failure",
+                                  "statement is not a SELECT/WITH query", None))
+            continue
+
+        gold_part_sql = gold_sql.get(pid)
+        if gold_part_sql is None:
+            raise GraderMetadataError(
+                f"gold_sql has no entry for declared part {pid!r}")
+        try:
+            pred_res, gold_res = X.execute_pair(stmt, gold_part_sql, scope,
+                                                db_path=db_path)
+        except X.ScopeError:
+            raise
+        except (X.SQLPolicyError, Exception) as e:  # noqa: BLE001
+            part_outcomes.append((pid, "SQL_error",
+                                  f"{type(e).__name__}: {str(e)[:120]}", None))
+            continue
+
+        X.assert_same_scope(pred_res, gold_res)
+        gr = compare_results(pred_res, gold_res, p_answer_type, p_target_columns)
+        part_outcomes.append((pid, None, gr.detail, gr))
+
+    # Extra, undeclared statements beyond what parts[] declares: does not fail
+    # task_result_correctness (each declared part is still graded on its own
+    # terms), but does fail strict_result_schema_accuracy -- extends the
+    # existing precedent that an extra column passes task_result_correctness
+    # but fails strict_result_schema_accuracy.
+    extra_present = any(s for s in pred_statements[len(parts_meta):])
+
+    failing = [(pid, st, d) for pid, st, d, _ in part_outcomes if st is not None]
+    if failing:
+        # Deterministic: the FIRST failure by declared part order, not an
+        # arbitrary one -- per-part detail is retained, never genericized.
+        pid, st, d = failing[0]
+        summary = "; ".join(
+            f"{pid2}:{st2 if st2 else (gr2.status if gr2 else '?')}"
+            for pid2, st2, _d2, gr2 in part_outcomes)
+        return GradeResult(
+            st, 0.0, 0.0,
+            f"multi_part part {pid!r} failed with {st}: {d} (all parts: {summary})")
+
+    all_correct = all(gr.status == "correct" for _, _, _, gr in part_outcomes)
+    strict_ok = (all(gr.strict_result_schema_accuracy == 1.0
+                     for _, _, _, gr in part_outcomes)
+                and not extra_present)
+    summary = "; ".join(f"{pid}:{gr.status}" for pid, _, _, gr in part_outcomes)
+    detail = f"multi_part: {summary}"
+    if extra_present:
+        detail += " (extra undeclared statement(s) present -- fails strict schema only)"
+    return GradeResult(
+        "correct" if all_correct else "incorrect",
+        1.0 if all_correct else 0.0,
+        1.0 if strict_ok else 0.0,
+        detail,
+        {"answer_type": "multi_part", "parts": [pid for pid, _, _, _ in part_outcomes]})
 
 
 def compare_results(pred_res: X.SQLResult, gold_res: X.SQLResult,
