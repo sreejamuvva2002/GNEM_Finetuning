@@ -611,6 +611,78 @@ def _multipart_battery():
     out.append(("multipart_semicolon_in_literal_not_a_boundary", lit_ok,
                "quote-aware statement splitting confirmed"))
 
+    # Second independent-audit round: reproduced-and-fixed bugs -------------
+    bracket_ok = G.split_top_level_statements("SELECT [a;b]; SELECT 2") == \
+        ["SELECT [a;b]", "SELECT 2"]
+    out.append(("multipart_semicolon_in_bracket_identifier_not_a_boundary",
+               bracket_ok,
+               "a semicolon inside a bracket-quoted identifier [a;b] must not "
+               "be mistaken for a statement boundary"))
+
+    # answer_type="multi_part" with a plain STRING gold_sql must fail closed,
+    # not silently fall through to the legacy single-query path (reproduced:
+    # this previously scored 'correct'/1.0/1.0 with no parts[] ever checked).
+    try:
+        G.grade_structured({"answer_type": "multi_part", "target_columns": ["company"]},
+                          "SELECT company FROM companies WHERE row_id=1",
+                          "SELECT company FROM companies WHERE row_id=1",
+                          "train_kb", db_path=DB)
+        out.append(("multipart_string_gold_sql_fails_closed", False,
+                   "*** NOT RAISED -- silently graded via the legacy path ***"))
+    except G.GraderMetadataError as e:
+        out.append(("multipart_string_gold_sql_fails_closed", True,
+                   f"GraderMetadataError: {str(e)[:70]}"))
+
+    # A dict gold_sql with a non-multi_part answer_type is equally invalid.
+    try:
+        G.grade_structured({"answer_type": "set", "target_columns": ["n"]},
+                          "SELECT 1", {"p1": "SELECT 1"}, "train_kb", db_path=DB)
+        out.append(("dict_gold_sql_requires_multipart_answer_type", False,
+                   "*** NOT RAISED ***"))
+    except G.GraderMetadataError as e:
+        out.append(("dict_gold_sql_requires_multipart_answer_type", True,
+                   f"GraderMetadataError: {str(e)[:70]}"))
+
+    # A part with empty target_columns previously projected zero columns,
+    # making any two same-row-count results compare equal regardless of
+    # actual values (999 scored "correct" against gold 1). Now fails closed
+    # via per-part metadata validation, before any execution.
+    bad_part_item = {"answer_type": "multi_part", "target_columns": ["n"],
+                     "parts": [{"part_id": "p1", "answer_type": "set",
+                               "target_columns": []}]}
+    try:
+        G.grade_structured(bad_part_item, "SELECT 999 AS n",
+                          {"p1": "SELECT 1 AS n"}, "train_kb", db_path=DB)
+        out.append(("multipart_part_empty_target_columns_fails_closed", False,
+                   "*** NOT RAISED -- scored despite meaningless comparison ***"))
+    except G.GraderMetadataError as e:
+        out.append(("multipart_part_empty_target_columns_fails_closed", True,
+                   f"GraderMetadataError: {str(e)[:70]}"))
+
+    # TimeoutError must classify as 'timeout', never generic 'SQL_error'.
+    orig_execute_pair = X.execute_pair
+
+    def _boom(*_a, **_k):
+        raise TimeoutError("synthetic executor deadline")
+    X.execute_pair = _boom
+    try:
+        r_single = G.grade_structured({"answer_type": "set", "target_columns": ["n"]},
+                                     "SELECT 1 AS n", "SELECT 1 AS n",
+                                     "train_kb", db_path=DB)
+        out.append(("single_query_timeout_classified_correctly",
+                   r_single.status == "timeout",
+                   f"status={r_single.status} (expected timeout, not SQL_error)"))
+        mp_item = {"answer_type": "multi_part", "target_columns": ["n"],
+                  "parts": [{"part_id": "p1", "answer_type": "scalar",
+                            "target_columns": ["n"]}]}
+        r_multi = G.grade_structured(mp_item, "SELECT 1 AS n", {"p1": "SELECT 1 AS n"},
+                                    "train_kb", db_path=DB)
+        out.append(("multipart_timeout_classified_correctly",
+                   r_multi.status == "timeout",
+                   f"status={r_multi.status} (expected timeout, not SQL_error)"))
+    finally:
+        X.execute_pair = orig_execute_pair
+
     return out, rows
 
 

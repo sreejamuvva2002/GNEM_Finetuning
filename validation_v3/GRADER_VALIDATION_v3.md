@@ -7,7 +7,7 @@ Phase 7 — SQL execution and grading. README: this gate **blocks the canonical 
 ```text
 datasets_v3/gnem_v3.sqlite   7437c746cb118f3d5bb9edcc34f500e0c9f764358a19fa05766dc526d63bb08b
 finetune/sqlexec_v3.py       a6c06b71dd97541997bedc2202e1980ab2e4cdd721aaf20ff43eacfda876c461   (sqlexec_v3.0)
-finetune/grade_v3.py         8c49e8566a8b88085070f6fd88929309c7a379bd708cb31350dd88c0cc98a147   (grade_v3.1)
+finetune/grade_v3.py         1051a161ac848ad058dda424417e296571404e6fd5dbe10174994cea7df0c6aa   (grade_v3.1)
 ```
 
 ## Scope contract
@@ -253,3 +253,9 @@ Every item receives exactly one status from the frozen vocabulary: `correct`, `i
 | `multipart_positional_pairing_is_literal_not_smart` | PASS | swapped statement order grades against the wrong declared part rather than being silently reordered: status=incorrect |
 | `multipart_duplicate_part_id_fails_closed` | PASS | GraderMetadataError: duplicate part_id(s) in declared parts: ['count', 'count'] |
 | `multipart_semicolon_in_literal_not_a_boundary` | PASS | quote-aware statement splitting confirmed |
+| `multipart_semicolon_in_bracket_identifier_not_a_boundary` | PASS | a semicolon inside a bracket-quoted identifier [a;b] must not be mistaken for a statement boundary |
+| `multipart_string_gold_sql_fails_closed` | PASS | GraderMetadataError: answer_type is 'multi_part' but gold_sql is not a part_id-keyed dict - |
+| `dict_gold_sql_requires_multipart_answer_type` | PASS | GraderMetadataError: gold_sql is a part_id-keyed dict but answer_type is not 'multi_part' - |
+| `multipart_part_empty_target_columns_fails_closed` | PASS | GraderMetadataError: part 'p1': invalid target_columns []; expected a non-empty list of col |
+| `single_query_timeout_classified_correctly` | PASS | status=timeout (expected timeout, not SQL_error) |
+| `multipart_timeout_classified_correctly` | PASS | status=timeout (expected timeout, not SQL_error) |

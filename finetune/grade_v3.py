@@ -160,7 +160,28 @@ def grade_structured(item: dict, prediction_text, gold_sql, scope, *,
                      db_path=None, stopped_at_max_new_tokens: bool = False) -> GradeResult:
     """Grade one structured item. `gold_sql` is a single SQL string for an
     ordinary item, or a part_id-keyed dict for a multi_part item -- routed to
-    `grade_multipart` automatically. Prediction and gold execute in ONE scope."""
+    `grade_multipart` automatically. Prediction and gold execute in ONE scope.
+
+    Dispatch is keyed on `answer_type`, not merely on `gold_sql`'s type: a
+    `multi_part` item MUST supply a dict `gold_sql` (and real `parts`
+    metadata, enforced inside `grade_multipart`); a non-`multi_part` item MUST
+    NOT supply a dict `gold_sql`. Reproduced as a live bug: an item declaring
+    `answer_type="multi_part"` with a plain STRING `gold_sql` silently fell
+    through to the ordinary single-query path (and its legacy flattened
+    `compare_results` multi_part branch), completely bypassing the
+    parts-required fail-closed check -- scoring 1.0/1.0 with no `parts`
+    metadata ever validated.
+    """
+    declared_multipart = item.get("answer_type") == "multi_part"
+    if declared_multipart and not isinstance(gold_sql, dict):
+        raise GraderMetadataError(
+            "answer_type is 'multi_part' but gold_sql is not a part_id-keyed "
+            "dict -- fails closed rather than silently grading through the "
+            "single-query path")
+    if isinstance(gold_sql, dict) and not declared_multipart:
+        raise GraderMetadataError(
+            "gold_sql is a part_id-keyed dict but answer_type is not "
+            "'multi_part' -- inconsistent task metadata")
     if isinstance(gold_sql, dict):
         return grade_multipart(
             item, prediction_text, gold_sql, scope, db_path=db_path,
@@ -184,6 +205,8 @@ def grade_structured(item: dict, prediction_text, gold_sql, scope, *,
         pred_res, gold_res = X.execute_pair(pred_sql, gold_sql, scope, db_path=db_path)
     except X.ScopeError:
         raise
+    except TimeoutError as e:
+        return GradeResult("timeout", 0.0, 0.0, f"execution timeout: {str(e)[:100]}")
     except (X.SQLPolicyError, Exception) as e:  # noqa: BLE001
         return GradeResult("SQL_error", 0.0, 0.0,
                            f"{type(e).__name__}: {str(e)[:120]}")
@@ -205,7 +228,8 @@ _NOISE_MASK_RE = re.compile(
     /\*.*?\*/                    |
     '(?:[^']|'')*'                |
     "(?:[^"]|"")*"                |
-    `(?:[^`]|``)*`
+    `(?:[^`]|``)*`                |
+    \[[^\]]*\]
     """,
     re.VERBOSE | re.DOTALL,
 )
@@ -246,9 +270,25 @@ def grade_multipart(item: dict, prediction_text, gold_sql: dict, scope, *,
         raise GraderMetadataError(
             "multi_part item is missing required 'parts' metadata -- fails "
             "closed rather than falling back to legacy per-column grading")
-    part_ids = [p["part_id"] for p in parts_meta]
+    part_ids = [p.get("part_id") for p in parts_meta]
     if len(part_ids) != len(set(part_ids)):
         raise GraderMetadataError(f"duplicate part_id(s) in declared parts: {part_ids}")
+
+    # Each part's OWN metadata must pass the same validation a normal item
+    # would -- reproduced as a live bug: a part with answer_type="set" and
+    # target_columns=[] projected zero columns, making any two same-row-count
+    # results compare equal regardless of actual values (999 scored "correct"
+    # against gold 1). Validated up front, before any execution, exactly like
+    # the single-query path validates item metadata before touching the
+    # prediction.
+    for p in parts_meta:
+        try:
+            validate_item_metadata(
+                {"answer_type": p.get("answer_type"),
+                 "target_columns": p.get("target_columns")})
+        except GraderMetadataError as e:
+            raise GraderMetadataError(
+                f"part {p.get('part_id')!r}: {e}") from e
 
     status = classify_prediction_text(
         prediction_text, stopped_at_max_new_tokens=stopped_at_max_new_tokens)
@@ -286,6 +326,10 @@ def grade_multipart(item: dict, prediction_text, gold_sql: dict, scope, *,
                                                 db_path=db_path)
         except X.ScopeError:
             raise
+        except TimeoutError as e:
+            part_outcomes.append((pid, "timeout",
+                                  f"execution timeout: {str(e)[:100]}", None))
+            continue
         except (X.SQLPolicyError, Exception) as e:  # noqa: BLE001
             part_outcomes.append((pid, "SQL_error",
                                   f"{type(e).__name__}: {str(e)[:120]}", None))
@@ -327,7 +371,13 @@ def grade_multipart(item: dict, prediction_text, gold_sql: dict, scope, *,
         1.0 if all_correct else 0.0,
         1.0 if strict_ok else 0.0,
         detail,
-        {"answer_type": "multi_part", "parts": [pid for pid, _, _, _ in part_outcomes]})
+        {"answer_type": "multi_part", "parts": [pid for pid, _, _, _ in part_outcomes],
+         # Retained so regrade() can reproduce the SAME strict-schema penalty
+         # from retained evidence alone -- without this, regrading (which
+         # never re-parses raw_output) could not know an extra statement had
+         # been present at original grading time, and would silently drop
+         # the penalty.
+         "extra_present": extra_present})
 
 
 def compare_results(pred_res: X.SQLResult, gold_res: X.SQLResult,

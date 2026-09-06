@@ -316,6 +316,15 @@ def run_gates():
     return checks, artifacts
 
 
+def _cost_csv_text(cost_rows) -> str:
+    import io
+    buf = io.StringIO()
+    w = csv.DictWriter(buf, fieldnames=list(cost_rows[0].keys()), lineterminator="\r\n")
+    w.writeheader()
+    w.writerows(cost_rows)
+    return buf.getvalue()
+
+
 def main() -> int:
     checks, artifacts = run_gates()
     (recs, split, rows, cos, train_rows, train_cos, tot_rows, tot_cos,
@@ -330,10 +339,9 @@ def main() -> int:
     OUT_LEDGER.write_text(json.dumps(ledger, indent=2, sort_keys=True,
                                      ensure_ascii=False) + "\n", encoding="utf-8")
     with OUT_COST.open("w", encoding="utf-8", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=list(cost_rows[0].keys()))
-        w.writeheader()
-        w.writerows(cost_rows)
-    _audit(registry, cost_rows, per_field, checks, comp, selected)
+        fh.write(_cost_csv_text(cost_rows))
+    OUT_AUDIT.write_text(_audit_text(registry, cost_rows, per_field, checks,
+                                     comp, selected), encoding="utf-8")
 
     print("\nAll Phase 9 gates passed.")
     for f in H.MULTIVALUED:
@@ -346,37 +354,95 @@ def main() -> int:
 
 def check_only() -> int:
     """Genuine read-only --check: recompute expected state, compare to the
-    committed artifacts, report drift, exit nonzero on mismatch. NO writes."""
-    reg_path_before = OUT_REG.stat().st_mtime_ns if OUT_REG.is_file() else None
-    ledger_path_before = OUT_LEDGER.stat().st_mtime_ns if OUT_LEDGER.is_file() else None
-    cost_path_before = OUT_COST.stat().st_mtime_ns if OUT_COST.is_file() else None
+    committed artifacts, report drift, exit nonzero on mismatch. NO writes.
+
+    Reproduced as a live gap: the previous version only recomputed and
+    compared the REGISTRY; redirecting the ledger/cost-CSV/audit-doc output
+    paths to nonexistent locations still exited "all clear" because their
+    CONTENT was never compared to fresh recomputation, only the registry's
+    was. All four committed artifacts are now compared byte-for-byte.
+    """
+    paths = (OUT_REG, OUT_LEDGER, OUT_COST, OUT_AUDIT)
+    mtimes_before = tuple(p.stat().st_mtime_ns if p.is_file() else None for p in paths)
 
     problems = []
     try:
-        candidate = H.load_candidate_registry_for_phase9_audit()
+        H.load_candidate_registry_for_phase9_audit()
         print("  [PASS] registry matches deterministic recomputation from "
               "frozen inputs (recompute-and-compare)")
     except H.HoldoutError as e:
-        problems.append(str(e))
+        problems.append(f"registry: {e}")
         print(f"  [FAIL] registry recomputation check: {e}")
 
     try:
-        checks, _ = run_gates()
+        checks, artifacts = run_gates()
         failed = [n for n, ok, _ in checks if not ok]
         if failed:
             problems.append(f"gates failed: {failed}")
         else:
             print(f"  [PASS] all {len(checks)} Phase 9 gates re-verified")
     except Gate as e:
-        problems.append(str(e))
+        problems.append(f"gates: {e}")
         print(f"  [FAIL] gate re-verification: {e}")
+        artifacts = None
+
+    if artifacts is not None:
+        (recs, split, rows, cos, train_rows, train_cos, tot_rows, tot_cos,
+         selected, comp, ent, cost_rows, per_field, registry, ledger) = artifacts
+
+        if not OUT_LEDGER.is_file():
+            problems.append(f"ledger: {OUT_LEDGER} does not exist")
+            print(f"  [FAIL] ledger: {OUT_LEDGER} does not exist")
+        else:
+            on_disk_ledger = json.loads(OUT_LEDGER.read_text(encoding="utf-8"))
+            expected_ledger = dict(ledger)
+            # registry_sha256 is filled from whatever registry is CURRENTLY on
+            # disk (separately verified above), not recomputed from scratch --
+            # comparing it against the committed ledger's own recorded value
+            # still catches drift between the two committed files.
+            expected_ledger["registry_sha256"] = (
+                H.sha256_file(OUT_REG) if OUT_REG.is_file() else None)
+            if expected_ledger != on_disk_ledger:
+                drifted = sorted(k for k in set(expected_ledger) | set(on_disk_ledger)
+                                 if expected_ledger.get(k) != on_disk_ledger.get(k))
+                problems.append(f"ledger content drifted: {drifted}")
+                print(f"  [FAIL] ledger content drifted: {drifted}")
+            else:
+                print("  [PASS] ledger content matches fresh recomputation")
+
+        if not OUT_COST.is_file():
+            problems.append(f"cost CSV: {OUT_COST} does not exist")
+            print(f"  [FAIL] cost CSV: {OUT_COST} does not exist")
+        else:
+            expected_csv = _cost_csv_text(cost_rows)
+            # newline="" disables universal-newline translation -- the CSV's
+            # real \r\n line endings must be compared as written, not folded
+            # to \n by Path.read_text()'s default text-mode translation
+            # (which produced a false-positive "drift" report here).
+            with OUT_COST.open(encoding="utf-8", newline="") as fh:
+                on_disk_csv = fh.read()
+            if expected_csv != on_disk_csv:
+                problems.append("cost CSV content drifted from fresh recomputation")
+                print("  [FAIL] cost CSV content drifted from fresh recomputation")
+            else:
+                print("  [PASS] cost CSV content matches fresh recomputation")
+
+        if not OUT_AUDIT.is_file():
+            problems.append(f"audit doc: {OUT_AUDIT} does not exist")
+            print(f"  [FAIL] audit doc: {OUT_AUDIT} does not exist")
+        else:
+            expected_audit = _audit_text(registry, cost_rows, per_field, checks,
+                                         comp, selected)
+            on_disk_audit = OUT_AUDIT.read_text(encoding="utf-8")
+            if expected_audit != on_disk_audit:
+                problems.append("audit doc content drifted from fresh recomputation")
+                print("  [FAIL] audit doc content drifted from fresh recomputation")
+            else:
+                print("  [PASS] audit doc content matches fresh recomputation")
 
     # Prove --check performed no writes.
-    reg_path_after = OUT_REG.stat().st_mtime_ns if OUT_REG.is_file() else None
-    ledger_path_after = OUT_LEDGER.stat().st_mtime_ns if OUT_LEDGER.is_file() else None
-    cost_path_after = OUT_COST.stat().st_mtime_ns if OUT_COST.is_file() else None
-    if (reg_path_before, ledger_path_before, cost_path_before) != \
-       (reg_path_after, ledger_path_after, cost_path_after):
+    mtimes_after = tuple(p.stat().st_mtime_ns if p.is_file() else None for p in paths)
+    if mtimes_before != mtimes_after:
         problems.append("BUG: --check modified a file's mtime -- it must be read-only")
 
     if problems:
@@ -388,7 +454,7 @@ def check_only() -> int:
     return 0
 
 
-def _audit(reg, cost_rows, per_field, checks, comp, selected):
+def _audit_text(reg, cost_rows, per_field, checks, comp, selected) -> str:
     aopf = reg["allowed_operations_per_field"]
     L = ["# HOLDOUT_FREEZE_v3\n",
          "Phase 9 — the Holdout Registry and Fact Exposure Ledger. " +
@@ -540,7 +606,7 @@ def _audit(reg, cost_rows, per_field, checks, comp, selected):
     for n, ok, d in checks:
         L.append(f"| `{n}` | {'PASS' if ok else 'FAIL'} | {d} |")
     L.append("")
-    OUT_AUDIT.write_text("\n".join(L), encoding="utf-8")
+    return "\n".join(L)
 
 
 if __name__ == "__main__":

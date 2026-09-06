@@ -43,8 +43,18 @@ class DenominatorError(ValueError):
     """Item accounting does not reconcile against the expected count."""
 
 
-def summarize(records, *, expected_count: int) -> dict:
-    """Summary with exact denominators and every failure status counted."""
+def summarize(records, *, expected_count: int,
+             expected_grader_sha256: str | None = None) -> dict:
+    """Summary with exact denominators and every failure status counted.
+
+    `expected_grader_sha256`, when supplied, makes the "fully regraded" claim
+    a REAL certification via `eval_verify_v3.assert_fully_regraded` (grader
+    identity checked, not just a coverage-count heuristic) -- reproduced as a
+    live bug: comparing `recomputed == total` alone let a record regraded
+    under a STALE grader build render "fully regraded under the current
+    grader" even though `assert_fully_regraded` correctly rejected it. When
+    omitted, the report makes no fully-regraded claim at all (safer default
+    than assuming completeness)."""
     recs = list(records)
     status_counts = Counter(r.status for r in recs)
     # Exactly-one-status accounting: each record contributes to exactly one bin.
@@ -90,11 +100,25 @@ def summarize(records, *, expected_count: int) -> dict:
         # changing it -- an insufficient-evidence record still counts in
         # scored/failed exactly per its retained status; this breakdown only
         # says whether that status was freshly re-verified under the current
-        # grader or is being carried forward unverified. This report does
-        # NOT by itself certify "fully regraded" -- see
-        # eval_verify_v3.assert_fully_regraded for that gate.
+        # grader or is being carried forward unverified.
         "regrade_coverage": V.regrade_coverage(recs),
+        # The REAL certification, via the strict whitelist gate -- not a
+        # count comparison. None means "not evaluated" (no
+        # expected_grader_sha256 supplied), which the renderer must not
+        # treat as "fully regraded".
+        "fully_regraded_certified": _fully_regraded_certified(
+            recs, expected_grader_sha256),
     }
+
+
+def _fully_regraded_certified(recs, expected_grader_sha256: str | None) -> bool | None:
+    if expected_grader_sha256 is None:
+        return None
+    try:
+        V.assert_fully_regraded(recs, expected_grader_sha256=expected_grader_sha256)
+        return True
+    except V.VerificationError:
+        return False
 
 
 def per_family(records) -> dict:
@@ -226,21 +250,34 @@ def render_report_skeleton(summary: dict, errors: dict, *, stats_demo: dict,
             L.append(f"| `{k}` | {v} |")
     cov = summary.get("regrade_coverage")
     if cov is not None:
-        fully_regraded = cov["recomputed"] == cov["total"] and cov["total"] > 0
+        # certified is the REAL gate (grader identity checked via
+        # assert_fully_regraded), never a count-comparison heuristic -- a
+        # record "recomputed" under a STALE grader build must not render as
+        # fully regraded under the CURRENT one.
+        certified = summary.get("fully_regraded_certified")
         L += ["",
               "## Regrade coverage (synthetic)\n", "```text",
               f"recomputed             {cov['recomputed']}",
               f"insufficient_evidence  {cov['insufficient_evidence']}",
               f"not_yet_regraded       {cov['not_yet_regraded']}",
               f"total                  {cov['total']}",
-              "```\n",
-              ("This result set is **fully regraded** under the current grader."
-               if fully_regraded else
-               "**This result set is NOT fully regraded** -- some records carry "
-               "historical, unverified scores rather than a fresh recomputation "
-               "under the current grader. See `eval_verify_v3.assert_fully_regraded`; "
-               "headline numbers above are not certified as freshly re-verified."),
-              ""]
+              "```\n"]
+        if certified is None:
+            L.append(
+                "Regrade certification was **not evaluated** for this report "
+                "(no expected grader build was supplied to `summarize()`) -- "
+                "no fully-regraded claim is made either way.")
+        elif certified:
+            L.append("This result set is **fully regraded** under the current "
+                     "grader (verified via `eval_verify_v3.assert_fully_regraded`).")
+        else:
+            L.append(
+                "**This result set is NOT fully regraded** -- some records carry "
+                "historical, unverified scores, or were regraded under a "
+                "different grader build, rather than a fresh recomputation "
+                "under the current grader. See `eval_verify_v3.assert_fully_regraded`; "
+                "headline numbers above are not certified as freshly re-verified.")
+        L += [""]
     L += ["",
           "## Statistical plumbing (synthetic inputs)\n",
           "Exercised to prove the functions behave. **No significance claim is "

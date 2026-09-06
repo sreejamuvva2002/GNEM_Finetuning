@@ -566,6 +566,32 @@ def operation_families_present(sql: str) -> set[str]:
 # commutative operands (AND/OR) sort before hashing so reordering doesn't
 # change identity; the operator and any differing predicate/value do.
 # --------------------------------------------------------------------------
+def _validate_logical_components(node) -> None:
+    """An incomplete/ambiguous logical_components tree must fail closed, not
+    silently hash. Reproduced as live bugs: {} and {"op":"AND"} (no operands)
+    both previously produced a fingerprint instead of raising."""
+    if not isinstance(node, dict) or not node:
+        raise HoldoutError(
+            "logical_components node is empty or not a mapping -- fails "
+            "closed rather than hashing an incomplete logical structure")
+    op = node.get("op")
+    if op is None:
+        raise HoldoutError("logical_components node is missing required 'op'")
+    if op in COMMUTATIVE_LOGICAL_OPERATORS:
+        operands = node.get("operands")
+        if not isinstance(operands, (list, tuple)) or not operands:
+            raise HoldoutError(
+                f"logical_components: '{op}' requires a non-empty 'operands' "
+                f"list -- fails closed rather than hashing an AND/OR with no "
+                f"actual operands")
+        for o in operands:
+            _validate_logical_components(o)
+    elif len(node) < 2:
+        raise HoldoutError(
+            f"logical_components leaf node with op={op!r} carries no "
+            f"predicate content (e.g. field/value) beyond 'op' -- fails closed")
+
+
 def _canon_logical_components(node):
     if isinstance(node, dict):
         op = node.get("op")
@@ -583,8 +609,8 @@ def _canon_logical_components(node):
 
 def logical_fingerprint(task: dict) -> str:
     """Semantic identity, insensitive to wording, formatting, aliases, ids and
-    commutative predicate reordering. Missing logical_components fails closed
-    rather than silently hashing a weaker skeleton."""
+    commutative predicate reordering. Missing OR incomplete logical_components
+    fails closed rather than silently hashing a weaker skeleton."""
     canon = {}
     for f in FINGERPRINT_SEMANTIC_FIELDS:
         v = task.get(f)
@@ -594,6 +620,7 @@ def logical_fingerprint(task: dict) -> str:
                     "logical_fingerprint: task is missing required "
                     "'logical_components' -- fails closed rather than hashing "
                     "a weaker skeleton that could collide AND with OR")
+            _validate_logical_components(v)
             v = _canon_logical_components(v)
         elif isinstance(v, (list, tuple, set)):
             v = sorted(str(x) for x in v)
@@ -850,14 +877,29 @@ REQUIRED_REGISTRY_SECTIONS = (
 )
 
 
+# Capability token: only `_load_and_verify_candidate` (below) holds a
+# reference to it, so `VerifiedCandidateRegistry(text)` cannot be constructed
+# directly without deliberately importing this private, leading-underscore
+# module attribute. Stated plainly: this is a naming/friction convention, not
+# a language-enforced guarantee -- Python cannot make direct construction
+# impossible, only conspicuous misuse.
+_VERIFICATION_TOKEN = object()
+
+
 class VerifiedCandidateRegistry:
     """Deeply-immutable registry handle. Stores only the canonical JSON text;
     every read parses a fresh copy, so mutating a returned dict/list can never
-    corrupt what's stored here."""
+    corrupt what's stored here. May only be constructed by
+    `_load_and_verify_candidate`, which performs verification first."""
 
     __slots__ = ("_text",)
 
-    def __init__(self, text: str):
+    def __init__(self, text: str, *, _token=None):
+        if _token is not _VERIFICATION_TOKEN:
+            raise HoldoutError(
+                "VerifiedCandidateRegistry may not be constructed directly; "
+                "obtain one from load_candidate_registry_for_phase9_audit() or "
+                "load_registry(), which verify the content first")
         object.__setattr__(self, "_text", text)
 
     def __setattr__(self, name, value):
@@ -926,13 +968,19 @@ def _load_and_verify_candidate(text: str) -> VerifiedCandidateRegistry:
         raise HoldoutError(
             "registry does not match deterministic recomputation from the "
             f"frozen inputs -- drifted section(s): {drifted}")
-    return VerifiedCandidateRegistry(text)
+    return VerifiedCandidateRegistry(text, _token=_VERIFICATION_TOKEN)
 
 
 def load_candidate_registry_for_phase9_audit() -> VerifiedCandidateRegistry:
     if not REGISTRY.is_file():
         raise HoldoutError(f"holdout registry not frozen: {REGISTRY}")
     return _load_and_verify_candidate(REGISTRY.read_text(encoding="utf-8"))
+
+
+# Approval record fields ALL required, not sha256 alone -- a hash-only record
+# is not a complete, auditable approval (who approved what commit, when).
+REQUIRED_APPROVAL_FIELDS = ("approved_registry_sha256", "approved_commit",
+                           "approved_date")
 
 
 def load_registry() -> VerifiedCandidateRegistry:
@@ -947,7 +995,12 @@ def load_registry() -> VerifiedCandidateRegistry:
         approval = json.loads(PHASE9_APPROVAL.read_text(encoding="utf-8"))
     except json.JSONDecodeError as e:
         raise HoldoutError(f"malformed PHASE9_APPROVAL.json: {e}") from e
-    if approval.get("approved_registry_sha256") != candidate.sha256():
+    missing = [f for f in REQUIRED_APPROVAL_FIELDS if not approval.get(f)]
+    if missing:
+        raise HoldoutError(
+            f"PHASE9_APPROVAL.json missing required field(s) {missing} -- a "
+            f"hash-only approval record is not a complete, auditable approval")
+    if approval["approved_registry_sha256"] != candidate.sha256():
         raise RegistryTamperError(
             "the current registry does not match the approved digest recorded "
             "in PHASE9_APPROVAL.json -- registry and/or code changed since "
@@ -955,8 +1008,23 @@ def load_registry() -> VerifiedCandidateRegistry:
     return candidate
 
 
+def _require_verified_registry(reg):
+    """A raw dict bypasses every verification this module performs. Every
+    scanner/accessor that takes an optional `reg` must reject one -- confirmed
+    a live bug: mutating a copy of the verified registry's data and passing it
+    straight through as `reg=` produced a passing zero-exposure certificate
+    for a value that was never actually still held out."""
+    if reg is not None and not isinstance(reg, VerifiedCandidateRegistry):
+        raise TypeError(
+            f"reg must be a VerifiedCandidateRegistry (from "
+            f"load_candidate_registry_for_phase9_audit()/load_registry()), "
+            f"not {type(reg).__name__} -- a raw dict bypasses all registry "
+            f"verification")
+    return reg
+
+
 def held_out_values(reg=None) -> dict:
-    reg = reg or load_registry()
+    reg = _require_verified_registry(reg) or load_registry()
     return {f: tuple(reg["value_holdouts"][f]["selected"]) for f in MULTIVALUED}
 
 
@@ -988,9 +1056,13 @@ def scan_strings(strings, reg=None) -> dict:
             f"scan_strings expects list[str], got {type(strings).__name__} -- "
             "wrap a single string in a list; for a part_id-keyed dict use "
             "list(d.values())")
-    reg = reg or load_registry()
+    reg = _require_verified_registry(reg) or load_registry()
     hv = held_out_values(reg)
     norm_strings = [(_normalize_for_exposure(s) if s else "") for s in strings]
+    # Evidence count is the number of genuinely non-empty entries actually
+    # examined, not the raw list length -- a list of [None, None] previously
+    # reported "2 strings scanned" and passed as verified-zero evidence.
+    real_evidence_count = sum(1 for s in strings if s)
     counts, hits = {}, []
     for f, vals in hv.items():
         for v in vals:
@@ -1004,7 +1076,7 @@ def scan_strings(strings, reg=None) -> dict:
             counts[v] = n
     return {"exposure_counts": counts,
             "total_exposures": sum(counts.values()),
-            "strings_scanned": len(strings),
+            "strings_scanned": real_evidence_count,
             "hits": hits}
 
 
@@ -1015,17 +1087,19 @@ def scan_operations(sql_texts, reg=None) -> dict:
             f"scan_operations expects list[str], got {type(sql_texts).__name__} "
             "-- for a part_id-keyed multi-part gold_sql dict, use "
             "scan_operations_multipart")
-    reg = reg or load_registry()
+    reg = _require_verified_registry(reg) or load_registry()
     held = set(reg["operation_holdouts"]["held_out_families"])
     counts = {f: 0 for f in sorted(held)}
+    real_evidence_count = 0
     for s in sql_texts:
         if not s:
             continue
+        real_evidence_count += 1
         for fam in operation_families_present(s) & held:
             counts[fam] += 1
     return {"operation_exposure_counts": counts,
             "total_exposures": sum(counts.values()),
-            "sql_scanned": len(sql_texts)}
+            "sql_scanned": real_evidence_count}
 
 
 def scan_operations_multipart(gold_sql: dict, reg=None) -> dict:
@@ -1038,6 +1112,11 @@ def scan_operations_multipart(gold_sql: dict, reg=None) -> dict:
     passed directly, 1 when .values() was extracted first)."""
     if not isinstance(gold_sql, dict):
         raise TypeError("scan_operations_multipart expects a part_id-keyed dict")
+    if not gold_sql:
+        raise HoldoutError(
+            "scan_operations_multipart: empty parts dict -- a multi-part task "
+            "with zero parts is not a valid task and cannot yield a genuine "
+            "zero-exposure certificate")
     return scan_operations(list(gold_sql.values()), reg)
 
 
@@ -1047,7 +1126,7 @@ def scan_compositions(component_sets, reg=None) -> dict:
         raise TypeError(
             "scan_compositions expects list[iterable[str]] -- for a multi-part "
             "task's component sets, use scan_compositions_multipart")
-    reg = reg or load_registry()
+    reg = _require_verified_registry(reg) or load_registry()
     held = [set(h) for h in reg["composition_holdouts"]["held_out_sets"]]
     violations = []
     for i, T in enumerate(component_sets):
@@ -1072,6 +1151,11 @@ def scan_compositions_multipart(parts_component_sets: dict, reg=None) -> dict:
         raise TypeError(
             "scan_compositions_multipart expects a part_id-keyed dict of "
             "component sets")
+    if not parts_component_sets:
+        raise HoldoutError(
+            "scan_compositions_multipart: empty parts dict -- a multi-part "
+            "task with zero parts is not a valid task and cannot yield a "
+            "genuine composition-scan certificate")
     union = set()
     for s in parts_component_sets.values():
         union |= set(s)
@@ -1081,7 +1165,9 @@ def scan_compositions_multipart(parts_component_sets: dict, reg=None) -> dict:
 def assert_value_scan_verified(report: dict) -> None:
     """Verified-zero requires real scan evidence (strings_scanned > 0), not
     merely total_exposures == 0 -- an empty scan would otherwise pass
-    vacuously."""
+    vacuously. Also requires internal consistency: a nonzero `hits` list
+    while `total_exposures == 0` (or vice versa) is a malformed report, not a
+    genuine zero-exposure certificate -- reproduced directly as a live bug."""
     required = ("exposure_counts", "total_exposures", "strings_scanned", "hits")
     missing = [k for k in required if k not in report]
     if missing:
@@ -1094,10 +1180,19 @@ def assert_value_scan_verified(report: dict) -> None:
         raise HoldoutError(
             "value-scan report internally inconsistent: per-value counts "
             "don't sum to total_exposures")
+    hits = report["hits"]
+    if report["total_exposures"] == 0 and hits:
+        raise HoldoutError(
+            "value-scan report internally inconsistent: total_exposures == 0 "
+            f"but hits is non-empty ({hits[:3]})")
+    if report["total_exposures"] > 0 and not hits:
+        raise HoldoutError(
+            "value-scan report internally inconsistent: total_exposures > 0 "
+            "but hits is empty")
     if report["total_exposures"] != 0:
         raise HoldoutError(
             f"exposure_count != 0 -- held-out literals appear in rendered "
-            f"training text: {report.get('hits', [])[:5]}")
+            f"training text: {hits[:5]}")
 
 
 def assert_operation_scan_verified(report: dict) -> None:
@@ -1119,6 +1214,9 @@ def assert_operation_scan_verified(report: dict) -> None:
 
 
 def assert_composition_scan_verified(report: dict) -> None:
+    """Requires internal consistency: a nonzero `violations` list while
+    `composition_violations == 0` (or vice versa) is malformed, not a
+    genuine zero-violation certificate."""
     required = ("composition_violations", "violations", "sets_scanned")
     missing = [k for k in required if k not in report]
     if missing:
@@ -1127,6 +1225,16 @@ def assert_composition_scan_verified(report: dict) -> None:
         raise HoldoutError(
             "composition-scan report proves nothing was actually scanned "
             "(sets_scanned <= 0) -- not a valid zero-exposure certificate")
+    violations = report["violations"]
+    if report["composition_violations"] == 0 and violations:
+        raise HoldoutError(
+            "composition-scan report internally inconsistent: "
+            f"composition_violations == 0 but violations is non-empty "
+            f"({violations[:3]})")
+    if report["composition_violations"] > 0 and not violations:
+        raise HoldoutError(
+            "composition-scan report internally inconsistent: "
+            "composition_violations > 0 but violations is empty")
     if report["composition_violations"] != 0:
         raise HoldoutError(
-            f"held-out composition present: {report['violations'][:5]}")
+            f"held-out composition present: {violations[:5]}")

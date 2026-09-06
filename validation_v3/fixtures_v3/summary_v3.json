@@ -69,6 +69,7 @@
       "task_result_correctness": 1.0
     }
   },
+  "fully_regraded_certified": null,
   "incorrect": 4,
   "provenance": "synthetic validation fixture; not experimental results",
   "regrade_coverage": {

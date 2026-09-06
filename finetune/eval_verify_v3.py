@@ -237,7 +237,15 @@ def _regrade_multipart(r: R.EvalRecord, grader_sha256: str) -> R.EvalRecord:
         return _replace(r, regrade_outcome="insufficient_evidence")
 
     all_correct = all(gr.status == "correct" for _, gr in outcomes)
-    strict_ok = all(gr.strict_result_schema_accuracy == 1.0 for _, gr in outcomes)
+    # extra_present must be retained alongside "parts" (grade_v3.grade_multipart
+    # sets it in GradeResult.metrics) so regrade can reproduce the SAME
+    # strict-schema penalty an extra undeclared statement earns at fresh
+    # grading time -- regrade never re-parses raw_output, so without this the
+    # penalty would silently disappear on regrade.
+    extra_present = bool((r.execution_result or {}).get("extra_present", False)) \
+        if isinstance(r.execution_result, dict) else False
+    strict_ok = (all(gr.strict_result_schema_accuracy == 1.0 for _, gr in outcomes)
+                and not extra_present)
     summary = "; ".join(f"{pid}:{gr.status}" for pid, gr in outcomes)
     return _replace(r, status="correct" if all_correct else "incorrect",
                     task_result_correctness=1.0 if all_correct else 0.0,

@@ -469,6 +469,85 @@ def main() -> int:
         "limit_only is field-agnostic and caught by the real SQL scanner "
         "independent of any per-field policy lookup")
 
+    # ---- 16. second independent-audit round: reproduced-and-fixed bugs ----
+    mutated = reg._data()
+    mutated["value_holdouts"]["certifications"]["selected"] = ["AS9100"]
+    expect("reg_kwarg_rejects_raw_dict",
+                lambda: H.scan_strings(["x"], mutated), TypeError,
+                "a raw dict passed as reg= bypassed all registry verification")
+    expect("verified_registry_rejects_direct_construction",
+                lambda: H.VerifiedCandidateRegistry("{}"), H.HoldoutError,
+                "constructing the wrapper directly, bypassing verification, "
+                "must be rejected")
+
+    hash_only_approval = json.dumps({"approved_registry_sha256": reg.sha256()})
+
+    def _approval_missing_fields():
+        orig_path = H.PHASE9_APPROVAL
+        import tempfile as _tf
+        with _tf.TemporaryDirectory() as td:
+            p = __import__("pathlib").Path(td) / "PHASE9_APPROVAL.json"
+            p.write_text(hash_only_approval, encoding="utf-8")
+            H.PHASE9_APPROVAL = p
+            try:
+                H.load_registry()
+            finally:
+                H.PHASE9_APPROVAL = orig_path
+    expect("approval_requires_commit_and_date_not_just_hash",
+                _approval_missing_fields, H.HoldoutError,
+                "a hash-only approval record (no approved_commit/approved_date) "
+                "must be rejected as incomplete")
+
+    r_none = H.scan_strings([None, None, None], reg)
+    expect("none_entries_are_not_real_scan_evidence",
+                lambda: H.assert_value_scan_verified(r_none), H.HoldoutError,
+                "an all-None input must not certify as a real zero-exposure scan")
+    r_none_op = H.scan_operations([None, None], reg)
+    expect("none_sql_entries_are_not_real_scan_evidence",
+                lambda: H.assert_operation_scan_verified(r_none_op), H.HoldoutError,
+                "an all-None SQL input must not certify as a real operation scan")
+
+    expect("multipart_composition_scan_rejects_zero_parts",
+                lambda: H.scan_compositions_multipart({}, reg), H.HoldoutError,
+                "a multi-part task with zero parts cannot yield a genuine "
+                "composition-scan certificate")
+    expect("multipart_operation_scan_rejects_zero_parts",
+                lambda: H.scan_operations_multipart({}, reg), H.HoldoutError,
+                "a multi-part task with zero parts cannot yield a genuine "
+                "operation-scan certificate")
+
+    fake_hits_mismatch = {"exposure_counts": {"AS9100": 0}, "total_exposures": 0,
+                          "strings_scanned": 5,
+                          "hits": [{"attribute": "certifications", "value": "AS9100",
+                                   "string_index": 0}]}
+    expect("hits_nonempty_with_zero_total_is_malformed",
+                lambda: H.assert_value_scan_verified(fake_hits_mismatch),
+                H.HoldoutError,
+                "hits present while total_exposures==0 must be rejected as "
+                "internally inconsistent, not accepted as verified-zero")
+    fake_violations_mismatch = {"composition_violations": 0,
+                                "violations": [{"index": 0, "held_out_set": ["x"],
+                                               "training_set": ["x", "y"]}],
+                                "sets_scanned": 1}
+    expect("violations_nonempty_with_zero_count_is_malformed",
+                lambda: H.assert_composition_scan_verified(fake_violations_mismatch),
+                H.HoldoutError,
+                "violations present while composition_violations==0 must be "
+                "rejected as internally inconsistent")
+
+    fp_base_leaf = {"op": "eq", "field": "county", "value": "Hall County"}
+    for bad_lc, label in (({}, "empty_dict"), ({"op": "AND"}, "and_no_operands"),
+                          ({"op": "eq"}, "leaf_no_content")):
+        expect(f"fingerprint_rejects_incomplete_logical_components_{label}",
+                    lambda bad_lc=bad_lc: H.logical_fingerprint(
+                        dict(base, logical_components=bad_lc)),
+                    H.HoldoutError,
+                    f"an incomplete logical_components tree ({bad_lc}) must "
+                    f"fail closed, not silently produce a fingerprint")
+    rec("fingerprint_accepts_well_formed_leaf",
+        bool(H.logical_fingerprint(dict(base, logical_components=fp_base_leaf))),
+        "a genuinely complete leaf node still produces a fingerprint")
+
     for n, ok, d in out:
         print(f"  [{'PASS' if ok else 'FAIL'}] fault:{n}: {d}")
     missed = [n for n, ok, _ in out if not ok]

@@ -46,9 +46,9 @@ FROZEN = {
     # executable gate); an earlier version of this comment/plan conflated the
     # two lists.
     "finetune/grade_v3.py":
-        "8c49e8566a8b88085070f6fd88929309c7a379bd708cb31350dd88c0cc98a147",
+        "1051a161ac848ad058dda424417e296571404e6fd5dbe10174994cea7df0c6aa",
     "finetune/phase7_grader_tests.py":
-        "52e78e63f8cb91aa755576913ad834827060fe141793b520ecc3d5d757952b45",
+        "bcdbdbb67211321c8ebd50e2d5a8eeb6908c5fb7b7b692a8cf028ba76b16d8b6",
 }
 
 # Retired concepts that must appear nowhere in the active Phase 8 stack.
@@ -962,6 +962,77 @@ def _regrade_correction_checks() -> list[tuple[str, bool, str]]:
                     V.VerificationError,
                     "end-to-end: a report built from this reloaded, regraded, "
                     "mixed batch still cannot claim full regrade coverage")
+
+    # ---- second independent-audit round: report certification must check
+    # grader IDENTITY, not merely count recomputed==total (reproduced: a
+    # record regraded under a STALE grader build previously rendered "fully
+    # regraded under the current grader").
+    stale_grader_rec = _rec("stale_grader_fx", "structured_heldin", "correct",
+                           1.0, 1.0, grader_version="grade_v3.0",
+                           grader_sha256="STALE_OLD_GRADER_SHA")
+    stale_regraded = V.regrade([stale_grader_rec], grader_sha256="STALE_OLD_GRADER_SHA")
+    rpt_summary_stale = RPT.summarize(
+        stale_regraded, expected_count=1,
+        expected_grader_sha256=current_sha)
+    rec("report_certification_checks_grader_identity_not_just_counts",
+        rpt_summary_stale["fully_regraded_certified"] is False,
+        f"a record 'recomputed' under a stale grader build must NOT certify "
+        f"as fully regraded under the current one: "
+        f"fully_regraded_certified={rpt_summary_stale['fully_regraded_certified']}")
+    skeleton_stale = RPT.render_report_skeleton(
+        rpt_summary_stale, RPT.error_analysis(stale_regraded),
+        stats_demo={}, provenance={})
+    rec("report_renders_not_fully_regraded_for_stale_grader",
+        "NOT fully regraded" in skeleton_stale,
+        "the rendered report text must say NOT fully regraded, not falsely "
+        "claim certification")
+
+    genuine_fx = _rec("genuine_fx", "structured_heldin", "correct", 1.0, 1.0,
+                      raw="SELECT company FROM companies WHERE row_id = 1",
+                      sql="SELECT company FROM companies WHERE row_id = 1",
+                      result={"columns": ["company"], "rows": [["X"]]},
+                      gold={"columns": ["company"], "rows": [["X"]]})
+    genuinely_current = V.regrade([genuine_fx], grader_sha256=current_sha)
+    rpt_summary_genuine = RPT.summarize(
+        genuinely_current, expected_count=1,
+        expected_grader_sha256=current_sha)
+    rec("report_certifies_when_genuinely_fully_regraded",
+        rpt_summary_genuine["fully_regraded_certified"] is True,
+        "a record recomputed under the actual current grader build correctly "
+        "certifies as fully regraded")
+    rec("report_omits_certification_when_not_requested",
+        RPT.summarize(genuinely_current, expected_count=1)
+        ["fully_regraded_certified"] is None,
+        "omitting expected_grader_sha256 makes no fully-regraded claim "
+        "either way (safer default than assuming completeness)")
+
+    # ---- multi-part regrade must preserve the extra-statement penalty -----
+    mp_item_extra = {"answer_type": "multi_part", "target_columns": ["n"],
+                     "parts": [{"part_id": "p1", "answer_type": "scalar",
+                               "target_columns": ["n"]}]}
+    fresh = G.grade_structured(mp_item_extra, "SELECT 1 AS n; SELECT 2",
+                              {"p1": "SELECT 1 AS n"}, "train_kb", db_path=DB)
+    rec("fresh_grading_penalizes_extra_statement",
+        fresh.task_result_correctness == 1.0
+        and fresh.strict_result_schema_accuracy == 0.0,
+        f"task={fresh.task_result_correctness} schema={fresh.strict_result_schema_accuracy}")
+    fx_extra = _rec("fx21_multipart_extra_statement_retained", "structured_paraphrase",
+                    fresh.status, fresh.task_result_correctness,
+                    fresh.strict_result_schema_accuracy,
+                    answer_type="multi_part", target_columns=("n",),
+                    parts=tuple(mp_item_extra["parts"]),
+                    result={"parts": {"p1": {"columns": ["n"], "rows": [[1]]}},
+                           "extra_present": fresh.metrics.get("extra_present")},
+                    gold={"parts": {"p1": {"columns": ["n"], "rows": [[1]]}}})
+    regraded_extra = V.regrade([fx_extra], grader_sha256=current_sha)[0]
+    rec("regrade_preserves_extra_statement_penalty",
+        regraded_extra.task_result_correctness == 1.0
+        and regraded_extra.strict_result_schema_accuracy == 0.0
+        and regraded_extra.regrade_outcome == "recomputed",
+        f"regrading from retained evidence (with extra_present retained "
+        f"alongside per-part evidence) reproduces the SAME strict-schema "
+        f"penalty fresh grading applied: task={regraded_extra.task_result_correctness} "
+        f"schema={regraded_extra.strict_result_schema_accuracy}")
 
     return out
 
