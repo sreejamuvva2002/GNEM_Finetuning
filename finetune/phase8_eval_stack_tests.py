@@ -853,6 +853,7 @@ def _regrade_correction_checks() -> list[tuple[str, bool, str]]:
         "no record carries a regrade_outcome before regrade() runs")
 
     current_sha = FROZEN["finetune/grade_v3.py"]
+    current_regrader_sha = V.EVAL_VERIFIER_SHA256
     regraded = V.regrade(mixed_batch, grader_sha256=current_sha)
     by_id = {r.example_id: r for r in regraded}
 
@@ -898,7 +899,8 @@ def _regrade_correction_checks() -> list[tuple[str, bool, str]]:
     # assert_fully_regraded: strict whitelist, not a blacklist
     expect_raise("assert_fully_regraded_rejects_mixed_batch",
                 lambda: V.assert_fully_regraded(regraded,
-                                                expected_grader_sha256=current_sha),
+                                                expected_grader_sha256=current_sha,
+                                expected_regrader_sha256=current_regrader_sha),
                 V.VerificationError,
                 "a batch containing insufficient_evidence records must not "
                 "be certifiable as fully regraded")
@@ -906,7 +908,8 @@ def _regrade_correction_checks() -> list[tuple[str, bool, str]]:
     fully_recomputable = [fx17, fx19]
     fully_regraded = V.regrade(fully_recomputable, grader_sha256=current_sha)
     try:
-        V.assert_fully_regraded(fully_regraded, expected_grader_sha256=current_sha)
+        V.assert_fully_regraded(fully_regraded, expected_grader_sha256=current_sha,
+                                expected_regrader_sha256=current_regrader_sha)
         rec("assert_fully_regraded_accepts_genuine_full_coverage", True,
             "a batch where every record is genuinely recomputed under the "
             "current grader passes")
@@ -917,7 +920,8 @@ def _regrade_correction_checks() -> list[tuple[str, bool, str]]:
     never_regraded = [fx17]
     expect_raise("assert_fully_regraded_rejects_never_regraded",
                 lambda: V.assert_fully_regraded(never_regraded,
-                                                expected_grader_sha256=current_sha),
+                                                expected_grader_sha256=current_sha,
+                                expected_regrader_sha256=current_regrader_sha),
                 V.VerificationError,
                 "regrade_outcome is None (never regraded) must not pass -- "
                 "a whitelist rejects this, not only the known-bad blacklist value")
@@ -925,7 +929,8 @@ def _regrade_correction_checks() -> list[tuple[str, bool, str]]:
     stale_stamped = V.regrade([fx17], grader_sha256="stale_build_sha")
     expect_raise("assert_fully_regraded_rejects_stale_grader_build",
                 lambda: V.assert_fully_regraded(stale_stamped,
-                                                expected_grader_sha256=current_sha),
+                                                expected_grader_sha256=current_sha,
+                                expected_regrader_sha256=current_regrader_sha),
                 V.VerificationError,
                 "'recomputed' under a DIFFERENT (stale) grader build must not "
                 "pass as fresh under the CURRENT one")
@@ -961,7 +966,8 @@ def _regrade_correction_checks() -> list[tuple[str, bool, str]]:
             f"{rpt_summary['regrade_coverage']}")
         expect_raise("full_path_cannot_certify_fully_regraded",
                     lambda: V.assert_fully_regraded(
-                        reloaded_regraded, expected_grader_sha256=current_sha),
+                        reloaded_regraded, expected_grader_sha256=current_sha,
+                                expected_regrader_sha256=current_regrader_sha),
                     V.VerificationError,
                     "end-to-end: a report built from this reloaded, regraded, "
                     "mixed batch still cannot claim full regrade coverage")
@@ -992,7 +998,8 @@ def _regrade_correction_checks() -> list[tuple[str, bool, str]]:
         f"got {stale_regraded[0].regrade_outcome!r}")
     rpt_summary_stale = RPT.summarize(
         stale_regraded, expected_count=1,
-        expected_grader_sha256=current_sha)
+        expected_grader_sha256=current_sha,
+                                expected_regrader_sha256=current_regrader_sha)
     rec("report_certification_checks_grader_identity_not_just_counts",
         rpt_summary_stale["fully_regraded_certified"] is False,
         f"a record 'recomputed' under a stale grader build must NOT certify "
@@ -1014,7 +1021,8 @@ def _regrade_correction_checks() -> list[tuple[str, bool, str]]:
     genuinely_current = V.regrade([genuine_fx], grader_sha256=current_sha)
     rpt_summary_genuine = RPT.summarize(
         genuinely_current, expected_count=1,
-        expected_grader_sha256=current_sha)
+        expected_grader_sha256=current_sha,
+                                expected_regrader_sha256=current_regrader_sha)
     rec("report_certifies_when_genuinely_fully_regraded",
         rpt_summary_genuine["fully_regraded_certified"] is True,
         "a record recomputed under the actual current grader build correctly "
@@ -1094,7 +1102,8 @@ def _regrade_correction_checks() -> list[tuple[str, bool, str]]:
         "an invalid_output outcome is still a structurally valid record "
         "(exactly one frozen status, required fields present)")
     summary_bad = RPT.summarize([rg_bad], expected_count=1,
-                                expected_grader_sha256=current_sha)
+                                expected_grader_sha256=current_sha,
+                                expected_regrader_sha256=current_regrader_sha)
     rec("report_does_not_falsely_certify_invalid_multipart_regrade",
         summary_bad["fully_regraded_certified"] is True
         and summary_bad["status_counts"]["invalid_output"] == 1,
@@ -1102,6 +1111,68 @@ def _regrade_correction_checks() -> list[tuple[str, bool, str]]:
         "explicit invalid_output failure, not silently passed as correct) -- "
         "certification here correctly reflects a real, honest recomputation "
         f"outcome, not a false 'correct': {summary_bad['status_counts']}")
+
+    # ---- fourth independent-audit round: reproduced-and-fixed bugs --------
+    # 1. Certification must check the REGRADER's identity (eval_verify_v3.py),
+    # not just the GRADER's (grade_v3.py) -- reproduced: a record stamped
+    # with the current grade_v3.py hash proved nothing about which build of
+    # THIS module's regrade() actually produced it.
+    stale_regrader_rec = _rec("stale_regrader_fx", "structured_heldin",
+                              "correct", 1.0, 1.0,
+                              raw="SELECT company FROM companies WHERE row_id = 4",
+                              sql="SELECT company FROM companies WHERE row_id = 4",
+                              result={"columns": ["company"], "rows": [["X"]]},
+                              gold={"columns": ["company"], "rows": [["X"]]})
+    genuinely_regraded = V.regrade([stale_regrader_rec], grader_sha256=current_sha)[0]
+    # Simulate presenting output from a STALE eval_verify_v3.py build: same
+    # grader hash (grade_v3.py unchanged), but a different regrader hash.
+    from dataclasses import replace as _dc_replace
+    faked_stale_regrader = _dc_replace(genuinely_regraded,
+                                       regrader_sha256="A_DIFFERENT_STALE_BUILD_HASH")
+    expect_raise("assert_fully_regraded_rejects_stale_regrader_build",
+                lambda: V.assert_fully_regraded(
+                    [faked_stale_regrader], expected_grader_sha256=current_sha,
+                    expected_regrader_sha256=current_regrader_sha),
+                V.VerificationError,
+                "a record 'recomputed' under the CURRENT grader but a "
+                "DIFFERENT (stale) regrader build must not certify as fully "
+                "regraded")
+    rec("assert_fully_regraded_accepts_current_regrader",
+        V.assert_fully_regraded(
+            [genuinely_regraded], expected_grader_sha256=current_sha,
+            expected_regrader_sha256=current_regrader_sha) is None,
+        "a record genuinely produced by the current regrade() build passes "
+        "(assert_fully_regraded returns None / does not raise)")
+
+    # 2. Duplicate part_id must be rejected on regrade exactly as it is on
+    # fresh grading -- reproduced: the same retained evidence was compared
+    # twice under two identical declared part_ids, certifying a
+    # task-authoring error fresh grading would have refused outright.
+    dup_parts = ({"part_id": "p1", "answer_type": "scalar", "target_columns": ["n"]},
+                {"part_id": "p1", "answer_type": "scalar", "target_columns": ["n"]})
+    try:
+        G.grade_structured({"answer_type": "multi_part", "target_columns": ["n"],
+                           "parts": list(dup_parts)},
+                          "SELECT 1 AS n", {"p1": "SELECT 1 AS n"},
+                          "train_kb", db_path=DB)
+        rec("fresh_grading_rejects_duplicate_part_id", False, "*** NOT RAISED ***")
+    except G.GraderMetadataError:
+        rec("fresh_grading_rejects_duplicate_part_id", True,
+            "fresh grading correctly refuses a duplicate declared part_id")
+    fx_dup = _rec("fx_regrade_rejects_duplicate_part_id", "structured_heldin",
+                 "incorrect", 0.0, 0.0, answer_type="multi_part",
+                 target_columns=("n",), parts=dup_parts,
+                 result={"parts": {"p1": {"columns": ["n"], "rows": [[1]]}},
+                        "extra_present": False},
+                 gold={"parts": {"p1": {"columns": ["n"], "rows": [[1]]}}})
+    rg_dup = V.regrade([fx_dup], grader_sha256=current_sha)[0]
+    rec("regrade_rejects_duplicate_part_id_same_as_fresh_grading",
+        rg_dup.status == "invalid_output" and rg_dup.task_result_correctness == 0.0
+        and rg_dup.regrade_outcome == "recomputed",
+        f"a duplicate declared part_id must fail closed on regrade exactly "
+        f"as it does on fresh grading, not silently compare the same "
+        f"retained evidence twice and certify it correct: "
+        f"status={rg_dup.status} task={rg_dup.task_result_correctness}")
 
     return out
 

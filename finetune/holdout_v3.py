@@ -1130,6 +1130,16 @@ def scan_operations(sql_texts, reg=None) -> dict:
             "scan_operations: a None entry means a declared part's SQL was "
             "never actually supplied -- it cannot be silently dropped from "
             "the scan rather than failing closed")
+    # A blank/whitespace-only string is not a legitimate empty QUERY -- unlike
+    # scan_strings (where an empty rendered string can be genuine content),
+    # there is no such thing as a real SQL statement with no text. Reproduced
+    # as a live bug: scan_operations([""], reg) reported "1 SQL scanned" and
+    # passed as verified evidence, though no query was ever actually present
+    # to check for held-out constructs.
+    if any(isinstance(s, str) and not s.strip() for s in sql_texts):
+        raise HoldoutError(
+            "scan_operations: a blank/whitespace-only entry is not an "
+            "executed query -- it cannot count as scanned SQL evidence")
     reg = _require_verified_registry(reg) or load_registry()
     held = set(reg["operation_holdouts"]["held_out_families"])
     counts = {f: 0 for f in sorted(held)}
@@ -1173,6 +1183,19 @@ def scan_compositions(component_sets, reg=None) -> dict:
             f"in a list: [component_set], not the bare set/string itself; "
             f"for a multi-part task's component sets, use "
             f"scan_compositions_multipart")
+    component_sets = list(component_sets)
+    # Each individual component SET must itself be a real collection, not a
+    # bare string -- reproduced as a live bug: scan_compositions(["certifications
+    # processes"], reg) passed the outer-shape check (a list!) but then did
+    # set("certifications processes") on the single nested string, scanning
+    # 24 individual characters as if they were 24 components, with the real
+    # intended two-component set never actually checked.
+    bad = [i for i, T in enumerate(component_sets) if isinstance(T, (str, bytes))]
+    if bad:
+        raise TypeError(
+            f"scan_compositions: component set(s) at index {bad[:5]} are bare "
+            f"strings, not a collection of component names -- wrap each one: "
+            f"[\"processes\"] not \"processes\"")
     reg = _require_verified_registry(reg) or load_registry()
     held = [set(h) for h in reg["composition_holdouts"]["held_out_sets"]]
     violations = []
@@ -1203,6 +1226,17 @@ def scan_compositions_multipart(parts_component_sets: dict, reg=None) -> dict:
             "scan_compositions_multipart: empty parts dict -- a multi-part "
             "task with zero parts is not a valid task and cannot yield a "
             "genuine composition-scan certificate")
+    # Same nested-string guard as scan_compositions -- reproduced as a live
+    # bug: {"p1": "certifications", "p2": "processes"} passed the dict-shape
+    # check but then did set("certifications") per value, scanning
+    # characters instead of the one real component each part declared.
+    bad = [pid for pid, s in parts_component_sets.items()
+          if isinstance(s, (str, bytes))]
+    if bad:
+        raise TypeError(
+            f"scan_compositions_multipart: part(s) {bad[:5]} carry a bare "
+            f"string as their component set, not a collection -- wrap each "
+            f"one: [\"processes\"] not \"processes\"")
     union = set()
     for s in parts_component_sets.values():
         union |= set(s)

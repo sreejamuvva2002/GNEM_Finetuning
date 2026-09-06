@@ -44,17 +44,24 @@ class DenominatorError(ValueError):
 
 
 def summarize(records, *, expected_count: int,
-             expected_grader_sha256: str | None = None) -> dict:
+             expected_grader_sha256: str | None = None,
+             expected_regrader_sha256: str | None = None) -> dict:
     """Summary with exact denominators and every failure status counted.
 
-    `expected_grader_sha256`, when supplied, makes the "fully regraded" claim
-    a REAL certification via `eval_verify_v3.assert_fully_regraded` (grader
-    identity checked, not just a coverage-count heuristic) -- reproduced as a
-    live bug: comparing `recomputed == total` alone let a record regraded
-    under a STALE grader build render "fully regraded under the current
-    grader" even though `assert_fully_regraded` correctly rejected it. When
-    omitted, the report makes no fully-regraded claim at all (safer default
-    than assuming completeness)."""
+    `expected_grader_sha256` AND `expected_regrader_sha256`, when BOTH
+    supplied, make the "fully regraded" claim a REAL certification via
+    `eval_verify_v3.assert_fully_regraded` (grader AND regrader identity both
+    checked, not just a coverage-count heuristic). Reproduced as live bugs,
+    fixed across three rounds: comparing `recomputed == total` alone let a
+    record regraded under a STALE grader build render "fully regraded";
+    checking only `grader_sha256` (grade_v3.py's identity) then let a record
+    produced by a STALE `eval_verify_v3.py` regrader pass, since the
+    multi-part validation logic that actually decides the outcome lives in
+    the regrader, not the grader. Supplying only one of the two expected
+    hashes is treated the same as supplying neither -- a half-checked
+    certification is not a certification. When either is omitted, the
+    report makes no fully-regraded claim at all (safer default than assuming
+    completeness)."""
     recs = list(records)
     status_counts = Counter(r.status for r in recs)
     # Exactly-one-status accounting: each record contributes to exactly one bin.
@@ -103,19 +110,20 @@ def summarize(records, *, expected_count: int,
         # grader or is being carried forward unverified.
         "regrade_coverage": V.regrade_coverage(recs),
         # The REAL certification, via the strict whitelist gate -- not a
-        # count comparison. None means "not evaluated" (no
-        # expected_grader_sha256 supplied), which the renderer must not
-        # treat as "fully regraded".
+        # count comparison. None means "not evaluated" (either expected hash
+        # omitted), which the renderer must not treat as "fully regraded".
         "fully_regraded_certified": _fully_regraded_certified(
-            recs, expected_grader_sha256),
+            recs, expected_grader_sha256, expected_regrader_sha256),
     }
 
 
-def _fully_regraded_certified(recs, expected_grader_sha256: str | None) -> bool | None:
-    if expected_grader_sha256 is None:
+def _fully_regraded_certified(recs, expected_grader_sha256: str | None,
+                              expected_regrader_sha256: str | None) -> bool | None:
+    if expected_grader_sha256 is None or expected_regrader_sha256 is None:
         return None
     try:
-        V.assert_fully_regraded(recs, expected_grader_sha256=expected_grader_sha256)
+        V.assert_fully_regraded(recs, expected_grader_sha256=expected_grader_sha256,
+                                expected_regrader_sha256=expected_regrader_sha256)
         return True
     except V.VerificationError:
         return False

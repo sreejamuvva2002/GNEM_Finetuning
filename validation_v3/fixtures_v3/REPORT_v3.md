@@ -16,7 +16,7 @@ report_module                eval_report_v3.1
 verify_module                eval_verify_v3.1
 grader                       grade_v3.1 1051a161ac848ad0…
 executor                     sqlexec_v3.0 a6c06b71dd975419…
-fixture_records_sha256       1213cc413c1b7b5cc44a5aadd74528ec243645ebf8eb44eea8ad82baa09d4e65
+fixture_records_sha256       afb1424556a4f75fc8b41f30c1386d346f29d2c7a36321bce60e365ccbdbe3e6
 ```
 
 ## Item accounting (synthetic)

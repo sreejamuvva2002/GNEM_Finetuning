@@ -32,17 +32,41 @@ strict WHITELIST (every record must show `regrade_outcome == "recomputed"`
 AND the expected `grader_sha256`), not a blacklist of one known-bad value, so
 a record that was simply never regraded (`regrade_outcome is None`) cannot
 silently pass either.
+
+REGRADER IDENTITY (Phase 9 correction, third audit round). `grader_sha256`
+names `grade_v3.py`'s identity -- but the multi-part validation/comparison
+LOGIC that decides a regraded outcome lives in THIS module (`regrade()`,
+`_regrade_multipart`), not in `grade_v3.py`. Reproduced as a live gap:
+stamping a record with the CURRENT `grade_v3.py` hash proved nothing about
+which version of THIS module's `regrade()` actually produced it -- an old,
+buggy `eval_verify_v3.regrade()` could produce a wrong result and still pass
+certification under the current grader hash alone. Every record `regrade()`
+touches is now also stamped with `regrader_sha256`, this module's OWN source
+hash computed once at import time, and `assert_fully_regraded` REQUIRES a
+matching `expected_regrader_sha256` alongside `expected_grader_sha256`. Like
+the `VerifiedCandidateRegistry` capability token elsewhere in this
+correction, this is a workflow-integrity guard against accidentally
+re-presenting a stale computation as current, not a cryptographic guarantee
+against a caller who hand-constructs a fabricated `EvalRecord` bypassing
+`regrade()` entirely -- Python cannot prevent that.
 """
 
 from __future__ import annotations
 
+import hashlib
 from collections import Counter
+from pathlib import Path
 
 import eval_records_v3 as R
 import grade_v3 as G
 import sqlexec_v3 as X
 
 VERIFY_VERSION = "eval_verify_v3.1"
+
+# This module's own identity, computed once at import time. Stamped onto
+# every record regrade() touches so a stale eval_verify_v3.py build cannot
+# present its output as if the current build had produced it.
+_SELF_SHA256 = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
 
 
 class VerificationError(ValueError):
@@ -160,6 +184,7 @@ def _regrade_single(r: R.EvalRecord, grader_sha256: str) -> R.EvalRecord:
                         error_detail="answer_type/target_columns invalid",
                         grader_version=G.GRADER_VERSION,
                         grader_sha256=grader_sha256,
+                        regrader_sha256=_SELF_SHA256,
                         regrade_outcome="recomputed")
 
     status = G.classify_prediction_text(
@@ -175,6 +200,7 @@ def _regrade_single(r: R.EvalRecord, grader_sha256: str) -> R.EvalRecord:
                         error_detail="degenerate output; not parsed",
                         grader_version=G.GRADER_VERSION,
                         grader_sha256=grader_sha256,
+                        regrader_sha256=_SELF_SHA256,
                         regrade_outcome="recomputed")
 
     pred_res = _sql_result_from_retained(r.execution_result)
@@ -193,6 +219,7 @@ def _regrade_single(r: R.EvalRecord, grader_sha256: str) -> R.EvalRecord:
                     error_detail=gr.detail,
                     grader_version=G.GRADER_VERSION,
                     grader_sha256=grader_sha256,
+                    regrader_sha256=_SELF_SHA256,
                     regrade_outcome="recomputed")
 
 
@@ -209,10 +236,27 @@ def _regrade_multipart(r: R.EvalRecord, grader_sha256: str) -> R.EvalRecord:
                                     "(whole-response check)",
                         grader_version=G.GRADER_VERSION,
                         grader_sha256=grader_sha256,
+                        regrader_sha256=_SELF_SHA256,
                         regrade_outcome="recomputed")
 
     if not r.parts:
         return _replace(r, regrade_outcome="insufficient_evidence")
+
+    # Declared part_id uniqueness must be validated on regrade exactly as it
+    # is on fresh grading (grade_multipart rejects this outright). Reproduced
+    # as a live bug: two identical declared parts sharing one part_id sailed
+    # through regrade (the same retained evidence simply matched twice),
+    # certifying a task-authoring error that fresh grading would have
+    # refused outright.
+    part_ids = [p.get("part_id") for p in r.parts]
+    if len(part_ids) != len(set(part_ids)):
+        return _replace(
+            r, status="invalid_output", task_result_correctness=0.0,
+            strict_result_schema_accuracy=0.0,
+            error_type="GraderMetadataError",
+            error_detail=f"duplicate part_id(s) in declared parts: {part_ids}",
+            grader_version=G.GRADER_VERSION, grader_sha256=grader_sha256,
+            regrader_sha256=_SELF_SHA256, regrade_outcome="recomputed")
 
     # Each part's OWN metadata must be validated before it's ever compared --
     # reproduced as a live bug: regrading a retained record whose declared
@@ -232,7 +276,7 @@ def _regrade_multipart(r: R.EvalRecord, grader_sha256: str) -> R.EvalRecord:
                 error_type="GraderMetadataError",
                 error_detail=f"part {p.get('part_id')!r}: {e}",
                 grader_version=G.GRADER_VERSION, grader_sha256=grader_sha256,
-                regrade_outcome="recomputed")
+                regrader_sha256=_SELF_SHA256, regrade_outcome="recomputed")
 
     pred_parts = (r.execution_result or {}).get("parts", {}) \
         if isinstance(r.execution_result, dict) else {}
@@ -282,6 +326,7 @@ def _regrade_multipart(r: R.EvalRecord, grader_sha256: str) -> R.EvalRecord:
                     error_detail=f"regraded multi_part: {summary}",
                     grader_version=G.GRADER_VERSION,
                     grader_sha256=grader_sha256,
+                    regrader_sha256=_SELF_SHA256,
                     regrade_outcome="recomputed")
 
 
@@ -292,7 +337,7 @@ def _regrade_multipart(r: R.EvalRecord, grader_sha256: str) -> R.EvalRecord:
 _REGRADE_MUTABLE_FIELDS = frozenset((
     "status", "task_result_correctness", "strict_result_schema_accuracy",
     "error_type", "error_detail", "grader_version", "grader_sha256",
-    "regrade_outcome",
+    "regrader_sha256", "regrade_outcome",
 ))
 
 
@@ -307,11 +352,25 @@ def _replace(rec: R.EvalRecord, **changes) -> R.EvalRecord:
     return R.from_dict(d)
 
 
-def assert_fully_regraded(records, *, expected_grader_sha256: str) -> None:
+def assert_fully_regraded(records, *, expected_grader_sha256: str,
+                          expected_regrader_sha256: str) -> None:
     """Strict whitelist gate: EVERY record must show
     regrade_outcome == 'recomputed' AND grader_sha256 == the current expected
-    build. Raises on 'insufficient_evidence', on None (never regraded), and on
-    a 'recomputed' record stamped by a DIFFERENT (stale) grader build.
+    grade_v3.py build AND regrader_sha256 == the current expected
+    eval_verify_v3.py build. Raises on 'insufficient_evidence', on None
+    (never regraded), on a 'recomputed' record stamped by a DIFFERENT (stale)
+    grader build, and -- separately -- on one produced by a different
+    (stale) REGRADER build.
+
+    `expected_regrader_sha256` is REQUIRED, not optional: `grader_sha256`
+    alone names `grade_v3.py`'s identity, but the multi-part
+    validation/comparison logic that actually decides a regraded outcome
+    lives in `eval_verify_v3.py` (this module). Reproduced as a live gap: a
+    record stamped with the CURRENT `grade_v3.py` hash proved nothing about
+    which build of THIS module's `regrade()` produced it -- an old, buggy
+    `eval_verify_v3.py` could still pass certification under the grader hash
+    alone. Pass `EVAL_VERIFIER_SHA256` (this module's own live hash) as the
+    expected value in the normal case.
 
     Call this before any report labels its output "freshly regraded" / "fully
     re-verified under the current grader" -- it is the only thing standing
@@ -323,10 +382,18 @@ def assert_fully_regraded(records, *, expected_grader_sha256: str) -> None:
             bad.append((r.example_id, r.regrade_outcome))
         elif r.grader_sha256 != expected_grader_sha256:
             bad.append((r.example_id, f"stale grader {r.grader_sha256}"))
+        elif r.regrader_sha256 != expected_regrader_sha256:
+            bad.append((r.example_id, f"stale regrader {r.regrader_sha256}"))
     if bad:
         raise VerificationError(
             f"{len(bad)} record(s) are not fully regraded under the current "
-            f"grader ({expected_grader_sha256}): {bad[:10]}")
+            f"grader ({expected_grader_sha256}) / regrader "
+            f"({expected_regrader_sha256}): {bad[:10]}")
+
+
+# Public alias so callers can pass THIS module's own live identity without
+# reaching into the underscore-prefixed internal constant.
+EVAL_VERIFIER_SHA256 = _SELF_SHA256
 
 
 def regrade_coverage(records) -> dict:

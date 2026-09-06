@@ -582,6 +582,34 @@ def main() -> int:
           "a bare string is iterable -- it must not be silently scanned "
           "character-by-character as if each character were a component set")
 
+    # ---- 18. fourth independent-audit round: reproduced-and-fixed bugs ----
+    expect("scan_compositions_rejects_nested_bare_string",
+          lambda: H.scan_compositions(["certifications processes"], reg),
+          TypeError,
+          "the outer shape is a list (passes the earlier guard), but the "
+          "single nested element is still a bare string -- it must not be "
+          "scanned character-by-character either")
+    expect("scan_compositions_multipart_rejects_nested_bare_strings",
+          lambda: H.scan_compositions_multipart(
+              {"p1": "certifications", "p2": "processes"}, reg),
+          TypeError,
+          "each part's component set must be a real collection, not a bare "
+          "string -- a correctly-shaped {'p1': ['certifications'], "
+          "'p2': ['processes']} must still detect the held-out composition")
+    correctly_shaped = H.scan_compositions_multipart(
+        {"p1": ["certifications"], "p2": ["processes"]}, reg)
+    rec("scan_compositions_multipart_correct_shape_still_detects_violation",
+        correctly_shaped["composition_violations"] == 1,
+        f"properly-shaped list values correctly detect the held-out "
+        f"composition once the nested-string guard stops accepting the "
+        f"malformed shape instead: {correctly_shaped}")
+
+    expect("scan_operations_rejects_blank_sql_entry",
+          lambda: H.scan_operations([""], reg), H.HoldoutError,
+          "a blank string is not an executed query -- it must not count as "
+          "real scanned SQL evidence the way a genuinely empty rendered "
+          "prose string can for scan_strings")
+
     for n, ok, d in out:
         print(f"  [{'PASS' if ok else 'FAIL'}] fault:{n}: {d}")
     missed = [n for n, ok, _ in out if not ok]

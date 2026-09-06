@@ -18,11 +18,11 @@ finetune/phase7_grader_tests.py    bcdbdbb67211321c8ebd50e2d5a8eeb6908c5fb7b7b69
 ## Stack modules
 
 ```text
-finetune/eval_records_v3.py               96bec72a4e9ebf55848e397f35d4251e1b87d9114e8eead69f33b5a391d021d2
+finetune/eval_records_v3.py               46e4f4502f7cd02ede534069704a4273adf07ad33175a8dfa89aae590065b8e2
 finetune/eval_stats_v3.py                 28add5267e6d77abd589243ab52dcdbbddaa612d7b8b1e733289af08132f9f24
-finetune/eval_report_v3.py                6eef354458a756cca78eb80554702dcec7efb60d500deeaf6bdfc5e9bad42930
-finetune/eval_verify_v3.py                d746e63468d0ae960458916192abc21272e1c54a9cae14720a6dca7fee055556
-finetune/phase8_eval_stack_tests.py       c7eb808c9d88756299310c14a80f4e27f5d0e60d54d41029f0561b4bb40772f6
+finetune/eval_report_v3.py                75113c4372dd2ae76b2e146a5e51774886b5df22cafcda56f09d46b5ec7799fa
+finetune/eval_verify_v3.py                839a04a04e17f293060385b38a48f7dfc293d2a0d1801dbade4d846c5629f665
+finetune/phase8_eval_stack_tests.py       8829672643c2be2039581d9da906228d65e159bf4d05731179a892c99cc9d5fd
 ```
 
 Rebuilt v3-native rather than ported. v2's stack is 4,213 lines and `report.py` alone carries 111 retired-concept references; README Phase 8 warns that recreating it "would add risk rather than remove it". Only the statistical METHODS were carried across as concepts, reimplemented against the v3 schema — no v2 file was copied.
@@ -30,11 +30,11 @@ Rebuilt v3-native rather than ported. v2's stack is 4,213 lines and `report.py` 
 ## Fixture manifest
 
 ```text
-validation_v3/fixtures_v3/fixture_records_v3.jsonl   1213cc413c1b7b5cc44a5aadd74528ec243645ebf8eb44eea8ad82baa09d4e65
-validation_v3/fixtures_v3/fixtures_manifest_v3.json  c4dfa3e0536ca6ba62cf9b39cdc27eba604f6f0843073991badecedb13cc41f6
+validation_v3/fixtures_v3/fixture_records_v3.jsonl   afb1424556a4f75fc8b41f30c1386d346f29d2c7a36321bce60e365ccbdbe3e6
+validation_v3/fixtures_v3/fixtures_manifest_v3.json  b3ee83e35e7114aa430b1ff1037c96ab20583860bbace54d266c98d317379fbf
 validation_v3/fixtures_v3/summary_v3.json            8f892a730a9413585cb654d641de942721ffcbc9c24808dab704369eeab600de
 validation_v3/fixtures_v3/error_analysis_v3.json     a662aaa3ba75d440eae83ccbc613c08e072ac608688f155c9650eb8e75a95216
-validation_v3/fixtures_v3/REPORT_v3.md               9a64076a735fb9c09748544774fe534474997c5e26e5704b47f62c0ae3c188ab
+validation_v3/fixtures_v3/REPORT_v3.md               a62a364820a36ca05b7b0560b6802228ac17937c00945a85988a86da22e11c26
 fixture item count                                   18
 families                                             factual_recall, no_match, structured_heldin, structured_paraphrase
 ```
@@ -300,6 +300,10 @@ None of 15 retired concepts appear in the stack, and no v2 repository path or v2
 | `regrade_validates_per_part_metadata_before_comparing` | PASS | a declared part with empty target_columns must fail closed on regrade exactly as it does on fresh grading, not silently project zero columns and certify 999=='correct' against gold 1: status=invalid_output task=0.0 |
 | `regrade_validated_failure_still_passes_structural_verify` | PASS | an invalid_output outcome is still a structurally valid record (exactly one frozen status, required fields present) |
 | `report_does_not_falsely_certify_invalid_multipart_regrade` | PASS | the record IS genuinely recomputed (recomputed correctly to an explicit invalid_output failure, not silently passed as correct) -- certification here correctly reflects a real, honest recomputation outcome, not a false 'correct': {'correct': 0, 'incorrect': 0, 'generation_failure': 0, 'parse_failure': 0, 'SQL_error': 0, 'timeout': 0, 'truncated_output': 0, 'invalid_output': 1} |
+| `assert_fully_regraded_rejects_stale_regrader_build` | PASS | VerificationError: 1 record(s) are not fully regraded under the current grader (1051a161a |
+| `assert_fully_regraded_accepts_current_regrader` | PASS | a record genuinely produced by the current regrade() build passes (assert_fully_regraded returns None / does not raise) |
+| `fresh_grading_rejects_duplicate_part_id` | PASS | fresh grading correctly refuses a duplicate declared part_id |
+| `regrade_rejects_duplicate_part_id_same_as_fresh_grading` | PASS | a duplicate declared part_id must fail closed on regrade exactly as it does on fresh grading, not silently compare the same retained evidence twice and certify it correct: status=invalid_output task=0.0 |
 
 ## Fault tests
 

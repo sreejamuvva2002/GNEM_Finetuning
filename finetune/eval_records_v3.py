@@ -72,7 +72,7 @@ RECORDS_VERSION = "eval_records_v3.1"
 # They carry defaults so an old serialized record (predating them) still
 # loads via from_dict -- they are backfilled to None, never treated as
 # missing-required.
-NEW_OPTIONAL_FIELDS = ("parts", "regrade_outcome")
+NEW_OPTIONAL_FIELDS = ("parts", "regrade_outcome", "regrader_sha256")
 
 # Valid values for `regrade_outcome`. None means "never regraded". This is a
 # separate, NON-AUTHORITATIVE field from `status` -- it never joins the
@@ -127,6 +127,7 @@ class EvalRecord:
     # -- added after the original schema was frozen (Phase 9 correction) --
     parts: tuple | None = None            # multi_part metadata, mirrors item["parts"]
     regrade_outcome: str | None = None    # None | "recomputed" | "insufficient_evidence"
+    regrader_sha256: str | None = None    # eval_verify_v3.py's own hash at regrade() time
 
     def __post_init__(self):
         if self.status not in STATUSES:
