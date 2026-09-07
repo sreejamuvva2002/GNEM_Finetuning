@@ -28,6 +28,23 @@ def non_train_companies() -> set[str]:
     return all_co - train_co
 
 
+def company_splits() -> dict[str, str]:
+    """company -> split ('train'/'dev'/'test'), for audit reporting only.
+
+    Reads full_kb split metadata -- validation-only, same reasoning as
+    non_train_companies(): this module exists so generator source never
+    contains a full_kb/train_dev_kb literal for the Phase 4 static check.
+    """
+    meta = KB.split_metadata("full_kb")
+    recs = {r.row_id: r.company for r in KB.load_kb("full_kb")}
+    return {recs[rid]: v["split"] for rid, v in meta.items()}
+
+
+def row_splits() -> dict[int, str]:
+    """row_id -> split, for audit reporting only (see company_splits())."""
+    return {rid: v["split"] for rid, v in KB.split_metadata("full_kb").items()}
+
+
 def companies_leaked_in(texts: list[str]) -> list[str]:
     """Which dev/test companies appear as a literal substring of any text.
 

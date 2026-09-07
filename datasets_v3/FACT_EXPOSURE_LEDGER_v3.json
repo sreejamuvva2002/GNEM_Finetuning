@@ -9,10 +9,12 @@
       "strings_scanned": 148
     },
     "B": {
-      "artifact": null,
-      "exposure_count": null,
-      "scanned": false,
-      "sha256": null
+      "artifact": "datasets_v3/train_B_facts_v3.jsonl",
+      "exposure_count": 0,
+      "phase": 11,
+      "scanned": true,
+      "sha256": "17ddccd67f2c46bb94e5d948c130cd2d6c99b564a07fc171618eb0f5e3f957b0",
+      "strings_scanned": 4023
     },
     "BC": {
       "artifact": null,
