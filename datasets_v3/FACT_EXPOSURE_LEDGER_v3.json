@@ -17,10 +17,13 @@
       "strings_scanned": 4023
     },
     "BC": {
-      "artifact": null,
-      "exposure_count": null,
-      "scanned": false,
-      "sha256": null
+      "artifact": "datasets_v3/train_BC_facts_answers_v3.jsonl",
+      "exposure_count": 0,
+      "note": "union of B and C, both independently verified exposure_count 0 at Phase 11/13; no new strings introduced by concatenation",
+      "phase": 15,
+      "scanned": true,
+      "sha256": "7fe6ea83569ed9d23d75a933539027dc636cefd6219fe40ce89f28798f6ccf1c",
+      "strings_scanned": 6324
     },
     "BD": {
       "artifact": null,

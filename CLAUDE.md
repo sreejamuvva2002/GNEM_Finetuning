@@ -41,9 +41,9 @@ Maintain this block as work progresses:
 
 ```text
 PROTOCOL_STATUS: FROZEN
-CURRENT_PHASE: 15
-LAST_COMPLETED_PHASE: 14
-NEXT_PHASE: Phase 16 — BD datasets and budget manifests
+CURRENT_PHASE: 16
+LAST_COMPLETED_PHASE: 15
+NEXT_PHASE: Phase 17 — Dev evaluation sets
 TEST_STATUS: LOCKED_UNTIL_PHASE_40
 ```
 
