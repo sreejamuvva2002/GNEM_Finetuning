@@ -610,6 +610,55 @@ def main() -> int:
           "real scanned SQL evidence the way a genuinely empty rendered "
           "prose string can for scan_strings")
 
+    # ---- 19. externally-audited round 6: component-MEMBER validation -----
+    # The outer collection-shape guards (17/18 above) reject a bare string
+    # standing in for a whole component set, but never validated what's
+    # INSIDE an otherwise well-shaped list -- reproduced directly:
+    # scan_compositions([[None]], reg) and scan_compositions_multipart with
+    # byte-string component names both reported composition_violations == 0
+    # and passed assert_composition_scan_verified, because set([None]) or
+    # set([b"certifications"]) can never equal a str-only held-out set even
+    # though the intended component is a genuine held-out one.
+    expect("scan_compositions_rejects_none_member",
+          lambda: H.scan_compositions([[None]], reg), TypeError,
+          "a None component name silently forms a set that can never match "
+          "the held-out set, producing a false zero-violation certificate")
+    expect("scan_compositions_rejects_numeric_member",
+          lambda: H.scan_compositions([[123]], reg), TypeError,
+          "a numeric component name is not a real component identifier")
+    expect("scan_compositions_rejects_blank_member",
+          lambda: H.scan_compositions([[""]], reg), TypeError,
+          "a blank-string component name is not a real component identifier")
+    expect("scan_compositions_rejects_whitespace_member",
+          lambda: H.scan_compositions([["   "]], reg), TypeError,
+          "a whitespace-only component name is not a real component identifier")
+    expect("scan_compositions_multipart_rejects_none_member",
+          lambda: H.scan_compositions_multipart({"p1": [None], "p2": [None]}, reg),
+          TypeError,
+          "None component names in a multi-part task must not silently "
+          "certify a zero-violation composition scan")
+    expect("scan_compositions_multipart_rejects_bytes_member",
+          lambda: H.scan_compositions_multipart(
+              {"p1": [b"certifications"], "p2": [b"processes"]}, reg),
+          TypeError,
+          "byte-string component names are content-identical to the "
+          "held-out set but type-mismatch against it -- replacing the byte "
+          "strings with ordinary strings must detect the same violation")
+    bytes_as_strings = H.scan_compositions_multipart(
+        {"p1": ["certifications"], "p2": ["processes"]}, reg)
+    rec("scan_compositions_multipart_str_member_detects_violation_bytes_hid",
+        bytes_as_strings["composition_violations"] == 1,
+        f"the exact composition the bytes-typed call above wrongly reported "
+        f"as clean must be detected once the members are ordinary strings: "
+        f"{bytes_as_strings}")
+    heldin_single_component = H.scan_compositions_multipart(
+        {"p1": ["certifications"], "p2": ["certifications"]}, reg)
+    rec("scan_compositions_multipart_valid_heldin_control_passes_clean",
+        heldin_single_component["composition_violations"] == 0,
+        f"a genuinely held-in single-component task (not the held-out pair) "
+        f"must still scan clean after the member-validation fix: "
+        f"{heldin_single_component}")
+
     for n, ok, d in out:
         print(f"  [{'PASS' if ok else 'FAIL'}] fault:{n}: {d}")
     missed = [n for n, ok, _ in out if not ok]

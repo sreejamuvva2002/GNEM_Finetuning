@@ -1169,6 +1169,26 @@ def scan_operations_multipart(gold_sql: dict, reg=None) -> dict:
     return scan_operations(list(gold_sql.values()), reg)
 
 
+def _validate_component_names(names, *, where: str) -> None:
+    """Every member of a component collection must itself be a non-blank str
+    -- reproduced as a live bug: scan_compositions([[None]], reg) and
+    scan_compositions_multipart({"p1": [b"certifications"], "p2":
+    [b"processes"]}, reg) both passed the outer collection-shape checks (a
+    list of a list; a dict of lists) and then did set(...) directly on the
+    un-validated members, so None/bytes/int component names silently formed
+    a set that could never equal the (str-only) held-out set -- a genuine
+    held-out composition (certifications+processes) reported zero violations
+    solely because the member type didn't match, not because it was absent."""
+    bad = [n for n in names
+           if not isinstance(n, str) or not n.strip()]
+    if bad:
+        raise TypeError(
+            f"{where}: component name(s) {bad[:5]!r} are not non-blank "
+            f"strings -- every member of a component set must be a real "
+            f"component name (e.g. \"processes\"), not None/bytes/a number/"
+            f"blank text")
+
+
 def scan_compositions(component_sets, reg=None) -> dict:
     """Superset rule: for held-out H and training set T, assert not H subset-of T."""
     if isinstance(component_sets, (str, bytes, dict)):
@@ -1196,6 +1216,8 @@ def scan_compositions(component_sets, reg=None) -> dict:
             f"scan_compositions: component set(s) at index {bad[:5]} are bare "
             f"strings, not a collection of component names -- wrap each one: "
             f"[\"processes\"] not \"processes\"")
+    for i, T in enumerate(component_sets):
+        _validate_component_names(list(T), where=f"scan_compositions: set at index {i}")
     reg = _require_verified_registry(reg) or load_registry()
     held = [set(h) for h in reg["composition_holdouts"]["held_out_sets"]]
     violations = []
@@ -1237,6 +1259,9 @@ def scan_compositions_multipart(parts_component_sets: dict, reg=None) -> dict:
             f"scan_compositions_multipart: part(s) {bad[:5]} carry a bare "
             f"string as their component set, not a collection -- wrap each "
             f"one: [\"processes\"] not \"processes\"")
+    for pid, s in parts_component_sets.items():
+        _validate_component_names(
+            list(s), where=f"scan_compositions_multipart: part {pid!r}")
     union = set()
     for s in parts_component_sets.values():
         union |= set(s)
