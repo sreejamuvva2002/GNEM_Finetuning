@@ -1216,8 +1216,16 @@ def scan_compositions(component_sets, reg=None) -> dict:
             f"scan_compositions: component set(s) at index {bad[:5]} are bare "
             f"strings, not a collection of component names -- wrap each one: "
             f"[\"processes\"] not \"processes\"")
+    # Materialize each component collection exactly ONCE, before validation.
+    # Regression, reproduced directly: validating list(T) and then later
+    # scanning the original T silently exhausts T when it's an iterator/
+    # generator (not a list/tuple/set) -- the validation pass consumes it,
+    # so the scan pass that runs afterward sees an empty collection and
+    # reports a false zero-violation certificate for a genuinely held-out
+    # composition. Validate and scan the SAME materialized list.
+    component_sets = [list(T) for T in component_sets]
     for i, T in enumerate(component_sets):
-        _validate_component_names(list(T), where=f"scan_compositions: set at index {i}")
+        _validate_component_names(T, where=f"scan_compositions: set at index {i}")
     reg = _require_verified_registry(reg) or load_registry()
     held = [set(h) for h in reg["composition_holdouts"]["held_out_sets"]]
     violations = []
@@ -1259,9 +1267,16 @@ def scan_compositions_multipart(parts_component_sets: dict, reg=None) -> dict:
             f"scan_compositions_multipart: part(s) {bad[:5]} carry a bare "
             f"string as their component set, not a collection -- wrap each "
             f"one: [\"processes\"] not \"processes\"")
+    # Same materialize-once discipline as scan_compositions -- reproduced
+    # directly: validating list(s) and then later doing set(s) on the
+    # original s silently exhausts an iterator/generator part value between
+    # the two passes, so the union-building step sees an empty collection
+    # and the composition scan certifies zero violations for a genuinely
+    # held-out composition.
+    parts_component_sets = {pid: list(s) for pid, s in parts_component_sets.items()}
     for pid, s in parts_component_sets.items():
         _validate_component_names(
-            list(s), where=f"scan_compositions_multipart: part {pid!r}")
+            s, where=f"scan_compositions_multipart: part {pid!r}")
     union = set()
     for s in parts_component_sets.values():
         union |= set(s)

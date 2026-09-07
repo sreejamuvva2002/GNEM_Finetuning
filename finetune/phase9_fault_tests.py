@@ -659,6 +659,103 @@ def main() -> int:
         f"must still scan clean after the member-validation fix: "
         f"{heldin_single_component}")
 
+    # ---- 20. re-audit of round 6: iterator-consumption regression --------
+    # The round-6 member-validation fix introduced a NEW bug: it validated
+    # list(T) but then scanned the original T, silently exhausting T when it
+    # was an iterator/generator (not list/tuple/set) -- the validation pass
+    # consumed it, so the scan pass afterward saw an empty collection and
+    # certified zero violations for a genuinely held-out composition.
+    # Reproduced directly against the round-6 commit before fixing; the
+    # identical case against the prior (round-5) commit correctly detected
+    # the violation, confirming this was a newly-introduced regression.
+    iter_single = H.scan_compositions(
+        [iter(["certifications", "processes"])], reg)
+    rec("scan_compositions_iterator_input_detects_violation",
+        iter_single["composition_violations"] == 1,
+        f"an iterator (not list/tuple/set) containing the held-out pair "
+        f"must be detected, not silently exhausted by validation before "
+        f"the scan runs: {iter_single}")
+    iter_multipart = H.scan_compositions_multipart(
+        {"p1": iter(["certifications"]), "p2": iter(["processes"])}, reg)
+    rec("scan_compositions_multipart_iterator_input_detects_violation",
+        iter_multipart["composition_violations"] == 1,
+        f"iterator part values must be detected across the multipart union, "
+        f"not silently exhausted between validation and union-building: "
+        f"{iter_multipart}")
+
+    def _gen_pair():
+        yield "certifications"
+        yield "processes"
+
+    gen_single = H.scan_compositions([_gen_pair()], reg)
+    rec("scan_compositions_generator_input_detects_violation",
+        gen_single["composition_violations"] == 1,
+        f"a generator containing the held-out pair must be detected: {gen_single}")
+
+    def _gen_cert():
+        yield "certifications"
+
+    def _gen_proc():
+        yield "processes"
+
+    gen_multipart = H.scan_compositions_multipart(
+        {"p1": _gen_cert(), "p2": _gen_proc()}, reg)
+    rec("scan_compositions_multipart_generator_input_detects_violation",
+        gen_multipart["composition_violations"] == 1,
+        f"generator part values must be detected across the multipart "
+        f"union: {gen_multipart}")
+
+    # Container-type equivalence: list/tuple/set/iterator/generator must all
+    # behave identically for both a held-out and a held-in input.
+    _held_out_makers = {
+        "list": lambda: ["certifications", "processes"],
+        "tuple": lambda: ("certifications", "processes"),
+        "set": lambda: {"certifications", "processes"},
+        "iterator": lambda: iter(["certifications", "processes"]),
+        "generator": lambda: (x for x in ["certifications", "processes"]),
+    }
+    for kind, maker in _held_out_makers.items():
+        r = H.scan_compositions([maker()], reg)
+        rec(f"scan_compositions_container_equivalence_heldout_{kind}",
+            r["composition_violations"] == 1,
+            f"{kind}-typed held-out input must detect 1 violation, got {r}")
+
+    _held_in_makers = {
+        "list": lambda: ["certifications"],
+        "tuple": lambda: ("certifications",),
+        "set": lambda: {"certifications"},
+        "iterator": lambda: iter(["certifications"]),
+        "generator": lambda: (x for x in ["certifications"]),
+    }
+    for kind, maker in _held_in_makers.items():
+        r = H.scan_compositions([maker()], reg)
+        rec(f"scan_compositions_container_equivalence_heldin_{kind}",
+            r["composition_violations"] == 0,
+            f"{kind}-typed held-in (single-component) input must scan "
+            f"clean, got {r}")
+
+    # Malformed-member detection must still work when the collection is a
+    # generator, not only a list -- confirms validation and the (separate,
+    # materialized) scan are looking at the same fully-realized content.
+    def _gen_bad():
+        yield None
+        yield "processes"
+
+    expect("scan_compositions_rejects_malformed_member_via_generator",
+          lambda: H.scan_compositions([_gen_bad()], reg), TypeError,
+          "a None member inside a generator-typed component set must still "
+          "be rejected, not silently pass because generators aren't lists")
+
+    def _gen_bad_multipart():
+        yield b"processes"
+
+    expect("scan_compositions_multipart_rejects_malformed_member_via_generator",
+          lambda: H.scan_compositions_multipart(
+              {"p1": _gen_bad_multipart(), "p2": _gen_cert()}, reg),
+          TypeError,
+          "a bytes member inside a generator-typed part value must still "
+          "be rejected")
+
     for n, ok, d in out:
         print(f"  [{'PASS' if ok else 'FAIL'}] fault:{n}: {d}")
     missed = [n for n, ok, _ in out if not ok]
