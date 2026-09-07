@@ -37,10 +37,12 @@
       "strings_scanned": 2301
     },
     "D": {
-      "artifact": null,
-      "exposure_count": null,
-      "scanned": false,
-      "sha256": null
+      "artifact": "datasets_v3/train_D_sql_v3.jsonl",
+      "exposure_count": 0,
+      "phase": 14,
+      "scanned": true,
+      "sha256": "d356ad0dd4c04a384f665a4a9b8ded0a7bb672618d19470c868e844905f9ff06",
+      "strings_scanned": 2301
     }
   },
   "frozen_date": "2026-08-24",

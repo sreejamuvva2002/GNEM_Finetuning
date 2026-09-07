@@ -41,9 +41,9 @@ Maintain this block as work progresses:
 
 ```text
 PROTOCOL_STATUS: FROZEN
-CURRENT_PHASE: 14
-LAST_COMPLETED_PHASE: 13
-NEXT_PHASE: Phase 15 — `train_BC_facts_answers_v3.jsonl`
+CURRENT_PHASE: 15
+LAST_COMPLETED_PHASE: 14
+NEXT_PHASE: Phase 16 — BD datasets and budget manifests
 TEST_STATUS: LOCKED_UNTIL_PHASE_40
 ```
 
