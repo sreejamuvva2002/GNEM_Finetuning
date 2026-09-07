@@ -28,13 +28,18 @@ assistant-only-loss mask actually trains on.
 
 WHAT'S FROZEN vs WHAT'S NOT. README asks for "optimizer steps, effective
 passes" in the report. Those require a batch size and epoch count, which are
-Phase 24 dev-tuned hyperparameters this repository has not yet chosen (README
-Phase 24: checkpoint selection, learning rate, epochs, LoRA rank are ALL dev
-decisions). Fabricating a batch size here to produce a step count would be
-exactly the kind of unstated-parameter invention CLAUDE.md forbids. This
-report gives the formula and the inputs (total tokens, example counts) and
-explicitly defers the numeric step/pass count to Phase 24 -- a documented
-scope boundary, not an omission.
+dev-tuned hyperparameters this repository has not yet chosen (CLAUDE.md's
+own "Dev policy" section names checkpoint selection, learning rate, epochs
+and LoRA rank as dev decisions; README's actual training phases are
+"Phases 33-39 -- Full training" -- CORRECTION, post-approval audit: an
+earlier version of this file cited "Phase 24" for this, which is README's
+Phase 24, "Structured paraphrase probe" -- an unrelated phase, confused with
+CLAUDE.md's own internal section 24, a different document's numbering).
+Fabricating a batch size here to produce a step count would be exactly the
+kind of unstated-parameter invention CLAUDE.md forbids. This report gives
+the formula and the inputs (total tokens, example counts) and explicitly
+defers the numeric step/pass count to Phases 33-39 -- a documented scope
+boundary, not an omission.
 """
 
 from __future__ import annotations
@@ -227,6 +232,32 @@ def main() -> int:
     check("registry_frozen_before_generation", bool(st["reg"].get("frozen_date")),
           f"HOLDOUT_REGISTRY_v3 {st['reg']['policy_version']}")
 
+    # Correction (post-approval audit, confirmed): the original ledger update
+    # for the BD arm copied forward B/D's PRIOR recorded exposure_count/
+    # strings_scanned without verifying those source files hadn't drifted
+    # since Phase 11/14, and without re-scanning anything itself. Fixed the
+    # same way as Phase 15's BC correction.
+    led = json.loads((ROOT / "datasets_v3" / "FACT_EXPOSURE_LEDGER_v3.json")
+                     .read_text(encoding="utf-8"))
+    b_sha_now, d_sha_now = H.sha256_file(B_PATH), H.sha256_file(D_PATH)
+    check("source_hashes_match_ledger",
+          b_sha_now == led["arms"]["B"]["sha256"]
+          and d_sha_now == led["arms"]["D"]["sha256"],
+          f"B {b_sha_now[:12]}.. == ledger {led['arms']['B']['sha256'][:12]}.. "
+          f"and D {d_sha_now[:12]}.. == ledger {led['arms']['D']['sha256'][:12]}.. "
+          f"-- refusing to inherit a prior exposure verdict for drifted source")
+
+    render_texts = []
+    for i in strip_internal(st["bd_full"]):
+        render_texts.extend(m["content"] for m in i["messages"])
+    rep_scan = H.scan_strings(render_texts, st["reg"])
+    H.assert_value_scan_verified(rep_scan)
+    check("exposure_count_zero_rescanned", rep_scan["total_exposures"] == 0,
+          f"0 held-out literals across {rep_scan['strings_scanned']} strings "
+          f"in BD_full, RE-SCANNED here (not inherited from B/D's ledger "
+          f"entries) -- BD_controlled and D_repeat are subsets/repeats of "
+          f"this same content, so this scan covers them too")
+
     b_ids = {i["example_id"] for i in st["b"]}
     d_ids = {i["example_id"] for i in st["d"]}
     full_ids = {i["example_id"] for i in st["bd_full"]}
@@ -298,6 +329,7 @@ def main() -> int:
             "examples": len(st["bd_full"]),
             "supervised_completion_tokens": st["b_total_comp"] + st["d_total_comp"],
             "total_tokens": sum(i["_total_tokens"] for i in st["bd_full"]),
+            "example_ids": [i["example_id"] for i in st["bd_full"]],
             "note": "the full eligible v3 recipe: every B and D example "
                    "surviving split/holdout/exposure exclusions, no sampling",
         },
@@ -309,6 +341,8 @@ def main() -> int:
             "d_supervised_completion_tokens": d_ctrl_tok,
             "balance_ratio": round(balance_ratio, 4),
             "total_tokens": sum(i["_total_tokens"] for i in st["bd_controlled"]),
+            "b_example_ids": [i["example_id"] for i in controlled_b],
+            "d_example_ids": [i["example_id"] for i in controlled_d],
             "sampling_method": "deterministic prefix fill over the non-anchor "
                                "arm, sorted by example_id, stopped at the "
                                "nearest completion-token match to the anchor "
@@ -320,23 +354,35 @@ def main() -> int:
             "supervised_completion_tokens": d_repeat_tok,
             "total_tokens": sum(i["_total_tokens"] for i in st["d_repeat"]),
             "target_budget": st["controlled_total"],
+            "example_ids": [i["example_id"] for i in st["d_repeat"]],
+            "source_task_id_by_example_id": {
+                i["example_id"]: i["example_id"].split("__rep")[0]
+                for i in st["d_repeat"]},
             "sampling_method": "D cycled from its example_id-sorted order, "
-                               "repeating, until the completion-token budget "
-                               "is met",
+                               "repeating (rep-cycle suffix __repN on each "
+                               "copy's example_id; source_task_id_by_"
+                               "example_id gives the exact repetition "
+                               "mapping), until the completion-token budget "
+                               "is met -- README requires an exact-ID "
+                               "manifest because a seed does not reproduce "
+                               "the same examples after generator code "
+                               "changes; this lists the actual IDs, not "
+                               "merely the method",
         },
         "optimizer_steps_and_effective_passes": (
             "NOT computed here. steps = total_supervised_tokens / "
             "(batch_size * assistant_only_loss ? completion_tokens_per_step : "
             "total_tokens_per_step); both batch_size and epoch count are "
-            "Phase 24 dev-tuned hyperparameters not yet frozen by this "
-            "repository. Reporting a specific step count now would require "
-            "inventing those parameters -- deferred to Phase 24's actual "
+            "dev-tuned hyperparameters (CLAUDE.md 'Dev policy') not yet "
+            "frozen by this repository, fixed during README's 'Phases 33-39 "
+            "-- Full training'. Reporting a specific step count now would "
+            "require inventing those parameters -- deferred to that actual "
             "training config rather than fabricated here."),
     }
     OUT_MANIFEST.write_text(json.dumps(manifest, indent=2, sort_keys=True,
                                        ensure_ascii=False) + "\n", encoding="utf-8")
 
-    _update_ledger(sha_full)
+    _update_ledger(sha_full, rep_scan)
     _composition(st, controlled_b, controlled_d)
     _audit(st, controlled_b, controlled_d, checks, sha_full, sha_ctrl, sha_rep)
 
@@ -350,24 +396,22 @@ def main() -> int:
     return 0
 
 
-def _update_ledger(sha_full):
-    """BD_full/BD_controlled/D_repeat all draw exclusively from B and D
-    content already independently verified exposure_count 0 at Phase 11/14
-    (README's exposure_policy arm list names BD, not BD_full/controlled/
-    repeat separately) -- no new strings, no new scan."""
+def _update_ledger(sha_full, rep_scan):
+    """Correction: this now records a REAL re-scan of BD_full's own rendered
+    strings (rep_scan, computed in main() via H.scan_strings), not a
+    copy-forward of B/D's prior counts -- see source_hashes_match_ledger and
+    exposure_count_zero_rescanned in main()."""
     p = ROOT / "datasets_v3" / "FACT_EXPOSURE_LEDGER_v3.json"
     led = json.loads(p.read_text(encoding="utf-8"))
-    b_scanned = led["arms"]["B"]["strings_scanned"]
-    d_scanned = led["arms"]["D"]["strings_scanned"]
     led["arms"]["BD"] = {
-        "scanned": True, "exposure_count": 0,
+        "scanned": True, "exposure_count": rep_scan["total_exposures"],
         "artifact": "datasets_v3/train_BD_facts_sql_v3.jsonl",
-        "sha256": sha_full, "strings_scanned": b_scanned + d_scanned,
+        "sha256": sha_full, "strings_scanned": rep_scan["strings_scanned"],
         "phase": 16,
-        "note": "union of B and D, both independently verified "
-               "exposure_count 0 at Phase 11/14; BD_controlled and "
-               "D_repeat_budgetmatched are subsets/repeats of this same "
-               "already-scanned content, introducing no new strings",
+        "note": "re-scanned directly against the holdout registry (BD_full), "
+               "not inherited from B/D's ledger entries (post-approval audit "
+               "correction); BD_controlled and D_repeat_budgetmatched are "
+               "subsets/repeats of this same scanned content",
     }
     p.write_text(json.dumps(led, indent=2, sort_keys=True,
                             ensure_ascii=False) + "\n", encoding="utf-8")
@@ -463,9 +507,11 @@ def _audit(st, controlled_b, controlled_d, checks, sha_full, sha_ctrl, sha_rep):
          f"{sum(i['_completion_tokens'] for i in st['d_repeat']):7d} tokens",
          "```\n",
          "## Optimizer steps / effective passes\n",
-         "Not computed. Both batch_size and epoch count are Phase 24 "
-         "dev-tuned hyperparameters not yet frozen — reporting a step count "
-         "now would require inventing them. See BD_SAMPLING_MANIFEST_v3.json's "
+         "Not computed. Both batch_size and epoch count are dev-tuned "
+         "hyperparameters (CLAUDE.md 'Dev policy'; fixed during README's "
+         "'Phases 33-39 — Full training') not yet frozen — reporting a step "
+         "count now would require inventing them. See "
+         "BD_SAMPLING_MANIFEST_v3.json's "
          "`optimizer_steps_and_effective_passes` note for the formula.\n",
          "## Validation\n", "| check | result | detail |", "|---|---|---|"]
     for n, ok, d in checks:

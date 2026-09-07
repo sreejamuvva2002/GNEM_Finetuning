@@ -162,13 +162,22 @@ def main() -> int:
     def answer_size(i):
         gold = next(t for t in pool if t["task_id"] == i["task_id"])["train_kb_gold"]
         return len(gold["rows"])
+    # Correction (post-approval audit, confirmed): "cross-table" means ANY
+    # table join (join_arity >= 1), not merely a two-attribute composition
+    # (join_arity >= 2) -- a single child-table join (child_filter) is still
+    # a cross-table query. The original >= 2 threshold let 4 single-join
+    # tasks through at 27-36 rows, silently outside the 1-25 cap.
     oversize = [i["example_id"] for i in items
-               if (i["join_arity"] >= 2 and answer_size(i) > 25)
-               or (i["join_arity"] < 2 and answer_size(i) > 40)]
-    check("answer_sizes_within_caps", not oversize,
+               if (i["join_arity"] >= 1 and answer_size(i) > 25)
+               or (i["join_arity"] == 0 and answer_size(i) > 40)]
+    undersize = [i["example_id"] for i in items
+                if i["answer_type"] == "set" and answer_size(i) < 1]
+    check("answer_sizes_within_caps", not oversize and not undersize,
           "every item's train_kb_gold row count is within the README Phase "
-          "14 caps (list/filter 1-40, cross-table 1-25)"
-          if not oversize else f"{oversize[:5]}")
+          "14 caps (list/filter 1-40, cross-table 1-25) and satisfies the "
+          "implicit minimum of 1 for a list-shaped answer"
+          if not oversize and not undersize
+          else f"oversize {oversize[:5]} undersize {undersize[:5]}")
 
     failed = [n for n, ok, _ in checks if not ok]
     for n, ok, d in checks:

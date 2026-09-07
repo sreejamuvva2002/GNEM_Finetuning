@@ -127,8 +127,17 @@ SCALAR_FIELDS = ("category", "industry_group", "primary_facility_type",
                  "ev_supply_chain_role", "supplier_or_affiliation_type",
                  "classification_method", "city", "county",
                  "primary_oems", "address", "ev_battery_relevant")
+# Correction (post-approval audit): count is an AGGREGATION, and address/
+# primary_oems carry only {"filter"} in FIELD_SEMANTIC_OPERATIONS -- no
+# "aggregation" at all. The original build iterated SCALAR_FIELDS
+# unconditionally for count, generating 131 address-count and 12
+# primary_oems-count tasks in violation of README:538's "Address gets no
+# structured aggregation" (and, by the same unstated semantic-ops rule,
+# primary_oems). Gated here exactly like GROUPABLE_FIELDS already was.
+AGGREGATABLE_FIELDS = tuple(f for f in SCALAR_FIELDS if "aggregation" in semantic_ops_for(f))
 GROUPABLE_FIELDS = tuple(f for f in SCALAR_FIELDS if "group_by" in semantic_ops_for(f))
 GROUPABLE_CHILD_FIELDS = ("processes", "services", "certifications")
+SENTINEL_VALUES = ("Not specified", "Not applicable")
 COMPOSITION_PAIRS = tuple(
     p for p in H.COMPOSITION_FAMILIES
     if tuple(sorted(p)) not in {tuple(sorted(h)) for h in
@@ -173,13 +182,20 @@ def composition_candidates(train_recs, f1: str, f2: str) -> dict[tuple, set[str]
 # gold_sql builders -- scope-neutral, logical table names only
 # ---------------------------------------------------------------------------
 def sql_filter(field: str, value) -> str:
-    return (f"SELECT company FROM companies WHERE {field} = {sql_lit(value)} "
-           f"ORDER BY company")
+    # DISTINCT: a multi-row company matching on this field more than once
+    # (e.g. two Atlanta facilities) must not appear twice in a company LIST.
+    return (f"SELECT DISTINCT company FROM companies WHERE {field} = "
+           f"{sql_lit(value)} ORDER BY company")
 
 
 def sql_count(field: str, value) -> str:
-    return (f"SELECT COUNT(*) AS n FROM companies WHERE {field} = "
-           f"{sql_lit(value)}")
+    # Correction (post-approval audit, confirmed): COUNT(*) counts ROWS, but
+    # the question asks "how many COMPANIES" -- a company with >1 matching
+    # row (Atlanta: Novelis Inc. has 3 rows there) was counted once per row.
+    # Reproduced and fixed: Atlanta's committed answer was 7 (rows); the
+    # correct company count is 5.
+    return (f"SELECT COUNT(DISTINCT company) AS n FROM companies WHERE "
+           f"{field} = {sql_lit(value)}")
 
 
 def sql_child_filter(field: str, value) -> str:
@@ -196,8 +212,13 @@ def sql_child_count(field: str, value) -> str:
 
 
 def sql_threshold(n: int) -> str:
-    return (f"SELECT company FROM companies WHERE employment > {int(n)} "
-           f"ORDER BY employment DESC, company ASC")
+    return (f"SELECT DISTINCT company FROM companies WHERE employment > "
+           f"{int(n)} ORDER BY employment DESC, company ASC")
+
+
+def _sentinel_exclusion(field: str) -> str:
+    lits = " AND ".join(f"{field} != {sql_lit(s)}" for s in SENTINEL_VALUES)
+    return f"WHERE {lits} "
 
 
 def sql_group_by_breakdown(field: str) -> str:
@@ -206,8 +227,14 @@ def sql_group_by_breakdown(field: str) -> str:
         return (f"SELECT x.{col} AS {col}, COUNT(DISTINCT c.company) AS n "
                f"FROM companies c JOIN {t} x ON x.row_id = c.row_id "
                f"GROUP BY x.{col} ORDER BY x.{col} ASC")
-    return (f"SELECT {field}, COUNT(*) AS n FROM companies GROUP BY {field} "
-           f"ORDER BY {field} ASC")
+    # Correction (post-approval audit, confirmed): a group-by breakdown with
+    # no WHERE clause grouped over raw DB values, including the sentinel
+    # "Not specified" (16 companies for supplier_or_affiliation_type) as if
+    # it were an ordinary category. Sentinels are excluded here exactly as
+    # they already are from filter/count candidate generation (scalar_field_
+    # values), not merely at the candidate-count-check level.
+    return (f"SELECT {field}, COUNT(DISTINCT company) AS n FROM companies "
+           f"{_sentinel_exclusion(field)}GROUP BY {field} ORDER BY {field} ASC")
 
 
 def sql_argmax_single(field: str) -> str:
@@ -216,7 +243,8 @@ def sql_argmax_single(field: str) -> str:
         return (f"SELECT x.{col} AS {col}, COUNT(DISTINCT c.company) AS n "
                f"FROM companies c JOIN {t} x ON x.row_id = c.row_id "
                f"GROUP BY x.{col} ORDER BY n DESC, x.{col} ASC LIMIT 1")
-    return (f"SELECT {field}, COUNT(*) AS n FROM companies GROUP BY {field} "
+    return (f"SELECT {field}, COUNT(DISTINCT company) AS n FROM companies "
+           f"{_sentinel_exclusion(field)}GROUP BY {field} "
            f"ORDER BY n DESC, {field} ASC LIMIT 1")
 
 
@@ -230,12 +258,24 @@ def sql_topk_employment(k: int) -> str:
 
 
 def sql_composition(f1: str, v1: str, f2: str, v2: str) -> str:
+    # Correction (post-approval audit, confirmed): joining both child tables
+    # ON x1.row_id = c.row_id AND x2.row_id = c.row_id requires BOTH facts to
+    # be recorded against the exact same physical row -- but composition
+    # candidates (composition_candidates(), below) are selected at COMPANY
+    # level, aggregating terms across every row that company has (matching
+    # CLAUDE.md's own company-level answer identity, #11). For the five
+    # multi-row train companies this mismatch produced real candidates
+    # (e.g. Sewon America does CNC Machining at one facility and Asset
+    # Management at another) that executed to an empty result -- reproduced
+    # directly: 8 tasks, all involving processes+services, all zero rows.
+    # Fixed by matching on company NAME (both child tables carry it), the
+    # same key the candidate selection already uses, not on row_id.
     t1, c1 = CHILD_TABLES[f1], CHILD_COLUMN[f1]
     t2, c2 = CHILD_TABLES[f2], CHILD_COLUMN[f2]
     return (f"SELECT DISTINCT c.company FROM companies c "
-           f"JOIN {t1} x1 ON x1.row_id = c.row_id AND x1.{c1} = {sql_lit(v1)} "
-           f"JOIN {t2} x2 ON x2.row_id = c.row_id AND x2.{c2} = {sql_lit(v2)} "
-           f"ORDER BY c.company")
+           f"WHERE c.company IN (SELECT company FROM {t1} WHERE {c1} = "
+           f"{sql_lit(v1)}) AND c.company IN (SELECT company FROM {t2} "
+           f"WHERE {c2} = {sql_lit(v2)}) ORDER BY c.company")
 
 
 # ---------------------------------------------------------------------------
@@ -291,7 +331,7 @@ def gold_for(task: dict) -> dict:
 def build():
     reg = H.load_registry()
     train_recs = KB.load_kb("train_kb")
-    tasks, exec_failures = [], []
+    tasks, exec_failures, empty_skips = [], [], []
     seen_ids = set()
 
     def add(t):
@@ -305,6 +345,17 @@ def build():
             exec_failures.append({"task_id": tid, "gold_sql": t["gold_sql"],
                                   "error": f"{type(e).__name__}: {e}"})
             return
+        # README's "1-40"/"1-25" result-size caps have an implicit floor of 1
+        # for LIST-shaped answers (scalar counts legitimately can be 0).
+        # Correction: candidate-time company-level support checks (min
+        # support >= 1) are not the same guarantee as the ACTUAL executed
+        # row count being >= 1 -- the composition row_id/company mismatch
+        # (fixed above) produced exactly this gap for 8 tasks. Enforced here
+        # post-execution, on real train_kb_gold, as defense in depth even
+        # after that root-cause fix.
+        if t["answer_type"] == "set" and not g["train_kb_gold"]["rows"]:
+            empty_skips.append({"task_id": tid, "gold_sql": t["gold_sql"]})
+            return
         t.update(g)
         # logical_fingerprint depends on entity_dependent (a FINGERPRINT_
         # SEMANTIC_FIELDS member), which gold_for() just computed -- must be
@@ -313,30 +364,37 @@ def build():
         t["logical_fingerprint"] = H.logical_fingerprint(t)
         tasks.append(t)
 
-    # filter / count
+    # filter / count. filter: every SCALAR_FIELDS value (arity 0, list/filter
+    # cap 40). count: only AGGREGATABLE_FIELDS (arity 0 aggregation) --
+    # correction, address/primary_oems carry no "aggregation" in their
+    # frozen semantic ops at all (README:537-538), so they never generate a
+    # count candidate now.
     for field in SCALAR_FIELDS:
         vals = scalar_field_values(train_recs, field)
         for value, cos in sorted(vals.items()):
-            if not (MIN_SUPPORT <= len(cos) <= LIST_CAP):
-                continue
-            q = QUESTION["filter"].format(field_h=FIELD_LABEL[field], value=value)
-            tid = f"D_v3_filter_{field}_{len(tasks):05d}"
-            add(make_task(tid, q, sql_filter(field, value), answer_type="set",
-                          target_columns=["company"], fields_used=[field],
-                          values_used=[value], logical_components=leaf(field, value),
-                          join_arity=0))
-            q = QUESTION["count"].format(field_h=FIELD_LABEL[field], value=value)
-            tid = f"D_v3_count_{field}_{len(tasks):05d}"
-            add(make_task(tid, q, sql_count(field, value), answer_type="scalar",
-                          target_columns=["n"], fields_used=[field],
-                          values_used=[value], logical_components=leaf(field, value),
-                          join_arity=0))
+            if MIN_SUPPORT <= len(cos) <= LIST_CAP:
+                q = QUESTION["filter"].format(field_h=FIELD_LABEL[field], value=value)
+                tid = f"D_v3_filter_{field}_{len(tasks):05d}"
+                add(make_task(tid, q, sql_filter(field, value), answer_type="set",
+                              target_columns=["company"], fields_used=[field],
+                              values_used=[value], logical_components=leaf(field, value),
+                              join_arity=0))
+            if field in AGGREGATABLE_FIELDS and len(cos) >= MIN_SUPPORT:
+                q = QUESTION["count"].format(field_h=FIELD_LABEL[field], value=value)
+                tid = f"D_v3_count_{field}_{len(tasks):05d}"
+                add(make_task(tid, q, sql_count(field, value), answer_type="scalar",
+                              target_columns=["n"], fields_used=[field],
+                              values_used=[value], logical_components=leaf(field, value),
+                              join_arity=0))
 
-    # child_filter / child_count
+    # child_filter / child_count -- arity 1 (a JOIN), so the cross-table cap
+    # (25) applies, not the single-table list/filter cap (40). Correction:
+    # the original cap here was LIST_CAP, which let 4 child_filter tasks
+    # through at 27-36 rows.
     for field in GROUPABLE_CHILD_FIELDS:
         vals = child_field_values(train_recs, field)
         for value, cos in sorted(vals.items()):
-            if not (MIN_SUPPORT <= len(cos) <= LIST_CAP):
+            if not (MIN_SUPPORT <= len(cos) <= CROSS_TABLE_CAP):
                 continue
             label = FIELD_LABEL[field]
             q = QUESTION["child_filter"].format(value=f"the {label} {value}")
@@ -367,14 +425,17 @@ def build():
                       values_used=[n], logical_components={"op": "gt",
                       "field": "employment", "value": str(n)}, join_arity=0))
 
-    # group_by_breakdown / argmax_single
+    # group_by_breakdown / argmax_single. group_by_breakdown returns one row
+    # PER GROUP, i.e. it's a list -- arity 1 (child fields) means a JOIN, so
+    # the cross-table cap applies there, same correction as child_filter.
     for field in GROUPABLE_FIELDS + GROUPABLE_CHILD_FIELDS:
+        arity = 1 if field in GROUPABLE_CHILD_FIELDS else 0
         n_groups = len(scalar_field_values(train_recs, field)
                       if field in SCALAR_FIELDS
                       else child_field_values(train_recs, field))
-        if not (1 <= n_groups <= LIST_CAP):
+        cap = CROSS_TABLE_CAP if arity >= 1 else LIST_CAP
+        if not (1 <= n_groups <= cap):
             continue
-        arity = 1 if field in GROUPABLE_CHILD_FIELDS else 0
         q = QUESTION["group_by_breakdown"].format(field_h=FIELD_LABEL[field])
         tid = f"D_v3_group_by_{field}"
         add(make_task(tid, q, sql_group_by_breakdown(field), answer_type="set",
@@ -413,7 +474,7 @@ def build():
                           logical_components={"op": "AND", "operands": [
                               leaf(f1, v1), leaf(f2, v2)]}, join_arity=2))
 
-    return reg, train_recs, tasks, exec_failures
+    return reg, train_recs, tasks, exec_failures, empty_skips
 
 
 REQUIRED_FIELDS = ("task_id", "question", "operation_family", "fields_used",
@@ -424,7 +485,7 @@ REQUIRED_FIELDS = ("task_id", "question", "operation_family", "fields_used",
 
 
 def main() -> int:
-    reg, train_recs, tasks, exec_failures = build()
+    reg, train_recs, tasks, exec_failures, empty_skips = build()
     checks: list[tuple[str, bool, str]] = []
 
     def check(n, ok, d):
@@ -504,6 +565,58 @@ def main() -> int:
     by_family = defaultdict(int)
     for t in tasks:
         by_family[t["operation_family"]] += 1
+
+    # --- Regression checks for the five confirmed post-approval audit findings ---
+    check("no_empty_set_answer_tasks",
+          not any(t["answer_type"] == "set" and not t["train_kb_gold"]["rows"]
+                 for t in tasks),
+          f"every set-answer task has >=1 train_kb_gold row "
+          f"({len(empty_skips)} empty candidates excluded before reaching "
+          f"the pool)")
+
+    count_family_ids = {t["task_id"] for t in tasks
+                        if t["task_id"].startswith(("D_v3_count_",
+                                                    "D_v3_child_count_"))}
+    distinct_mismatch = []
+    for t in tasks:
+        if t["task_id"] in count_family_ids:
+            u = t["gold_sql"].upper()
+            if "COUNT(*)" in u or "COUNT( * )" in u:
+                distinct_mismatch.append(t["task_id"])
+    check("count_uses_distinct_company_not_count_star", not distinct_mismatch,
+          "every count/child_count task's gold_sql uses COUNT(DISTINCT "
+          "company), never COUNT(*) (a multi-row company must count once, "
+          "not once per row)" if not distinct_mismatch
+          else f"{distinct_mismatch[:5]}")
+
+    forbidden_agg = [t["task_id"] for t in tasks
+                     if t["task_id"].startswith("D_v3_count_")
+                     and t["fields_used"][0] not in AGGREGATABLE_FIELDS]
+    check("no_aggregation_on_filter_only_fields", not forbidden_agg,
+          f"no count task targets a field outside AGGREGATABLE_FIELDS "
+          f"(address, primary_oems carry only 'filter' in "
+          f"FIELD_SEMANTIC_OPERATIONS -- README:537-538)"
+          if not forbidden_agg else f"{forbidden_agg[:5]}")
+
+    sentinel_in_groupby = [t["task_id"] for t in tasks
+                           if t["operation_family"] == "group_by"
+                           and any(str(r[0]) in SENTINEL_VALUES
+                                  for r in t["train_kb_gold"]["rows"])]
+    check("no_sentinel_as_group_by_category", not sentinel_in_groupby,
+          "no group_by_breakdown task's gold rows contain a frozen sentinel "
+          "as a category value" if not sentinel_in_groupby
+          else f"{sentinel_in_groupby[:5]}")
+
+    cap_violations = [t["task_id"] for t in tasks
+                      if t["answer_type"] == "set" and (
+                          (t["join_arity"] >= 1 and
+                           len(t["train_kb_gold"]["rows"]) > CROSS_TABLE_CAP) or
+                          (t["join_arity"] == 0 and
+                           len(t["train_kb_gold"]["rows"]) > LIST_CAP))]
+    check("result_size_within_caps_by_join_arity", not cap_violations,
+          f"every set-answer task's row count is within its arity-appropriate "
+          f"cap (arity 0: <= {LIST_CAP}, arity >= 1: <= {CROSS_TABLE_CAP})"
+          if not cap_violations else f"{cap_violations[:5]}")
 
     failed = [n for n, ok, _ in checks if not ok]
     for n, ok, d in checks:

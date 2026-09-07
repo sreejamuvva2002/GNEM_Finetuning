@@ -19,36 +19,36 @@
     "BC": {
       "artifact": "datasets_v3/train_BC_facts_answers_v3.jsonl",
       "exposure_count": 0,
-      "note": "union of B and C, both independently verified exposure_count 0 at Phase 11/13; no new strings introduced by concatenation",
+      "note": "re-scanned directly against the holdout registry, not inherited from B/C's ledger entries (post-approval audit correction)",
       "phase": 15,
       "scanned": true,
-      "sha256": "7fe6ea83569ed9d23d75a933539027dc636cefd6219fe40ce89f28798f6ccf1c",
-      "strings_scanned": 6324
+      "sha256": "2914d2d1346211a8ef60fecbea06dc500d3fddc83a0c2099147edd24144f3dfb",
+      "strings_scanned": 9057
     },
     "BD": {
       "artifact": "datasets_v3/train_BD_facts_sql_v3.jsonl",
       "exposure_count": 0,
-      "note": "union of B and D, both independently verified exposure_count 0 at Phase 11/14; BD_controlled and D_repeat_budgetmatched are subsets/repeats of this same already-scanned content, introducing no new strings",
+      "note": "re-scanned directly against the holdout registry (BD_full), not inherited from B/D's ledger entries (post-approval audit correction); BD_controlled and D_repeat_budgetmatched are subsets/repeats of this same scanned content",
       "phase": 16,
       "scanned": true,
-      "sha256": "68a82340b9ea1b6e08089bd11b2689307a462e34b1bbb7df0a1120f953bc6238",
-      "strings_scanned": 6324
+      "sha256": "93d0b1ca574f04132c5971e511b4b48487f8d4e1de7c947f02041c7d682abcdb",
+      "strings_scanned": 9057
     },
     "C": {
       "artifact": "datasets_v3/train_C_answers_v3.jsonl",
       "exposure_count": 0,
       "phase": 13,
       "scanned": true,
-      "sha256": "fa5fdfe7ad96a6d04e146861a5b8c64bdfe7d43cf716de56d1b3f52e606d820a",
-      "strings_scanned": 2301
+      "sha256": "95da32e3a9dafb4bfd66764f9e9047f1fe3ee0f50390903f24a0586e6256c9b7",
+      "strings_scanned": 2017
     },
     "D": {
       "artifact": "datasets_v3/train_D_sql_v3.jsonl",
       "exposure_count": 0,
       "phase": 14,
       "scanned": true,
-      "sha256": "d356ad0dd4c04a384f665a4a9b8ded0a7bb672618d19470c868e844905f9ff06",
-      "strings_scanned": 2301
+      "sha256": "9244bd4a884bff9cab2de087b5c8ed0843ec094947f8b309ab742eceefd1abcd",
+      "strings_scanned": 2017
     }
   },
   "frozen_date": "2026-08-24",
