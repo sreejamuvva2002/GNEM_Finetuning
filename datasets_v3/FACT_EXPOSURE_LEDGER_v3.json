@@ -29,10 +29,12 @@
       "sha256": null
     },
     "C": {
-      "artifact": null,
-      "exposure_count": null,
-      "scanned": false,
-      "sha256": null
+      "artifact": "datasets_v3/train_C_answers_v3.jsonl",
+      "exposure_count": 0,
+      "phase": 13,
+      "scanned": true,
+      "sha256": "fa5fdfe7ad96a6d04e146861a5b8c64bdfe7d43cf716de56d1b3f52e606d820a",
+      "strings_scanned": 2301
     },
     "D": {
       "artifact": null,
