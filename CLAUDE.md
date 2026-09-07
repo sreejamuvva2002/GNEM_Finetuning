@@ -41,9 +41,9 @@ Maintain this block as work progresses:
 
 ```text
 PROTOCOL_STATUS: FROZEN
-CURRENT_PHASE: 16
-LAST_COMPLETED_PHASE: 15
-NEXT_PHASE: Phase 17 — Dev evaluation sets
+CURRENT_PHASE: 17
+LAST_COMPLETED_PHASE: 16
+NEXT_PHASE: Phase 18 — `probe_fact_recall_v3.jsonl`
 TEST_STATUS: LOCKED_UNTIL_PHASE_40
 ```
 

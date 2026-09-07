@@ -1,0 +1,50 @@
+{
+  "bd_controlled": {
+    "artifact": "datasets_v3/train_BD_controlled_v3.jsonl",
+    "b_examples": 2011,
+    "b_supervised_completion_tokens": 38824,
+    "balance_ratio": 1.0,
+    "d_examples": 1029,
+    "d_supervised_completion_tokens": 38825,
+    "examples": 3040,
+    "sampling_method": "deterministic prefix fill over the non-anchor arm, sorted by example_id, stopped at the nearest completion-token match to the anchor arm's total",
+    "sha256": "fc3ce5ae3a4b05bf1e3d5808defa7f1aaa3ecd9f8013aa1c8acbc3756da502a6",
+    "total_tokens": 330356
+  },
+  "bd_full": {
+    "artifact": "datasets_v3/train_BD_facts_sql_v3.jsonl",
+    "examples": 3161,
+    "note": "the full eligible v3 recipe: every B and D example surviving split/holdout/exposure exclusions, no sampling",
+    "sha256": "68a82340b9ea1b6e08089bd11b2689307a462e34b1bbb7df0a1120f953bc6238",
+    "supervised_completion_tokens": 79987,
+    "total_tokens": 350332
+  },
+  "d_repeat_budgetmatched": {
+    "artifact": "datasets_v3/train_D_repeat_budgetmatched_v3.jsonl",
+    "examples": 2071,
+    "sampling_method": "D cycled from its example_id-sorted order, repeating, until the completion-token budget is met",
+    "sha256": "9be037d6d0fa6fc0557c746e6c091dad38bf2fea3c9bf57814948990c5f0d7ec",
+    "supervised_completion_tokens": 77651,
+    "target_budget": 77649,
+    "total_tokens": 389842
+  },
+  "generator": "bd_v3.0",
+  "optimizer_steps_and_effective_passes": "NOT computed here. steps = total_supervised_tokens / (batch_size * assistant_only_loss ? completion_tokens_per_step : total_tokens_per_step); both batch_size and epoch count are Phase 24 dev-tuned hyperparameters not yet frozen by this repository. Reporting a specific step count now would require inventing those parameters -- deferred to Phase 24's actual training config rather than fabricated here.",
+  "standalone": {
+    "B": {
+      "examples": 2011,
+      "supervised_completion_tokens": 38824,
+      "total_tokens": 136233
+    },
+    "D": {
+      "examples": 1150,
+      "supervised_completion_tokens": 41163,
+      "total_tokens": 214099
+    }
+  },
+  "tokenizer": {
+    "model": "Qwen/Qwen2.5-14B-Instruct",
+    "revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+    "tokenizer_json_sha256": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539"
+  }
+}

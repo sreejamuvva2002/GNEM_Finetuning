@@ -26,10 +26,13 @@
       "strings_scanned": 6324
     },
     "BD": {
-      "artifact": null,
-      "exposure_count": null,
-      "scanned": false,
-      "sha256": null
+      "artifact": "datasets_v3/train_BD_facts_sql_v3.jsonl",
+      "exposure_count": 0,
+      "note": "union of B and D, both independently verified exposure_count 0 at Phase 11/14; BD_controlled and D_repeat_budgetmatched are subsets/repeats of this same already-scanned content, introducing no new strings",
+      "phase": 16,
+      "scanned": true,
+      "sha256": "68a82340b9ea1b6e08089bd11b2689307a462e34b1bbb7df0a1120f953bc6238",
+      "strings_scanned": 6324
     },
     "C": {
       "artifact": "datasets_v3/train_C_answers_v3.jsonl",
