@@ -1,0 +1,22 @@
+{
+  "purpose": "Post-push documentation corrections only; no score or data changes",
+  "timestamp_utc": "2026-09-12T20:17:48.805173+00:00",
+  "before_sha256": {
+    "validation_v3/resumption/PUSH_PREPARATION_2026-09-12.json": "397e8e0d70e4e6ac6e56350d2b17315e889621e27c6d3e225a375f1fa827d8e9",
+    "results_v3/dev/REPORT_A002_r2.md": "91a18fd72414718a91cb64b42aaef7d9d5f4148030d0475c4abf8fbf257750a7",
+    "docs/REPOSITORY_MAINTENANCE.md": "b58691df877cf7346d229e7bf87232edbfbc33ef28bd20fe700ccdb2b9283a1f",
+    "REPOSITORY_REVIEW_2026-09-11.md": "3beaec8b645f4c8109425954fed7d7053f4c169e06484443e58c58ef2df865f4"
+  },
+  "after_sha256": {
+    "validation_v3/resumption/PUSH_PREPARATION_2026-09-12.json": "4b5799dd384df9ddfb978be1f82d632033b543a8c8b95aee8d212d78ef15140a",
+    "results_v3/dev/REPORT_A002_r2.md": "72551792b95d0354dfeb75a16d718096a6c915ec48786bf034b09da3710b7468",
+    "docs/REPOSITORY_MAINTENANCE.md": "bc5ae28cfe7c798f413144fce552737d05363abaee4d7e5bce869254c9df7cbe",
+    "REPOSITORY_REVIEW_2026-09-11.md": "ce29ab43783b307f8376a86ca89fda5d8730c6c4fa59c669cfd5f940b7da3ea1",
+    "docs/ARTIFACT_RETENTION.md": "ec37c19e07976cc8c3f0b5d0c4bcb33b5017a10512da7cb6a2934f5032f1e54a"
+  },
+  "report_artifacts": {
+    "results_v3/dev/VERIFIED_BASELINES_A002_r2.json": "63a6b465fb536c3cf864ac6c4e9f78fcd064a17273273d5c579153a57e3248e2",
+    "results_v3/dev/REPORT_A002_r2.md": "72551792b95d0354dfeb75a16d718096a6c915ec48786bf034b09da3710b7468"
+  },
+  "historical_regrader_identity": "Unchanged; report includes a separately recorded explanatory addendum."
+}

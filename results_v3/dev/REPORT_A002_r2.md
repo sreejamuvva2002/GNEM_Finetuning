@@ -35,3 +35,9 @@ Every reclassification is incorrect -> correct: the bounded repair is strictly w
 - All 51 structured development questions quote their own gold answer inside the question (*"Which recorded company is named X and has &lt;field&gt; recorded as V?"* with gold `[[X]]`). A 100% score on them is a ceiling artifact, not evidence of analytical capability, and they remain unfit for checkpoint selection. Tracked in [PRE_TRAINING_GATES_A002.md](../../validation_v3/PRE_TRAINING_GATES_A002.md).
 - Boolean surface forms (`true`/`False`) against recorded `Yes`/`No` remain incorrect by decision; the contract asks for the recorded value.
 - No failed prediction was removed from a denominator. Earlier `initial`/`json_contract` runs remain pilots and are excluded.
+
+## Post-publication documentation clarification
+
+For SQL conditions, Strict is grade_v3's independent column-schema match (including aliases), not the natural-language JSON-contract conjunction described above. Both SQL conditions answer 51/51 correctly; base_sql_5shot matches the expected schema in 14/51 cases (27.5%), versus 51/51 for base_sql. The other 37 five-shot cases are schema mismatches, not incorrect answer sets. Do not interpret this strict-score difference as an answer-capability gap.
+
+This explanatory addendum does not change scores, raw outputs or the original regrader code identity. A rerun of the historical generator reproduces the report before this addendum; documentation-correction hashes are recorded separately in validation_v3/resumption/DOCUMENTATION_CORRECTIONS_POST_PUSH.json.

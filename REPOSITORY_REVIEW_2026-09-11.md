@@ -206,7 +206,7 @@ The following inventory records each original project file and its audit role. C
 | [.gitignore](.gitignore) | 13 lines | `cdf0eca9316d` | Environment/cache exclusions; no dependency setup. |
 | [CLAUDE.md](CLAUDE.md) | 1,128 lines | `887b6bbb1a4a` | Execution contract, current status, and retired scope reviewed. |
 | [Chat 1.txt](Chat 1.txt) | 12,762 lines | `947eaa4b0530` | Historical context; searched decisions and experiment history. |
-| [Chat 2.txt](Chat 2.txt) | 19,423 lines | `3ee10add5e06` | Historical context; searched review history and corrections. |
+| [Chat 2.txt](<archive/planning_before_cleanup_2026-09-11/Chat 2.txt>) | 19,423 lines | `3ee10add5e06` | Historical context; searched review history and corrections. |
 | [PHASE_REVIEW_HANDOFF.md](PHASE_REVIEW_HANDOFF.md) | 1,554 lines | `141a54cf88f8` | Outstanding A006–A010 findings and unimplemented correction plans reviewed. |
 | [PROVENANCE_v3.md](PROVENANCE_v3.md) | 276 lines | `308b8b4e057e` | Freeze, approval, and historical-reference records reviewed. |
 | [README.md](README.md) | 1,145 lines | `19ef18dfd150` | Frozen experiment protocol; research versus production scope and future phases reviewed. |

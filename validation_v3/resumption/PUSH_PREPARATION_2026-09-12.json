@@ -89,5 +89,7 @@
   "no_git_candidate_over_100_mib": true,
   "final_runs": 0,
   "q42_approval": "pending",
-  "historical_manifests": "Preserved; describe their earlier code snapshots."
+  "historical_manifests": "Preserved; describe their earlier code snapshots.",
+  "regrade_report_artifact": "results_v3/dev/VERIFIED_BASELINES_A002_r2.json",
+  "hash_field_clarification": "The original regrade_report_sha256 identifies the machine-readable JSON report, not REPORT_A002_r2.md. Original digest retained; explicit artifact paths added by documentation correction."
 }
