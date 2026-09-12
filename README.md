@@ -17,8 +17,8 @@ Include full processes, services, certifications, Employment and the other eligi
 | C_answers | 1,311 | 3 |
 | D_sql | 1,311 | 3 |
 | BC | 3,460 | 1 |
-| BD_controlled | 3,515 | 3 |
-| D_repeat_budgetmatched | 2,732 | 3 |
+| BD_controlled | 3,512 | 3 |
+| D_repeat_budgetmatched | 2,724 | 3 |
 | BD_full | 3,460 | 1 |
 
 All variants start independently from the pinned Qwen2.5-14B-Instruct base revision. The four baselines are base, base_ctx_oracle, base_sql and base_sql_5shot. Their information access differs and their scores must be reported separately.

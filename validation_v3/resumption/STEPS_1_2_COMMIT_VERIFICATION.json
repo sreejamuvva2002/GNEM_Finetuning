@@ -1,0 +1,25 @@
+{
+  "timestamp_utc": "2026-09-12T23:06:16.884624+00:00",
+  "release_gate_tests_passed": 35,
+  "repetition_tests_passed": 10,
+  "factual_coverage": "2220/2220",
+  "candidate_sha256": "7aca111b5403a4e69bac0e86c25cb365b6a11b020c6503266218814d0a5ed597",
+  "candidate_approved": false,
+  "candidate_pin_mismatches": [
+    "validation_v3/PRE_TRAINING_GATES_A002.md"
+  ],
+  "candidate_regenerated": false,
+  "final_runs": 0,
+  "q42_approval": "pending",
+  "current_training_sha256": {
+    "datasets_v3/train_A_cpt_v3.jsonl": "8d4737439cae67798d8f9ab0351acde65a1e66b2cc375920758e5f77247c985f",
+    "datasets_v3/train_D_repeat_budgetmatched_v3.jsonl": "779ad64ff06205cd2589c6808285893f0783966c12293df2c1147a1dc52b1286",
+    "datasets_v3/train_BD_controlled_v3.jsonl": "d3d029e8854cdb48b7be71d429fe5c0ce486d22723813ae07ca5704e2b4fe88c",
+    "datasets_v3/train_B_facts_v3.jsonl": "87ea988d2e0a8e68f76daa0d4ea5fb5227314003ad4c83618375c3a487d9db21",
+    "datasets_v3/train_C_answers_v3.jsonl": "e887a8cf0c3f576c8a137ae3f4af2c93001da01e457f6c422d72497f9ce5c6e3",
+    "datasets_v3/train_BD_facts_sql_v3.jsonl": "64dc25b3df873505ecfa67f7af7e90029889d5a379a145d1d115f51c43d3271a",
+    "datasets_v3/train_D_sql_v3.jsonl": "6a199c7d15ef52baae01b4faec4eff3e2a59d7cd47b687acfb1c49adf47d1e2a",
+    "datasets_v3/train_BC_facts_answers_v3.jsonl": "0b0a34c0d11dbfcc01368003180a5fb84e171a72fc294bb26170c495b5385ace"
+  },
+  "note": "Hash pinning binds evidence bytes; it does not independently authenticate human authorship. No actual approval artifact exists."
+}

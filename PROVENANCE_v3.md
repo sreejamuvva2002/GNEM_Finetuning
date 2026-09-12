@@ -350,3 +350,57 @@ D_sql rehearsal exercises final accumulation and epoch selection, 6 steps; finit
 ## Offline final-driver integration
 
 Added final_eval_v3.py and nine synthetic tests. Driver authorization checks precede protected-content parsing; Q42 approval and Phase 40 release files remain absent. Explicit per-probe scopes retained, including train_kb for structured recall/paraphrase. Canonical multipart serialization, SQL result evidence, no-match counts and independent-seed summaries verified. No final inference, unsealing, protected grading, commit or push occurred. Remaining generation/export/sealing and planned comparison integration is stated in docs/FINAL_EVALUATION_DRIVER.md.
+
+## 2026-09-12 — training release bound to external Q42 approval evidence
+
+`train_v3.py` previously accepted a release whose own `approved` and `q42_approval`
+fields asserted approval; flipping those two strings unlocked all 18 final runs with
+no external evidence, while `final_eval_v3.authorize()` already required a pinned,
+hash-verified `Q42_HUMAN_APPROVAL_A002.json` for protected scoring.
+
+`check_q42_approval()` now mirrors that requirement for training: the release must pin
+both the approval artifact and `datasets_v3/probe_42_v3.jsonl`, both pinned digests
+must match the files on disk, the approval must itself record `approved: true`, and it
+must name the current benchmark bytes so a stale adjudication cannot certify a changed
+Q42 set. The training gate is therefore no weaker than the evaluation gate.
+
+Verified by re-running the original bypass: a release satisfying every other check —
+complete pins, correct pre-registered schedule, both approval strings flipped — is now
+refused, and only genuine, correctly pinned, current evidence is accepted. Ten new
+rejection tests cover a missing artifact, `approved: false`, malformed JSON, a stale
+benchmark reference, an unpinned or wrongly pinned digest, and the absence of any
+approval artifact in the repository. 35 release-gate tests pass; 110 across all suites.
+
+No approval was fabricated, no `TRAINING_RELEASE_A002.json` or
+`Q42_HUMAN_APPROVAL_A002.json` was created, no training was started. Operation
+holdouts and all training datasets are unchanged. Q42 adjudication remains pending at
+the user's direction and final training remains 0/18.
+
+## 2026-09-12 — BD partial-cycle repetition stratified jointly
+
+The arity-only sampler balanced join arity but left the task-kind axis skewed: count
+tasks received 39.05% of extra-copy tokens against a 9.30% source share, and no filter
+task was ever repeated, because ordering inside an arity was a lexicographic prefix and
+`count` sorts before `filter`.
+
+Repetition now retains every source and every complete cycle, and allocates the final
+partial cycle jointly across `(join_arity, task_kind)` by source supervised-token share.
+Within a stratum the order is a keyed sha256 digest of the example ID — deterministic and
+reproducible from the artifact, decorrelated from the ID text, salted with the generator
+version so a future generator reshuffles openly.
+
+Maximum joint-stratum token-share deviation is 0.26% (BD_controlled) and 0.13%
+(D_repeat_budgetmatched), against +29.75% before. Whole-example rounding leaves the single
+`threshold` task (0.05% of D tokens) without an extra copy; deviations, the seven-token
+overshoot and the ordering rule are recorded in BD_COMPOSITION_v3.md and
+BD_SAMPLING_MANIFEST_v3.json rather than summarised away.
+
+BD_controlled is 3,512 items / 94,411 tokens (B 47,202, D 47,209); D_repeat is 2,724 /
+94,418. BD_full, A, B, C, D and BC are byte-identical. Factual coverage re-verified at
+2,220/2,220. Both earlier mixtures are archived with hashes under
+archive/pre_stratified_BD_2026-09-12 (original) and archive/pre_joint_stratified_BD_2026-09-12
+(arity-only). The controlled-BD and repeated-D smoke runs were produced on the ORIGINAL
+mixtures and still resolve to those input hashes; they do not validate the current
+mixtures, and the affected checks must be repeated if smoke-level evidence is wanted.
+
+No approval was created, no training was started, nothing was committed or pushed.

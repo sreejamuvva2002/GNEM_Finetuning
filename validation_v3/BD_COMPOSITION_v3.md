@@ -28,7 +28,7 @@ Only `filter` survives D's eligibility gate (Phase 13/14 excludes argmax_topk/gr
 |---|---|---|---|
 | standalone D | 39.22% | 15.53% | 45.25% |
 | D share of BD_full | 39.22% | 15.53% | 45.25% |
-| D share of BD_controlled | 39.21% | 15.5% | 45.28% |
+| D share of BD_controlled | 39.23% | 15.54% | 45.24% |
 
 If BD_controlled's join_arity mix drifts from standalone D's, that is a finding about the deterministic example_id-order sampler (README:577-582), reported here rather than hidden inside a single aggregate total.
 
@@ -40,7 +40,53 @@ Kinds below are derived from task_id generator prefixes, not operation_family.
 | source | child | composition | count | filter | threshold |
 |---|---|---|---|---|---|
 | standalone D | 15.53% | 45.25% | 9.30% | 29.88% | 0.05% |
-| controlled extra copies | 14.70% | 46.25% | 39.05% | 0.00% | 0.00% |
-| repeated-D extra copies | 16.30% | 44.96% | 38.74% | 0.00% | 0.00% |
+| controlled extra copies | 15.66% | 44.99% | 9.28% | 30.07% | 0.00% |
+| repeated-D extra copies | 15.58% | 45.24% | 9.17% | 30.01% | 0.00% |
 
-Residual bias is unresolved: within each join-arity stratum, the partial cycle still takes a lexicographic prefix. Count tasks sort before filter tasks, so extra copies are not proportional by task kind. Arity balance does not establish overall sampling balance. This disclosure is not acceptance of the sampling design for final training; joint stratification or another justified ordering remains a release gate.
+The partial cycle is stratified JOINTLY on (join_arity, task_kind). Arity balance alone did not establish sampling balance: an earlier arity-only sampler gave count tasks 39% of extra copies against a 9% source share and repeated no filter task at all, because ordering inside an arity was a lexicographic prefix and count sorts before filter. Within each stratum the order is now a keyed sha256 digest of the example ID, which is deterministic and reproducible from the artifact but decorrelated from the ID text.
+
+## Joint-stratum token-share deviation
+
+Repetition adds whole examples, so no stratum can land exactly on its proportional token target. Actual deviations and the whole-example overshoot are reported here rather than summarised away.
+
+### BD_controlled
+
+```text
+complete cycles retained     1
+residual token target        1749
+residual tokens allocated    1756
+whole-example overshoot      7
+within-stratum ordering      sha256 digest of 'bd_v3.2_joint_stratified' + example_id (not lexicographic)
+```
+
+| stratum | source token share | extra token share | deviation | extra copies |
+|---|---:|---:|---:|---:|
+| `structured|0|count` | 9.30% | 9.28% | -0.02% | 7 |
+| `structured|0|filter` | 29.88% | 30.07% | +0.19% | 23 |
+| `structured|0|threshold` | 0.05% | 0.00% | -0.05% | 0 |
+| `structured|1|child` | 15.53% | 15.66% | +0.13% | 8 |
+| `structured|2|composition` | 45.25% | 44.99% | -0.26% | 14 |
+
+Repetition adds whole examples, so no stratum lands exactly on its proportional token target; deviations are reported above.
+
+### D_repeat_budgetmatched
+
+```text
+complete cycles retained     2
+residual token target        3505
+residual tokens allocated    3512
+whole-example overshoot      7
+within-stratum ordering      sha256 digest of 'bd_v3.2_joint_stratified' + example_id (not lexicographic)
+```
+
+| stratum | source token share | extra token share | deviation | extra copies |
+|---|---:|---:|---:|---:|
+| `structured|0|count` | 9.30% | 9.17% | -0.13% | 14 |
+| `structured|0|filter` | 29.88% | 30.01% | +0.13% | 45 |
+| `structured|0|threshold` | 0.05% | 0.00% | -0.05% | 0 |
+| `structured|1|child` | 15.53% | 15.58% | +0.04% | 15 |
+| `structured|2|composition` | 45.25% | 45.24% | -0.00% | 28 |
+
+Repetition adds whole examples, so no stratum lands exactly on its proportional token target; deviations are reported above.
+
+A stratum whose proportional target is a fraction of one example receives no extra copy; `threshold` (a single task, 0.05% of D tokens) is the only such stratum here. That is unavoidable whole-example rounding, not a selection preference.

@@ -22,7 +22,7 @@ There are 43 phases (0–42). Status below separates built artifacts, engineerin
 | 13 | train_C_answers_v3.jsonl | Rebuilt; paired with D | 1,311 answer-supervised structured tasks. |
 | 14 | train_D_sql_v3.jsonl | Rebuilt; paired with C | 1,311 SQL-supervised tasks; actual-operation eligibility and membership checks pass. |
 | 15 | train_BC_facts_answers_v3.jsonl | Rebuilt; source checked | 3,460 B+C items; all messages scanned. |
-| 16 | BD datasets and budget manifests | Rebuilt; source and label budgets checked | BD_full 3,460; BD_controlled 3,515; repeated-D 2,732. Every B/D source retained; shifted assistant-label budgets verified. |
+| 16 | BD datasets and budget manifests | Rebuilt; source and label budgets checked | BD_full 3,460; BD_controlled 3,512; repeated-D 2,724 (partial cycle jointly stratified across join arity and task kind). Every B/D source retained; shifted assistant-label budgets verified. |
 | 17 | Dev evaluation sets | Structured set replaced 2026-09-12 | 255 factual items. The original 51 structured filters quoted their own gold answer and are retained as historical evidence; `dev_structured_r2_v3.jsonl` supplies 120 non-tautological tasks (join arity 0/1/2, 96 set answers, 24 counts) and is the checkpoint-selection input. Analytical spread before final selection is still under review. |
 | 18 | probe_fact_recall_v3.jsonl | Probe inputs built | 2,820 factual questions; no protected model scoring. |
 | 19 | probe_fact_paraphrase_v3.jsonl | Probe inputs built | 2,820 factual paraphrases; question overlap checks pass; no protected model scoring. |

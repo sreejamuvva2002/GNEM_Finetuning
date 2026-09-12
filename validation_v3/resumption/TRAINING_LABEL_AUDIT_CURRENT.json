@@ -40,20 +40,20 @@
     "configured_single_device_steps": 1299
   },
   "BD_controlled": {
-    "sha256": "996c9bdc361e813607d77080322dd445e55f47da9dfe4842072abf8c270436c1",
-    "source_rows": 3515,
-    "training_sequences": 3515,
-    "shifted_supervised_tokens": 94417,
+    "sha256": "d3d029e8854cdb48b7be71d429fe5c0ce486d22723813ae07ca5704e2b4fe88c",
+    "source_rows": 3512,
+    "training_sequences": 3512,
+    "shifted_supervised_tokens": 94411,
     "max_sequence_length": 244,
-    "configured_single_device_steps": 1320
+    "configured_single_device_steps": 1317
   },
   "D_repeat_budgetmatched": {
-    "sha256": "239419aa178e3ac9b2ba5c742678f79e9640e3be570084aed23dc389b33730ec",
-    "source_rows": 2732,
-    "training_sequences": 2732,
-    "shifted_supervised_tokens": 94440,
+    "sha256": "779ad64ff06205cd2589c6808285893f0783966c12293df2c1147a1dc52b1286",
+    "source_rows": 2724,
+    "training_sequences": 2724,
+    "shifted_supervised_tokens": 94418,
     "max_sequence_length": 244,
-    "configured_single_device_steps": 1026
+    "configured_single_device_steps": 1023
   },
   "BD_full": {
     "sha256": "64dc25b3df873505ecfa67f7af7e90029889d5a379a145d1d115f51c43d3271a",

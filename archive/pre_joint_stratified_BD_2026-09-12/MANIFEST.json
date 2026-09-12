@@ -1,0 +1,10 @@
+{
+  "validation_v3/BD_COMPOSITION_v3.md": "9faf6018e8f20b960e6b85fc1a9f809bc1353893b63a7e8107e4fc454adcf0fd",
+  "validation_v3/DATASET_BD_v3.md": "fda01e2bac9218c065b7b1ac68036acf33c9046e6346913032cacffc33a0c0c2",
+  "finetune/phase16_build_bd.py": "eb0f89e7d8055152d0aa2f66a40fa580cde475be4e50b33a49d77e0be635be00",
+  "datasets_v3/train_D_repeat_budgetmatched_v3.jsonl": "239419aa178e3ac9b2ba5c742678f79e9640e3be570084aed23dc389b33730ec",
+  "datasets_v3/BD_SAMPLING_MANIFEST_v3.json": "4b4294aac70c1729014ce47b21d6a8fc50e35c82fafcccc1a192e40a438251a7",
+  "datasets_v3/FACT_EXPOSURE_LEDGER_v3.json": "f34f8fc5735b03b4ccd21f3e415f0ee66045ee9f8718c6a37f6cebafdfe151d3",
+  "datasets_v3/train_BD_controlled_v3.jsonl": "996c9bdc361e813607d77080322dd445e55f47da9dfe4842072abf8c270436c1",
+  "_note": "Arity-only stratified mixtures, superseded by joint (arity, task_kind) stratification on 2026-09-12. Preserved to keep every historical input recoverable."
+}

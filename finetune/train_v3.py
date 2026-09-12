@@ -26,6 +26,14 @@ TOTAL_RUNS=18
 # count and minimum-seed checks while quietly running seeds the proposal never
 # declared, which is the post-hoc seed choice the pre-registration exists to prevent.
 PROPOSED_SCHEDULE='validation_v3/PROPOSED_RUN_SCHEDULE_A002.json'
+# Q42 adjudication evidence. The release's own `q42_approval` string is an
+# ASSERTION BY THE RELEASE ABOUT ITSELF and is not evidence: flipping two fields
+# once unlocked all 18 runs. Final training now requires the same externally
+# pinned, hash-verified approval artifact that final_eval_v3.authorize() demands
+# for protected scoring, so the training gate is no weaker than the evaluation
+# gate. Neither file is created by this code.
+Q42_APPROVAL='validation_v3/Q42_HUMAN_APPROVAL_A002.json'
+Q42_BENCHMARK='datasets_v3/probe_42_v3.jsonl'
 # numpy's legacy seeding accepts [0, 2**32); transformers.set_seed feeds it directly.
 SEED_MIN,SEED_MAX=0,2**32-1
 # Every input whose bytes can change a final run. An approved release must pin
@@ -39,7 +47,8 @@ REQUIRED_RELEASE_INPUTS=tuple(sorted(
     'datasets_v3/gnem_v3.sqlite','kb/GNEM_Final_Combined_Dataset.xlsx',
     'finetune/templates/qwen_a002.jinja','finetune/training_tokens_v3.py',
     'finetune/train_v3.py','finetune/phase13_build_c_answers.py',
-    'finetune/phase14_build_d_sql.py','finetune/phase11_build_b_facts.py']))
+    'finetune/phase14_build_d_sql.py','finetune/phase11_build_b_facts.py',
+    Q42_BENCHMARK]))
 
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def read(p):return [json.loads(l) for l in Path(p).read_text().splitlines()]
@@ -49,12 +58,38 @@ def valid_seed(seed):
     return (isinstance(seed,int) and not isinstance(seed,bool)
             and SEED_MIN<=seed<=SEED_MAX)
 
-def check_release(variant,seed,release_path=None):
-    """Fail closed. A release must be approved, complete, undrifted, and must
-    pre-declare the exact (variant, seed) pair being run.
+def check_q42_approval(pins,*,approval_path=None,benchmark_path=None):
+    """Require external, hash-verified Q42 adjudication evidence.
 
-    `release_path` is injectable so the regression suite can exercise rejection
-    paths without ever writing an approved release into the repository."""
+    The release must PIN the approval artifact and the benchmark it approves, the
+    pinned digests must match the files on disk, the approval must itself say
+    approved, and it must name the exact benchmark bytes it adjudicated -- so a
+    stale approval cannot certify a changed Q42 set. Mirrors
+    final_eval_v3.authorize(). Paths are injectable for rejection tests only;
+    production callers use the repository defaults."""
+    approval=Path(approval_path or ROOT/Q42_APPROVAL)
+    benchmark=Path(benchmark_path or ROOT/Q42_BENCHMARK)
+    for path,name in ((approval,Q42_APPROVAL),(benchmark,Q42_BENCHMARK)):
+        if not path.is_file():
+            raise RuntimeError(f'Missing Q42 approval evidence: {name}')
+        if pins.get(name)!=sha(path):
+            raise RuntimeError(f'Q42 approval evidence is unpinned or drifted: {name}')
+    try:evidence=json.loads(approval.read_text())
+    except json.JSONDecodeError:
+        raise RuntimeError('Q42 approval evidence is not valid JSON')
+    if not isinstance(evidence,dict) or evidence.get('approved') is not True:
+        raise RuntimeError('Q42 approval evidence does not record approval')
+    if evidence.get('benchmark_sha256')!=sha(benchmark):
+        raise RuntimeError('Q42 approval is stale: it does not name the current benchmark bytes')
+
+def check_release(variant,seed,release_path=None,approval_path=None,benchmark_path=None):
+    """Fail closed. A release must be approved, complete, undrifted, backed by
+    external Q42 approval evidence, and must pre-declare the exact (variant, seed)
+    pair being run.
+
+    `release_path`, `approval_path` and `benchmark_path` are injectable so the
+    regression suite can exercise rejection paths without ever writing an approved
+    release or a fabricated approval into the repository."""
     release_path=Path(release_path or RELEASE)
     if not release_path.exists():
         raise RuntimeError(f'No training release at {release_path}; final training is not released')
@@ -70,11 +105,16 @@ def check_release(variant,seed,release_path=None):
     if missing:
         raise RuntimeError(f'Release does not pin required inputs: {missing}')
     for name,digest in sorted(pinned.items()):
+        # The approval artifact is validated by check_q42_approval against the
+        # resolved path, which is injectable for tests; it is not skipped.
+        if name==Q42_APPROVAL:continue
         path=ROOT/name
         if not path.exists():
             raise RuntimeError(f'Release pins a missing input: {name}')
         if sha(path)!=digest:
             raise RuntimeError(f'Release input drift: {name}')
+    # The release's own approval string is not evidence; require the artifact.
+    check_q42_approval(pinned,approval_path=approval_path,benchmark_path=benchmark_path)
     schedule=release.get('run_schedule')
     if not isinstance(schedule,list) or not schedule:
         raise RuntimeError('Release declares no run_schedule; seeds must be pre-registered')

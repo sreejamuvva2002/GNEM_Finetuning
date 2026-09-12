@@ -31,9 +31,7 @@ complete source cycles remain intact. No eligible source is removed.
 
 from __future__ import annotations
 
-import hashlib
 import json
-import re
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -55,10 +53,7 @@ OUT_REPEAT = ROOT / "datasets_v3" / "train_D_repeat_budgetmatched_v3.jsonl"
 OUT_MANIFEST = ROOT / "datasets_v3" / "BD_SAMPLING_MANIFEST_v3.json"
 OUT_COMPOSITION = ROOT / "validation_v3" / "BD_COMPOSITION_v3.md"
 OUT_AUDIT = ROOT / "validation_v3" / "DATASET_BD_v3.md"
-GENERATOR_VERSION = "bd_v3.2_joint_stratified"
-# Salt for the within-stratum ordering digest. Tied to the generator version so a
-# future generator reshuffles openly instead of silently inheriting this order.
-ORDER_SALT = "bd_v3.2_joint_stratified"
+GENERATOR_VERSION = "bd_v3.1_stratified"
 
 
 class Gate(Exception):
@@ -85,102 +80,37 @@ def with_tokens(tok, items: list[dict]) -> list[dict]:
     return out
 
 
-def task_kind(item: dict) -> str:
-    """Generator family from the task_id prefix (filter / count / child /
-    composition / threshold). This is a FINER axis than operation_family, which is
-    uniformly `filter` for every eligible D task and therefore cannot distinguish
-    a counting item from a two-table composition."""
-    match = re.search(r"_v3_([a-z]+)_", str(item.get("task_id", "")))
-    return match.group(1) if match else "none"
-
-
-def stratum_key(item: dict) -> tuple:
-    """Joint stratum. For structured items this is (join_arity, task_kind): arity
-    alone left counting supervision at 39% of extra copies against a 9% source
-    share, because within an arity the ordering put every count task ahead of every
-    filter task. For factual items the attribute is the meaningful axis."""
-    if item.get("join_arity") is not None:
-        return ("structured", str(item["join_arity"]), task_kind(item))
-    return ("factual", str(item.get("attribute", "all")))
-
-
-def stratum_order(items: list[dict]) -> list[dict]:
-    """Deterministic, reproducible ordering that is NOT a lexicographic prefix.
-
-    Ordering members by example_id means a partial cycle always takes an
-    alphabetical prefix of the stratum, which correlates with field and value
-    names. Ordering by a keyed digest of the example ID is equally deterministic
-    and reproducible from the artifact alone, but decorrelated from the ID text.
-    The salt is the generator version, so a future generator reshuffles openly
-    rather than silently inheriting this ordering.
+def repeat_to_budget(items_sorted: list[dict], budget: int) -> list[dict]:
+    """Retain complete cycles; allocate the final partial cycle by source-token
+    share across join arities (or factual attributes), with deterministic ties.
+    This avoids selecting only the lexicographically first arity for extra dose.
+    Every repeated copy retains an exact source ID and unchanged messages.
     """
-    return sorted(items, key=lambda i: (hashlib.sha256(
-        (ORDER_SALT + "\x00" + i["example_id"]).encode("utf-8")).hexdigest(),
-        i["example_id"]))
-
-
-def repeat_to_budget(items_sorted: list[dict], budget: int) -> tuple[list[dict], dict]:
-    """Retain every source and every complete cycle; allocate the final partial
-    cycle jointly across (join_arity, task_kind) by source supervised-token share.
-
-    Returns (selected, diagnostics). Repetition proceeds in whole examples, so a
-    stratum cannot be hit exactly; the residual deviation is reported rather than
-    hidden. Every repeated copy retains an exact source ID and unchanged messages.
-    """
-    if not items_sorted or any(i["_completion_tokens"] <= 0 for i in items_sorted):
-        raise Gate("Repetition requires nonempty sources with positive token counts")
-    total = sum(i["_completion_tokens"] for i in items_sorted)
+    if not items_sorted or any(i['_completion_tokens'] <= 0 for i in items_sorted):
+        raise Gate('Repetition requires nonempty sources with positive token counts')
+    total = sum(i['_completion_tokens'] for i in items_sorted)
     full_cycles, residual = divmod(budget, total)
     selected = list(items_sorted) * full_cycles
     groups = defaultdict(list)
     for src in items_sorted:
-        groups[stratum_key(src)].append(src)
-    groups = {k: stratum_order(v) for k, v in sorted(groups.items())}
-    weights = {k: sum(i["_completion_tokens"] for i in v) for k, v in groups.items()}
-    used = {k: 0 for k in groups}
-    positions = {k: 0 for k in groups}
+        key = str(src.get('join_arity', src.get('attribute', 'all')))
+        groups[key].append(src)
+    weights = {k: sum(i['_completion_tokens'] for i in v) for k,v in groups.items()}
+    used = {k: 0 for k in groups}; positions = {k: 0 for k in groups}
     running = 0
     while running < residual:
         available = [k for k in groups if positions[k] < len(groups[k])]
-        if not available:
-            raise Gate("Residual exceeds one full cycle; budget arithmetic is wrong")
-        # Stratum furthest below its proportional token allocation; ties by key.
+        # Choose the stratum furthest below its proportional token allocation.
         key = max(available, key=lambda k: (residual * weights[k] / total - used[k], k))
-        src = groups[key][positions[key]]
-        positions[key] += 1
-        selected.append(src)
-        used[key] += src["_completion_tokens"]
-        running += src["_completion_tokens"]
-    counts = defaultdict(int)
-    out = []
+        src = groups[key][positions[key]]; positions[key] += 1
+        selected.append(src); used[key] += src['_completion_tokens']
+        running += src['_completion_tokens']
+    counts = defaultdict(int); out = []
     for src in selected:
-        copy = dict(src)
-        n = counts[src["example_id"]]
-        counts[src["example_id"]] += 1
-        copy["example_id"] = f"{src['example_id']}__rep{n}"
-        copy["source_example_id"] = src["example_id"]
-        out.append(copy)
-    deviations = {}
-    for key in groups:
-        target = residual * weights[key] / total
-        deviations["|".join(key)] = {
-            "source_token_share": weights[key] / total,
-            "extra_copies": positions[key],
-            "extra_tokens": used[key],
-            "target_tokens": target,
-            "token_deviation": used[key] - target,
-            "extra_token_share": (used[key] / running) if running else 0.0,
-        }
-    diagnostics = {
-        "full_cycles": full_cycles, "residual_token_target": residual,
-        "residual_tokens_allocated": running,
-        "whole_example_overshoot": running - residual,
-        "ordering": f"sha256 digest of '{ORDER_SALT}' + example_id (not lexicographic)",
-        "strata": deviations,
-        "rounding_note": ("Repetition adds whole examples, so no stratum lands exactly "
-                          "on its proportional token target; deviations are reported above."),
-    }
-    return out, diagnostics
+        copy = dict(src); n = counts[src['example_id']]; counts[src['example_id']] += 1
+        copy['example_id'] = f"{src['example_id']}__rep{n}"
+        copy['source_example_id'] = src['example_id']; out.append(copy)
+    return out
 
 
 def build():
@@ -208,14 +138,14 @@ def build():
     else:
         anchor, anchor_total, other_sorted = d_sorted, d_total_comp, b_sorted
         anchor_name, other_name = "D", "B"
-    other_sample, controlled_diag = repeat_to_budget(other_sorted, anchor_total)
+    other_sample = repeat_to_budget(other_sorted, anchor_total)
     bd_controlled = (anchor + other_sample if anchor_name == "B"
                      else other_sample + anchor)
     controlled_total = anchor_total + sum(i["_completion_tokens"]
                                           for i in other_sample)
 
     # D_repeat_budgetmatched: pure D, cycled to BD_controlled's total budget.
-    d_repeat, repeat_diag = repeat_to_budget(d_sorted, controlled_total)
+    d_repeat = repeat_to_budget(d_sorted, controlled_total)
 
     return {
         "reg": reg, "tok_sha": tok_sha,
@@ -226,8 +156,6 @@ def build():
         "anchor_name": anchor_name, "other_name": other_name,
         "other_sample": other_sample,
         "d_repeat": d_repeat,
-        "controlled_diagnostics": controlled_diag,
-        "repeat_diagnostics": repeat_diag,
     }
 
 
@@ -390,8 +318,7 @@ def main() -> int:
             "total_tokens": sum(i["_total_tokens"] for i in st["bd_controlled"]),
             "b_example_ids": [i["example_id"] for i in controlled_b],
             "d_example_ids": [i["example_id"] for i in controlled_d],
-            "sampling_method": "A-002: retain every source and every complete cycle; allocate the final partial cycle jointly across (join_arity, task_kind) by source supervised-token share, ordering within a stratum by a keyed sha256 digest rather than a lexicographic prefix",
-            "repetition_diagnostics": st["controlled_diagnostics"],
+            "sampling_method": "A-002: retain every source; repeat the smaller arm in sorted ID order to match the larger arm within one whole example",
         },
         "d_repeat_budgetmatched": {
             "artifact": "datasets_v3/train_D_repeat_budgetmatched_v3.jsonl",
@@ -403,8 +330,7 @@ def main() -> int:
             "source_task_id_by_example_id": {
                 i["example_id"]: i["task_id"]
                 for i in st["d_repeat"]},
-            "repetition_diagnostics": st["repeat_diagnostics"],
-            "sampling_method": "D cycled with complete cycles retained and the partial cycle jointly stratified, "
+            "sampling_method": "D cycled from its example_id-sorted order, "
                                "repeating (rep-cycle suffix __repN on each "
                                "copy's example_id; source_task_id_by_"
                                "example_id gives the exact repetition "
@@ -539,38 +465,11 @@ def _composition(st, controlled_b, controlled_d):
         for i in items: totals[kind(i)] += i['_completion_tokens']
         denom=sum(totals.values()) or 1
         L.append('| '+label+' | '+' | '.join(f'{100*totals[k]/denom:.2f}%' for k in kinds)+' |')
-    L += ['', 'The partial cycle is stratified JOINTLY on (join_arity, task_kind). Arity '
-          'balance alone did not establish sampling balance: an earlier arity-only sampler gave '
-          'count tasks 39% of extra copies against a 9% source share and repeated no filter task '
-          'at all, because ordering inside an arity was a lexicographic prefix and count sorts '
-          'before filter. Within each stratum the order is now a keyed sha256 digest of the '
-          'example ID, which is deterministic and reproducible from the artifact but decorrelated '
-          'from the ID text.', '',
-          '## Joint-stratum token-share deviation', '',
-          'Repetition adds whole examples, so no stratum can land exactly on its proportional '
-          'token target. Actual deviations and the whole-example overshoot are reported here '
-          'rather than summarised away.', '']
-    for label, diag in (('BD_controlled', st['controlled_diagnostics']),
-                        ('D_repeat_budgetmatched', st['repeat_diagnostics'])):
-        L += [f'### {label}', '',
-              f"```text",
-              f"complete cycles retained     {diag['full_cycles']}",
-              f"residual token target        {diag['residual_token_target']}",
-              f"residual tokens allocated    {diag['residual_tokens_allocated']}",
-              f"whole-example overshoot      {diag['whole_example_overshoot']}",
-              f"within-stratum ordering      {diag['ordering']}",
-              "```", '',
-              '| stratum | source token share | extra token share | deviation | extra copies |',
-              '|---|---:|---:|---:|---:|']
-        for key, d in sorted(diag['strata'].items()):
-            L.append(f"| `{key}` | {100*d['source_token_share']:.2f}% | "
-                     f"{100*d['extra_token_share']:.2f}% | "
-                     f"{100*(d['extra_token_share']-d['source_token_share']):+.2f}% | "
-                     f"{d['extra_copies']} |")
-        L += ['', diag['rounding_note'], '']
-    L += ['A stratum whose proportional target is a fraction of one example receives no extra '
-          'copy; `threshold` (a single task, 0.05% of D tokens) is the only such stratum here. '
-          'That is unavoidable whole-example rounding, not a selection preference.', '']
+    L += ['', 'Residual bias is unresolved: within each join-arity stratum, the partial cycle '
+          'still takes a lexicographic prefix. Count tasks sort before filter tasks, so extra '
+          'copies are not proportional by task kind. Arity balance does not establish overall '
+          'sampling balance. This disclosure is not acceptance of the sampling design for final '
+          'training; joint stratification or another justified ordering remains a release gate.', '']
     OUT_COMPOSITION.write_text("\n".join(L), encoding="utf-8")
 
 

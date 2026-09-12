@@ -19,3 +19,7 @@ Historical root README/CLAUDE references are preserved byte-identically in docs/
 Current excluded files, exact sizes and the absence of a verified backup are listed in [artifact retention](ARTIFACT_RETENTION.md). The root historical review now links directly to archived Chat 2; the four root-context links in byte-preserved protocol snapshots remain intentionally unchanged.
 
 The original PUSH_PREPARATION_2026-09-12.json is now explicitly historical. [Current preparation record](../validation_v3/resumption/PUSH_PREPARATION_CURRENT.json) supersedes its mixture hashes; old BD source bytes remain archived. Two historical BD smoke runs refer to those archived mixtures, not current sampling.
+
+## Release-candidate regeneration policy
+
+Regeneration of TRAINING_RELEASE_CANDIDATE_A002.json is a separate, explicit action requested by the user. Ordinary validation, dataset rebuilding and commits must not silently regenerate it. The steps 1–2 commit retains the supplied unapproved candidate. Its gate-register pin is stale after subsequent documentation edits; see validation_v3/resumption/STEPS_1_2_COMMIT_VERIFICATION.json for exact drift. This does not grant approval or invalidate the separately verified datasets. Explicit regeneration is required before the candidate can represent current inputs.

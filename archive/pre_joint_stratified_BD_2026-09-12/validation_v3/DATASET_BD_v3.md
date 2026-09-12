@@ -6,8 +6,8 @@ Phase 16 — BD datasets and budget manifests.
 
 ```text
 train_BD_facts_sql_v3.jsonl          sha256 64dc25b3df873505ecfa67f7af7e90029889d5a379a145d1d115f51c43d3271a
-train_BD_controlled_v3.jsonl         sha256 d3d029e8854cdb48b7be71d429fe5c0ce486d22723813ae07ca5704e2b4fe88c
-train_D_repeat_budgetmatched_v3.jsonl sha256 779ad64ff06205cd2589c6808285893f0783966c12293df2c1147a1dc52b1286
+train_BD_controlled_v3.jsonl         sha256 996c9bdc361e813607d77080322dd445e55f47da9dfe4842072abf8c270436c1
+train_D_repeat_budgetmatched_v3.jsonl sha256 239419aa178e3ac9b2ba5c742678f79e9640e3be570084aed23dc389b33730ec
 BD_SAMPLING_MANIFEST_v3.json, BD_COMPOSITION_v3.md
 ```
 
@@ -24,18 +24,18 @@ v2 reference (context only, not a v3 target): B ~89.3k supervised chars, D ~71.2
 
 ```text
 B    2149 examples     47202 tokens (all B sources retained; repetitions if needed)
-D    1363 examples     47209 tokens (all D sources retained; repetitions if needed)
+D    1366 examples     47215 tokens (all D sources retained; repetitions if needed)
 ```
 
 ## D_repeat_budgetmatched
 
 ```text
- 2724 examples (D cycled/repeated)     94418 tokens
+ 2732 examples (D cycled/repeated)     94440 tokens
 ```
 
 ## Optimizer steps / effective passes
 
-Current single-device trainer defaults: batch size 1, accumulation 8, three epochs. Transformers 4.56.2 uses ceil(examples/8) updates per epoch: BD_full 1299, BD_controlled 1317, D_repeat 1023 total planned steps. These are configured estimates, not observed runs or approved final hyperparameters. See PRE_TRAINING_GATES_A002.md.
+Current single-device trainer defaults: batch size 1, accumulation 8, three epochs. Transformers 4.56.2 uses ceil(examples/8) updates per epoch: BD_full 1299, BD_controlled 1320, D_repeat 1026 total planned steps. These are configured estimates, not observed runs or approved final hyperparameters. See PRE_TRAINING_GATES_A002.md.
 
 ## Validation
 
@@ -45,9 +45,9 @@ Current single-device trainer defaults: batch size 1, accumulation 8, three epoc
 | `source_hashes_match_ledger` | PASS | B 87ea988d2e0a.. == ledger 87ea988d2e0a.. and D 6a199c7d15ef.. == ledger 6a199c7d15ef.. -- refusing to inherit a prior exposure verdict for drifted source |
 | `exposure_count_zero_rescanned` | PASS | 0 held-out literals across 10380 strings in BD_full, RE-SCANNED here (not inherited from B/D's ledger entries) -- BD_controlled and D_repeat are subsets/repeats of this same content, so this scan covers them too |
 | `bd_full_is_exact_union_of_b_and_d` | PASS | 3460 items = 2149 B + 1311 D, no additions or omissions |
-| `bd_controlled_items_are_genuine_b_or_d` | PASS | 2149 from B + 1363 from D = 3512, no fabricated items |
-| `bd_controlled_approximately_50_50` | PASS | B 47202 / D 47209 supervised completion tokens (ratio 1.000, target >= 0.95 for '~50/50') |
+| `bd_controlled_items_are_genuine_b_or_d` | PASS | 2149 from B + 1366 from D = 3515, no fabricated items |
+| `bd_controlled_approximately_50_50` | PASS | B 47202 / D 47215 supervised completion tokens (ratio 1.000, target >= 0.95 for '~50/50') |
 | `bd_controlled_uses_full_anchor_arm` | PASS | the larger-total arm (B) is used in full (2149 items), never subsampled downward |
 | `d_repeat_is_pure_d_content` | PASS | every D_repeat_budgetmatched item's source id traces to a real D item; no B content present |
-| `d_repeat_matches_controlled_budget` | PASS | D_repeat_budgetmatched 94418 supervised tokens vs BD_controlled 94411 (within one item's worth of exact, since repetition proceeds in whole-item units) |
+| `d_repeat_matches_controlled_budget` | PASS | D_repeat_budgetmatched 94440 supervised tokens vs BD_controlled 94417 (within one item's worth of exact, since repetition proceeds in whole-item units) |
 | `real_tokenizer_used` | PASS | tokenizer.json hash matches the frozen Phase 6/10 expectation - no estimator, no substitution |
