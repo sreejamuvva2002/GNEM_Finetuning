@@ -9,10 +9,20 @@ from answer_parser_v3 import grade_answer,VERSION
 from eval_records_v3 import EvalRecord
 from context_renderer_v3 import build_ctx_oracle_prompt
 
+# The structured development artifact. dev_structured_v3.jsonl quoted its gold
+# answer inside every question; the r2 set replaces it for selection and needs its
+# own baselines. The frozen A002 manifest is a historical snapshot, so the r2
+# manifest is a separate file rather than an edit.
+STRUCTURED_SETS={'r2':('dev_structured_r2_v3.jsonl','EVALUATION_INPUT_MANIFEST_A002_r2.json'),
+                 'legacy':('dev_structured_v3.jsonl','EVALUATION_INPUT_MANIFEST_A002.json')}
+
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--condition',choices=['base','base_ctx_oracle','base_sql','base_sql_5shot'],required=True)
+    parser.add_argument('--structured',choices=STRUCTURED_SETS,default='r2',
+        help='which structured development artifact to evaluate (default: the r2 replacement)')
     parser.add_argument('--micro',action='store_true');parser.add_argument('--run-id',default='initial');args=parser.parse_args()
+    structured_name,manifest_name=STRUCTURED_SETS[args.structured]
     import torch
     from transformers import AutoModelForCausalLM,AutoTokenizer
     out=ROOT/'results_v3'/('micro' if args.micro else 'dev')/args.condition/args.run_id
@@ -20,11 +30,12 @@ def main():
     resultpath=out/'predictions.jsonl'
     if resultpath.exists():raise RuntimeError('Refusing to overwrite predictions')
     prompts=json.loads((ROOT/'datasets_v3/PROMPT_TEMPLATES_A002.json').read_text())
-    inputs=json.loads((ROOT/'datasets_v3/EVALUATION_INPUT_MANIFEST_A002.json').read_text())
-    files=['dev_fact_v3.jsonl'] if args.condition=='base_ctx_oracle' else (['dev_structured_v3.jsonl'] if 'sql' in args.condition else ['dev_fact_v3.jsonl','dev_structured_v3.jsonl'])
+    inputs=json.loads((ROOT/'datasets_v3'/manifest_name).read_text())
+    files=['dev_fact_v3.jsonl'] if args.condition=='base_ctx_oracle' else ([structured_name] if 'sql' in args.condition else ['dev_fact_v3.jsonl',structured_name])
     rows=[]
     for name in files:
         path=ROOT/'datasets_v3'/name
+        assert name in inputs['classification'], f'{name} is not a declared evaluation input'
         assert inputs['classification'][name]=='dev' and sha(path)==inputs['sha256'][name]
         part=[json.loads(l) for l in path.read_text().splitlines()]
         # Micro needs varied attributes, not just the first record's category.
@@ -37,9 +48,17 @@ def main():
     model=AutoModelForCausalLM.from_pretrained(prompts['model_id'],revision=prompts['model_revision'],local_files_only=True,torch_dtype=torch.bfloat16,device_map={'':0},attn_implementation='sdpa').eval()
     model.generation_config.do_sample=False
     metadata={'condition':args.condition,'development_only':True,'micro_only':args.micro,'expected_count':len(rows),
+              'structured_set':args.structured,'structured_artifact':structured_name,'input_manifest':manifest_name,
               'input_hashes':{name:inputs['sha256'][name] for name in files},'prompt_sha256':sha(ROOT/'datasets_v3/PROMPT_TEMPLATES_A002.json'),
               'model_revision':prompts['model_revision'],'runner_sha256':sha(__file__),
-              'parser_sha256':sha(ROOT/'finetune/answer_parser_v3.py'),'note':'Conservative parser scores; semantic equivalents may require separately reported adjudication.'}
+              'parser_sha256':sha(ROOT/'finetune/answer_parser_v3.py'),
+              'sql_grader_sha256':sha(ROOT/'finetune/grade_v3.py'),
+              'executor_sha256':sha(ROOT/'finetune/sqlexec_v3.py'),
+              'database_sha256':sha(ROOT/'datasets_v3/gnem_v3.sqlite'),
+              'fewshot_sha256':sha(ROOT/'datasets_v3/FEWSHOT_MANIFEST_v3.json'),
+              'context_renderer_sha256':sha(ROOT/'finetune/context_renderer_v3.py'),
+              'input_manifest_sha256':sha(ROOT/'datasets_v3'/manifest_name),
+              'generation':{'do_sample':False,'max_new_tokens':1024},'note':'Conservative parser scores; semantic equivalents may require separately reported adjudication.'}
     (out/'manifest.json').write_text(json.dumps(metadata,indent=2)+'\n')
     summaries=[]
     with resultpath.open('x') as f:

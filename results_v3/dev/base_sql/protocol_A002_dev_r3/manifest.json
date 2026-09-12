@@ -1,0 +1,27 @@
+{
+  "condition": "base_sql",
+  "development_only": true,
+  "micro_only": false,
+  "expected_count": 120,
+  "structured_set": "r2",
+  "structured_artifact": "dev_structured_r2_v3.jsonl",
+  "input_manifest": "EVALUATION_INPUT_MANIFEST_A002_r2.json",
+  "input_hashes": {
+    "dev_structured_r2_v3.jsonl": "416f586d405ee0ae1d622448228fdccb9a6222abe82294c5a6521970045a6027"
+  },
+  "prompt_sha256": "a806773b08bc91829324ee2fba39edfe24ff2c1d41623fc250eb545914cbe96e",
+  "model_revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+  "runner_sha256": "88a407b5afd3bd35e739af36e3826ce5290ff02578bc7056a664771341a881ae",
+  "parser_sha256": "d728d239135ddf1c682b8621ed08692cafd356382b7a2abfb9f82a578513f458",
+  "sql_grader_sha256": "c7775cdcf69f11705eb35a172202cc917648fa6df149a13c8cb8d217e63cfb04",
+  "executor_sha256": "dfe5d8a882f730c05351643c167ad47203159383b88ef21020353f27f4443588",
+  "database_sha256": "7437c746cb118f3d5bb9edcc34f500e0c9f764358a19fa05766dc526d63bb08b",
+  "fewshot_sha256": "06917023384ffce666e91f8ed4d3a213a4739d117c87d485b3c9cdaa3197ce33",
+  "context_renderer_sha256": "6b84ccf6c3b0868c4f73efbd5adcd236de1c35341e6d905a43bd69c45b197ab5",
+  "input_manifest_sha256": "526b8679cdb669849b9a0cf0b08f763583a596db5a089ee409c6dc51a62fb471",
+  "generation": {
+    "do_sample": false,
+    "max_new_tokens": 1024
+  },
+  "note": "Conservative parser scores; semantic equivalents may require separately reported adjudication."
+}

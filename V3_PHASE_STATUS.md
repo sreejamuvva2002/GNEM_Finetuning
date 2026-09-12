@@ -22,8 +22,8 @@ There are 43 phases (0–42). Status below separates built artifacts, engineerin
 | 13 | train_C_answers_v3.jsonl | Rebuilt; paired with D | 1,311 answer-supervised structured tasks. |
 | 14 | train_D_sql_v3.jsonl | Rebuilt; paired with C | 1,311 SQL-supervised tasks; actual-operation eligibility and membership checks pass. |
 | 15 | train_BC_facts_answers_v3.jsonl | Rebuilt; source checked | 3,460 B+C items; all messages scanned. |
-| 16 | BD datasets and budget manifests | Rebuilt; source and label budgets checked | BD_full 3,460; BD_controlled 3,505; repeated-D 2,718. Every B/D source retained; shifted assistant-label budgets verified. |
-| 17 | Dev evaluation sets | Dev sets built; scope verified | 255 factual and 51 entity-conditioned structured filters. Broader analytical dev coverage remains a limitation before final selection. |
+| 16 | BD datasets and budget manifests | Rebuilt; source and label budgets checked | BD_full 3,460; BD_controlled 3,515; repeated-D 2,732. Every B/D source retained; shifted assistant-label budgets verified. |
+| 17 | Dev evaluation sets | Structured set replaced 2026-09-12 | 255 factual items. The original 51 structured filters quoted their own gold answer and are retained as historical evidence; `dev_structured_r2_v3.jsonl` supplies 120 non-tautological tasks (join arity 0/1/2, 96 set answers, 24 counts) and is the checkpoint-selection input. Analytical spread before final selection is still under review. |
 | 18 | probe_fact_recall_v3.jsonl | Probe inputs built | 2,820 factual questions; no protected model scoring. |
 | 19 | probe_fact_paraphrase_v3.jsonl | Probe inputs built | 2,820 factual paraphrases; question overlap checks pass; no protected model scoring. |
 | 20 | probe_structured_train_v3.jsonl | Diagnostic inputs built | 1,306 held-in structured questions after reserving five-shot sources. |
@@ -37,8 +37,8 @@ There are 43 phases (0–42). Status below separates built artifacts, engineerin
 | 28 | Revalidate the 42 business questions | Pending user approval and adjudication | All 42 candidate golds constructed. User explicitly kept approval pending; old/new entity/numeric deltas and ambiguity review remain open. |
 | 29 | Global dataset and leakage audit | Engineering checks pass; release gate open | Coverage and scoped golds verified. This is not a full training release. |
 | 30 | Micro end-to-end battery | Real-model micro checks pass | Factual/context and SQL pilots retained; six SQL cases cover count, top-k, no-match, composition, grouping and multipart. Not final quality estimates. |
-| 31 | Baseline dev evaluation | Four current dev baselines completed | All expected records verified; limitations and exact-score denominators in results_v3/dev/REPORT_A002_r2.md. |
-| 32 | Training smoke tests | Representative two-step smoke suite passes | All eight recipes; finite losses, nonzero LoRA updates, identical reload logits. Initial prefix-only pilots preserved separately. |
+| 31 | Baseline dev evaluation | Four current dev baselines completed | All expected records verified; limitations and exact-score denominators in results_v3/dev/REPORT_A002_r3.md. |
+| 32 | Training smoke tests | Representative two-step smoke suite passes | All eight historical recipes; finite losses, nonzero LoRA updates, identical reload logits. Controlled-BD and repeated-D used superseded source mixtures now preserved under archive/pre_stratified_BD_2026-09-12; those smoke tests do not validate current mixture bytes. Initial prefix-only pilots preserved separately. |
 | 33 | Train A_cpt | Not started | Final independent runs require Q42 approval and the completed pre-training release. Smoke adapters do not count. |
 | 34 | Train B_facts | Not started | Final independent runs require Q42 approval and the completed pre-training release. Smoke adapters do not count. |
 | 35 | Train C_answers | Not started | Final independent runs require Q42 approval and the completed pre-training release. Smoke adapters do not count. |
@@ -50,8 +50,10 @@ There are 43 phases (0–42). Status below separates built artifacts, engineerin
 | 41 | Statistical analysis | Not started | Protected scoring, final statistics and archive follow completed final training and selection freeze. |
 | 42 | Report and archive | Not started | Protected scoring, final statistics and archive follow completed final training and selection freeze. |
 
-Current evidence: [coverage](validation_v3/resumption/FULL_FIELD_COVERAGE_A002.json), [actual trainer labels](validation_v3/resumption/TRAINER_LABEL_AUDIT_A002.json), [representative smoke results](validation_v3/resumption/SMOKE_TRAINING_RESULTS_A002.json), [adapter reloads](validation_v3/resumption/SMOKE_RELOAD_A002.json), [verified dev baselines](results_v3/dev/REPORT_A002_r2.md), and [pending Q42 review](validation_v3/Q42_REVIEW_A002.md).
+Current evidence: [coverage](validation_v3/resumption/FULL_FIELD_COVERAGE_A002.json), [actual trainer labels](validation_v3/resumption/TRAINING_LABEL_AUDIT_CURRENT.json), [representative smoke results](validation_v3/resumption/SMOKE_TRAINING_RESULTS_A002.json), [adapter reloads](validation_v3/resumption/SMOKE_RELOAD_A002.json), [verified dev baselines](results_v3/dev/REPORT_A002_r3.md), and [pending Q42 review](validation_v3/Q42_REVIEW_A002.md).
 
 Checks are agent-run, not an independent human audit. Earlier manifests describe historical snapshots; the current runtime manifest records new hashes. No guarantee of error-free implementation is claimed.
 
-Current pre-training limitations and configured-step corrections: [gate register](validation_v3/PRE_TRAINING_GATES_A002.md). The r2 report supersedes r1 scoring; historical evidence remains preserved.
+Current pre-training limitations and configured-step corrections: [gate register](validation_v3/PRE_TRAINING_GATES_A002.md); proposed but unapproved run schedule: [18 variant/seed pairs](validation_v3/PROPOSED_RUN_SCHEDULE_A002.json). The r2 report supersedes r1 scoring; historical evidence remains preserved.
+
+Latest verification: [current gate register](validation_v3/PRE_TRAINING_GATES_A002.md) supersedes historical statements about pending baselines, BD repetition, and rehearsal. New r3 baselines and diagnostic rehearsal are complete; final training and Q42 approval remain pending.

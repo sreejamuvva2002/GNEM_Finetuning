@@ -1,0 +1,183 @@
+{
+  "status": "PROPOSED -- NOT APPROVED, NOT A RELEASE",
+  "not_a_release": "This file is deliberately NOT validation_v3/TRAINING_RELEASE_A002.json and carries no 'approved' key. train_v3.py reads the run schedule only from an approved release, which does not exist. Creating one requires the user's explicit decision.",
+  "purpose": "Pre-register the 18 (variant, seed) pairs in writing so seeds cannot be chosen after seeing an outcome.",
+  "authority": "PROVENANCE_v3.md Phase 0 -- five primary arms at >=3 seeds, three diagnostic arms at one seed, 18 runs confirmed.",
+  "seed_rationale": "61 is the seed already used by the representative two-step smoke suite, so it was fixed before any final outcome existed; 62 and 63 are its immediate successors. Consecutive successors are used so no seed can look search-selected. The same seed set is reused across arms to align seed labels across comparisons; different datasets do not imply identical example order or RNG consumption.",
+  "total_runs": 18,
+  "runs_by_claim_status": {
+    "primary": 15,
+    "diagnostic": 3
+  },
+  "run_schedule": [
+    {
+      "phase": 33,
+      "variant": "A_cpt",
+      "seed": 61,
+      "claim_status": "diagnostic"
+    },
+    {
+      "phase": 34,
+      "variant": "B_facts",
+      "seed": 61,
+      "claim_status": "primary"
+    },
+    {
+      "phase": 34,
+      "variant": "B_facts",
+      "seed": 62,
+      "claim_status": "primary"
+    },
+    {
+      "phase": 34,
+      "variant": "B_facts",
+      "seed": 63,
+      "claim_status": "primary"
+    },
+    {
+      "phase": 35,
+      "variant": "C_answers",
+      "seed": 61,
+      "claim_status": "primary"
+    },
+    {
+      "phase": 35,
+      "variant": "C_answers",
+      "seed": 62,
+      "claim_status": "primary"
+    },
+    {
+      "phase": 35,
+      "variant": "C_answers",
+      "seed": 63,
+      "claim_status": "primary"
+    },
+    {
+      "phase": 36,
+      "variant": "D_sql",
+      "seed": 61,
+      "claim_status": "primary"
+    },
+    {
+      "phase": 36,
+      "variant": "D_sql",
+      "seed": 62,
+      "claim_status": "primary"
+    },
+    {
+      "phase": 36,
+      "variant": "D_sql",
+      "seed": 63,
+      "claim_status": "primary"
+    },
+    {
+      "phase": 37,
+      "variant": "BC",
+      "seed": 61,
+      "claim_status": "diagnostic"
+    },
+    {
+      "phase": 38,
+      "variant": "BD_controlled",
+      "seed": 61,
+      "claim_status": "primary"
+    },
+    {
+      "phase": 38,
+      "variant": "BD_controlled",
+      "seed": 62,
+      "claim_status": "primary"
+    },
+    {
+      "phase": 38,
+      "variant": "BD_controlled",
+      "seed": 63,
+      "claim_status": "primary"
+    },
+    {
+      "phase": 38,
+      "variant": "D_repeat_budgetmatched",
+      "seed": 61,
+      "claim_status": "primary"
+    },
+    {
+      "phase": 38,
+      "variant": "D_repeat_budgetmatched",
+      "seed": 62,
+      "claim_status": "primary"
+    },
+    {
+      "phase": 38,
+      "variant": "D_repeat_budgetmatched",
+      "seed": 63,
+      "claim_status": "primary"
+    },
+    {
+      "phase": 39,
+      "variant": "BD_full",
+      "seed": 61,
+      "claim_status": "diagnostic"
+    }
+  ],
+  "required_release_inputs": [
+    "datasets_v3/HOLDOUT_REGISTRY_A002.json",
+    "datasets_v3/PROMPT_TEMPLATES_A002.json",
+    "datasets_v3/canonical_records_v3.jsonl",
+    "datasets_v3/company_split_groups_v3.csv",
+    "datasets_v3/dev_fact_v3.jsonl",
+    "datasets_v3/dev_structured_r2_v3.jsonl",
+    "datasets_v3/gnem_v3.sqlite",
+    "datasets_v3/train_A_cpt_v3.jsonl",
+    "datasets_v3/train_BC_facts_answers_v3.jsonl",
+    "datasets_v3/train_BD_controlled_v3.jsonl",
+    "datasets_v3/train_BD_facts_sql_v3.jsonl",
+    "datasets_v3/train_B_facts_v3.jsonl",
+    "datasets_v3/train_C_answers_v3.jsonl",
+    "datasets_v3/train_D_repeat_budgetmatched_v3.jsonl",
+    "datasets_v3/train_D_sql_v3.jsonl",
+    "finetune/phase11_build_b_facts.py",
+    "finetune/phase13_build_c_answers.py",
+    "finetune/phase14_build_d_sql.py",
+    "finetune/templates/qwen_a002.jinja",
+    "finetune/train_v3.py",
+    "finetune/training_tokens_v3.py",
+    "kb/GNEM_Final_Combined_Dataset.xlsx"
+  ],
+  "current_input_sha256": {
+    "datasets_v3/HOLDOUT_REGISTRY_A002.json": "b200df3c300fe4298c8e35ba8a4b011d1bb367319a92111b114b6f72428890e9",
+    "datasets_v3/PROMPT_TEMPLATES_A002.json": "a806773b08bc91829324ee2fba39edfe24ff2c1d41623fc250eb545914cbe96e",
+    "datasets_v3/canonical_records_v3.jsonl": "42851c0a2e93209ac5d37e73ce07447009e038b9db625004212722d7738e6488",
+    "datasets_v3/company_split_groups_v3.csv": "a59d673ac9acafd1f70f60cf560491c32d8d11bacdab3c9bc5d77016b536b701",
+    "datasets_v3/dev_fact_v3.jsonl": "c00abaedde82cc7e6cef7728a8aa87eefeb36fcefbff0fabf178da8996d25307",
+    "datasets_v3/dev_structured_r2_v3.jsonl": "416f586d405ee0ae1d622448228fdccb9a6222abe82294c5a6521970045a6027",
+    "datasets_v3/gnem_v3.sqlite": "7437c746cb118f3d5bb9edcc34f500e0c9f764358a19fa05766dc526d63bb08b",
+    "datasets_v3/train_A_cpt_v3.jsonl": "8d4737439cae67798d8f9ab0351acde65a1e66b2cc375920758e5f77247c985f",
+    "datasets_v3/train_BC_facts_answers_v3.jsonl": "0b0a34c0d11dbfcc01368003180a5fb84e171a72fc294bb26170c495b5385ace",
+    "datasets_v3/train_BD_controlled_v3.jsonl": "996c9bdc361e813607d77080322dd445e55f47da9dfe4842072abf8c270436c1",
+    "datasets_v3/train_BD_facts_sql_v3.jsonl": "64dc25b3df873505ecfa67f7af7e90029889d5a379a145d1d115f51c43d3271a",
+    "datasets_v3/train_B_facts_v3.jsonl": "87ea988d2e0a8e68f76daa0d4ea5fb5227314003ad4c83618375c3a487d9db21",
+    "datasets_v3/train_C_answers_v3.jsonl": "e887a8cf0c3f576c8a137ae3f4af2c93001da01e457f6c422d72497f9ce5c6e3",
+    "datasets_v3/train_D_repeat_budgetmatched_v3.jsonl": "239419aa178e3ac9b2ba5c742678f79e9640e3be570084aed23dc389b33730ec",
+    "datasets_v3/train_D_sql_v3.jsonl": "6a199c7d15ef52baae01b4faec4eff3e2a59d7cd47b687acfb1c49adf47d1e2a",
+    "finetune/phase11_build_b_facts.py": "7295c2a0f2bdd64a8b596cf0e1bcbfe5bbd4cd9205d6278340d2d7e002467adf",
+    "finetune/phase13_build_c_answers.py": "8a045eaf361deaa17509ee0e796e8beb1e69267e7deb443c4a76c11d360623d1",
+    "finetune/phase14_build_d_sql.py": "93b33a055d7a8515102731019ddd01e97f8dc4d5fc5d3dfed139ecd2819824e4",
+    "finetune/templates/qwen_a002.jinja": "ab2cb7b5e2b68921be04ee5662029982f33ef9339e270d7b92333ed40a76d878",
+    "finetune/train_v3.py": "46289ffc8747fba0dffb85e160b93cbc85c920025c883522af6c86812d7874cf",
+    "finetune/training_tokens_v3.py": "7be8bee65883cd000516b0a013895ed26474d71fa494f7edef70f1e8910a2d9e",
+    "kb/GNEM_Final_Combined_Dataset.xlsx": "a8a4ca5c72211e7e2e32bbf418873f86677b7fb1264d2c657955b3fee008b034"
+  },
+  "hash_note": "Current digests are recorded for reference only. They are not an approval, and an approved release must re-pin them at approval time.",
+  "outstanding_before_any_release": [
+    "Q42 adjudication and user approval",
+    "Final evaluation driver integration and release approval evidence",
+    "Durable external artifact backup",
+    "Broader forgetting evaluation decision; 30-item floor screen is insufficient alone"
+  ],
+  "final_training_runs_completed": 0,
+  "q42_approval": "pending_by_user",
+  "recorded_utc": "2026-09-12T21:07:46.160896+00:00",
+  "enforcement": "train_v3.py requires an approved release to set run_schedule_source to this path, pin this file's sha256, and declare a run_schedule whose (variant, seed) pairs match this file's exactly. Seeds must be integers in [0, 2**32-1]; bool is rejected.",
+  "sampling_update": "Proportional token allocation over join arity for final partial repetition; all sources retained. BD_controlled 94417 vs D_repeat 94440 supervised tokens.",
+  "rehearsal_update": "D_sql diagnostic: 3 epochs, accumulation 8, 6 optimizer steps; best checkpoint tensor match and deterministic reload verified."
+}

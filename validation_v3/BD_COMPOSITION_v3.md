@@ -28,6 +28,19 @@ Only `filter` survives D's eligibility gate (Phase 13/14 excludes argmax_topk/gr
 |---|---|---|---|
 | standalone D | 39.22% | 15.53% | 45.25% |
 | D share of BD_full | 39.22% | 15.53% | 45.25% |
-| D share of BD_controlled | 37.77% | 18.67% | 43.57% |
+| D share of BD_controlled | 39.21% | 15.5% | 45.28% |
 
 If BD_controlled's join_arity mix drifts from standalone D's, that is a finding about the deterministic example_id-order sampler (README:577-582), reported here rather than hidden inside a single aggregate total.
+
+
+## D task-kind mix and residual repetition bias
+
+Kinds below are derived from task_id generator prefixes, not operation_family.
+
+| source | child | composition | count | filter | threshold |
+|---|---|---|---|---|---|
+| standalone D | 15.53% | 45.25% | 9.30% | 29.88% | 0.05% |
+| controlled extra copies | 14.70% | 46.25% | 39.05% | 0.00% | 0.00% |
+| repeated-D extra copies | 16.30% | 44.96% | 38.74% | 0.00% | 0.00% |
+
+Residual bias is unresolved: within each join-arity stratum, the partial cycle still takes a lexicographic prefix. Count tasks sort before filter tasks, so extra copies are not proportional by task kind. Arity balance does not establish overall sampling balance. This disclosure is not acceptance of the sampling design for final training; joint stratification or another justified ordering remains a release gate.

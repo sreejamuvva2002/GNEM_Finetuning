@@ -1,0 +1,17 @@
+{
+  "D_sql": {
+    "adapter_sha256": "da646a88890ceb6ea6c2bfb1fdd88c0f48159f6f9d77bcc66622183dbd72a8df",
+    "all_tensors_finite": true,
+    "all_lora_B_updated": true,
+    "max_logit_difference_from_base": 0.2734375,
+    "reload_logits_identical": true,
+    "optimizer_steps": 6,
+    "selected_matches_best_checkpoint": true,
+    "epoch_evaluation_losses": [
+      0.8962782621383667,
+      0.3186667859554291,
+      0.24146881699562073,
+      0.24146881699562073
+    ]
+  }
+}

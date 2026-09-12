@@ -1,0 +1,74 @@
+{
+  "arms": {
+    "A": {
+      "artifact": "datasets_v3/train_A_cpt_v3.jsonl",
+      "exposure_count": 0,
+      "phase": 10,
+      "scanned": true,
+      "sha256": "8d4737439cae67798d8f9ab0351acde65a1e66b2cc375920758e5f77247c985f",
+      "strings_scanned": 148
+    },
+    "B": {
+      "artifact": "datasets_v3/train_B_facts_v3.jsonl",
+      "exposure_count": 0,
+      "phase": 11,
+      "scanned": true,
+      "sha256": "87ea988d2e0a8e68f76daa0d4ea5fb5227314003ad4c83618375c3a487d9db21",
+      "strings_scanned": 6447
+    },
+    "BC": {
+      "artifact": "datasets_v3/train_BC_facts_answers_v3.jsonl",
+      "exposure_count": 0,
+      "note": "re-scanned directly against the holdout registry, not inherited from B/C's ledger entries (post-approval audit correction)",
+      "phase": 15,
+      "scanned": true,
+      "sha256": "0b0a34c0d11dbfcc01368003180a5fb84e171a72fc294bb26170c495b5385ace",
+      "strings_scanned": 10380
+    },
+    "BD": {
+      "artifact": "datasets_v3/train_BD_facts_sql_v3.jsonl",
+      "exposure_count": 0,
+      "note": "re-scanned directly against the holdout registry (BD_full), not inherited from B/D's ledger entries (post-approval audit correction); BD_controlled and D_repeat_budgetmatched are subsets/repeats of this same scanned content",
+      "phase": 16,
+      "scanned": true,
+      "sha256": "64dc25b3df873505ecfa67f7af7e90029889d5a379a145d1d115f51c43d3271a",
+      "strings_scanned": 10380
+    },
+    "C": {
+      "artifact": "datasets_v3/train_C_answers_v3.jsonl",
+      "exposure_count": 0,
+      "phase": 13,
+      "scanned": true,
+      "sha256": "e887a8cf0c3f576c8a137ae3f4af2c93001da01e457f6c422d72497f9ce5c6e3",
+      "strings_scanned": 2623
+    },
+    "D": {
+      "artifact": "datasets_v3/train_D_sql_v3.jsonl",
+      "exposure_count": 0,
+      "phase": 14,
+      "scanned": true,
+      "sha256": "6a199c7d15ef52baae01b4faec4eff3e2a59d7cd47b687acfb1c49adf47d1e2a",
+      "strings_scanned": 2623
+    }
+  },
+  "held_out_compositions": [
+    [
+      "certifications",
+      "processes"
+    ]
+  ],
+  "held_out_operations": [
+    "argmax_topk",
+    "group_by",
+    "limit_only"
+  ],
+  "held_out_values": {
+    "certifications": [],
+    "processes": [],
+    "services": []
+  },
+  "ledger": "FACT_EXPOSURE_LEDGER_A002",
+  "note": "Old ledger archived. Value withholding disabled; complete coverage requires separate observation audit.",
+  "policy_version": "holdout_v3.2_A002",
+  "registry_sha256": "b200df3c300fe4298c8e35ba8a4b011d1bb367319a92111b114b6f72428890e9"
+}

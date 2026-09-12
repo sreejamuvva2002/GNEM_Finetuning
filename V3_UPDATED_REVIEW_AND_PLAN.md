@@ -44,7 +44,7 @@ All 18 runs start independently from the same pinned base revision. Keep the fou
 
 The full-field training variants have been regenerated and their coverage, labels and scoped SQL golds verified. Development/probe inputs and prompts are built. Four development baselines and all eight representative two-step training smoke tests have run; these are not the final 18 independent training runs.
 
-The current release gates are Q42 adjudication/approval (explicitly pending at the user's direction), broader analytical development coverage, and final scoring integration. See [phase status](V3_PHASE_STATUS.md) for individual gates and [development results](results_v3/dev/REPORT_A002_r2.md) for actual denominators and limitations. Do not launch full training until the release is satisfied. Protected test inference remains sealed.
+The current release gates are Q42 adjudication/approval (explicitly pending at the user's direction), broader analytical development coverage, and final scoring integration. See [phase status](V3_PHASE_STATUS.md) for individual gates and [development results](results_v3/dev/REPORT_A002_r3.md) for actual denominators and limitations. Do not launch full training until the release is satisfied. Protected test inference remains sealed.
 
 ## V2 regression requirements
 
@@ -61,3 +61,5 @@ Keep executable modules in `finetune/`, source in `kb/`, generated data in `data
 Superseded planning snapshots and the conversation export were moved to [the planning archive](archive/planning_before_cleanup_2026-09-11/README.md). The [cleanup manifest](validation_v3/resumption/CLEANUP_2026-09-11.json) records exact hashes and dispositions. Historical reviews and the handoff remain available as evidence, while this document supplies the current roadmap.
 
 Current pre-training limitations and configured-step corrections: [gate register](validation_v3/PRE_TRAINING_GATES_A002.md). The r2 report supersedes r1 scoring; historical evidence remains preserved.
+
+Latest verification: [current gate register](validation_v3/PRE_TRAINING_GATES_A002.md) supersedes historical statements about pending baselines, BD repetition, and rehearsal. New r3 baselines and diagnostic rehearsal are complete; final training and Q42 approval remain pending.

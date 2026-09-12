@@ -1,0 +1,24 @@
+{
+  "timestamp_utc": "2026-09-12T22:22:09.136756+00:00",
+  "supersedes": "validation_v3/resumption/PUSH_PREPARATION_2026-09-12.json",
+  "historical_snapshot_note": "Earlier PUSH_PREPARATION describes its original commit, not current mixtures. Original record remains unchanged.",
+  "sha256": {
+    "datasets_v3/train_A_cpt_v3.jsonl": "8d4737439cae67798d8f9ab0351acde65a1e66b2cc375920758e5f77247c985f",
+    "datasets_v3/train_D_repeat_budgetmatched_v3.jsonl": "239419aa178e3ac9b2ba5c742678f79e9640e3be570084aed23dc389b33730ec",
+    "datasets_v3/train_BD_controlled_v3.jsonl": "996c9bdc361e813607d77080322dd445e55f47da9dfe4842072abf8c270436c1",
+    "datasets_v3/train_B_facts_v3.jsonl": "87ea988d2e0a8e68f76daa0d4ea5fb5227314003ad4c83618375c3a487d9db21",
+    "datasets_v3/train_C_answers_v3.jsonl": "e887a8cf0c3f576c8a137ae3f4af2c93001da01e457f6c422d72497f9ce5c6e3",
+    "datasets_v3/train_BD_facts_sql_v3.jsonl": "64dc25b3df873505ecfa67f7af7e90029889d5a379a145d1d115f51c43d3271a",
+    "datasets_v3/train_D_sql_v3.jsonl": "6a199c7d15ef52baae01b4faec4eff3e2a59d7cd47b687acfb1c49adf47d1e2a",
+    "datasets_v3/train_BC_facts_answers_v3.jsonl": "0b0a34c0d11dbfcc01368003180a5fb84e171a72fc294bb26170c495b5385ace",
+    "README.md": "3477cc2ba0b88bc0982b901d2719dc3663ba9aa3722cdbd71e4bfc9e8e45fb21",
+    "V3_PHASE_STATUS.md": "d2330b7192d1b520e0270e7d1012a2576a704720d854d602566e50205a81b0e9",
+    "docs/ARTIFACT_RETENTION.md": "95bfe57ece45126558b2f6fbc4f07dff110b29503d741f6afec25a1dd404ed83",
+    "validation_v3/BD_COMPOSITION_v3.md": "9faf6018e8f20b960e6b85fc1a9f809bc1353893b63a7e8107e4fc454adcf0fd",
+    "validation_v3/PRE_TRAINING_GATES_A002.md": "d7ba3761a681822a681db18c3a5b9bb0f7aec56477b7cd54e1417ed90398664d"
+  },
+  "current_verification": "validation_v3/resumption/CURRENT_CONTINUATION_VERIFICATION.json",
+  "final_training_runs": 0,
+  "q42_approval": "pending",
+  "not_a_training_release": true
+}

@@ -1,0 +1,9 @@
+{
+  "model_revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+  "input_sha256": "83a3e13f484a2bfa8fe22255025d6bf72ca5cf661fd6b26a116959ba88379893",
+  "runner_sha256": "a7dab431453bc5526e45b791d1128dca582e7f20d1e9c0b87ec946d4815b4920",
+  "predictions_sha256": "00b0c8388b3451ae804842aee4c86c57ceb2ac7759dbba8402abd4f7992c93fe",
+  "n": 30,
+  "correct": 30,
+  "limitation": "Basic floor screen only; requires matched post-training evaluation and broader tasks to assess forgetting."
+}

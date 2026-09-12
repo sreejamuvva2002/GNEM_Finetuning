@@ -24,3 +24,16 @@ def encode_chat(tok, messages, max_length=MAX_SEQUENCE_LENGTH):
 
 def supervised_tokens(encoded):
     return sum(t != -100 for t in encoded['labels'][1:])
+
+
+def pack_cpt_stream(stream, max_length=MAX_SEQUENCE_LENGTH):
+    """Preserve all tokens; shift a boundary when a one-token tail would occur.
+    No token is dropped or duplicated. Ordinary chunk boundaries are unchanged.
+    """
+    if max_length < 3 or len(stream) < 2:
+        raise ValueError('CPT packing needs at least two tokens and max_length >= 3')
+    chunks = [list(stream[i:i+max_length]) for i in range(0, len(stream), max_length)]
+    if len(chunks[-1]) == 1:
+        chunks[-1].insert(0, chunks[-2].pop())
+    return [{'input_ids':ids, 'attention_mask':[1]*len(ids), 'labels':ids.copy()}
+            for ids in chunks]

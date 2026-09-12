@@ -17,3 +17,5 @@ Ordinary Git retains code, datasets, source workbook, raw development outputs, c
 Historical root README/CLAUDE references are preserved byte-identically in docs/PHASE_PROTOCOL_REFERENCE.md and docs/EXECUTION_RULES_REFERENCE.md. Relative links inside those snapshots resolve using their original root context: use ../ for root targets when navigating manually. Historical Chat 2.txt is at ../archive/planning_before_cleanup_2026-09-11/Chat 2.txt; Chat 1.txt remains at the root as historical conversation evidence. No historical snapshot was silently rewritten.
 
 Current excluded files, exact sizes and the absence of a verified backup are listed in [artifact retention](ARTIFACT_RETENTION.md). The root historical review now links directly to archived Chat 2; the four root-context links in byte-preserved protocol snapshots remain intentionally unchanged.
+
+The original PUSH_PREPARATION_2026-09-12.json is now explicitly historical. [Current preparation record](../validation_v3/resumption/PUSH_PREPARATION_CURRENT.json) supersedes its mixture hashes; old BD source bytes remain archived. Two historical BD smoke runs refer to those archived mixtures, not current sampling.

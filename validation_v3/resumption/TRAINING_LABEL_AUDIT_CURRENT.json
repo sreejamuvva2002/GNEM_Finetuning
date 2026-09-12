@@ -1,0 +1,66 @@
+{
+  "A_cpt": {
+    "sha256": "8d4737439cae67798d8f9ab0351acde65a1e66b2cc375920758e5f77247c985f",
+    "source_rows": 148,
+    "training_sequences": 35,
+    "shifted_supervised_tokens": 35036,
+    "max_sequence_length": 1024,
+    "configured_single_device_steps": 20
+  },
+  "B_facts": {
+    "sha256": "87ea988d2e0a8e68f76daa0d4ea5fb5227314003ad4c83618375c3a487d9db21",
+    "source_rows": 2149,
+    "training_sequences": 2149,
+    "shifted_supervised_tokens": 47202,
+    "max_sequence_length": 150,
+    "configured_single_device_steps": 807
+  },
+  "C_answers": {
+    "sha256": "e887a8cf0c3f576c8a137ae3f4af2c93001da01e457f6c422d72497f9ce5c6e3",
+    "source_rows": 1311,
+    "training_sequences": 1311,
+    "shifted_supervised_tokens": 21098,
+    "max_sequence_length": 243,
+    "configured_single_device_steps": 492
+  },
+  "D_sql": {
+    "sha256": "6a199c7d15ef52baae01b4faec4eff3e2a59d7cd47b687acfb1c49adf47d1e2a",
+    "source_rows": 1311,
+    "training_sequences": 1311,
+    "shifted_supervised_tokens": 45453,
+    "max_sequence_length": 244,
+    "configured_single_device_steps": 492
+  },
+  "BC": {
+    "sha256": "0b0a34c0d11dbfcc01368003180a5fb84e171a72fc294bb26170c495b5385ace",
+    "source_rows": 3460,
+    "training_sequences": 3460,
+    "shifted_supervised_tokens": 68300,
+    "max_sequence_length": 243,
+    "configured_single_device_steps": 1299
+  },
+  "BD_controlled": {
+    "sha256": "996c9bdc361e813607d77080322dd445e55f47da9dfe4842072abf8c270436c1",
+    "source_rows": 3515,
+    "training_sequences": 3515,
+    "shifted_supervised_tokens": 94417,
+    "max_sequence_length": 244,
+    "configured_single_device_steps": 1320
+  },
+  "D_repeat_budgetmatched": {
+    "sha256": "239419aa178e3ac9b2ba5c742678f79e9640e3be570084aed23dc389b33730ec",
+    "source_rows": 2732,
+    "training_sequences": 2732,
+    "shifted_supervised_tokens": 94440,
+    "max_sequence_length": 244,
+    "configured_single_device_steps": 1026
+  },
+  "BD_full": {
+    "sha256": "64dc25b3df873505ecfa67f7af7e90029889d5a379a145d1d115f51c43d3271a",
+    "source_rows": 3460,
+    "training_sequences": 3460,
+    "shifted_supervised_tokens": 92655,
+    "max_sequence_length": 244,
+    "configured_single_device_steps": 1299
+  }
+}

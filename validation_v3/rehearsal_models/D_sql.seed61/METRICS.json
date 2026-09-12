@@ -1,0 +1,18 @@
+{
+  "train_runtime": 24.2486,
+  "train_samples_per_second": 1.979,
+  "train_steps_per_second": 0.247,
+  "total_flos": 801628140109824.0,
+  "train_loss": 0.8891298770904541,
+  "epoch": 3.0,
+  "eval": {
+    "eval_loss": 0.24146881699562073,
+    "eval_runtime": 0.4383,
+    "eval_samples_per_second": 9.126,
+    "eval_steps_per_second": 9.126,
+    "epoch": 3.0
+  },
+  "global_step": 6,
+  "best_model_checkpoint": "/home/sm11926/GNEM_Finetuning/validation_v3/rehearsal_models/D_sql.seed61/checkpoint-6",
+  "peak_cuda_allocated_bytes": 31446367232
+}

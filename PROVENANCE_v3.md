@@ -312,3 +312,41 @@ README and CLAUDE now describe current status; their complete previous contents 
 ## Intermediate push preparation — 12 September 2026
 
 Added versioned A002.2 dev rescoring and 30 parser regression tests; retained r1 predictions and reports. Current report is results_v3/dev/REPORT_A002_r2.md. Added explicit pre-training gates and corrected generated A/BD budget documentation without changing training data. Large weights remain local, excluded from ordinary Git; no external backup is claimed. This milestone is not a training release, and Q42 approval remains pending.
+
+## 2026-09-12 — development set replacement and release-gate hardening
+
+Two pre-training gates were closed as engineering work; neither is an approval.
+
+**Structured development set.** `dev_structured_v3.jsonl` quoted its complete gold
+answer inside every one of its 51 questions and was the checkpoint-selection signal
+for five of the eight arms. `dev_structured_r2_v3.jsonl` (120 tasks, join arity
+0/1/2, 96 set answers and 24 counts) replaces it for selection. The original file,
+`results_v3/dev/REPORT_A002.md`, `VERIFIED_BASELINES_A002.json` and the r2 rescoring
+outputs are preserved byte-identically as historical artifacts; the new set is a new
+file, not an edit. Frozen company, operation and composition holdouts are unchanged
+and re-asserted fail-closed by `dev_structured_r2_tests.py`. Reasoning is recorded in
+`MODEL_SELECTION_LOG_v3.md`; hashes and test results in
+`validation_v3/resumption/DEV_SET_AND_RELEASE_GATE_2026-09-12.json`.
+
+**Release gate.** `train_v3.py` previously accepted a release with an empty input
+hash map and never checked the seed being run. It now requires a complete, undrifted
+22-input pin, `q42_approval: approved`, and a pre-declared 18-entry `run_schedule`
+containing the exact `(variant, seed)` pair. The proposed pairs are recorded in
+`validation_v3/PROPOSED_RUN_SCHEDULE_A002.json`, which is explicitly not a release.
+
+No model inference was performed, no training was started, no approved release was
+created, and Q42 approval remains pending at the user's direction. Final training
+runs completed: 0 of 18. Earlier runtime and cleanup manifests remain snapshots of
+their own dates and were not rewritten.
+
+## Current continuation: corrected dev baselines and sampling
+
+Ran four unchanged-base conditions against the corrected dev input with isolated protocol_A002_dev_r3 outputs. Factual base 0/255, oracle 245/255; structured base 0/120, SQL and SQL-five-shot 120/120. These are a changed benchmark, not a model-improvement comparison. Preserved all prior raw predictions and inputs.
+
+Changed final partial repetition to proportional source-token allocation by join arity, retaining all sources. Archived old mixtures; current controlled/repeated budgets 94,417/94,440. Rebuilt audits, checked full-field coverage. Existing smoke adapters describe old inputs, not smoke validation of the new mixtures.
+
+D_sql rehearsal exercises final accumulation and epoch selection, 6 steps; finite losses and deterministic best-adapter reload checked. Added exact structured result grading and output-contract helper. Base floor sanity 30/30; does not establish broad capability. New helper integration into final sealed evaluation remains open. No final training, approved release, Q42 approval, commit or push performed by this continuation.
+
+## Offline final-driver integration
+
+Added final_eval_v3.py and nine synthetic tests. Driver authorization checks precede protected-content parsing; Q42 approval and Phase 40 release files remain absent. Explicit per-probe scopes retained, including train_kb for structured recall/paraphrase. Canonical multipart serialization, SQL result evidence, no-match counts and independent-seed summaries verified. No final inference, unsealing, protected grading, commit or push occurred. Remaining generation/export/sealing and planned comparison integration is stated in docs/FINAL_EVALUATION_DRIVER.md.

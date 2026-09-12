@@ -1,6 +1,6 @@
 # GNEM V3 — EV and battery supply-chain fine-tuning
 
-**Current state:** full-field training datasets rebuilt and checked; development baselines and eight two-step smoke tests completed. **Final training: 0 of 18 runs. Protected test evaluation has not run.** Q42 approval is pending at the user's direction. Broader analytical development coverage and final scoring integration also remain open.
+**Current state:** full-field training datasets rebuilt and checked; development baselines and eight historical two-step smoke tests completed; the controlled-BD and repeated-D smoke sources have since been superseded. **Final training: 0 of 18 runs. Protected test evaluation has not run.** Q42 approval is pending at the user's direction. Broader analytical development coverage and final scoring integration also remain open.
 
 Start with the [current implementation plan](V3_UPDATED_REVIEW_AND_PLAN.md) and [phase-by-phase status](V3_PHASE_STATUS.md). The [A-002 amendment](PROTOCOL_A002_FULL_FIELD.md) defines the full-field policy; its migration-state text records the amendment's issuance, while the phase-status file records current implementation progress.
 
@@ -17,8 +17,8 @@ Include full processes, services, certifications, Employment and the other eligi
 | C_answers | 1,311 | 3 |
 | D_sql | 1,311 | 3 |
 | BC | 3,460 | 1 |
-| BD_controlled | 3,505 | 3 |
-| D_repeat_budgetmatched | 2,718 | 3 |
+| BD_controlled | 3,515 | 3 |
+| D_repeat_budgetmatched | 2,732 | 3 |
 | BD_full | 3,460 | 1 |
 
 All variants start independently from the pinned Qwen2.5-14B-Instruct base revision. The four baselines are base, base_ctx_oracle, base_sql and base_sql_5shot. Their information access differs and their scores must be reported separately.
@@ -26,9 +26,9 @@ All variants start independently from the pinned Qwen2.5-14B-Instruct base revis
 ## Verified evidence
 
 - [Factual coverage](validation_v3/resumption/FULL_FIELD_COVERAGE_A002.json): 2,220/2,220 eligible row/attribute observations mapped; full factual sources retained in mixtures.
-- [Actual training-label audit](validation_v3/resumption/TRAINER_LABEL_AUDIT_A002.json): all seven chat variants checked (A_cpt has a separate LM objective); chat sequences at most 244 tokens against a 1,024-token limit.
+- [Actual training-label audit](validation_v3/resumption/TRAINING_LABEL_AUDIT_CURRENT.json): all seven chat variants checked (A_cpt has a separate LM objective); chat sequences at most 244 tokens against a 1,024-token limit.
 - [Smoke training](validation_v3/resumption/SMOKE_TRAINING_RESULTS_A002.json) and [adapter reload checks](validation_v3/resumption/SMOKE_RELOAD_A002.json): eight representative two-step diagnostic runs; these do not count toward final training.
-- [Development baseline results](results_v3/dev/REPORT_A002_r2.md): exact-score denominators and limitations. The 51 structured dev questions are simple entity-conditioned filters, not a comprehensive analytical benchmark.
+- [Development baseline results](results_v3/dev/REPORT_A002_r3.md): exact-score denominators and limitations, reporting semantic correctness separately from JSON output-contract compliance. The r3 baselines use 120 corrected structured dev questions. Historical r1/r2 reports used the original 51 questions that quoted their own gold answers; both sets and reports are retained. [dev_structured_r2_v3.jsonl](validation_v3/DEV_STRUCTURED_R2_v3.md) (120 non-tautological tasks) is now the checkpoint-selection input.
 - [Q42 review](validation_v3/Q42_REVIEW_A002.md): candidate golds and unresolved interpretations; approval remains pending.
 
 ## Repository map
@@ -55,3 +55,5 @@ User instructions and [A-002](PROTOCOL_A002_FULL_FIELD.md) override incompatible
 Use development results for decisions; keep protected test results sealed until Phase 40. Preserve every final adapter and exact run inputs. Do not infer model correctness from low loss or call smoke tests final experiments. Do not release full training while Q42 approval and the other pre-training gates remain open.
 
 Current pre-training limitations and configured-step corrections: [gate register](validation_v3/PRE_TRAINING_GATES_A002.md). The r2 report supersedes r1 scoring; historical evidence remains preserved.
+
+Latest verification: [current gate register](validation_v3/PRE_TRAINING_GATES_A002.md) supersedes historical statements about pending baselines, BD repetition, and rehearsal. New r3 baselines and diagnostic rehearsal are complete; final training and Q42 approval remain pending.

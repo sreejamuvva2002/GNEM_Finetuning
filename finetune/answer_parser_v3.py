@@ -88,14 +88,12 @@ Deliberately NOT normalised, and regression-tested to stay incorrect:
   * substring containment, extra set members, missing set members;
   * one-key objects whose key does not name the requested attribute.
 
-Known limitation, unchanged here: `grade_answer` grades any non-`set` answer_type
-through the scalar branch, so `top_k` and `multi_part` are not correctly graded on
-the natural-language path. No development record uses them (they appear only in
-sealed probes). Tracked in validation_v3/PRE_TRAINING_GATES_A002.md.
+Ordered rows, multi-column sets and multipart JSON answers use structured_answer_v3.
+Scalar and single-column set behavior remains the A002.2 contract.
 """
 import json,re,unicodedata
 from grade_v3 import GradeResult,classify_prediction_text
-VERSION='answer_parser_A002.2'
+VERSION='answer_parser_A002.3'
 
 # Total surplus quoting layers R1 may remove per value, counting a successful
 # json.loads as the first. Raising this is a protocol change, not a bug fix.
@@ -239,6 +237,12 @@ def grade_answer(text,item,truncated=False):
     # Format compliance is decided here, from the raw response and the frozen
     # contract only, before any parsing or comparison against gold.
     compliant=output_contract_compliant(text,item['answer_type'])
+    gold_shape=item['gold_value']
+    if (item['answer_type'] in ('top_k','multi_part') or
+        (item['answer_type']=='set' and isinstance(gold_shape,dict) and
+         len(gold_shape.get('columns',[]))>1)):
+        from structured_answer_v3 import grade_structured_answer
+        return grade_structured_answer(text,item,truncated)
     try:pred=parse(text,item)
     except (ValueError,TypeError) as exc:
         return GradeResult('parse_failure',0.,0.,str(exc),

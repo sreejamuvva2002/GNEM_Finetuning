@@ -24,20 +24,9 @@ that are not -100. The annotated template must reproduce the pinned model's
 text exactly; overlength or zero-label examples fail instead of being dropped.
 A-002 preserves all examples and repeats the smaller source to balance tokens.
 
-WHAT'S FROZEN vs WHAT'S NOT. README asks for "optimizer steps, effective
-passes" in the report. Those require a batch size and epoch count, which are
-dev-tuned hyperparameters this repository has not yet chosen (CLAUDE.md's
-own "Dev policy" section names checkpoint selection, learning rate, epochs
-and LoRA rank as dev decisions; README's actual training phases are
-"Phases 33-39 -- Full training" -- CORRECTION, post-approval audit: an
-earlier version of this file cited "Phase 24" for this, which is README's
-Phase 24, "Structured paraphrase probe" -- an unrelated phase, confused with
-CLAUDE.md's own internal section 24, a different document's numbering).
-Fabricating a batch size here to produce a step count would be exactly the
-kind of unstated-parameter invention CLAUDE.md forbids. This report gives
-the formula and the inputs (total tokens, example counts) and explicitly
-defers the numeric step/pass count to Phases 33-39 -- a documented scope
-boundary, not an omission.
+Configured optimizer-step estimates are reported separately from observed runs.
+Partial repetition cycles use proportional token scheduling across join arity;
+complete source cycles remain intact. No eligible source is removed.
 """
 
 from __future__ import annotations
@@ -64,7 +53,7 @@ OUT_REPEAT = ROOT / "datasets_v3" / "train_D_repeat_budgetmatched_v3.jsonl"
 OUT_MANIFEST = ROOT / "datasets_v3" / "BD_SAMPLING_MANIFEST_v3.json"
 OUT_COMPOSITION = ROOT / "validation_v3" / "BD_COMPOSITION_v3.md"
 OUT_AUDIT = ROOT / "validation_v3" / "DATASET_BD_v3.md"
-GENERATOR_VERSION = "bd_v3.0"
+GENERATOR_VERSION = "bd_v3.1_stratified"
 
 
 class Gate(Exception):
@@ -92,26 +81,35 @@ def with_tokens(tok, items: list[dict]) -> list[dict]:
 
 
 def repeat_to_budget(items_sorted: list[dict], budget: int) -> list[dict]:
-    """Cycle through `items_sorted` from the start, repeating, until the
-    cumulative completion-token total first meets or exceeds `budget`. Each
-    repeated copy keeps its source content and task_id (traceable) but gets a
-    distinct example_id (repeat cycle suffix) so the file has no duplicate
-    ids despite duplicate content -- duplicate CONTENT is the entire point
-    (README:566-567: 'the same SQL information repeated to match exposure')."""
-    out, running, cycle, i = [], 0, 0, 0
-    n = len(items_sorted)
-    if n == 0:
-        raise Gate("repeat_to_budget: empty source set")
-    while running < budget:
-        src = items_sorted[i % n]
-        if i > 0 and i % n == 0:
-            cycle += 1
-        copy = dict(src)
-        copy["example_id"] = f"{src['example_id']}__rep{i // n}"
-        copy["source_example_id"] = src["example_id"]
-        out.append(copy)
-        running += src["_completion_tokens"]
-        i += 1
+    """Retain complete cycles; allocate the final partial cycle by source-token
+    share across join arities (or factual attributes), with deterministic ties.
+    This avoids selecting only the lexicographically first arity for extra dose.
+    Every repeated copy retains an exact source ID and unchanged messages.
+    """
+    if not items_sorted or any(i['_completion_tokens'] <= 0 for i in items_sorted):
+        raise Gate('Repetition requires nonempty sources with positive token counts')
+    total = sum(i['_completion_tokens'] for i in items_sorted)
+    full_cycles, residual = divmod(budget, total)
+    selected = list(items_sorted) * full_cycles
+    groups = defaultdict(list)
+    for src in items_sorted:
+        key = str(src.get('join_arity', src.get('attribute', 'all')))
+        groups[key].append(src)
+    weights = {k: sum(i['_completion_tokens'] for i in v) for k,v in groups.items()}
+    used = {k: 0 for k in groups}; positions = {k: 0 for k in groups}
+    running = 0
+    while running < residual:
+        available = [k for k in groups if positions[k] < len(groups[k])]
+        # Choose the stratum furthest below its proportional token allocation.
+        key = max(available, key=lambda k: (residual * weights[k] / total - used[k], k))
+        src = groups[key][positions[key]]; positions[key] += 1
+        selected.append(src); used[key] += src['_completion_tokens']
+        running += src['_completion_tokens']
+    counts = defaultdict(int); out = []
+    for src in selected:
+        copy = dict(src); n = counts[src['example_id']]; counts[src['example_id']] += 1
+        copy['example_id'] = f"{src['example_id']}__rep{n}"
+        copy['source_example_id'] = src['example_id']; out.append(copy)
     return out
 
 
@@ -444,6 +442,34 @@ def _composition(st, controlled_b, controlled_d):
           "that is a finding about the deterministic example_id-order sampler "
           "(README:577-582), reported here rather than hidden inside a "
           "single aggregate total.\n"]
+    # Task kind is finer than operation_family (which is uniformly filter).
+    def kind(i):
+        task = i['task_id']
+        return task.removeprefix('D_v3_').split('_')[0]
+    kinds = sorted({kind(i) for i in st['d']})
+    def extras(items):
+        counts = defaultdict(int)
+        for i in items: counts[i['task_id']] += 1
+        base = min(counts.values())
+        seen = defaultdict(int); out = []
+        for i in items:
+            seen[i['task_id']] += 1
+            if seen[i['task_id']] > base: out.append(i)
+        return out
+    L += ['', '## D task-kind mix and residual repetition bias', '',
+          'Kinds below are derived from task_id generator prefixes, not operation_family.', '',
+          '| source | '+' | '.join(kinds)+' |', '|---|'+'---|'*len(kinds)]
+    for label, items in [('standalone D',st['d']),('controlled extra copies',extras(controlled_d)),
+                         ('repeated-D extra copies',extras(st['d_repeat']))]:
+        totals=defaultdict(int)
+        for i in items: totals[kind(i)] += i['_completion_tokens']
+        denom=sum(totals.values()) or 1
+        L.append('| '+label+' | '+' | '.join(f'{100*totals[k]/denom:.2f}%' for k in kinds)+' |')
+    L += ['', 'Residual bias is unresolved: within each join-arity stratum, the partial cycle '
+          'still takes a lexicographic prefix. Count tasks sort before filter tasks, so extra '
+          'copies are not proportional by task kind. Arity balance does not establish overall '
+          'sampling balance. This disclosure is not acceptance of the sampling design for final '
+          'training; joint stratification or another justified ordering remains a release gate.', '']
     OUT_COMPOSITION.write_text("\n".join(L), encoding="utf-8")
 
 
@@ -477,8 +503,8 @@ def _audit(st, controlled_b, controlled_d, checks, sha_full, sha_ctrl, sha_rep):
          "```\n",
          "## Optimizer steps / effective passes\n",
          "Current single-device trainer defaults: batch size 1, accumulation 8, three epochs. "
-         "Transformers 4.56.2 uses ceil(examples/8) updates per epoch: BD_full 1,299, "
-         "BD_controlled 1,317, D_repeat 1,020 total planned steps. These are configured "
+         f"Transformers 4.56.2 uses ceil(examples/8) updates per epoch: BD_full {3*((len(st['bd_full'])+7)//8)}, "
+         f"BD_controlled {3*((len(st['bd_controlled'])+7)//8)}, D_repeat {3*((len(st['d_repeat'])+7)//8)} total planned steps. These are configured "
          "estimates, not observed runs or approved final hyperparameters. See PRE_TRAINING_GATES_A002.md.\n",
          "## Validation\n", "| check | result | detail |", "|---|---|---|"]
     for n, ok, d in checks:

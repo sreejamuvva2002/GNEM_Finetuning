@@ -1,0 +1,9 @@
+{
+  "datasets_v3/train_BD_controlled_v3.jsonl": "df95dd003c9d9f17df78f75e7facd7aee2095c1aa7f20919e94f821704e2b033",
+  "datasets_v3/train_D_repeat_budgetmatched_v3.jsonl": "6d7bc704fb26c9496289e172a9d4bad0764e93e1fdf8728bff56dd9a5453f93b",
+  "datasets_v3/BD_SAMPLING_MANIFEST_v3.json": "18c1c63635192d13f33b72047d22c8008504c30bfa472a631f451af49b283be7",
+  "datasets_v3/FACT_EXPOSURE_LEDGER_v3.json": "f34f8fc5735b03b4ccd21f3e415f0ee66045ee9f8718c6a37f6cebafdfe151d3",
+  "validation_v3/BD_COMPOSITION_v3.md": "5d916fe0664f0921e3f915b62dd3d1d2d75ab23944bc6ab5a07fb5b76587769c",
+  "validation_v3/DATASET_BD_v3.md": "85806f96822481242623768401466da57909f0481f0041e88775a3548573d998",
+  "finetune/phase16_build_bd.py": "6461001b22afdb83b21b105bc0c528b289e081005c859713d176fac28bc3c3c6"
+}

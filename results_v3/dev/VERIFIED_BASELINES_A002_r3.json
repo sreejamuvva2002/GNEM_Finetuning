@@ -1,0 +1,421 @@
+{
+  "run_id": "protocol_A002_dev_r3",
+  "reporter_sha256": "c9150ab0a3bd0df28287ac9f4be5eebf01f67c67778414f1684146ebf6da10a8",
+  "conditions": {
+    "base": {
+      "verification": {
+        "verify_version": "eval_verify_v3.1",
+        "n_records": 375,
+        "expected_count": 375,
+        "unique_example_ids": 375,
+        "exactly_one_status": true,
+        "scored": 375,
+        "failed": 0,
+        "families": [
+          "dev_structured_r2",
+          "factual_recall"
+        ],
+        "grader_sha256": "d728d239135ddf1c682b8621ed08692cafd356382b7a2abfb9f82a578513f458",
+        "passed": true
+      },
+      "groups": {
+        "family:factual_recall": {
+          "n": 255,
+          "correct": 0,
+          "semantic": 0.0,
+          "strict": 0.0,
+          "format": 0.9764705882352941,
+          "statuses": {
+            "incorrect": 255
+          }
+        },
+        "family:dev_structured_r2": {
+          "n": 120,
+          "correct": 0,
+          "semantic": 0.0,
+          "strict": 0.0,
+          "format": 1.0,
+          "statuses": {
+            "incorrect": 120
+          }
+        },
+        "arity:0": {
+          "n": 23,
+          "correct": 0,
+          "semantic": 0.0,
+          "strict": 0.0,
+          "format": 1.0,
+          "statuses": {
+            "incorrect": 23
+          }
+        },
+        "answer_type:set": {
+          "n": 96,
+          "correct": 0,
+          "semantic": 0.0,
+          "strict": 0.0,
+          "format": 1.0,
+          "statuses": {
+            "incorrect": 96
+          }
+        },
+        "set_size:1": {
+          "n": 36,
+          "correct": 0,
+          "semantic": 0.0,
+          "strict": 0.0,
+          "format": 1.0,
+          "statuses": {
+            "incorrect": 36
+          }
+        },
+        "answer_type:scalar": {
+          "n": 24,
+          "correct": 0,
+          "semantic": 0.0,
+          "strict": 0.0,
+          "format": 1.0,
+          "statuses": {
+            "incorrect": 24
+          }
+        },
+        "arity:1": {
+          "n": 73,
+          "correct": 0,
+          "semantic": 0.0,
+          "strict": 0.0,
+          "format": 1.0,
+          "statuses": {
+            "incorrect": 73
+          }
+        },
+        "set_size:11+": {
+          "n": 33,
+          "correct": 0,
+          "semantic": 0.0,
+          "strict": 0.0,
+          "format": 1.0,
+          "statuses": {
+            "incorrect": 33
+          }
+        },
+        "set_size:2-10": {
+          "n": 27,
+          "correct": 0,
+          "semantic": 0.0,
+          "strict": 0.0,
+          "format": 1.0,
+          "statuses": {
+            "incorrect": 27
+          }
+        },
+        "arity:2": {
+          "n": 24,
+          "correct": 0,
+          "semantic": 0.0,
+          "strict": 0.0,
+          "format": 1.0,
+          "statuses": {
+            "incorrect": 24
+          }
+        }
+      },
+      "overall": {
+        "n": 375,
+        "correct": 0,
+        "semantic": 0.0,
+        "strict": 0.0,
+        "format": 0.984,
+        "statuses": {
+          "incorrect": 375
+        }
+      },
+      "predictions_sha256": "0ebd6dc49822671222641756c7518d7b4fc8a1efe45997458379af941db739b8",
+      "manifest_sha256": "19d2b2b0c802fa4d11a85b6c8c66f76fe82000ed20c8b1dcf6ae4d24ef7576b8"
+    },
+    "base_ctx_oracle": {
+      "verification": {
+        "verify_version": "eval_verify_v3.1",
+        "n_records": 255,
+        "expected_count": 255,
+        "unique_example_ids": 255,
+        "exactly_one_status": true,
+        "scored": 255,
+        "failed": 0,
+        "families": [
+          "factual_recall"
+        ],
+        "grader_sha256": "d728d239135ddf1c682b8621ed08692cafd356382b7a2abfb9f82a578513f458",
+        "passed": true
+      },
+      "groups": {
+        "family:factual_recall": {
+          "n": 255,
+          "correct": 245,
+          "semantic": 0.9607843137254902,
+          "strict": 0.8392156862745098,
+          "format": 0.984313725490196,
+          "statuses": {
+            "correct": 245,
+            "incorrect": 10
+          }
+        }
+      },
+      "overall": {
+        "n": 255,
+        "correct": 245,
+        "semantic": 0.9607843137254902,
+        "strict": 0.8392156862745098,
+        "format": 0.984313725490196,
+        "statuses": {
+          "correct": 245,
+          "incorrect": 10
+        }
+      },
+      "predictions_sha256": "4fa883721530c46133eea826614eb7ccc1f9bf4ac59952c21a650fb4d4e17549",
+      "manifest_sha256": "5984692b5af0da1a6ae402bef4b9ffd4c4579eedbbd86f49fdec6256761607a8"
+    },
+    "base_sql": {
+      "verification": {
+        "verify_version": "eval_verify_v3.1",
+        "n_records": 120,
+        "expected_count": 120,
+        "unique_example_ids": 120,
+        "exactly_one_status": true,
+        "scored": 120,
+        "failed": 0,
+        "families": [
+          "dev_structured_r2"
+        ],
+        "grader_sha256": "c7775cdcf69f11705eb35a172202cc917648fa6df149a13c8cb8d217e63cfb04",
+        "passed": true
+      },
+      "groups": {
+        "family:dev_structured_r2": {
+          "n": 120,
+          "correct": 120,
+          "semantic": 1.0,
+          "strict": 0.8,
+          "format": null,
+          "statuses": {
+            "correct": 120
+          }
+        },
+        "arity:0": {
+          "n": 23,
+          "correct": 23,
+          "semantic": 1.0,
+          "strict": 0.5217391304347826,
+          "format": null,
+          "statuses": {
+            "correct": 23
+          }
+        },
+        "answer_type:set": {
+          "n": 96,
+          "correct": 96,
+          "semantic": 1.0,
+          "strict": 1.0,
+          "format": null,
+          "statuses": {
+            "correct": 96
+          }
+        },
+        "set_size:1": {
+          "n": 36,
+          "correct": 36,
+          "semantic": 1.0,
+          "strict": 1.0,
+          "format": null,
+          "statuses": {
+            "correct": 36
+          }
+        },
+        "answer_type:scalar": {
+          "n": 24,
+          "correct": 24,
+          "semantic": 1.0,
+          "strict": 0.0,
+          "format": null,
+          "statuses": {
+            "correct": 24
+          }
+        },
+        "arity:1": {
+          "n": 73,
+          "correct": 73,
+          "semantic": 1.0,
+          "strict": 0.821917808219178,
+          "format": null,
+          "statuses": {
+            "correct": 73
+          }
+        },
+        "set_size:11+": {
+          "n": 33,
+          "correct": 33,
+          "semantic": 1.0,
+          "strict": 1.0,
+          "format": null,
+          "statuses": {
+            "correct": 33
+          }
+        },
+        "set_size:2-10": {
+          "n": 27,
+          "correct": 27,
+          "semantic": 1.0,
+          "strict": 1.0,
+          "format": null,
+          "statuses": {
+            "correct": 27
+          }
+        },
+        "arity:2": {
+          "n": 24,
+          "correct": 24,
+          "semantic": 1.0,
+          "strict": 1.0,
+          "format": null,
+          "statuses": {
+            "correct": 24
+          }
+        }
+      },
+      "overall": {
+        "n": 120,
+        "correct": 120,
+        "semantic": 1.0,
+        "strict": 0.8,
+        "format": null,
+        "statuses": {
+          "correct": 120
+        }
+      },
+      "predictions_sha256": "729ededc26c9180e6fe52ce5e36b7ca7bf12feea435552f62ab7a27a0371a2a5",
+      "manifest_sha256": "00a82b3c5d6d1964c84eea0dec59023bff14f83eced653a6d8a147006ea09965"
+    },
+    "base_sql_5shot": {
+      "verification": {
+        "verify_version": "eval_verify_v3.1",
+        "n_records": 120,
+        "expected_count": 120,
+        "unique_example_ids": 120,
+        "exactly_one_status": true,
+        "scored": 120,
+        "failed": 0,
+        "families": [
+          "dev_structured_r2"
+        ],
+        "grader_sha256": "c7775cdcf69f11705eb35a172202cc917648fa6df149a13c8cb8d217e63cfb04",
+        "passed": true
+      },
+      "groups": {
+        "family:dev_structured_r2": {
+          "n": 120,
+          "correct": 120,
+          "semantic": 1.0,
+          "strict": 1.0,
+          "format": null,
+          "statuses": {
+            "correct": 120
+          }
+        },
+        "arity:0": {
+          "n": 23,
+          "correct": 23,
+          "semantic": 1.0,
+          "strict": 1.0,
+          "format": null,
+          "statuses": {
+            "correct": 23
+          }
+        },
+        "answer_type:set": {
+          "n": 96,
+          "correct": 96,
+          "semantic": 1.0,
+          "strict": 1.0,
+          "format": null,
+          "statuses": {
+            "correct": 96
+          }
+        },
+        "set_size:1": {
+          "n": 36,
+          "correct": 36,
+          "semantic": 1.0,
+          "strict": 1.0,
+          "format": null,
+          "statuses": {
+            "correct": 36
+          }
+        },
+        "answer_type:scalar": {
+          "n": 24,
+          "correct": 24,
+          "semantic": 1.0,
+          "strict": 1.0,
+          "format": null,
+          "statuses": {
+            "correct": 24
+          }
+        },
+        "arity:1": {
+          "n": 73,
+          "correct": 73,
+          "semantic": 1.0,
+          "strict": 1.0,
+          "format": null,
+          "statuses": {
+            "correct": 73
+          }
+        },
+        "set_size:11+": {
+          "n": 33,
+          "correct": 33,
+          "semantic": 1.0,
+          "strict": 1.0,
+          "format": null,
+          "statuses": {
+            "correct": 33
+          }
+        },
+        "set_size:2-10": {
+          "n": 27,
+          "correct": 27,
+          "semantic": 1.0,
+          "strict": 1.0,
+          "format": null,
+          "statuses": {
+            "correct": 27
+          }
+        },
+        "arity:2": {
+          "n": 24,
+          "correct": 24,
+          "semantic": 1.0,
+          "strict": 1.0,
+          "format": null,
+          "statuses": {
+            "correct": 24
+          }
+        }
+      },
+      "overall": {
+        "n": 120,
+        "correct": 120,
+        "semantic": 1.0,
+        "strict": 1.0,
+        "format": null,
+        "statuses": {
+          "correct": 120
+        }
+      },
+      "predictions_sha256": "9af6c02f0118090e6c16f2b19d4758cf2608d9774da9071596672d65a400e71e",
+      "manifest_sha256": "83b5b0bd35f9fc8cf5410a0ac0b1f1c35143dd08621ed4e2bd6c01a8c0e241a9"
+    }
+  },
+  "final_training_runs": 0,
+  "q42_approval": "pending"
+}

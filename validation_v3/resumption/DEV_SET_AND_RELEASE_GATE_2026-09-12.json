@@ -1,0 +1,69 @@
+{
+  "timestamp_utc": "2026-09-12T21:11:44.713163+00:00",
+  "supersedes": "validation_v3/resumption/DEV_SET_AND_RELEASE_GATE_2026-09-12.json (first pass)",
+  "review_findings_corrected": [
+    "14 of 120 tasks had no development record satisfying their combined predicate; the builder now requires one and retains dev_anchor_row_ids (26 candidates skipped)",
+    "the release gate never compared the submitted run_schedule against the pre-registered proposal; seed 999 substituted for 62 was accepted",
+    "seed type and range were unvalidated; bool, negative, oversized and string seeds were accepted",
+    "anchor_entity_split listed splits of matching records while reading as the anchor; replaced by dev_anchor_row_ids plus descriptive matching_record_splits",
+    "scalar-plus-child queries were described as in-distribution; now described as new combinations of familiar operations"
+  ],
+  "model_inference_performed": false,
+  "baseline_evaluation_of_r2_set": "NOT RUN -- published baselines describe the legacy 51 questions",
+  "final_training_runs_completed": 0,
+  "q42_approval": "pending_by_user",
+  "approved_release_created": false,
+  "preserved_unchanged": {
+    "datasets_v3/dev_structured_v3.jsonl": "a50262fb61af9f2c057b1c428023d3f16b89920aaed4ce028badb1c3a887b804",
+    "datasets_v3/EVALUATION_INPUT_MANIFEST_A002.json": "fdaf6c116f76028fb37d8a8860bc94f6a44785c5440f035b90e6a160b40dcd2d",
+    "results_v3/dev/REPORT_A002.md": "05bb22959659e935398fc8af891bb2ffe1af7a9cadb82c5422809de6dde2e2b7",
+    "results_v3/dev/VERIFIED_BASELINES_A002.json": "ff336f71744cd8645155ea4b326d1a12e0b300e9110009fb44a73fba7c24abd8",
+    "results_v3/dev/REPORT_A002_r2.md": "72551792b95d0354dfeb75a16d718096a6c915ec48786bf034b09da3710b7468",
+    "kb/GNEM_Final_Combined_Dataset.xlsx": "a8a4ca5c72211e7e2e32bbf418873f86677b7fb1264d2c657955b3fee008b034"
+  },
+  "sha256": {
+    "datasets_v3/dev_structured_r2_v3.jsonl": "416f586d405ee0ae1d622448228fdccb9a6222abe82294c5a6521970045a6027",
+    "datasets_v3/dev_structured_v3.jsonl": "a50262fb61af9f2c057b1c428023d3f16b89920aaed4ce028badb1c3a887b804",
+    "datasets_v3/EVALUATION_INPUT_MANIFEST_A002_r2.json": "526b8679cdb669849b9a0cf0b08f763583a596db5a089ee409c6dc51a62fb471",
+    "datasets_v3/EVALUATION_INPUT_MANIFEST_A002.json": "fdaf6c116f76028fb37d8a8860bc94f6a44785c5440f035b90e6a160b40dcd2d",
+    "finetune/phase17b_build_dev_structured_r2.py": "e890f409d4e465829b23fe7715b239b7737a0e94d31c64828f55093e3712be20",
+    "finetune/dev_structured_r2_tests.py": "6e837f1c61bf02ff966577fb079253f8d22adaaf9efac7f8ce9aae99b99d7f02",
+    "finetune/release_gate_tests.py": "544c4e559d2b691ed1dee2013cbb73475fd107dc09d489c313aea49bfcdedb6f",
+    "finetune/train_v3.py": "ac69ca241aab833018f072ca59e885f3cad39c8c70a5d1f11a1b8261b7284ccd",
+    "finetune/infer_dev_v3.py": "243eb8d62e86b0312cf76c884136ae1a16cfd9c20a231c872b7f8d5ac56d2f4b",
+    "validation_v3/PROPOSED_RUN_SCHEDULE_A002.json": "8e60fdff357a68fc136501bb31ef5e676187cb96e9aff6e1f832fec980f585e6",
+    "validation_v3/DEV_STRUCTURED_R2_v3.md": "fbe97b81627c3450a0c66440349189eb9bd3ad0b1a76bc385f39b96e9c5d5776"
+  },
+  "tests": {
+    "dev_structured_r2_tests": {
+      "passed": true,
+      "result": "OK",
+      "count": "Ran 21 tests in 5.759s"
+    },
+    "release_gate_tests": {
+      "passed": true,
+      "result": "OK",
+      "count": "Ran 25 tests in 3.846s"
+    },
+    "answer_parser_tests": {
+      "passed": true,
+      "result": "OK",
+      "count": "Ran 30 tests in 0.002s"
+    },
+    "training_tokens_tests": {
+      "passed": true,
+      "result": "OK",
+      "count": "Ran 5 tests in 4.195s"
+    },
+    "phase12_fault_tests": {
+      "passed": true,
+      "result": "15 fault checks, 0 failed.",
+      "count": ""
+    },
+    "phase5_fault_tests": {
+      "passed": true,
+      "result": "All 8 faults correctly caught.",
+      "count": ""
+    }
+  }
+}
