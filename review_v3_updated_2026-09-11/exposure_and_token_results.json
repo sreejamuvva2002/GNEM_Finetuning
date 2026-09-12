@@ -1,0 +1,184 @@
+{
+  "scope": "Current V3 files, tokenizer pinned; labels reconstructed with historical TRL template, NOT an implemented V3 trainer",
+  "artifacts": {
+    "train_A_cpt_v3.jsonl": {
+      "examples": 148,
+      "strings_scanned": 148,
+      "heldout_literal_exposures": 0,
+      "length_min": 154,
+      "length_max": 267,
+      "over_1024": 0,
+      "over_2048": 0,
+      "historical_template_zero_supervision_at_1024": 0,
+      "historical_template_supervised_tokens": 0,
+      "mask_minus_length_difference_counts": {},
+      "historical_template_changes_tokens": 0
+    },
+    "train_BC_facts_answers_v3.jsonl": {
+      "examples": 3019,
+      "strings_scanned": 9057,
+      "heldout_literal_exposures": 0,
+      "length_min": 52,
+      "length_max": 243,
+      "over_1024": 0,
+      "over_2048": 0,
+      "historical_template_zero_supervision_at_1024": 0,
+      "historical_template_supervised_tokens": 59044,
+      "mask_minus_length_difference_counts": {
+        "1": 3019
+      },
+      "historical_template_changes_tokens": 0
+    },
+    "train_BD_controlled_v3.jsonl": {
+      "examples": 2787,
+      "strings_scanned": 8361,
+      "heldout_literal_exposures": 0,
+      "length_min": 52,
+      "length_max": 223,
+      "over_1024": 0,
+      "over_2048": 0,
+      "historical_template_zero_supervision_at_1024": 0,
+      "historical_template_supervised_tokens": 70752,
+      "mask_minus_length_difference_counts": {
+        "1": 2787
+      },
+      "historical_template_changes_tokens": 0
+    },
+    "train_BD_facts_sql_v3.jsonl": {
+      "examples": 3019,
+      "strings_scanned": 9057,
+      "heldout_literal_exposures": 0,
+      "length_min": 52,
+      "length_max": 223,
+      "over_1024": 0,
+      "over_2048": 0,
+      "historical_template_zero_supervision_at_1024": 0,
+      "historical_template_supervised_tokens": 75825,
+      "mask_minus_length_difference_counts": {
+        "1": 3019
+      },
+      "historical_template_changes_tokens": 0
+    },
+    "train_B_facts_v3.jsonl": {
+      "examples": 2011,
+      "strings_scanned": 6033,
+      "heldout_literal_exposures": 0,
+      "length_min": 52,
+      "length_max": 139,
+      "over_1024": 0,
+      "over_2048": 0,
+      "historical_template_zero_supervision_at_1024": 0,
+      "historical_template_supervised_tokens": 40835,
+      "mask_minus_length_difference_counts": {
+        "1": 2011
+      },
+      "historical_template_changes_tokens": 0
+    },
+    "train_C_answers_v3.jsonl": {
+      "examples": 1008,
+      "strings_scanned": 3024,
+      "heldout_literal_exposures": 0,
+      "length_min": 54,
+      "length_max": 243,
+      "over_1024": 0,
+      "over_2048": 0,
+      "historical_template_zero_supervision_at_1024": 0,
+      "historical_template_supervised_tokens": 18209,
+      "mask_minus_length_difference_counts": {
+        "1": 1008
+      },
+      "historical_template_changes_tokens": 0
+    },
+    "train_D_repeat_budgetmatched_v3.jsonl": {
+      "examples": 2017,
+      "strings_scanned": 6051,
+      "heldout_literal_exposures": 0,
+      "length_min": 158,
+      "length_max": 223,
+      "over_1024": 0,
+      "over_2048": 0,
+      "historical_template_zero_supervision_at_1024": 0,
+      "historical_template_supervised_tokens": 70018,
+      "mask_minus_length_difference_counts": {
+        "1": 2017
+      },
+      "historical_template_changes_tokens": 0
+    },
+    "train_D_sql_v3.jsonl": {
+      "examples": 1008,
+      "strings_scanned": 3024,
+      "heldout_literal_exposures": 0,
+      "length_min": 158,
+      "length_max": 223,
+      "over_1024": 0,
+      "over_2048": 0,
+      "historical_template_zero_supervision_at_1024": 0,
+      "historical_template_supervised_tokens": 34990,
+      "mask_minus_length_difference_counts": {
+        "1": 1008
+      },
+      "historical_template_changes_tokens": 0
+    }
+  },
+  "findings": {
+    "stale_metadata_groupby_accepted": true,
+    "effect_size_constant_positive": 0.0,
+    "alias_only_grade": {
+      "status": "incorrect",
+      "task_result_correctness": 0.0,
+      "strict_result_schema_accuracy": 0.0,
+      "detail": "prediction result lacks target column 'n'",
+      "metrics": {}
+    },
+    "repeat_mapping_mismatches": 2017,
+    "controlled_missing_B_companies": [
+      "Textron Specialized Vehicles",
+      "Thermal Ceramics Inc.",
+      "Thomson Plastics Inc.",
+      "Toyota Industries Group (TACG-TICA)",
+      "Trenton Pressing",
+      "Trenton Pressing Inc.",
+      "Valeo",
+      "Vanguard National Trailer Corp.",
+      "Vernay",
+      "Vista Metals Corp.",
+      "Voestalpine Automotive Body Parts Inc.",
+      "Volvo Group North America",
+      "WIKA USA",
+      "Wheelabrator Group Inc.",
+      "Woory Industrial Co.",
+      "YKK USA Inc.",
+      "Yachiyo Manufacturing of America LLC",
+      "Yamaha Motor Manufacturing Corp."
+    ],
+    "child_roundtrip": {
+      "processes": {
+        "expected": 555,
+        "actual": 555,
+        "missing": 0,
+        "extra": 0
+      },
+      "services": {
+        "expected": 290,
+        "actual": 290,
+        "missing": 0,
+        "extra": 0
+      },
+      "certifications": {
+        "expected": 662,
+        "actual": 662,
+        "missing": 0,
+        "extra": 0
+      }
+    },
+    "environment": {
+      "torch": false,
+      "openpyxl": false,
+      "pandas": false,
+      "pytest": false,
+      "transformers": true,
+      "trl": false,
+      "peft": false
+    }
+  }
+}

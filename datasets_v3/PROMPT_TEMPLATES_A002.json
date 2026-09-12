@@ -1,0 +1,22 @@
+{
+  "closed_book_system": "You are answering questions about companies in the Georgia new-energy mobility supply chain from memory. Answer directly and concisely.",
+  "context_system": "You are answering questions about companies in the Georgia new-energy mobility supply chain. Use only the company record provided. If the record does not contain the answer, say so.",
+  "decoding": {
+    "do_sample": false,
+    "max_new_tokens": 1024
+  },
+  "max_context": 32768,
+  "model_id": "Qwen/Qwen2.5-14B-Instruct",
+  "model_revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+  "note": "Information access differs explicitly: model-only, oracle record context, or SQL execution. No outcomes used.",
+  "output_instructions": {
+    "scalar": "Return only one JSON string or number containing the recorded value. For missing evidence, return its recorded sentinel. Do not include explanatory prose.",
+    "set": "Return only a JSON array containing every requested value. Use an empty array if no record matches. Do not include explanatory prose.",
+    "top_k": "Return only a JSON array of rows in the requested order. Do not include explanatory prose."
+  },
+  "runtime_catalogue_scope": "Full source vocabulary; SQL conditions only; no company-to-value associations",
+  "runtime_catalogue_sha256": "1b01d1efa6a78e0de9b710b626ed34c9c0c7620f8b0f17e1ec1011765be12dd6",
+  "sql_system": "You translate questions about companies in the Georgia new-energy mobility supply chain into a single read-only SQL SELECT query. Schema -- companies(row_id, company, category, industry_group, location, address, primary_facility_type, ev_supply_chain_role, primary_oems, supplier_or_affiliation_type, employment, product_or_service, ev_battery_relevant, classification_method, city, county); processes(row_id, company, process); services(row_id, company, service); certifications(row_id, company, standard_family). Join a child table on row_id for record-level facts; join by company for company-level combinations across records. Respond with exactly one SQL SELECT statement and nothing else.",
+  "training_max_sequence_length": 1024,
+  "training_template_sha256": "ab2cb7b5e2b68921be04ee5662029982f33ef9339e270d7b92333ed40a76d878"
+}

@@ -1,0 +1,23 @@
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+  [PASS] registry_frozen_before_generation: HOLDOUT_REGISTRY_v3 holdout_v3.2_A002 dated 2026-09-11
+  [PASS] one_passage_per_row: 148 passages for 148 train rows (one each)
+  [PASS] unique_example_ids: 148 unique ids
+  [PASS] no_duplicate_passages: 0 duplicate passages
+  [PASS] zero_heldout_or_dev_companies_present: 0 of 52 dev/test companies appear in the plain text
+  [PASS] static_check_generator_never_reaches_full_kb: no forbidden scope literal in 1 scanned file(s)
+  [PASS] sentinel_evidence_qualified: ['None identified after search', 'Not applicable', 'Not specified']
+  [PASS] no_certification_count_target: Certification Count never rendered
+  [PASS] exposure_count_zero: 0 held-out literals across 148 rendered passages
+  [PASS] omitted_fields_match_registry_processes: 0 rows omit processes == registry train_rows_lost 0
+  [PASS] omitted_fields_match_registry_services: 0 rows omit services == registry train_rows_lost 0
+  [PASS] omitted_fields_match_registry_certifications: 0 rows omit certifications == registry train_rows_lost 0
+  [PASS] coverage_floor_holds: processes 100.0% · services 100.0% · certifications 100.0%
+  [PASS] coverage_matches_registry_prediction_processes: 100.00% recomputed == 100.0% frozen at Phase 9
+  [PASS] coverage_matches_registry_prediction_services: 100.00% recomputed == 100.0% frozen at Phase 9
+  [PASS] coverage_matches_registry_prediction_certifications: 100.00% recomputed == 100.0% frozen at Phase 9
+  [PASS] real_tokenizer_loaded_at_pinned_revision: Qwen/Qwen2.5-14B-Instruct @ cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8 (Qwen2Tokenizer, local_files_only=True)
+  [PASS] tokenizer_json_sha_matches_expected: c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539
+
+All Phase 10 gates passed.
+  datasets_v3/train_A_cpt_v3.jsonl  sha256 8d4737439cae67798d8f9ab0351acde65a1e66b2cc375920758e5f77247c985f
+  passages 148 · LM tokens 34923 · chars 171715

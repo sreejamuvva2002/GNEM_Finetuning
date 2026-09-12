@@ -1,0 +1,91 @@
+{
+  "reviewed_commit": "8e7196e0e58d6ebcb35d7a14944146039f4c912f",
+  "scope": "Read-only repository audit and proposed updated plan; no model training/inference",
+  "original_files_unchanged": 178,
+  "files": {
+    "review_v3_updated_2026-09-11/FILE_REVIEW.md": {
+      "bytes": 57900,
+      "sha256": "baf2863ea7f1470bb4ea4b3b30472f403601f19373c783533bbaaabdbbef1028"
+    },
+    "review_v3_updated_2026-09-11/PRESERVATION_CHECK.json": {
+      "bytes": 57,
+      "sha256": "b9e673cb0fdee4423b4fbdf88299fbebc0727618b70591823f407bda5f4340a7"
+    },
+    "review_v3_updated_2026-09-11/audit_current.py": {
+      "bytes": 9580,
+      "sha256": "a537d226bfd0afe460e56ef8eb3666fd38b845a74e6aa35954e905bf701c8022"
+    },
+    "review_v3_updated_2026-09-11/audit_results.json": {
+      "bytes": 9800,
+      "sha256": "d80d4e7ee3f6739a54d8e8c2030322ca4b8d1f9b52057dcd96fbe7fed003de51"
+    },
+    "review_v3_updated_2026-09-11/cell_changes.json": {
+      "bytes": 57746,
+      "sha256": "f2679b48ca239a211fd8b3ed44c75cd5cb6a402e1437e94f5edb3ee22922cdd9"
+    },
+    "review_v3_updated_2026-09-11/check_exposure_and_tokens.py": {
+      "bytes": 4857,
+      "sha256": "3fcb827e09824e2e4749c99a71effcd02d4389e88e56c9be614df81519221958"
+    },
+    "review_v3_updated_2026-09-11/check_results.json": {
+      "bytes": 4230,
+      "sha256": "b7da6817ed44c1efdb6b21bcaa6d738dfaeb07638400430ea14b9833387e9326"
+    },
+    "review_v3_updated_2026-09-11/exposure_and_token_results.json": {
+      "bytes": 5382,
+      "sha256": "7c48edb6f0794cbb3283b8a035eccfee82f094fe3dbfa91dc084617646082505"
+    },
+    "review_v3_updated_2026-09-11/file_inventory.json": {
+      "bytes": 49082,
+      "sha256": "bfc53e25f136c1c8e3f195b35b28fac754e277914398a2cfa9267c488e1d1579"
+    },
+    "review_v3_updated_2026-09-11/phase12_fault_tests.log": {
+      "bytes": 2348,
+      "sha256": "02c18469b6e579315269229d98d4bd29ca7b511372b99d1fc294e87c0fc01d60"
+    },
+    "review_v3_updated_2026-09-11/phase5_fault_tests.log": {
+      "bytes": 1160,
+      "sha256": "c38a1b78674ec0182a2c414936b2a1cbcf1d6203734f79a5c2c1a313167729fc"
+    },
+    "review_v3_updated_2026-09-11/phase6_fault_tests.log": {
+      "bytes": 1630,
+      "sha256": "56e9f913b66bd8ad383ffe5a3d96726d8169318e0c911075f342aaa552c93b7b"
+    },
+    "review_v3_updated_2026-09-11/phase7_grader_tests.log": {
+      "bytes": 7762,
+      "sha256": "6f5bcc162839c13300a4671aa24e89aeba1f771b55a18297eb909eade8fcdfb4"
+    },
+    "review_v3_updated_2026-09-11/phase8_eval_stack_tests.log": {
+      "bytes": 13201,
+      "sha256": "1129b7bd329fe624c7c772e5f36566b0bacab1d413cd3649ec9a7fa26be4589a"
+    },
+    "review_v3_updated_2026-09-11/phase9_fault_tests.log": {
+      "bytes": 18754,
+      "sha256": "53e3424d711badfcc183f54955fcf1b0d108ba2fd9232decfad2464d0bf5b99a"
+    },
+    "review_v3_updated_2026-09-11/phase9_freeze_holdouts.log": {
+      "bytes": 5078,
+      "sha256": "e72946edca1fc40c04ce22676be12142df8d0e4a2971129284f66a950d5260c0"
+    },
+    "review_v3_updated_2026-09-11/phase9_independent_recomputation.log": {
+      "bytes": 1432,
+      "sha256": "7992e28b2d07ee0083f0999fd8ed15f6fff08e63763622ae184ed56136fabd3d"
+    },
+    "review_v3_updated_2026-09-11/raw_term_preservation.json": {
+      "bytes": 553,
+      "sha256": "be905b99acd7b87cf235c166628b4accdd510f4a146f67cf757557f58950e97c"
+    },
+    "review_v3_updated_2026-09-11/run_regression_checks.py": {
+      "bytes": 1325,
+      "sha256": "14d12efd778f9f7ee81beb111e358893665f52255481d731100e38cf2b40f0ae"
+    },
+    "review_v3_updated_2026-09-11/workbook_cells.json": {
+      "bytes": 550854,
+      "sha256": "8beedeb74dc13bbfbb3bf1cc6ddbd94fbafcd63ceb687205df3db7549e25e6b6"
+    },
+    "V3_UPDATED_REVIEW_AND_PLAN.md": {
+      "bytes": 33117,
+      "sha256": "a7bf90eb8c40ccdce78c0d18511eeee8f43e9c33bee5d5d55adaa3d02791b3bf"
+    }
+  }
+}

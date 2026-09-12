@@ -1,0 +1,9 @@
+test_constant_effects_preserve_direction_without_false_zero (__main__.PairedEffectTests.test_constant_effects_preserve_direction_without_false_zero) ... ok
+test_known_sample_standard_deviation (__main__.PairedEffectTests.test_known_sample_standard_deviation) ... ok
+test_positive_rescaling_does_not_change_standardized_effect (__main__.PairedEffectTests.test_positive_rescaling_does_not_change_standardized_effect) ... ok
+test_undersized_and_nonfinite_samples_refused (__main__.PairedEffectTests.test_undersized_and_nonfinite_samples_refused) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+OK

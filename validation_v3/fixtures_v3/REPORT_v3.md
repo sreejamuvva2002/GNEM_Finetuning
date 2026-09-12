@@ -11,12 +11,12 @@
 ```text
 phase                        8 (synthetic fixture validation)
 records_module               eval_records_v3.1
-stats_module                 eval_stats_v3.0
+stats_module                 eval_stats_v3.1
 report_module                eval_report_v3.1
 verify_module                eval_verify_v3.1
-grader                       grade_v3.1 1051a161ac848ad0…
-executor                     sqlexec_v3.0 a6c06b71dd975419…
-fixture_records_sha256       afb1424556a4f75fc8b41f30c1386d346f29d2c7a36321bce60e365ccbdbe3e6
+grader                       grade_v3.2_A002 c7775cdcf69f1170…
+executor                     sqlexec_v3.1_A002 dfe5d8a882f730c0…
+fixture_records_sha256       dee9db4ed0990901ee005a457ea28fa2ae466193b8519085eb89aa244f87467a
 ```
 
 ## Item accounting (synthetic)

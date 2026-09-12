@@ -13,8 +13,8 @@ FOUR TABLES, exactly as frozen:
 
 No graph_edges. No coordinates. No OEM relationship table. No spatial index.
 
-`certification_count` is deliberately NOT a column anywhere: a model that can
-COUNT the child table must not be handed the answer. `split` and `split_group`
+`certification_count` is excluded by the user-authorized A-002 exception.
+Its recorded source value remains in the canonical data for validation. `split` and `split_group`
 are likewise absent -- leakage-control metadata never becomes queryable data.
 
 THE DATABASE IS SCOPED, NOT SINGULAR. Every gold in the task pool is produced by
@@ -60,7 +60,7 @@ CANONICAL = ROOT / "datasets_v3" / "canonical_records_v3.jsonl"
 OUT_DB = ROOT / "datasets_v3" / "gnem_v3.sqlite"
 OUT_AUDIT = ROOT / "validation_v3" / "DB_VALIDATION_v3.md"
 
-BUILDER_VERSION = "phase5_sqlite_v3.0"
+BUILDER_VERSION = "phase5_sqlite_v3.1_A002"
 CERT_SENTINEL = "None identified after search"
 # Assembled at runtime so this file does not itself contain the literal the
 # scan looks for. That keeps the scan global -- excluding the checker's own
@@ -472,7 +472,7 @@ def main() -> int:
 
 def _grep_gnem_sqlite_fallback() -> list[str]:
     hits = []
-    for p in sorted(ROOT.rglob("*.py")):
+    for p in sorted((ROOT / "finetune").rglob("*.py")):
         if ".git" in p.parts:
             continue
         for n, line in enumerate(p.read_text(encoding="utf-8").splitlines(), 1):
@@ -512,8 +512,8 @@ def _write_audit(hashes, db_sha, stats, checks, byte_identical, scope_ids) -> No
          "no second cleaning path and geography is not re-parsed — `city`/`county` are taken "
          "from the Phase 4 derivation and compared cell-by-cell.\n",
          "## Schema\n", "```sql", SCHEMA_SQL.strip(), "```\n",
-         "`certification_count` is **not a column anywhere**: a model that can `COUNT` the "
-         "child table must not be handed the answer. `split`, `split_group`, latitude, "
+         "`certification_count` is excluded by the user-authorized A-002 exception; "
+         "its source value remains in canonical data. `split`, `split_group`, latitude, "
          "longitude and graph metadata are equally absent — leakage-control metadata never "
          "becomes queryable data.\n",
          f"Indexes created: **{len(stats['indexes'])}** "

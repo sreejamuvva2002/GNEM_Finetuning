@@ -1,0 +1,16 @@
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+  [PASS] registry_frozen_before_generation: HOLDOUT_REGISTRY_v3 holdout_v3.2_A002
+  [PASS] source_hashes_match_ledger: B 87ea988d2e0a.. == ledger 87ea988d2e0a.. and D 6a199c7d15ef.. == ledger 6a199c7d15ef.. -- refusing to inherit a prior exposure verdict for drifted source
+  [PASS] exposure_count_zero_rescanned: 0 held-out literals across 10380 strings in BD_full, RE-SCANNED here (not inherited from B/D's ledger entries) -- BD_controlled and D_repeat are subsets/repeats of this same content, so this scan covers them too
+  [PASS] bd_full_is_exact_union_of_b_and_d: 3460 items = 2149 B + 1311 D, no additions or omissions
+  [PASS] bd_controlled_items_are_genuine_b_or_d: 2149 from B + 1356 from D = 3505, no fabricated items
+  [PASS] bd_controlled_approximately_50_50: B 47202 / D 47205 supervised completion tokens (ratio 1.000, target >= 0.95 for '~50/50')
+  [PASS] bd_controlled_uses_full_anchor_arm: the larger-total arm (B) is used in full (2149 items), never subsampled downward
+  [PASS] d_repeat_is_pure_d_content: every D_repeat_budgetmatched item's source id traces to a real D item; no B content present
+  [PASS] d_repeat_matches_controlled_budget: D_repeat_budgetmatched 94432 supervised tokens vs BD_controlled 94407 (within one item's worth of exact, since repetition proceeds in whole-item units)
+  [PASS] real_tokenizer_used: tokenizer.json hash matches the frozen Phase 6/10 expectation - no estimator, no substitution
+
+All Phase 16 gates passed.
+  datasets_v3/train_BD_facts_sql_v3.jsonl  sha256 64dc25b3df873505ecfa67f7af7e90029889d5a379a145d1d115f51c43d3271a  (3460 items)
+  datasets_v3/train_BD_controlled_v3.jsonl  sha256 df95dd003c9d9f17df78f75e7facd7aee2095c1aa7f20919e94f821704e2b033  (3505 items, B 47202 / D 47205 tok)
+  datasets_v3/train_D_repeat_budgetmatched_v3.jsonl  sha256 6d7bc704fb26c9496289e172a9d4bad0764e93e1fdf8728bff56dd9a5453f93b  (2718 items, 94432 tok)

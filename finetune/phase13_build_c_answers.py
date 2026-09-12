@@ -27,6 +27,7 @@ through from the pool task, never dropped.
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -60,6 +61,39 @@ def load_pool() -> list[dict]:
 
 
 def is_eligible(task: dict, held: dict) -> tuple[bool, str | None]:
+    sql = task.get("gold_sql")
+    if not isinstance(sql, str) or not sql.strip():
+        raise Gate("Missing actual gold SQL")
+    # Training pool grammar: one SELECT, explicit plain-name joins, no CTEs
+    # or quoted table identifiers. More complex evaluation SQL is unaffected.
+    for match in H._SQL_NOISE_RE.finditer(sql):
+        if match.group(0).startswith(('"', '`', '[')):
+            raise Gate("Quoted SQL identifiers are outside the training pool grammar")
+    clean = H._strip_sql_noise(sql)
+    if len(re.findall(r"\bSELECT\b", clean, re.I)) != 1 or re.search(r"\bWITH\b", clean, re.I):
+        raise Gate("CTEs/subqueries are outside the training pool grammar")
+    if ';' in clean.rstrip().rstrip(';'):
+        raise Gate("Multiple statements in training gold")
+    tables = re.findall(r"\b(?:FROM|JOIN)\s+(\w+)", clean, re.I)
+    if not tables or any(t.lower() not in {'companies','processes','services','certifications'} for t in tables):
+        raise Gate("Unknown or missing training table")
+    from_part = re.split(r"\bFROM\b", clean, flags=re.I)[1]
+    from_part = re.split(r"\b(?:WHERE|GROUP|ORDER|LIMIT)\b", from_part, flags=re.I)[0]
+    if ',' in from_part or re.search(r"\b(?:FROM|JOIN)\s+\w+\s*\.", clean, re.I):
+        raise Gate("Implicit joins or qualified tables are outside the training pool grammar")
+    if len(re.findall(r"\bJOIN\b", clean, re.I)) != task["join_arity"]:
+        raise Gate("Actual JOIN count disagrees with task metadata")
+    actual_family = H.classify_operation(sql)
+    if actual_family != task["operation_family"]:
+        raise Gate("Actual SQL operation disagrees with task metadata")
+    if H.operation_families_present(sql) & set(H.HELD_OUT_OPERATIONS):
+        return False, "held_out_actual_sql_operation"
+    used = {t.lower() for t in tables} & set(H.MULTIVALUED)
+    reg = H.load_registry()
+    if any(set(pair) <= used for pair in reg["composition_holdouts"]["held_out_sets"]):
+        return False, "held_out_actual_sql_composition"
+    if used != set(task["fields_used"]) & set(H.MULTIVALUED):
+        raise Gate("Actual child tables disagree with task metadata")
     if task["operation_family"] in H.HELD_OUT_OPERATIONS:
         return False, f"held_out_operation:{task['operation_family']}"
     for field, vals in held.items():

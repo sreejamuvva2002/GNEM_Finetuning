@@ -1,0 +1,129 @@
+  [PASS] fault:policy_prefers_low_collateral_over_test_support: policy chose ['lowcol_a', 'lowcol_b'] (union 2 train rows); a max-test-support rule would have chosen ['bigtest_a', 'bigtest_b'] (union 6, test 16). The two genuinely disagree.
+  [PASS] fault:test_support_cannot_affect_ranking: ranking is decided on train-side collateral only
+  [PASS] fault:dev_below_minimum_is_ineligible: 0 candidates with dev < 1 survive eligibility
+  [PASS] fault:train_below_minimum_is_ineligible: 0 candidates with train < 2 survive eligibility
+  [PASS] fault:test_below_minimum_is_ineligible: 0 candidates with test < 1 survive eligibility
+  [PASS] fault:rejected_dev0_candidate_ISO_22301: ISO 22301: dev_support 0 -> ineligible (was wrongly selected before)
+  [PASS] fault:rejected_dev0_candidate_OHSAS_18001: OHSAS 18001: dev_support 0 -> ineligible (was wrongly selected before)
+  [PASS] fault:row_band_reproduces_readme_processes: stage-1 row-band 26 == README 26
+  [PASS] fault:stages_reported_distinctly_processes: row-band 26 != post-filter eligible 13; both recorded
+  [PASS] fault:registry_records_both_stages_processes: registry carries both counts under unambiguous names
+  [PASS] fault:row_band_reproduces_readme_services: stage-1 row-band 13 == README 13
+  [PASS] fault:stages_reported_distinctly_services: row-band 13 != post-filter eligible 7; both recorded
+  [PASS] fault:registry_records_both_stages_services: registry carries both counts under unambiguous names
+  [PASS] fault:row_band_reproduces_readme_certifications: stage-1 row-band 8 == README 8
+  [PASS] fault:stages_reported_distinctly_certifications: row-band 8 != post-filter eligible 2; both recorded
+  [PASS] fault:registry_records_both_stages_certifications: registry carries both counts under unambiguous names
+  [PASS] fault:objective_is_union_train_row_loss_processes: selected set has the minimum union train-row loss (6)
+  [PASS] fault:coverage_floor_enforced_processes: every feasible combination retains >= 85.0%
+  [PASS] fault:objective_is_union_train_row_loss_services: selected set has the minimum union train-row loss (2)
+  [PASS] fault:coverage_floor_enforced_services: every feasible combination retains >= 85.0%
+  [PASS] fault:objective_is_union_train_row_loss_certifications: selected set has the minimum union train-row loss (13)
+  [PASS] fault:coverage_floor_enforced_certifications: every feasible combination retains >= 85.0%
+  [PASS] fault:tie1_exact_company_union: the wider company footprint loses tie-break 1
+  [PASS] fault:tie2_dev_support_maximised: with equal collateral and companies, higher dev support wins (bb dev=5 > aa dev=1)
+  [PASS] fault:tie3_lexicographic_final: fully tied candidates resolve to the lexicographically smallest
+  [PASS] fault:impossible_coverage_floor_refused: HoldoutError: certifications: no 2-combination satisfies the 99.9% flo
+  [PASS] fault:oversized_holdout_count_refused: HoldoutError: certifications: post-split-filter eligible pool 2 < requ
+  [PASS] fault:deterministic_rerun_identical: repeated optimisation yields identical selected sets
+  [PASS] fault:value_exposure_detected: 1 exposure of 'Battery Module Assembly' in a catalogue-like string
+  [PASS] fault:exposure_assert_fails_loudly: HoldoutError: exposure_count != 0 -- held-out literals appear in rende
+  [PASS] fault:clean_strings_pass: 0 exposures on clean text
+  [PASS] fault:operation_exposure_all_three_families: GROUP_BY, LIMIT and ARGMAX_TOPK each detected independently
+  [PASS] fault:composition_superset_violation_detected: H=['certifications', 'processes'] inside a 3-component set is caught; single components are not
+  [PASS] fault:composition_does_not_hide_component_values: component-bearing text is clean unless it carries a held-out VALUE
+  [PASS] fault:fingerprint_ignores_non_semantic_fields: example_id/split/seed/question do not change the fingerprint
+  [PASS] fault:detect_evasion_3d21: comment/whitespace variant of GROUP BY still detected: 'SELECT county, COUNT(*) FROM companies GROUP/**/BY county'
+  [PASS] fault:detect_evasion_8301: comment/whitespace variant of GROUP BY still detected: 'SELECT county, COUNT(*) FROM companies GROUP\nBY county'
+  [PASS] fault:detect_evasion_c1c5: comment/whitespace variant of GROUP BY still detected: 'SELECT county, COUNT(*) FROM companies GROUP  BY county'
+  [PASS] fault:no_false_positive_497: literal/identifier/plain-word variant NOT falsely detected: "SELECT 'LIMIT' AS x FROM companies"
+  [PASS] fault:no_false_positive_52fc: literal/identifier/plain-word variant NOT falsely detected: 'SELECT "GROUP BY" FROM companies'
+  [PASS] fault:no_false_positive_b7d8: literal/identifier/plain-word variant NOT falsely detected: 'SELECT `GROUP BY` FROM companies'
+  [PASS] fault:no_false_positive_1c7e: literal/identifier/plain-word variant NOT falsely detected: "SELECT company FROM companies WHERE x = '[GROUP BY]'"
+  [PASS] fault:no_false_positive_e3cb: literal/identifier/plain-word variant NOT falsely detected: 'SELECT group_id FROM companies'
+  [PASS] fault:escaped_quotes_handled: an escaped quote inside a string literal does not break literal-span detection
+  [PASS] fault:scan_strings_rejects_bare_string: TypeError: scan_strings expects list[str], got str -- wrap a single
+  [PASS] fault:scan_strings_rejects_dict: TypeError: scan_strings expects list[str], got dict -- wrap a singl
+  [PASS] fault:scan_strings_detects_in_list: list-wrapped scalar-equivalent input is scanned correctly
+  [PASS] fault:scan_operations_rejects_bare_string: TypeError: scan_operations expects list[str], got str -- for a part
+  [PASS] fault:scan_operations_rejects_dict: TypeError: scan_operations expects list[str], got dict -- for a par
+  [PASS] fault:scan_compositions_rejects_dict: TypeError: scan_compositions expects list[iterable[str]], got dict 
+  [PASS] fault:normalization_detects_b410: case/whitespace variant of 'AS9100' detected: 'AS9100'
+  [PASS] fault:normalization_detects_b3c8: case/whitespace variant of 'AS9100' detected: 'as9100'
+  [PASS] fault:normalization_detects_7470: case/whitespace variant of 'AS9100' detected: '  AS9100  '
+  [PASS] fault:normalization_detects_b410: case/whitespace variant of 'AS9100' detected: 'AS9100'
+  [PASS] fault:normalization_no_false_positive_on_unrelated_text: unrelated text is not falsely flagged
+  [PASS] fault:verified_zero_passes: a real scan with 0 exposures passes
+  [PASS] fault:empty_scan_does_not_pass_as_verified_zero: HoldoutError: value-scan report proves nothing was actually scanned (s
+  [PASS] fault:malformed_value_report_rejected: HoldoutError: malformed value-scan report, missing ['exposure_counts',
+  [PASS] fault:operation_verified_zero_passes: a real op-scan with 0 exposures passes
+  [PASS] fault:empty_operation_scan_does_not_pass: HoldoutError: operation-scan report proves nothing was actually scanne
+  [PASS] fault:composition_verified_zero_passes: a real composition-scan with 0 violations passes
+  [PASS] fault:empty_composition_scan_does_not_pass: HoldoutError: composition-scan report proves nothing was actually scan
+  [PASS] fault:multipart_dict_keys_are_not_sql: confirms WHY the dict-direct call would have silently found nothing
+  [PASS] fault:scan_operations_multipart_finds_real_violation: scan_operations_multipart correctly scans .values(), catching the bare LIMIT in the 'companies' part
+  [PASS] fault:scan_operations_multipart_rejects_non_dict: TypeError: scan_operations_multipart expects a part_id-keyed dict
+  [PASS] fault:composition_per_part_alone_misses_violation: checking [['certifications'], ['processes']] separately reports 0 violations even though the held-out pair straddles the two parts
+  [PASS] fault:scan_compositions_multipart_catches_split_violation: the task-level UNION of both parts' components correctly reports the held-out pair present across the whole task
+  [PASS] fault:scan_compositions_multipart_rejects_non_dict: TypeError: scan_compositions_multipart expects a part_id-keyed dict
+  [PASS] fault:candidate_loader_works_pre_approval: load_candidate_registry_for_phase9_audit() succeeds with no approval anchor present
+  [FAIL] fault:production_loader_refuses_without_approval: *** NOT RAISED *** load_registry() must raise Phase9NotApproved, not silently serve an unapproved registry
+  [PASS] fault:mutated_selected_value_rejected: HoldoutError: registry does not match deterministic recomputation from
+  [PASS] fault:registry_missing_sections_rejected: HoldoutError: registry missing required section(s): ['phase', 'policy_
+  [PASS] fault:duplicate_selected_value_rejected: HoldoutError: duplicate selected value(s) in processes: ['Battery Modu
+  [PASS] fault:malformed_json_rejected: HoldoutError: malformed registry JSON: Expecting property name enclose
+  [PASS] fault:deep_immutability_holds: mutating a returned section does not corrupt the registry's stored canonical text -- each access returns a fresh parse
+  [PASS] fault:allowed_operations_present_in_loaded_registry: contract survives load/verify round-trip
+  [PASS] fault:primary_oems_restricted: Primary OEMs excludes group_by/argmax_topk at the SEMANTIC layer, not just training eligibility (README:537-538)
+  [PASS] fault:address_no_aggregation: Address gets no structured aggregation (README:538)
+  [PASS] fault:employment_ranking_semantically_valid_but_training_ineligible: ranking by employment is semantically meaningful (needed by the Phase 22 operation-heldout probe) but training-ineligible (argmax_topk is held out everywhere) -- the two layers correctly disagree
+  [PASS] fault:limit_only_excluded_regardless_of_field_policy: limit_only is field-agnostic and caught by the real SQL scanner independent of any per-field policy lookup
+  [PASS] fault:reg_kwarg_rejects_raw_dict: TypeError: reg must be a VerifiedCandidateRegistry (from load_candi
+  [PASS] fault:verified_registry_rejects_direct_construction: HoldoutError: VerifiedCandidateRegistry may not be constructed directl
+  [PASS] fault:approval_requires_commit_and_date_not_just_hash: HoldoutError: PHASE9_APPROVAL.json missing required field(s) ['approve
+  [PASS] fault:none_entries_rejected_immediately_by_scan_strings: HoldoutError: scan_strings: a None entry means a slot was never actual
+  [PASS] fault:none_sql_entries_rejected_immediately_by_scan_operations: HoldoutError: scan_operations: a None entry means a declared part's SQ
+  [PASS] fault:multipart_composition_scan_rejects_zero_parts: HoldoutError: scan_compositions_multipart: empty parts dict -- a multi
+  [PASS] fault:multipart_operation_scan_rejects_zero_parts: HoldoutError: scan_operations_multipart: empty parts dict -- a multi-p
+  [PASS] fault:hits_nonempty_with_zero_total_is_malformed: HoldoutError: value-scan report internally inconsistent: total_exposur
+  [PASS] fault:violations_nonempty_with_zero_count_is_malformed: HoldoutError: composition-scan report internally inconsistent: composi
+  [PASS] fault:fingerprint_rejects_incomplete_logical_components_empty_dict: HoldoutError: logical_components node is empty or not a mapping -- fai
+  [PASS] fault:fingerprint_rejects_incomplete_logical_components_and_no_operands: HoldoutError: logical_components: 'AND' requires a non-empty 'operands
+  [PASS] fault:fingerprint_rejects_incomplete_logical_components_leaf_no_content: HoldoutError: logical_components leaf node with op='eq' is missing req
+  [PASS] fault:fingerprint_accepts_well_formed_leaf: a genuinely complete leaf node still produces a fingerprint
+  [PASS] fault:fingerprint_leaf_requires_value_not_just_two_keys: HoldoutError: logical_components leaf node with op='eq' is missing req
+  [PASS] fault:fingerprint_leaf_requires_field_not_just_two_keys: HoldoutError: logical_components leaf node with op='eq' is missing req
+  [PASS] fault:scan_strings_rejects_none_mixed_with_valid_entries: HoldoutError: scan_strings: a None entry means a slot was never actual
+  [PASS] fault:scan_operations_rejects_none_mixed_with_valid_entries: HoldoutError: scan_operations: a None entry means a declared part's SQ
+  [PASS] fault:scan_operations_multipart_rejects_none_part: HoldoutError: scan_operations: a None entry means a declared part's SQ
+  [PASS] fault:scan_compositions_rejects_bare_string: TypeError: scan_compositions expects list[iterable[str]], got str -
+  [PASS] fault:scan_compositions_rejects_nested_bare_string: TypeError: scan_compositions: component set(s) at index [0] are bar
+  [PASS] fault:scan_compositions_multipart_rejects_nested_bare_strings: TypeError: scan_compositions_multipart: part(s) ['p1', 'p2'] carry 
+  [PASS] fault:scan_compositions_multipart_correct_shape_still_detects_violation: properly-shaped list values correctly detect the held-out composition once the nested-string guard stops accepting the malformed shape instead: {'composition_violations': 1, 'violations': [{'index': 0, 'held_out_set': ['certifications', 'processes'], 'training_set': ['certifications', 'processes']}], 'sets_scanned': 1}
+  [PASS] fault:scan_operations_rejects_blank_sql_entry: HoldoutError: scan_operations: a blank/whitespace-only entry is not an
+  [PASS] fault:scan_compositions_rejects_none_member: TypeError: scan_compositions: set at index 0: component name(s) [No
+  [PASS] fault:scan_compositions_rejects_numeric_member: TypeError: scan_compositions: set at index 0: component name(s) [12
+  [PASS] fault:scan_compositions_rejects_blank_member: TypeError: scan_compositions: set at index 0: component name(s) [''
+  [PASS] fault:scan_compositions_rejects_whitespace_member: TypeError: scan_compositions: set at index 0: component name(s) [' 
+  [PASS] fault:scan_compositions_multipart_rejects_none_member: TypeError: scan_compositions_multipart: part 'p1': component name(s
+  [PASS] fault:scan_compositions_multipart_rejects_bytes_member: TypeError: scan_compositions_multipart: part 'p1': component name(s
+  [PASS] fault:scan_compositions_multipart_str_member_detects_violation_bytes_hid: the exact composition the bytes-typed call above wrongly reported as clean must be detected once the members are ordinary strings: {'composition_violations': 1, 'violations': [{'index': 0, 'held_out_set': ['certifications', 'processes'], 'training_set': ['certifications', 'processes']}], 'sets_scanned': 1}
+  [PASS] fault:scan_compositions_multipart_valid_heldin_control_passes_clean: a genuinely held-in single-component task (not the held-out pair) must still scan clean after the member-validation fix: {'composition_violations': 0, 'violations': [], 'sets_scanned': 1}
+  [PASS] fault:scan_compositions_iterator_input_detects_violation: an iterator (not list/tuple/set) containing the held-out pair must be detected, not silently exhausted by validation before the scan runs: {'composition_violations': 1, 'violations': [{'index': 0, 'held_out_set': ['certifications', 'processes'], 'training_set': ['certifications', 'processes']}], 'sets_scanned': 1}
+  [PASS] fault:scan_compositions_multipart_iterator_input_detects_violation: iterator part values must be detected across the multipart union, not silently exhausted between validation and union-building: {'composition_violations': 1, 'violations': [{'index': 0, 'held_out_set': ['certifications', 'processes'], 'training_set': ['certifications', 'processes']}], 'sets_scanned': 1}
+  [PASS] fault:scan_compositions_generator_input_detects_violation: a generator containing the held-out pair must be detected: {'composition_violations': 1, 'violations': [{'index': 0, 'held_out_set': ['certifications', 'processes'], 'training_set': ['certifications', 'processes']}], 'sets_scanned': 1}
+  [PASS] fault:scan_compositions_multipart_generator_input_detects_violation: generator part values must be detected across the multipart union: {'composition_violations': 1, 'violations': [{'index': 0, 'held_out_set': ['certifications', 'processes'], 'training_set': ['certifications', 'processes']}], 'sets_scanned': 1}
+  [PASS] fault:scan_compositions_container_equivalence_heldout_list: list-typed held-out input must detect 1 violation, got {'composition_violations': 1, 'violations': [{'index': 0, 'held_out_set': ['certifications', 'processes'], 'training_set': ['certifications', 'processes']}], 'sets_scanned': 1}
+  [PASS] fault:scan_compositions_container_equivalence_heldout_tuple: tuple-typed held-out input must detect 1 violation, got {'composition_violations': 1, 'violations': [{'index': 0, 'held_out_set': ['certifications', 'processes'], 'training_set': ['certifications', 'processes']}], 'sets_scanned': 1}
+  [PASS] fault:scan_compositions_container_equivalence_heldout_set: set-typed held-out input must detect 1 violation, got {'composition_violations': 1, 'violations': [{'index': 0, 'held_out_set': ['certifications', 'processes'], 'training_set': ['certifications', 'processes']}], 'sets_scanned': 1}
+  [PASS] fault:scan_compositions_container_equivalence_heldout_iterator: iterator-typed held-out input must detect 1 violation, got {'composition_violations': 1, 'violations': [{'index': 0, 'held_out_set': ['certifications', 'processes'], 'training_set': ['certifications', 'processes']}], 'sets_scanned': 1}
+  [PASS] fault:scan_compositions_container_equivalence_heldout_generator: generator-typed held-out input must detect 1 violation, got {'composition_violations': 1, 'violations': [{'index': 0, 'held_out_set': ['certifications', 'processes'], 'training_set': ['certifications', 'processes']}], 'sets_scanned': 1}
+  [PASS] fault:scan_compositions_container_equivalence_heldin_list: list-typed held-in (single-component) input must scan clean, got {'composition_violations': 0, 'violations': [], 'sets_scanned': 1}
+  [PASS] fault:scan_compositions_container_equivalence_heldin_tuple: tuple-typed held-in (single-component) input must scan clean, got {'composition_violations': 0, 'violations': [], 'sets_scanned': 1}
+  [PASS] fault:scan_compositions_container_equivalence_heldin_set: set-typed held-in (single-component) input must scan clean, got {'composition_violations': 0, 'violations': [], 'sets_scanned': 1}
+  [PASS] fault:scan_compositions_container_equivalence_heldin_iterator: iterator-typed held-in (single-component) input must scan clean, got {'composition_violations': 0, 'violations': [], 'sets_scanned': 1}
+  [PASS] fault:scan_compositions_container_equivalence_heldin_generator: generator-typed held-in (single-component) input must scan clean, got {'composition_violations': 0, 'violations': [], 'sets_scanned': 1}
+  [PASS] fault:scan_compositions_rejects_malformed_member_via_generator: TypeError: scan_compositions: set at index 0: component name(s) [No
+  [PASS] fault:scan_compositions_multipart_rejects_malformed_member_via_generator: TypeError: scan_compositions_multipart: part 'p1': component name(s
+
+FAULT SUITE FAILED: ['production_loader_refuses_without_approval']

@@ -1,0 +1,10 @@
+test_empty_assistant_refused (__main__.LabelTests.test_empty_assistant_refused) ... ok
+test_entire_answer_and_eot_supervised (__main__.LabelTests.test_entire_answer_and_eot_supervised) ... ok
+test_extra_turn_refused_until_explicit_support (__main__.LabelTests.test_extra_turn_refused_until_explicit_support) ... ok
+test_long_answer_fails_instead_of_truncating_list (__main__.LabelTests.test_long_answer_fails_instead_of_truncating_list) ... ok
+test_long_prompt_fails_instead_of_dropping_answer (__main__.LabelTests.test_long_prompt_fails_instead_of_dropping_answer) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 4.154s
+
+OK

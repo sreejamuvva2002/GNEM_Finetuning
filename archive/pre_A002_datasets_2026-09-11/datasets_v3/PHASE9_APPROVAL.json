@@ -1,0 +1,8 @@
+{
+  "approved_by": "Sreeja (sreejamuvva2002@gmail.com)",
+  "approved_commit": "6ac466d23404b25ddabc4a82e14b1b692a157916",
+  "approved_date": "2026-09-07",
+  "approved_registry_sha256": "b0a29b197e7e08ccacc58560fcb538f1ad8d5b47fa31c0ed2799986d15da796f",
+  "note": "Approval follows seven correction rounds (3ad1fb6..6ac466d) hardening the exposure/composition scanners and grading validation code around a holdout selection (9 values, v3.1 collateral-minimizing objective) that has been byte-unchanged and independently re-verified as optimal since 9a1c0d8. A scoped external re-audit of 6ac466d found no remaining technical blocker and recommended approval; this record reflects the user's separate, explicit authorization of that recommendation, not the audit itself.",
+  "workflow": "See finetune/holdout_v3.py load_registry(): this file is the required approval anchor gating production/Phase-10+ consumption of the frozen candidate registry. approved_registry_sha256 must match VerifiedCandidateRegistry.sha256() for the current datasets_v3/HOLDOUT_REGISTRY_v3.json at load time; a mismatch raises RegistryTamperError."
+}

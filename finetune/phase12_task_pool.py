@@ -92,6 +92,7 @@ QUESTION = {
 }
 
 FIELD_LABEL = {
+    "location": "recorded location", "product_or_service": "exact recorded product/service description",
     "category": "category", "industry_group": "industry group",
     "primary_facility_type": "primary facility type",
     "ev_supply_chain_role": "EV supply chain role",
@@ -126,7 +127,7 @@ def semantic_ops_for(field: str) -> set[str]:
 SCALAR_FIELDS = ("category", "industry_group", "primary_facility_type",
                  "ev_supply_chain_role", "supplier_or_affiliation_type",
                  "classification_method", "city", "county",
-                 "primary_oems", "address", "ev_battery_relevant")
+                 "primary_oems", "address", "ev_battery_relevant", "location", "product_or_service")
 # Correction (post-approval audit): count is an AGGREGATION, and address/
 # primary_oems carry only {"filter"} in FIELD_SEMANTIC_OPERATIONS -- no
 # "aggregation" at all. The original build iterated SCALAR_FIELDS
@@ -142,8 +143,7 @@ COMPOSITION_PAIRS = tuple(
     p for p in H.COMPOSITION_FAMILIES
     if tuple(sorted(p)) not in {tuple(sorted(h)) for h in
                                 (lambda reg: reg["composition_holdouts"]["held_out_sets"])(
-                                    json.loads((ROOT / "datasets_v3" /
-                                               "HOLDOUT_REGISTRY_v3.json").read_text()))})
+                                    H.load_registry())})
 
 
 def scalar_field_values(train_recs, field: str) -> dict[str, set[str]]:
@@ -273,9 +273,10 @@ def sql_composition(f1: str, v1: str, f2: str, v2: str) -> str:
     t1, c1 = CHILD_TABLES[f1], CHILD_COLUMN[f1]
     t2, c2 = CHILD_TABLES[f2], CHILD_COLUMN[f2]
     return (f"SELECT DISTINCT c.company FROM companies c "
-           f"WHERE c.company IN (SELECT company FROM {t1} WHERE {c1} = "
-           f"{sql_lit(v1)}) AND c.company IN (SELECT company FROM {t2} "
-           f"WHERE {c2} = {sql_lit(v2)}) ORDER BY c.company")
+            f"JOIN {t1} x1 ON x1.company = c.company "
+            f"JOIN {t2} x2 ON x2.company = c.company "
+            f"WHERE x1.{c1} = {sql_lit(v1)} AND x2.{c2} = {sql_lit(v2)} "
+            f"ORDER BY c.company")
 
 
 # ---------------------------------------------------------------------------
@@ -374,14 +375,14 @@ def build():
         for value, cos in sorted(vals.items()):
             if MIN_SUPPORT <= len(cos) <= LIST_CAP:
                 q = QUESTION["filter"].format(field_h=FIELD_LABEL[field], value=value)
-                tid = f"D_v3_filter_{field}_{len(tasks):05d}"
+                tid = f"D_v3_filter_{field}_{len(seen_ids):05d}"
                 add(make_task(tid, q, sql_filter(field, value), answer_type="set",
                               target_columns=["company"], fields_used=[field],
                               values_used=[value], logical_components=leaf(field, value),
                               join_arity=0))
             if field in AGGREGATABLE_FIELDS and len(cos) >= MIN_SUPPORT:
                 q = QUESTION["count"].format(field_h=FIELD_LABEL[field], value=value)
-                tid = f"D_v3_count_{field}_{len(tasks):05d}"
+                tid = f"D_v3_count_{field}_{len(seen_ids):05d}"
                 add(make_task(tid, q, sql_count(field, value), answer_type="scalar",
                               target_columns=["n"], fields_used=[field],
                               values_used=[value], logical_components=leaf(field, value),
@@ -398,13 +399,13 @@ def build():
                 continue
             label = FIELD_LABEL[field]
             q = QUESTION["child_filter"].format(value=f"the {label} {value}")
-            tid = f"D_v3_child_filter_{field}_{len(tasks):05d}"
+            tid = f"D_v3_child_filter_{field}_{len(seen_ids):05d}"
             add(make_task(tid, q, sql_child_filter(field, value), answer_type="set",
                           target_columns=["company"], fields_used=[field],
                           values_used=[value], logical_components=leaf(field, value),
                           join_arity=1))
             q = QUESTION["child_count"].format(value=f"the {label} {value}")
-            tid = f"D_v3_child_count_{field}_{len(tasks):05d}"
+            tid = f"D_v3_child_count_{field}_{len(seen_ids):05d}"
             add(make_task(tid, q, sql_child_count(field, value), answer_type="scalar",
                           target_columns=["n"], fields_used=[field],
                           values_used=[value], logical_components=leaf(field, value),
@@ -419,7 +420,7 @@ def build():
         if not (MIN_SUPPORT <= support <= LIST_CAP):
             continue
         q = QUESTION["threshold_filter"].format(value=n)
-        tid = f"D_v3_threshold_employment_{len(tasks):05d}"
+        tid = f"D_v3_threshold_employment_{len(seen_ids):05d}"
         add(make_task(tid, q, sql_threshold(n), answer_type="set",
                       target_columns=["company"], fields_used=["employment"],
                       values_used=[n], logical_components={"op": "gt",
@@ -467,7 +468,7 @@ def build():
                 composition_candidates(train_recs, f1, f2).items()):
             label = f"{FIELD_LABEL[f1]} {v1} and {FIELD_LABEL[f2]} {v2}"
             q = QUESTION["composition_filter"].format(value=label)
-            tid = f"D_v3_composition_{f1}_{f2}_{len(tasks):05d}"
+            tid = f"D_v3_composition_{f1}_{f2}_{len(seen_ids):05d}"
             add(make_task(tid, q, sql_composition(f1, v1, f2, v2),
                           answer_type="set", target_columns=["company"],
                           fields_used=[f1, f2], values_used=[v1, v2],

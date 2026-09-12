@@ -1,0 +1,19 @@
+{
+  "condition": "base_sql_5shot",
+  "regrade_of": "results_v3/dev/base_sql_5shot/protocol_A002",
+  "source_predictions_sha256": "940d4499c2f5d5adcf7f0950cbb49625b8e3b60409689a7d6d6533936c621904",
+  "development_only": true,
+  "micro_only": false,
+  "model_inference_repeated": false,
+  "expected_count": 51,
+  "input_hashes": {
+    "dev_structured_v3.jsonl": "a50262fb61af9f2c057b1c428023d3f16b89920aaed4ce028badb1c3a887b804"
+  },
+  "prompt_sha256": "a806773b08bc91829324ee2fba39edfe24ff2c1d41623fc250eb545914cbe96e",
+  "model_revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+  "grader_version": "grade_v3.2_A002",
+  "grader_sha256": "c7775cdcf69f11705eb35a172202cc917648fa6df149a13c8cb8d217e63cfb04",
+  "regrader_sha256": "2327d4985f4ba03326c22ccfed522090912a3df2dffc2c8a09cbd93a7d8abc84",
+  "status_changes": 0,
+  "note": "Raw predictions preserved verbatim; only the verdict was recomputed."
+}

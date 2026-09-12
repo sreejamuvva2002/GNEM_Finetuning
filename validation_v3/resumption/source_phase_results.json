@@ -1,0 +1,19 @@
+[
+  {
+    "phase": 2,
+    "exit_code": 0,
+    "byte_identical_outputs": {
+      "datasets_v3/canonical_records_v3.jsonl": true,
+      "validation_v3/CLEANING_AUDIT_v3.csv": true
+    },
+    "scope": "Existing normalization/split gates; source and company holdout retained by A-002. No amended downstream dataset certification."
+  },
+  {
+    "phase": 3,
+    "exit_code": 0,
+    "byte_identical_outputs": {
+      "datasets_v3/company_split_groups_v3.csv": true
+    },
+    "scope": "Existing normalization/split gates; source and company holdout retained by A-002. No amended downstream dataset certification."
+  }
+]

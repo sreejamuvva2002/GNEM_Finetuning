@@ -1,0 +1,56 @@
+{
+  "best_global_step": 2,
+  "best_metric": 5.435128211975098,
+  "best_model_checkpoint": "/home/sm11926/GNEM_Finetuning/validation_v3/smoke_models/BC.seed61/checkpoint-2",
+  "epoch": 0.25,
+  "eval_steps": 2,
+  "global_step": 2,
+  "is_hyper_param_search": false,
+  "is_local_process_zero": true,
+  "is_world_process_zero": true,
+  "log_history": [
+    {
+      "epoch": 0.125,
+      "grad_norm": 26.17339324951172,
+      "learning_rate": 0.0,
+      "loss": 8.284,
+      "step": 1
+    },
+    {
+      "epoch": 0.25,
+      "grad_norm": 70.6279525756836,
+      "learning_rate": 0.0001,
+      "loss": 10.7573,
+      "step": 2
+    },
+    {
+      "epoch": 0.25,
+      "eval_loss": 5.435128211975098,
+      "eval_runtime": 0.2859,
+      "eval_samples_per_second": 13.989,
+      "eval_steps_per_second": 13.989,
+      "step": 2
+    }
+  ],
+  "logging_steps": 1,
+  "max_steps": 2,
+  "num_input_tokens_seen": 0,
+  "num_train_epochs": 1,
+  "save_steps": 2,
+  "stateful_callbacks": {
+    "TrainerControl": {
+      "args": {
+        "should_epoch_stop": false,
+        "should_evaluate": false,
+        "should_log": false,
+        "should_save": true,
+        "should_training_stop": true
+      },
+      "attributes": {}
+    }
+  },
+  "total_flos": 11444564183040.0,
+  "train_batch_size": 1,
+  "trial_name": null,
+  "trial_params": null
+}

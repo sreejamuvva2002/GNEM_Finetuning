@@ -1,0 +1,48 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/8 [00:00<?, ?it/s]Loading checkpoint shards:  12%|█▎        | 1/8 [00:02<00:15,  2.17s/it]Loading checkpoint shards:  25%|██▌       | 2/8 [00:04<00:12,  2.16s/it]Loading checkpoint shards:  38%|███▊      | 3/8 [00:06<00:10,  2.19s/it]Loading checkpoint shards:  50%|█████     | 4/8 [00:08<00:08,  2.20s/it]Loading checkpoint shards:  62%|██████▎   | 5/8 [00:10<00:06,  2.20s/it]Loading checkpoint shards:  75%|███████▌  | 6/8 [00:13<00:04,  2.19s/it]Loading checkpoint shards:  88%|████████▊ | 7/8 [00:15<00:02,  2.20s/it]Loading checkpoint shards: 100%|██████████| 8/8 [00:16<00:00,  1.80s/it]Loading checkpoint shards: 100%|██████████| 8/8 [00:16<00:00,  2.04s/it]
+The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+FR_4_category incorrect
+FR_4_industry_group incorrect
+FR_4_location incorrect
+FR_4_address incorrect
+FR_4_primary_facility_type incorrect
+FR_4_ev_supply_chain_role incorrect
+FR_4_primary_oems incorrect
+FR_4_supplier_or_affiliation_type incorrect
+FR_4_employment incorrect
+FR_4_product_or_service incorrect
+FR_4_ev_battery_relevant incorrect
+FR_4_classification_method incorrect
+FR_4_processes incorrect
+FR_4_services incorrect
+FR_4_certifications incorrect
+DEV_S_4_category incorrect
+DEV_S_4_industry_group incorrect
+DEV_S_4_primary_facility_type incorrect
+DEV_S_7_category incorrect
+DEV_S_7_industry_group incorrect
+DEV_S_7_primary_facility_type incorrect
+DEV_S_16_category incorrect
+DEV_S_16_industry_group incorrect
+DEV_S_16_primary_facility_type incorrect
+DEV_S_19_category incorrect
+DEV_S_19_industry_group incorrect
+DEV_S_19_primary_facility_type incorrect
+DEV_S_77_category incorrect
+DEV_S_77_industry_group incorrect
+DEV_S_77_primary_facility_type incorrect
+{
+  "count": 30,
+  "correct": 0,
+  "status_counts": {
+    "correct": 0,
+    "incorrect": 30,
+    "generation_failure": 0,
+    "parse_failure": 0,
+    "SQL_error": 0,
+    "timeout": 0,
+    "truncated_output": 0,
+    "invalid_output": 0
+  },
+  "prediction_sha256": "06e54102b1127afe4caf17879b8fa1d5620ba2ef1087416c5bfdf11793c912aa"
+}

@@ -1,0 +1,21 @@
+  [PASS] registry_frozen_before_generation: HOLDOUT_REGISTRY_v3 holdout_v3.2_A002 dated 2026-09-11
+  [PASS] nonzero_tasks: 1326 tasks
+  [PASS] gold_100pct_execution: 0 execution failures across 1326 candidates
+  [PASS] unique_task_ids: 1326 unique task_ids
+  [PASS] required_fields_complete: all 17 README-required fields present on every task
+  [PASS] nonempty_questions: every question is non-blank
+  [PASS] logical_fingerprint_reproducible: every stored fingerprint reproduces byte-identically from its own task metadata
+  [PASS] operation_family_matches_real_scanner: every stored operation_family reproduces from holdout_v3.classify_operation(gold_sql), the authoritative gate (README:279)
+  [PASS] composition_holdout_pair_never_generated: the held-out composition [('certifications', 'processes')] never appears as a task's fields_used
+  [PASS] deterministic_tiebreak_on_ranking_tasks: every one of 9 top_k tasks orders by metric plus at least one tie-break column (README:510-513)
+  [PASS] no_row_id_where_filter: row_id appears only inside JOIN...ON clauses, never a WHERE filter (README:541-543)
+  [PASS] entity_dependent_flag_present: 447/1326 tasks are entity_dependent (full_kb_gold != train_kb_gold)
+  [PASS] no_empty_set_answer_tasks: every set-answer task has >=1 train_kb_gold row (0 empty candidates excluded before reaching the pool)
+  [PASS] count_uses_distinct_company_not_count_star: every count/child_count task's gold_sql uses COUNT(DISTINCT company), never COUNT(*) (a multi-row company must count once, not once per row)
+  [PASS] no_aggregation_on_filter_only_fields: no count task targets a field outside AGGREGATABLE_FIELDS (address, primary_oems carry only 'filter' in FIELD_SEMANTIC_OPERATIONS -- README:537-538)
+  [PASS] no_sentinel_as_group_by_category: no group_by_breakdown task's gold rows contain a frozen sentinel as a category value
+  [PASS] result_size_within_caps_by_join_arity: every set-answer task's row count is within its arity-appropriate cap (arity 0: <= 40, arity >= 1: <= 25)
+
+All Phase 12 gates passed.
+  datasets_v3/STRUCTURED_TASK_POOL_v3.jsonl  sha256 fb158d92eb56060020b2e33fd6ddf9338c94f8c8ea61926ce0dfdc6a7cc988a7
+  tasks 1326

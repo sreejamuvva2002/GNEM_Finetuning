@@ -19,6 +19,7 @@ here for this exact eligible subset.
 from __future__ import annotations
 
 import json
+import re
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -46,7 +47,8 @@ SQL_SYSTEM = (
     "county); processes(row_id, company, process); "
     "services(row_id, company, service); "
     "certifications(row_id, company, standard_family). Join a child table on "
-    "row_id. Respond with exactly one SQL SELECT statement and nothing else."
+    "row_id for record-level facts; join by company for company-level combinations "
+    "across records. Respond with exactly one SQL SELECT statement and nothing else."
 )
 
 
@@ -128,8 +130,8 @@ def main() -> int:
           else f"{byte_mismatch[:5]}")
 
     check("no_semicolon_string_membership",
-          not any(f"= '{v}'" in i["gold_sql"] and (";" in str(v))
-                 for i in items for v in i.get("values_used", [])),
+          not any(re.search(r"\b(?:process|service|standard_family)\s*=\s*'(?:''|[^'])*;", i["gold_sql"], re.I)
+                  for i in items),
           "no gold_sql compares a child field against a semicolon-joined "
           "string literal (child tables are queried via JOIN)")
 

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/sm11926/GNEM_Finetuning/finetune/phase17_26_build_evaluation.py", line 133, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/sm11926/GNEM_Finetuning/finetune/phase17_26_build_evaluation.py", line 50, in main
+    assert all(H.sha256_file(OUT/name)==v['sha256'] for name,v in proof['artifacts'].items()), 'Training audit is stale'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Training audit is stale

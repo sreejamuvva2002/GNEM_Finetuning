@@ -1,0 +1,2 @@
+PASS: 2220 / 2220 factual observations, complete A records, exact paired C/D, and full factual coverage in mixtures.
+PASS: engineering checks, 3978 scoped gold executions and mutation rejection. Full training remains gated.

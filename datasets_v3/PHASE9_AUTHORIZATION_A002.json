@@ -1,0 +1,10 @@
+{
+  "amendment_sha256": "52280bc2a441708e1c8a1f18ee54eb7ba384ba2df72f4631327db430fb64cf98",
+  "approved_commit": "8e7196e0e58d6ebcb35d7a14944146039f4c912f",
+  "approved_date": "2026-09-11",
+  "approved_registry_sha256": "b200df3c300fe4298c8e35ba8a4b011d1bb367319a92111b114b6f72428890e9",
+  "authorization_basis": "User explicitly requested full-field original V3 and continuing all phases",
+  "commit_semantics": "Historical base at authorization; not approval of a new commit",
+  "policy_code_sha256": "7609bfc9f203d91dc4132a079014f6451a62394c9c3487b477d3eb41dce0bdf2",
+  "validation": "Agent-run regression checks; no independent human approval claimed"
+}

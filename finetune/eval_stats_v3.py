@@ -29,7 +29,7 @@ import math
 import random
 from collections import defaultdict
 
-STATS_VERSION = "eval_stats_v3.0"
+STATS_VERSION = "eval_stats_v3.1"
 BOOTSTRAP_N = 10000
 BOOTSTRAP_SEED = 20260824   # fixed, so bootstrap output is reproducible
 
@@ -71,14 +71,21 @@ def mean_sd(xs, *, deterministic: bool = False) -> dict:
     return {"mean": m, "sd": sd, "n": len(xs), "deterministic": False}
 
 
-def effect_size(diffs) -> float:
-    """Standardized paired effect size (Cohen's d_z). README:972."""
+def effect_size(diffs) -> float | None:
+    """Standardized paired effect (Cohen's d_z), or None for zero variance.
+
+    A-002: with zero sample SD the ratio is undefined, even for identical
+    zero differences. Return JSON-safe None rather than a misleading zero or
+    non-finite number. Reports must also retain mean(diffs), the raw effect.
+    """
     diffs = list(diffs)
     if len(diffs) < 2:
         raise StatsUsageError("effect size needs at least two paired items")
+    if not all(math.isfinite(d) for d in diffs):
+        raise StatsUsageError("effect size requires finite paired differences")
     m = mean(diffs)
     sd = math.sqrt(sum((d - m) ** 2 for d in diffs) / (len(diffs) - 1))
-    return 0.0 if sd == 0 else m / sd
+    return None if sd == 0 else m / sd
 
 
 def paired_bootstrap(diffs, *, n: int = BOOTSTRAP_N, seed: int = BOOTSTRAP_SEED,

@@ -1,0 +1,273 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/8 [00:00<?, ?it/s]Loading checkpoint shards:  12%|█▎        | 1/8 [00:02<00:15,  2.20s/it]Loading checkpoint shards:  25%|██▌       | 2/8 [00:04<00:13,  2.29s/it]Loading checkpoint shards:  38%|███▊      | 3/8 [00:06<00:11,  2.28s/it]Loading checkpoint shards:  50%|█████     | 4/8 [00:09<00:09,  2.30s/it]Loading checkpoint shards:  62%|██████▎   | 5/8 [00:11<00:06,  2.29s/it]Loading checkpoint shards:  75%|███████▌  | 6/8 [00:13<00:04,  2.28s/it]Loading checkpoint shards:  88%|████████▊ | 7/8 [00:15<00:02,  2.27s/it]Loading checkpoint shards: 100%|██████████| 8/8 [00:16<00:00,  1.86s/it]Loading checkpoint shards: 100%|██████████| 8/8 [00:16<00:00,  2.12s/it]
+The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+FR_4_category correct
+FR_4_industry_group correct
+FR_4_location correct
+FR_4_address correct
+FR_4_primary_facility_type correct
+FR_4_ev_supply_chain_role correct
+FR_4_primary_oems correct
+FR_4_supplier_or_affiliation_type incorrect
+FR_4_employment correct
+FR_4_product_or_service incorrect
+FR_4_ev_battery_relevant incorrect
+FR_4_classification_method correct
+FR_4_processes correct
+FR_4_services correct
+FR_4_certifications correct
+FR_7_category correct
+FR_7_industry_group correct
+FR_7_location correct
+FR_7_address correct
+FR_7_primary_facility_type correct
+FR_7_ev_supply_chain_role correct
+FR_7_primary_oems correct
+FR_7_supplier_or_affiliation_type incorrect
+FR_7_employment correct
+FR_7_product_or_service incorrect
+FR_7_ev_battery_relevant correct
+FR_7_classification_method correct
+FR_7_processes correct
+FR_7_services correct
+FR_7_certifications correct
+FR_16_category correct
+FR_16_industry_group correct
+FR_16_location correct
+FR_16_address correct
+FR_16_primary_facility_type correct
+FR_16_ev_supply_chain_role correct
+FR_16_primary_oems correct
+FR_16_supplier_or_affiliation_type correct
+FR_16_employment correct
+FR_16_product_or_service incorrect
+FR_16_ev_battery_relevant correct
+FR_16_classification_method correct
+FR_16_processes correct
+FR_16_services correct
+FR_16_certifications correct
+FR_19_category correct
+FR_19_industry_group correct
+FR_19_location correct
+FR_19_address correct
+FR_19_primary_facility_type correct
+FR_19_ev_supply_chain_role correct
+FR_19_primary_oems correct
+FR_19_supplier_or_affiliation_type incorrect
+FR_19_employment correct
+FR_19_product_or_service incorrect
+FR_19_ev_battery_relevant incorrect
+FR_19_classification_method correct
+FR_19_processes correct
+FR_19_services correct
+FR_19_certifications correct
+FR_77_category correct
+FR_77_industry_group correct
+FR_77_location correct
+FR_77_address correct
+FR_77_primary_facility_type correct
+FR_77_ev_supply_chain_role incorrect
+FR_77_primary_oems correct
+FR_77_supplier_or_affiliation_type correct
+FR_77_employment correct
+FR_77_product_or_service incorrect
+FR_77_ev_battery_relevant incorrect
+FR_77_classification_method correct
+FR_77_processes correct
+FR_77_services correct
+FR_77_certifications correct
+FR_79_category correct
+FR_79_industry_group correct
+FR_79_location correct
+FR_79_address correct
+FR_79_primary_facility_type correct
+FR_79_ev_supply_chain_role correct
+FR_79_primary_oems correct
+FR_79_supplier_or_affiliation_type incorrect
+FR_79_employment correct
+FR_79_product_or_service incorrect
+FR_79_ev_battery_relevant incorrect
+FR_79_classification_method correct
+FR_79_processes correct
+FR_79_services correct
+FR_79_certifications correct
+FR_81_category correct
+FR_81_industry_group correct
+FR_81_location correct
+FR_81_address correct
+FR_81_primary_facility_type correct
+FR_81_ev_supply_chain_role correct
+FR_81_primary_oems correct
+FR_81_supplier_or_affiliation_type incorrect
+FR_81_employment correct
+FR_81_product_or_service correct
+FR_81_ev_battery_relevant incorrect
+FR_81_classification_method correct
+FR_81_processes correct
+FR_81_services correct
+FR_81_certifications correct
+FR_102_category correct
+FR_102_industry_group correct
+FR_102_location correct
+FR_102_address correct
+FR_102_primary_facility_type correct
+FR_102_ev_supply_chain_role correct
+FR_102_primary_oems correct
+FR_102_supplier_or_affiliation_type incorrect
+FR_102_employment correct
+FR_102_product_or_service correct
+FR_102_ev_battery_relevant incorrect
+FR_102_classification_method correct
+FR_102_processes correct
+FR_102_services correct
+FR_102_certifications correct
+FR_108_category correct
+FR_108_industry_group correct
+FR_108_location correct
+FR_108_address correct
+FR_108_primary_facility_type correct
+FR_108_ev_supply_chain_role correct
+FR_108_primary_oems correct
+FR_108_supplier_or_affiliation_type incorrect
+FR_108_employment correct
+FR_108_product_or_service incorrect
+FR_108_ev_battery_relevant incorrect
+FR_108_classification_method correct
+FR_108_processes correct
+FR_108_services correct
+FR_108_certifications correct
+FR_113_category correct
+FR_113_industry_group correct
+FR_113_location correct
+FR_113_address correct
+FR_113_primary_facility_type correct
+FR_113_ev_supply_chain_role correct
+FR_113_primary_oems correct
+FR_113_supplier_or_affiliation_type incorrect
+FR_113_employment correct
+FR_113_product_or_service incorrect
+FR_113_ev_battery_relevant correct
+FR_113_classification_method correct
+FR_113_processes correct
+FR_113_services correct
+FR_113_certifications correct
+FR_117_category correct
+FR_117_industry_group correct
+FR_117_location correct
+FR_117_address correct
+FR_117_primary_facility_type correct
+FR_117_ev_supply_chain_role correct
+FR_117_primary_oems correct
+FR_117_supplier_or_affiliation_type incorrect
+FR_117_employment correct
+FR_117_product_or_service correct
+FR_117_ev_battery_relevant correct
+FR_117_classification_method correct
+FR_117_processes correct
+FR_117_services correct
+FR_117_certifications correct
+FR_124_category correct
+FR_124_industry_group correct
+FR_124_location correct
+FR_124_address correct
+FR_124_primary_facility_type correct
+FR_124_ev_supply_chain_role correct
+FR_124_primary_oems correct
+FR_124_supplier_or_affiliation_type incorrect
+FR_124_employment correct
+FR_124_product_or_service incorrect
+FR_124_ev_battery_relevant incorrect
+FR_124_classification_method correct
+FR_124_processes correct
+FR_124_services correct
+FR_124_certifications correct
+FR_132_category correct
+FR_132_industry_group correct
+FR_132_location incorrect
+FR_132_address correct
+FR_132_primary_facility_type correct
+FR_132_ev_supply_chain_role correct
+FR_132_primary_oems correct
+FR_132_supplier_or_affiliation_type incorrect
+FR_132_employment correct
+FR_132_product_or_service incorrect
+FR_132_ev_battery_relevant incorrect
+FR_132_classification_method correct
+FR_132_processes correct
+FR_132_services correct
+FR_132_certifications correct
+FR_170_category correct
+FR_170_industry_group correct
+FR_170_location correct
+FR_170_address correct
+FR_170_primary_facility_type correct
+FR_170_ev_supply_chain_role correct
+FR_170_primary_oems correct
+FR_170_supplier_or_affiliation_type correct
+FR_170_employment correct
+FR_170_product_or_service correct
+FR_170_ev_battery_relevant correct
+FR_170_classification_method correct
+FR_170_processes correct
+FR_170_services correct
+FR_170_certifications correct
+FR_173_category correct
+FR_173_industry_group correct
+FR_173_location correct
+FR_173_address correct
+FR_173_primary_facility_type correct
+FR_173_ev_supply_chain_role correct
+FR_173_primary_oems correct
+FR_173_supplier_or_affiliation_type correct
+FR_173_employment correct
+FR_173_product_or_service correct
+FR_173_ev_battery_relevant correct
+FR_173_classification_method correct
+FR_173_processes correct
+FR_173_services correct
+FR_173_certifications correct
+FR_194_category correct
+FR_194_industry_group correct
+FR_194_location correct
+FR_194_address correct
+FR_194_primary_facility_type correct
+FR_194_ev_supply_chain_role correct
+FR_194_primary_oems incorrect
+FR_194_supplier_or_affiliation_type incorrect
+FR_194_employment correct
+FR_194_product_or_service incorrect
+FR_194_ev_battery_relevant incorrect
+FR_194_classification_method correct
+FR_194_processes correct
+FR_194_services correct
+FR_194_certifications correct
+FR_201_category correct
+FR_201_industry_group correct
+FR_201_location correct
+FR_201_address correct
+FR_201_primary_facility_type correct
+FR_201_ev_supply_chain_role incorrect
+FR_201_primary_oems incorrect
+FR_201_supplier_or_affiliation_type incorrect
+FR_201_employment correct
+FR_201_product_or_service incorrect
+FR_201_ev_battery_relevant incorrect
+FR_201_classification_method correct
+FR_201_processes correct
+FR_201_services correct
+FR_201_certifications correct
+{
+  "count": 255,
+  "correct": 214,
+  "status_counts": {
+    "correct": 214,
+    "incorrect": 41,
+    "generation_failure": 0,
+    "parse_failure": 0,
+    "SQL_error": 0,
+    "timeout": 0,
+    "truncated_output": 0,
+    "invalid_output": 0
+  },
+  "prediction_sha256": "d9ca763127f1a18c5097fbbf498704a12e6b40c30e2fa5b96f8208d4f23548eb"
+}

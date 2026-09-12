@@ -1,0 +1,18 @@
+{
+  "train_runtime": 3.4521,
+  "train_samples_per_second": 0.579,
+  "train_steps_per_second": 0.579,
+  "total_flos": 32299103361024.0,
+  "train_loss": 1.114287257194519,
+  "epoch": 0.25,
+  "eval": {
+    "eval_loss": 1.245286226272583,
+    "eval_runtime": 0.4115,
+    "eval_samples_per_second": 9.721,
+    "eval_steps_per_second": 9.721,
+    "epoch": 0.25
+  },
+  "global_step": 2,
+  "best_model_checkpoint": "/home/sm11926/GNEM_Finetuning/validation_v3/smoke_models/D_repeat_budgetmatched.seed61/checkpoint-2",
+  "peak_cuda_allocated_bytes": 30806045696
+}

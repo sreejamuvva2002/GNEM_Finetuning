@@ -1,0 +1,74 @@
+[
+  {
+    "variant": "A_cpt",
+    "logged_trained_at": "2026-08-12T18:08:08+0000",
+    "manifest_trained_at": "2026-08-12T18:08:08+0000",
+    "dataset_hash_agrees": true,
+    "timestamp_agrees": true,
+    "adapter_file_sha256": "376da9b57b5b4c4959120eeb6c66303b8a79f0f38898d5f0776e1f7e506f11c7"
+  },
+  {
+    "variant": "BC_facts_answers",
+    "logged_trained_at": "2026-08-12T20:47:17+0000",
+    "manifest_trained_at": "2026-08-12T20:47:17+0000",
+    "dataset_hash_agrees": true,
+    "timestamp_agrees": true,
+    "adapter_file_sha256": "de70a3afe600aed5c5284c79c0d4487eae6b7b284801674964a9f8c63dc5ed93"
+  },
+  {
+    "variant": "BD_facts_sql",
+    "logged_trained_at": "2026-08-13T09:03:56+0000",
+    "manifest_trained_at": "2026-08-13T09:03:56+0000",
+    "dataset_hash_agrees": true,
+    "timestamp_agrees": true,
+    "adapter_file_sha256": "0c648f9800f1cdff08d74fd68936e088599df448807bdd069546de0856bfd882"
+  },
+  {
+    "variant": "B_facts",
+    "logged_trained_at": "2026-08-12T19:38:43+0000",
+    "manifest_trained_at": "2026-08-12T19:38:43+0000",
+    "dataset_hash_agrees": true,
+    "timestamp_agrees": true,
+    "adapter_file_sha256": "5ed601e7b83251a729b8afde1a843b7a8f71acc67bc64bf7e3f3a827bdc33553"
+  },
+  {
+    "variant": "C_answers",
+    "logged_trained_at": "2026-08-12T20:05:39+0000",
+    "manifest_trained_at": "2026-08-12T20:05:39+0000",
+    "dataset_hash_agrees": true,
+    "timestamp_agrees": true,
+    "adapter_file_sha256": "7336a96e34bf1a33479376736767b751c3fe60d3006a736083f8896b835b6524"
+  },
+  {
+    "variant": "D_sql",
+    "logged_trained_at": "2026-08-13T07:30:49+0000",
+    "manifest_trained_at": "2026-08-13T07:30:49+0000",
+    "dataset_hash_agrees": true,
+    "timestamp_agrees": true,
+    "adapter_file_sha256": "12369e40087eb4a3d7bebef04198f08a3f79652a387bcb009a8314d75e9d2f12"
+  },
+  {
+    "variant": "D_sql_k0",
+    "logged_trained_at": "2026-08-13T21:54:27+0000",
+    "manifest_trained_at": "2026-08-13T21:54:27+0000",
+    "dataset_hash_agrees": true,
+    "timestamp_agrees": true,
+    "adapter_file_sha256": "356fdbaab5474c2a6bc150260ec45063e2e19ad46d87e2952bd6c2c13b59d6ed"
+  },
+  {
+    "variant": "D_sql_k5",
+    "logged_trained_at": "2026-08-13T21:58:43+0000",
+    "manifest_trained_at": "2026-08-13T21:58:43+0000",
+    "dataset_hash_agrees": true,
+    "timestamp_agrees": true,
+    "adapter_file_sha256": "ebe359cdf00167643a31c498dbe2a9af7b56e47b5e9cb61b4cc442ee871e5d39"
+  },
+  {
+    "variant": "D_sql_k25",
+    "logged_trained_at": "2026-08-13T21:59:34+0000",
+    "manifest_trained_at": "2026-08-13T21:59:34+0000",
+    "dataset_hash_agrees": true,
+    "timestamp_agrees": true,
+    "adapter_file_sha256": "627aa71de8d47119b322e6b548e316ff8880d154646a2ae12bfd75d1f1fb478c"
+  }
+]

@@ -1,0 +1,88 @@
+{
+  "arms": {
+    "A": {
+      "artifact": "datasets_v3/train_A_cpt_v3.jsonl",
+      "exposure_count": 0,
+      "phase": 10,
+      "scanned": true,
+      "sha256": "ae5f77239743150597e33ed34e831dfe18404f4df566d17e44d66e55788a5c14",
+      "strings_scanned": 148
+    },
+    "B": {
+      "artifact": "datasets_v3/train_B_facts_v3.jsonl",
+      "exposure_count": 0,
+      "phase": 11,
+      "scanned": true,
+      "sha256": "17ddccd67f2c46bb94e5d948c130cd2d6c99b564a07fc171618eb0f5e3f957b0",
+      "strings_scanned": 4023
+    },
+    "BC": {
+      "artifact": "datasets_v3/train_BC_facts_answers_v3.jsonl",
+      "exposure_count": 0,
+      "note": "re-scanned directly against the holdout registry, not inherited from B/C's ledger entries (post-approval audit correction)",
+      "phase": 15,
+      "scanned": true,
+      "sha256": "2914d2d1346211a8ef60fecbea06dc500d3fddc83a0c2099147edd24144f3dfb",
+      "strings_scanned": 9057
+    },
+    "BD": {
+      "artifact": "datasets_v3/train_BD_facts_sql_v3.jsonl",
+      "exposure_count": 0,
+      "note": "re-scanned directly against the holdout registry (BD_full), not inherited from B/D's ledger entries (post-approval audit correction); BD_controlled and D_repeat_budgetmatched are subsets/repeats of this same scanned content",
+      "phase": 16,
+      "scanned": true,
+      "sha256": "93d0b1ca574f04132c5971e511b4b48487f8d4e1de7c947f02041c7d682abcdb",
+      "strings_scanned": 9057
+    },
+    "C": {
+      "artifact": "datasets_v3/train_C_answers_v3.jsonl",
+      "exposure_count": 0,
+      "phase": 13,
+      "scanned": true,
+      "sha256": "95da32e3a9dafb4bfd66764f9e9047f1fe3ee0f50390903f24a0586e6256c9b7",
+      "strings_scanned": 2017
+    },
+    "D": {
+      "artifact": "datasets_v3/train_D_sql_v3.jsonl",
+      "exposure_count": 0,
+      "phase": 14,
+      "scanned": true,
+      "sha256": "9244bd4a884bff9cab2de087b5c8ed0843ec094947f8b309ab742eceefd1abcd",
+      "strings_scanned": 2017
+    }
+  },
+  "frozen_date": "2026-08-24",
+  "held_out_compositions": [
+    [
+      "certifications",
+      "processes"
+    ]
+  ],
+  "held_out_operations": [
+    "argmax_topk",
+    "group_by",
+    "limit_only"
+  ],
+  "held_out_values": {
+    "certifications": [
+      "AS9100",
+      "ISO/IEC 17025"
+    ],
+    "processes": [
+      "Battery Module Assembly",
+      "Battery Pack Assembly",
+      "Battery Recycling Logistics",
+      "Refining"
+    ],
+    "services": [
+      "Battery Collection",
+      "Battery Repurposing",
+      "Circular Economy Consulting"
+    ]
+  },
+  "ledger": "FACT_EXPOSURE_LEDGER_v3",
+  "note": "initialised at Phase 9. v3.0 was frozen before any training dataset existed. Phase 10 (train_A_cpt_v3.jsonl) was then generated from v3.0 and fully reverted. v3.1 was frozen after that correction, before any training dataset was ever built from it. No model training or evaluation ever used v3.0-derived data. Each dataset phase re-runs the scanner on its final rendered strings and updates its arm entry; every arm must reach exposure_count 0.",
+  "phase": 9,
+  "policy_version": "holdout_v3.1",
+  "registry_sha256": "b0a29b197e7e08ccacc58560fcb538f1ad8d5b47fa31c0ed2799986d15da796f"
+}

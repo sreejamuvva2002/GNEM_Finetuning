@@ -1,7 +1,4 @@
-# Python bytecode and tool caches. Nothing else is ignored yet: v3 artifact
-# roots (datasets_v3/, adapters_v3/, results_v3/, validation_v3/) are retained
-# and archived at Phase 42, so their tracking policy is a later decision and is
-# deliberately not pre-empted here.
+# Generated weights stay local; metadata and evidence remain tracked. See docs/REPOSITORY_MAINTENANCE.md.
 __pycache__/
 *.py[cod]
 .pytest_cache/
@@ -11,3 +8,12 @@ __pycache__/
 # Repo-local Phase 6+ runtime environment. Never committed; the v2
 # repository's .venv-ft is deliberately NOT used (CLAUDE.md 7).
 .venv-v3/
+
+# Isolated pinned model-training runtime.
+.venv-v3-train/
+
+# Large artifacts: preserve locally, never add to ordinary Git.
+*.safetensors
+*.pt
+*.pth
+/review_v2_questions/all_predictions.jsonl

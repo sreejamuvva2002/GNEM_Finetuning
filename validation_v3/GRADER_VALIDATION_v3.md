@@ -6,8 +6,8 @@ Phase 7 — SQL execution and grading. README: this gate **blocks the canonical 
 
 ```text
 datasets_v3/gnem_v3.sqlite   7437c746cb118f3d5bb9edcc34f500e0c9f764358a19fa05766dc526d63bb08b
-finetune/sqlexec_v3.py       a6c06b71dd97541997bedc2202e1980ab2e4cdd721aaf20ff43eacfda876c461   (sqlexec_v3.0)
-finetune/grade_v3.py         1051a161ac848ad058dda424417e296571404e6fd5dbe10174994cea7df0c6aa   (grade_v3.1)
+finetune/sqlexec_v3.py       dfe5d8a882f730c05351643c167ad47203159383b88ef21020353f27f4443588   (sqlexec_v3.1_A002)
+finetune/grade_v3.py         c7775cdcf69f11705eb35a172202cc917648fa6df149a13c8cb8d217e63cfb04   (grade_v3.2_A002)
 ```
 
 ## Scope contract

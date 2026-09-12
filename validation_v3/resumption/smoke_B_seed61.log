@@ -1,0 +1,32 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/8 [00:00<?, ?it/s]Loading checkpoint shards:  12%|█▎        | 1/8 [00:02<00:17,  2.52s/it]Loading checkpoint shards:  25%|██▌       | 2/8 [00:04<00:13,  2.25s/it]Loading checkpoint shards:  38%|███▊      | 3/8 [00:06<00:10,  2.15s/it]Loading checkpoint shards:  50%|█████     | 4/8 [00:08<00:08,  2.10s/it]Loading checkpoint shards:  62%|██████▎   | 5/8 [00:10<00:06,  2.14s/it]Loading checkpoint shards:  75%|███████▌  | 6/8 [00:12<00:04,  2.12s/it]Loading checkpoint shards:  88%|████████▊ | 7/8 [00:15<00:02,  2.12s/it]Loading checkpoint shards: 100%|██████████| 8/8 [00:15<00:00,  1.73s/it]Loading checkpoint shards: 100%|██████████| 8/8 [00:15<00:00,  1.99s/it]
+The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and generation config. The model config and generation config were aligned accordingly, being updated with the tokenizer's values. Updated tokens: {'bos_token_id': None, 'pad_token_id': 151645}.
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [00:00<00:00,  1.20it/s]                                              50%|█████     | 1/2 [00:00<00:00,  1.20it/s]100%|██████████| 2/2 [00:01<00:00,  1.93it/s]                                             100%|██████████| 2/2 [00:01<00:00,  1.93it/s]{'loss': 2.6455, 'grad_norm': 11.17162799835205, 'learning_rate': 0.0, 'epoch': 0.12}
+{'loss': 7.5595, 'grad_norm': 24.927988052368164, 'learning_rate': 0.0001, 'epoch': 0.25}
+
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 75%|███████▌  | 3/4 [00:00<00:00, 22.26it/s][A                                             
+                                             [A100%|██████████| 2/2 [00:01<00:00,  1.93it/s]
+100%|██████████| 4/4 [00:00<00:00, 22.26it/s][A
+                                             [A                                             100%|██████████| 2/2 [00:03<00:00,  1.93it/s]100%|██████████| 2/2 [00:03<00:00,  1.68s/it]
+{'eval_loss': 3.5135698318481445, 'eval_runtime': 0.2816, 'eval_samples_per_second': 14.207, 'eval_steps_per_second': 14.207, 'epoch': 0.25}
+{'train_runtime': 3.3695, 'train_samples_per_second': 0.594, 'train_steps_per_second': 0.594, 'train_loss': 5.102494835853577, 'epoch': 0.25}
+  0%|          | 0/4 [00:00<?, ?it/s] 75%|███████▌  | 3/4 [00:00<00:00, 21.95it/s]100%|██████████| 4/4 [00:00<00:00, 18.21it/s]
+{
+  "train_runtime": 3.3695,
+  "train_samples_per_second": 0.594,
+  "train_steps_per_second": 0.594,
+  "total_flos": 12716182425600.0,
+  "train_loss": 5.102494835853577,
+  "epoch": 0.25,
+  "eval": {
+    "eval_loss": 3.5135698318481445,
+    "eval_runtime": 0.29,
+    "eval_samples_per_second": 13.795,
+    "eval_steps_per_second": 13.795,
+    "epoch": 0.25
+  },
+  "global_step": 2,
+  "best_model_checkpoint": "/home/sm11926/GNEM_Finetuning/validation_v3/smoke_models/B_facts.seed61/checkpoint-2",
+  "peak_cuda_allocated_bytes": 30736733696
+}

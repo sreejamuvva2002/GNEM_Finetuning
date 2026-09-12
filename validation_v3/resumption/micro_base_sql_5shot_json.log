@@ -1,0 +1,33 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/8 [00:00<?, ?it/s]Loading checkpoint shards:  12%|█▎        | 1/8 [00:02<00:14,  2.06s/it]Loading checkpoint shards:  25%|██▌       | 2/8 [00:04<00:12,  2.10s/it]Loading checkpoint shards:  38%|███▊      | 3/8 [00:06<00:10,  2.13s/it]Loading checkpoint shards:  50%|█████     | 4/8 [00:08<00:08,  2.16s/it]Loading checkpoint shards:  62%|██████▎   | 5/8 [00:10<00:06,  2.17s/it]Loading checkpoint shards:  75%|███████▌  | 6/8 [00:12<00:04,  2.18s/it]Loading checkpoint shards:  88%|████████▊ | 7/8 [00:15<00:02,  2.17s/it]Loading checkpoint shards: 100%|██████████| 8/8 [00:16<00:00,  1.77s/it]Loading checkpoint shards: 100%|██████████| 8/8 [00:16<00:00,  2.00s/it]
+The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+DEV_S_4_category correct
+DEV_S_4_industry_group correct
+DEV_S_4_primary_facility_type correct
+DEV_S_7_category correct
+DEV_S_7_industry_group correct
+DEV_S_7_primary_facility_type correct
+DEV_S_16_category correct
+DEV_S_16_industry_group correct
+DEV_S_16_primary_facility_type correct
+DEV_S_19_category correct
+DEV_S_19_industry_group correct
+DEV_S_19_primary_facility_type correct
+DEV_S_77_category correct
+DEV_S_77_industry_group correct
+DEV_S_77_primary_facility_type correct
+{
+  "count": 15,
+  "correct": 15,
+  "status_counts": {
+    "correct": 15,
+    "incorrect": 0,
+    "generation_failure": 0,
+    "parse_failure": 0,
+    "SQL_error": 0,
+    "timeout": 0,
+    "truncated_output": 0,
+    "invalid_output": 0
+  },
+  "prediction_sha256": "3ebedc621cd24e348f34f61e90bdd35d4d543169b5abae9c0823c5872b0f007b"
+}

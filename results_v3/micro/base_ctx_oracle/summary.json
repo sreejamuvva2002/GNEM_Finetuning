@@ -1,0 +1,15 @@
+{
+  "count": 15,
+  "correct": 0,
+  "status_counts": {
+    "correct": 0,
+    "incorrect": 15,
+    "generation_failure": 0,
+    "parse_failure": 0,
+    "SQL_error": 0,
+    "timeout": 0,
+    "truncated_output": 0,
+    "invalid_output": 0
+  },
+  "prediction_sha256": "0abab682b3fb2124e6ca14d4be40bf2b8e8499c82e4c816626bd4f34938a9da0"
+}

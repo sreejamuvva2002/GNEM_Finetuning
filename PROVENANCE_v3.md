@@ -274,3 +274,41 @@ seed policy, KB scope, holdout rule, comparison hierarchy, or grading rule was a
 Phase 2 does **not** materialize `city`/`county`. Derivation belongs to the Phase 4 loader.
 
 ---
+
+
+## Amendment A-002 — original V3 full-field training
+
+The user explicitly selected “Revise original V3 now for full-field training” during resumption. [PROTOCOL_A002_FULL_FIELD.md](PROTOCOL_A002_FULL_FIELD.md) records the active specification and its overrides. Existing company holdouts and the eight-variant/minimum-18-run study remain; categorical field omissions and within-training literal holdouts are superseded. Phase 21 exposure interpretation and controlled-mixture sampling change as documented. No V3 training/test inference was performed at amendment time. Earlier phase approvals remain historical and are not reused to certify amended artifacts. This records specification authorization, not downstream completion.
+
+
+### A-002 clarification — recorded Certification Count excluded from training
+
+User-authorized exception: retain Certification Count in source/canonical data for validation but exclude it from model-facing training and schema. Full certification lists remain included. Loader updated to kb_v3.2_count_internal; no source, canonical or training dataset values were edited by this clarification. Earlier A-002 count-inclusion wording is superseded.
+
+## 2026-09-11 — A-002 Phase 5–8 implementation and regression verification
+
+Rebuilt the database byte-identically and revalidated complete context. Phase 5's forbidden-V2-path scan now targets executable `finetune/` sources, excluding historical review evidence and installed packages; this is a literal source check, not proof of transitive runtime isolation. Corrected unambiguous single-cell alias grading while preserving strict-schema scores. Added a configurable five-second SQLite VM deadline (progress callbacks every 1,000 instructions plus completion check); setup is outside the query deadline and a single long-running SQLite builtin may delay a callback, so this is not process-level resource isolation. An actual expensive cross-join interruption is regression-tested. Updated Phase 8 grader/executor pins after passing the Phase 7 tests; preserved earlier synthetic fixtures in `archive/pre_A002_phase8_2026-09-11/`.
+
+Passing checks: Phase 5 builder and 8 faults; Phase 6 budget gates and 16 faults; Phase 7 existing 81 checks and 5 new regressions; Phase 8 synthetic 94 checks and 4 statistics regressions. See `validation_v3/resumption/PHASE5_8_MANIFEST.json` for exact current artifact hashes. These are agent-run engineering checks, not independent human review, model evaluation, or approval of the old training datasets. Next: Phase 9 A-002 registry migration.
+
+## A-002 runtime continuation — development and smoke evidence
+
+Regenerated the full-field A/B/C/D and mixture datasets. Independent coverage verifies 2,220 training-row/attribute observations; company identifiers and source-record provenance are retained. Complete assistant labels were checked with the pinned training tokenizer; overlength, empty-assistant and unsupported-turn regressions fail explicitly. The structured pool contains 1,326 tasks and 3,978 verified scoped SQL gold executions.
+
+Built development and protected probe inputs without protected model scoring. Q42 candidate oracles remain pending adjudication and personal approval; the user explicitly selected “Keep Q42 approval pending; continue runtime checks.” No final training release was created.
+
+Ran four development baselines with preserved raw outputs, canonical records and telemetry. The first prose-format and missing-catalogue runs are retained as pilots. Prompt corrections and their reasons are recorded in MODEL_SELECTION_LOG_v3.md. The current 51 structured dev questions are narrow entity-conditioned filters, so their scores do not establish analytical generalization. Broader analytical development and final scoring integration remain open gates.
+
+All eight recipes completed representative two-step LoRA smoke tests and adapter reload checks. Nonzero LoRA updates, finite losses and identical reload logits were verified. These are smoke adapters, not any of the 18 required final training runs. The first prefix-only smoke suite was archived because it did not exercise every mixture component. Six real-model SQL micro cases exercised count, top-k, no-match, composition, grouping and multipart paths; no quality claim is drawn from this small plumbing battery.
+
+Current evidence: validation_v3/resumption/RUNTIME_PROGRESS_A002.json; results_v3/dev/REPORT_A002.md; V3_PHASE_STATUS.md. The experiment remains incomplete until outstanding review, evaluation and final-training gates are satisfied.
+
+## Repository cleanup verification — 12 September 2026
+
+User-authorized cleanup removed redundant completed smoke checkpoint copies and optimizer/scheduler/RNG resume state: 224 recorded actions, 13,549,695,392 logical bytes (12.62 GiB). Identical checkpoint files now use relative links to retained selected adapters. All selected adapters, source data, datasets and raw results were retained. Completed smoke runs no longer support optimizer-state resume; final-training retention requirements are unchanged.
+
+README and CLAUDE now describe current status; their complete previous contents remain in docs as historical protocol references. Removed unused superseded omission/sampling helpers and corrected the BD audit wording. Rebuilt A, B and BD artifacts, rechecked the frozen A-002 registry and full-field coverage. Final cleanup integrity results and current file hashes are recorded in validation_v3/resumption/CLEANUP_VERIFICATION_2026-09-12.json. Earlier runtime manifests remain historical snapshots, not claims that the new documentation/code produced earlier model runs. Final training remains 0/18; Q42 approval remains pending.
+
+## Intermediate push preparation — 12 September 2026
+
+Added versioned A002.2 dev rescoring and 30 parser regression tests; retained r1 predictions and reports. Current report is results_v3/dev/REPORT_A002_r2.md. Added explicit pre-training gates and corrected generated A/BD budget documentation without changing training data. Large weights remain local, excluded from ordinary Git; no external backup is claimed. This milestone is not a training release, and Q42 approval remains pending.

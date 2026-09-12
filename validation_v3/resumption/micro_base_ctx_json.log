@@ -1,0 +1,33 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/8 [00:00<?, ?it/s]Loading checkpoint shards:  12%|█▎        | 1/8 [00:02<00:15,  2.18s/it]Loading checkpoint shards:  25%|██▌       | 2/8 [00:04<00:13,  2.19s/it]Loading checkpoint shards:  38%|███▊      | 3/8 [00:06<00:10,  2.20s/it]Loading checkpoint shards:  50%|█████     | 4/8 [00:08<00:08,  2.14s/it]Loading checkpoint shards:  62%|██████▎   | 5/8 [00:10<00:06,  2.14s/it]Loading checkpoint shards:  75%|███████▌  | 6/8 [00:12<00:04,  2.15s/it]Loading checkpoint shards:  88%|████████▊ | 7/8 [00:15<00:02,  2.15s/it]Loading checkpoint shards: 100%|██████████| 8/8 [00:16<00:00,  1.78s/it]Loading checkpoint shards: 100%|██████████| 8/8 [00:16<00:00,  2.01s/it]
+The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+FR_4_category correct
+FR_4_industry_group correct
+FR_4_location correct
+FR_4_address correct
+FR_4_primary_facility_type correct
+FR_4_ev_supply_chain_role correct
+FR_4_primary_oems correct
+FR_4_supplier_or_affiliation_type incorrect
+FR_4_employment correct
+FR_4_product_or_service incorrect
+FR_4_ev_battery_relevant incorrect
+FR_4_classification_method correct
+FR_4_processes correct
+FR_4_services correct
+FR_4_certifications correct
+{
+  "count": 15,
+  "correct": 12,
+  "status_counts": {
+    "correct": 12,
+    "incorrect": 3,
+    "generation_failure": 0,
+    "parse_failure": 0,
+    "SQL_error": 0,
+    "timeout": 0,
+    "truncated_output": 0,
+    "invalid_output": 0
+  },
+  "prediction_sha256": "7417ee626645fd49fa1b6feffa190c9e591e197cfd5ef6f21f3352e0bbf4d394"
+}

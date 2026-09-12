@@ -71,8 +71,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CANONICAL = ROOT / "datasets_v3" / "canonical_records_v3.jsonl"
 SPLITS = ROOT / "datasets_v3" / "company_split_groups_v3.csv"
-REGISTRY = ROOT / "datasets_v3" / "HOLDOUT_REGISTRY_v3.json"
-PHASE9_APPROVAL = ROOT / "datasets_v3" / "PHASE9_APPROVAL.json"
+REGISTRY = ROOT / "datasets_v3" / "HOLDOUT_REGISTRY_A002.json"
+PHASE9_APPROVAL = ROOT / "datasets_v3" / "PHASE9_AUTHORIZATION_A002.json"
 
 FROZEN_INPUT_PATHS = (
     "datasets_v3/canonical_records_v3.jsonl",
@@ -81,8 +81,8 @@ FROZEN_INPUT_PATHS = (
 )
 README_ROW_BAND_TABLE = {"processes": 26, "services": 13, "certifications": 8}
 
-POLICY_VERSION = "holdout_v3.1"
-FROZEN_DATE = "2026-08-24"
+POLICY_VERSION = "holdout_v3.2_A002"
+FROZEN_DATE = "2026-09-11"
 
 MULTIVALUED = ("processes", "services", "certifications")
 CERT_SENTINEL = "None identified after search"
@@ -116,7 +116,7 @@ TIE2_DEV_SUPPORT_DEFINITION = (
     "rewarded even when it shares dev rows with another selected value")
 COVERAGE_FLOOR_PCT = 85.0             # README:712 "at least X%" -- X frozen here
 PER_VALUE_COVERAGE_THRESHOLD_PCT = 85.0   # README:706, one knob not two
-HOLDOUT_COUNTS = {"processes": 4, "services": 3, "certifications": 2}
+HOLDOUT_COUNTS = {"processes": 0, "services": 0, "certifications": 0}
 
 # Operation axis. README Phase 22's validation requires all three defining
 # constructs to appear 0 times in training gold, so all three are held out.
@@ -328,7 +328,7 @@ PHASE9_CORRECTION = {
         "registry loading: two-function split -- "
         "load_candidate_registry_for_phase9_audit() (recompute-and-compare, "
         "usable pre-approval) and load_registry() (requires an external "
-        "PHASE9_APPROVAL.json anchor, raises Phase9NotApproved otherwise)",
+        "PHASE9_AUTHORIZATION_A002.json anchor, raises Phase9NotApproved otherwise)",
         "registry wrapper is deeply immutable (stores canonical JSON text, "
         "every accessor returns a fresh parse)",
         "scan_strings/scan_operations/scan_compositions: list-only, raise on a "
@@ -851,6 +851,24 @@ def build_registry_bundle():
                             "supervision using the value"),
         },
     }
+    # A-002 supersedes only the deliberate value-withholding axis.
+    registry["registry"] = "HOLDOUT_REGISTRY_A002"
+    registry["policy_revision"] = {"amendment": "PROTOCOL_A002_FULL_FIELD.md",
+        "authorization": "User requested full-field original V3; Certification Count excluded",
+        "historical_policy": "holdout_v3.1",
+        "timing": "After historical datasets, before V3 model training or evaluation"}
+    registry["frozen_by"] = "User-authorized amendment; agent implementation and automated validation"
+    registry["timestamp_note"] = "Policy date; no claim of a newly approved Git commit"
+    registry["parameters"].update({"selection_objective": "No deliberate value withholding under A-002",
+        "tie_breaks": [], "value_support_rules": "Historical diagnostics only; no values selected"})
+    registry["exposure_policy"]["omit_policy"] = (
+        "No value-based omissions. Complete training-record observations, missingness and conflicts "
+        "must be supervised. Certification Count stays internal. Company holdouts remain excluded.")
+    registry["exposure_policy"]["value_axis_status"] = "disabled_under_A002_not_evidence_of_unseen_values"
+    registry["coverage_policy"] = {"required": "all training source observations",
+        "source_field_exception": ["certification_count"], "missingness": "source-qualified",
+        "conflicts": "record-scoped observations with explicit uncertainty",
+        "phase21": "exposure-stratified value probe, no deliberately withheld literals"}
     return (recs, split, rows, cos, train_rows, train_cos, tot_rows, tot_cos,
             selected, comp, ent, per_field, registry)
 
@@ -871,7 +889,7 @@ def recompute_registry_dict() -> dict:
 #
 #   load_registry()  -- the production / Phase-10+ entry point. Requires the
 #       candidate checks above to pass AND a separate, externally-recorded
-#       approval anchor (PHASE9_APPROVAL.json) to exist and match. Raises
+#       approval anchor (PHASE9_AUTHORIZATION_A002.json) to exist and match. Raises
 #       Phase9NotApproved if the anchor is absent -- it never returns a
 #       partially-usable object with a pending flag. A file inside the same
 #       writable repo is not a cryptographic guarantee; this is a separately
@@ -1000,23 +1018,23 @@ def load_registry() -> VerifiedCandidateRegistry:
     candidate = load_candidate_registry_for_phase9_audit()
     if not PHASE9_APPROVAL.is_file():
         raise Phase9NotApproved(
-            "Phase 9 has not been approved: no PHASE9_APPROVAL.json anchor "
+            "Phase 9 has not been approved: no PHASE9_AUTHORIZATION_A002.json anchor "
             "exists. Production/Phase-10+ code may not consume this registry "
             "until an explicit, separately-reviewed approval record is "
-            "written -- see PHASE9_APPROVAL.json's documented workflow.")
+            "written -- see PHASE9_AUTHORIZATION_A002.json's documented workflow.")
     try:
         approval = json.loads(PHASE9_APPROVAL.read_text(encoding="utf-8"))
     except json.JSONDecodeError as e:
-        raise HoldoutError(f"malformed PHASE9_APPROVAL.json: {e}") from e
+        raise HoldoutError(f"malformed PHASE9_AUTHORIZATION_A002.json: {e}") from e
     missing = [f for f in REQUIRED_APPROVAL_FIELDS if not approval.get(f)]
     if missing:
         raise HoldoutError(
-            f"PHASE9_APPROVAL.json missing required field(s) {missing} -- a "
+            f"PHASE9_AUTHORIZATION_A002.json missing required field(s) {missing} -- a "
             f"hash-only approval record is not a complete, auditable approval")
     if approval["approved_registry_sha256"] != candidate.sha256():
         raise RegistryTamperError(
             "the current registry does not match the approved digest recorded "
-            "in PHASE9_APPROVAL.json -- registry and/or code changed since "
+            "in PHASE9_AUTHORIZATION_A002.json -- registry and/or code changed since "
             "approval")
     return candidate
 

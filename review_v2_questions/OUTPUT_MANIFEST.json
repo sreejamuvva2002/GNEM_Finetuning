@@ -1,0 +1,65 @@
+{
+  "scope": "V2 prediction census and selected independent semantic/DB checks; no V3 artifacts modified",
+  "files": {
+    "INPUT_MANIFEST.json": {
+      "bytes": 79140,
+      "sha256": "fda03d0cfd72686b93e552bc5dc96b28dc2044470bb67bcef9a4200df5ad50ab"
+    },
+    "verify_examples.py": {
+      "bytes": 4015,
+      "sha256": "5d4c7989f072cf126db23ea6e2bf33cb96799108586570653234bf12563b116c"
+    },
+    "summary.json": {
+      "bytes": 544235,
+      "sha256": "e95c3faf1f0ba6a30ef8e939b1c949efa73de2f0b3ae64dbc28d84ba46744aaa"
+    },
+    "REPORT.md": {
+      "bytes": 18396,
+      "sha256": "5344f104c9ecde128ea9a8a6dd0bbf9ebdb41b9579e48eddcfdbc56eb266f491"
+    },
+    "historical_taxonomy.py": {
+      "bytes": 6722,
+      "sha256": "a469bd42cbf0f98905a982010f73b668ffd33cfd19645891766a44c2db0d2a93"
+    },
+    "six_variant_comparison.csv": {
+      "bytes": 3389467,
+      "sha256": "d13256c0b2498c3285a947ad3f994bade2ebb80c6d47b0a09126839a5ba0d561"
+    },
+    "paraphrase_disagreements.json": {
+      "bytes": 3299294,
+      "sha256": "d0f87cdb85485a3e5e0ab845048091978cf32791854cf86c76fea9fb04036374"
+    },
+    "original_examples.json": {
+      "bytes": 626803,
+      "sha256": "c3352330fcd74fde28e4682ea61a1ec6488a00067e6c3627fdbef7ea1e3af6e8"
+    },
+    "verified_examples.json": {
+      "bytes": 52100,
+      "sha256": "c5a53f86ff9d5c38f68564a8b7886fd830701e891dbba3dda7d35c83b03af38f"
+    },
+    "historical_grade.py": {
+      "bytes": 17296,
+      "sha256": "ff01c3c1470dfdf2980ec3c553ce6ec1a8e55c3d81cd2cf490ba7b25a26ea1e3"
+    },
+    "analyze.py": {
+      "bytes": 7632,
+      "sha256": "0e8289f18870222c85605ab18b17d2b2b18af5fe42b0e9acdfc42da23a30c1c1"
+    },
+    "all_predictions.jsonl": {
+      "bytes": 158826666,
+      "sha256": "03cb33a38b873aedcad2d2e5d1e984cb214cc74990f75764a87e978bfb075a91"
+    },
+    "certification_literal_set_audit.json": {
+      "bytes": 74239,
+      "sha256": "ebc5c1f59a4601dd8e12cc89ccf1c1e0e54fd6712ccc712352b8aedae592138b"
+    },
+    "historical_gnem.sqlite": {
+      "bytes": 290816,
+      "sha256": "8e5ebac209202642a2325e8b2c465ffddb8e3f6d548ccd1e1bbee58d97a18303"
+    },
+    "all_questions.csv": {
+      "bytes": 60720761,
+      "sha256": "eeede4349c926f1a11011068ab737bad99069ae61036f8d76b0ccdc1143aa931"
+    }
+  }
+}

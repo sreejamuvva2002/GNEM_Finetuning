@@ -1,0 +1,17 @@
+  [PASS] count_sql_uses_distinct_company: SELECT COUNT(DISTINCT company) AS n FROM companies WHERE city = 'Atlanta'
+  [PASS] atlanta_company_count_is_5_not_7: got 5 (exact reproduction: the pre-fix gold was 7, the row count -- 5 is the distinct company count)
+  [PASS] count_star_reproduces_the_original_bug_value: got 7 -- confirms the fix actually changes the answer, not merely the SQL text
+  [PASS] composition_sql_has_no_row_id_join: SELECT DISTINCT c.company FROM companies c WHERE c.company IN (SELECT company FROM processes WHERE process = 'CNC Machining') AND c.company IN (SELECT company FROM services WHERE service = 'Asset Management') ORDER BY c.company
+  [PASS] cnc_asset_management_composition_nonempty: got (('Sewon America Inc.',),) -- Sewon America performs CNC Machining at one facility and Asset Management at another; company-level composition must find it
+  [PASS] candidate_selection_agrees_with_fixed_sql: candidate set for ('CNC Machining', 'Asset Management'): {'Sewon America Inc.'}
+  [PASS] address_excluded_from_aggregatable_fields: AGGREGATABLE_FIELDS = ('category', 'industry_group', 'primary_facility_type', 'ev_supply_chain_role', 'supplier_or_affiliation_type', 'classification_method', 'city', 'county', 'ev_battery_relevant')
+  [PASS] primary_oems_excluded_from_aggregatable_fields: AGGREGATABLE_FIELDS = ('category', 'industry_group', 'primary_facility_type', 'ev_supply_chain_role', 'supplier_or_affiliation_type', 'classification_method', 'city', 'county', 'ev_battery_relevant')
+  [PASS] address_and_primary_oems_still_filterable: filter tasks (README:537-538 explicitly permits filtering on both) are unaffected by the aggregation exclusion
+  [PASS] no_sentinel_in_group_by_breakdown: 2 groups, none a sentinel
+  [PASS] sentinel_exclusion_helper_names_both_frozen_sentinels: WHERE category != 'Not specified' AND category != 'Not applicable' 
+  [PASS] cross_table_cap_smaller_than_list_cap: CROSS_TABLE_CAP=25 < LIST_CAP=40 (the ordering the join_arity>=1 branch depends on)
+  [PASS] committed_pool_has_no_arity1plus_oversize: 462 arity>=1 set tasks, all <= 25 rows
+  [PASS] committed_pool_has_no_empty_set_tasks: every set-answer task has >=1 train_kb_gold row
+  [PASS] committed_pool_has_no_forbidden_aggregation_tasks: 0 address/primary_oems count tasks in the committed pool
+
+15 fault checks, 0 failed.

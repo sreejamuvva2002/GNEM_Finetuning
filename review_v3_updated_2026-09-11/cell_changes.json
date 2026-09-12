@@ -1,0 +1,1941 @@
+[
+  {
+    "row_id": 201,
+    "source_column": "Category",
+    "field": "category",
+    "raw": "OEM Footprint",
+    "canonical": "OEM (Footprint)"
+  },
+  {
+    "row_id": 202,
+    "source_column": "Category",
+    "field": "category",
+    "raw": "OEM Footprint",
+    "canonical": "OEM (Footprint)"
+  },
+  {
+    "row_id": 205,
+    "source_column": "Category",
+    "field": "category",
+    "raw": "OEM Footprint",
+    "canonical": "OEM (Footprint)"
+  },
+  {
+    "row_id": 187,
+    "source_column": "Location",
+    "field": "location",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 192,
+    "source_column": "Location",
+    "field": "location",
+    "raw": null,
+    "canonical": "Not applicable"
+  },
+  {
+    "row_id": 193,
+    "source_column": "Location",
+    "field": "location",
+    "raw": null,
+    "canonical": "Not applicable"
+  },
+  {
+    "row_id": 187,
+    "source_column": "Address",
+    "field": "address",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 186,
+    "source_column": "Primary Facility Type",
+    "field": "primary_facility_type",
+    "raw": "Manufacturing plant",
+    "canonical": "Manufacturing Plant"
+  },
+  {
+    "row_id": 187,
+    "source_column": "Primary Facility Type",
+    "field": "primary_facility_type",
+    "raw": "Manufacturing plant",
+    "canonical": "Manufacturing Plant"
+  },
+  {
+    "row_id": 188,
+    "source_column": "Primary Facility Type",
+    "field": "primary_facility_type",
+    "raw": "Manufacturing plant",
+    "canonical": "Manufacturing Plant"
+  },
+  {
+    "row_id": 189,
+    "source_column": "Primary Facility Type",
+    "field": "primary_facility_type",
+    "raw": "Manufacturing plant",
+    "canonical": "Manufacturing Plant"
+  },
+  {
+    "row_id": 190,
+    "source_column": "Primary Facility Type",
+    "field": "primary_facility_type",
+    "raw": "Manufacturing plant",
+    "canonical": "Manufacturing Plant"
+  },
+  {
+    "row_id": 191,
+    "source_column": "Primary Facility Type",
+    "field": "primary_facility_type",
+    "raw": "Manufacturing plant",
+    "canonical": "Manufacturing Plant"
+  },
+  {
+    "row_id": 192,
+    "source_column": "Primary Facility Type",
+    "field": "primary_facility_type",
+    "raw": "Manufacturing plant",
+    "canonical": "Manufacturing Plant"
+  },
+  {
+    "row_id": 193,
+    "source_column": "Primary Facility Type",
+    "field": "primary_facility_type",
+    "raw": "Manufacturing plant",
+    "canonical": "Manufacturing Plant"
+  },
+  {
+    "row_id": 194,
+    "source_column": "Primary Facility Type",
+    "field": "primary_facility_type",
+    "raw": "Manufacturing plant",
+    "canonical": "Manufacturing Plant"
+  },
+  {
+    "row_id": 195,
+    "source_column": "Primary Facility Type",
+    "field": "primary_facility_type",
+    "raw": "Manufacturing plant",
+    "canonical": "Manufacturing Plant"
+  },
+  {
+    "row_id": 200,
+    "source_column": "Primary Facility Type",
+    "field": "primary_facility_type",
+    "raw": "Engineering / Manufacturing",
+    "canonical": "Manufacturing / Engineering"
+  },
+  {
+    "row_id": 180,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not applicable"
+  },
+  {
+    "row_id": 181,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not applicable"
+  },
+  {
+    "row_id": 182,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not applicable"
+  },
+  {
+    "row_id": 183,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not applicable"
+  },
+  {
+    "row_id": 184,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not applicable"
+  },
+  {
+    "row_id": 185,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not applicable"
+  },
+  {
+    "row_id": 186,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 187,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 188,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 189,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 190,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 191,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 192,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 193,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 194,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 195,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 196,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 197,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 198,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 199,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 200,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 201,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not applicable"
+  },
+  {
+    "row_id": 202,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not applicable"
+  },
+  {
+    "row_id": 203,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 204,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 205,
+    "source_column": "Primary OEMs",
+    "field": "primary_oems",
+    "raw": null,
+    "canonical": "Not applicable"
+  },
+  {
+    "row_id": 180,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 181,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 182,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 183,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 184,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 185,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 186,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 187,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 188,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 189,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 190,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 191,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 192,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 193,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 194,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 195,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 196,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 197,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 198,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 199,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 200,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 201,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 202,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 203,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 204,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 205,
+    "source_column": "Supplier or Affiliation Type",
+    "field": "supplier_or_affiliation_type",
+    "raw": null,
+    "canonical": "Not specified"
+  },
+  {
+    "row_id": 1,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Interior Assembly; Injection Molding",
+    "canonical": "Injection Molding; Interior Assembly"
+  },
+  {
+    "row_id": 2,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Interior Assembly; Injection Molding",
+    "canonical": "Injection Molding; Interior Assembly"
+  },
+  {
+    "row_id": 3,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Sensor Manufacturing; Sensor Integration",
+    "canonical": "Sensor Integration; Sensor Manufacturing"
+  },
+  {
+    "row_id": 5,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Polymer Production; Compression Molding",
+    "canonical": "Compression Molding; Polymer Production"
+  },
+  {
+    "row_id": 6,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Rolling; Stamping; CNC Machining; Milling",
+    "canonical": "CNC Machining; Milling; Rolling; Stamping"
+  },
+  {
+    "row_id": 8,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "CNC Machining; Turning; Grinding",
+    "canonical": "CNC Machining; Grinding; Turning"
+  },
+  {
+    "row_id": 9,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Powder Coating; Electroplating",
+    "canonical": "Electroplating; Powder Coating"
+  },
+  {
+    "row_id": 10,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Polymer Production; Compression Molding; Stamping; Body-in-White Assembly; CNC Machining",
+    "canonical": "Body-in-White Assembly; CNC Machining; Compression Molding; Polymer Production; Stamping"
+  },
+  {
+    "row_id": 11,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Refining; Cathode Material Production; Battery Recycling Logistics; Injection Molding; Interior Assembly",
+    "canonical": "Battery Recycling Logistics; Cathode Material Production; Injection Molding; Interior Assembly; Refining"
+  },
+  {
+    "row_id": 12,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Polymer Production; Compression Molding; Composite Manufacturing; Composite Layup; Injection Molding",
+    "canonical": "Composite Layup; Composite Manufacturing; Compression Molding; Injection Molding; Polymer Production"
+  },
+  {
+    "row_id": 16,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Polymer Production; Compression Molding",
+    "canonical": "Compression Molding; Polymer Production"
+  },
+  {
+    "row_id": 17,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Body-in-White Assembly; Powertrain Installation; Interior Assembly; End-of-Line Testing; Injection Molding",
+    "canonical": "Body-in-White Assembly; End-of-Line Testing; Injection Molding; Interior Assembly; Powertrain Installation"
+  },
+  {
+    "row_id": 20,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Injection Molding; CNC Machining; Turning; Grinding",
+    "canonical": "CNC Machining; Grinding; Injection Molding; Turning"
+  },
+  {
+    "row_id": 21,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Welding; Stamping",
+    "canonical": "Stamping; Welding"
+  },
+  {
+    "row_id": 23,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Composite Manufacturing; Composite Layup",
+    "canonical": "Composite Layup; Composite Manufacturing"
+  },
+  {
+    "row_id": 24,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Interior Assembly; Injection Molding",
+    "canonical": "Injection Molding; Interior Assembly"
+  },
+  {
+    "row_id": 25,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Body-in-White Assembly; Powertrain Installation; Interior Assembly; End-of-Line Testing; Injection Molding",
+    "canonical": "Body-in-White Assembly; End-of-Line Testing; Injection Molding; Interior Assembly; Powertrain Installation"
+  },
+  {
+    "row_id": 27,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Body-in-White Assembly; Powertrain Installation; Interior Assembly; End-of-Line Testing; Injection Molding",
+    "canonical": "Body-in-White Assembly; End-of-Line Testing; Injection Molding; Interior Assembly; Powertrain Installation"
+  },
+  {
+    "row_id": 28,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Stamping; Body-in-White Assembly",
+    "canonical": "Body-in-White Assembly; Stamping"
+  },
+  {
+    "row_id": 29,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Polymer Production; Compression Molding",
+    "canonical": "Compression Molding; Polymer Production"
+  },
+  {
+    "row_id": 30,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Polymer Production; Compression Molding; Interior Assembly; Injection Molding",
+    "canonical": "Compression Molding; Injection Molding; Interior Assembly; Polymer Production"
+  },
+  {
+    "row_id": 32,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Polymer Production; Compression Molding",
+    "canonical": "Compression Molding; Polymer Production"
+  },
+  {
+    "row_id": 33,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Polymer Production; Compression Molding",
+    "canonical": "Compression Molding; Polymer Production"
+  },
+  {
+    "row_id": 34,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Powder Coating; Injection Molding",
+    "canonical": "Injection Molding; Powder Coating"
+  },
+  {
+    "row_id": 35,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Rolling; Electroplating",
+    "canonical": "Electroplating; Rolling"
+  },
+  {
+    "row_id": 37,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Interior Assembly; Injection Molding",
+    "canonical": "Injection Molding; Interior Assembly"
+  },
+  {
+    "row_id": 38,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Polymer Production; Compression Molding",
+    "canonical": "Compression Molding; Polymer Production"
+  },
+  {
+    "row_id": 40,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Stamping; Body-in-White Assembly",
+    "canonical": "Body-in-White Assembly; Stamping"
+  },
+  {
+    "row_id": 41,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Injection Molding; Rolling; Stamping; CNC Machining; Milling",
+    "canonical": "CNC Machining; Injection Molding; Milling; Rolling; Stamping"
+  },
+  {
+    "row_id": 43,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Polymer Production; Compression Molding; Interior Assembly; Injection Molding",
+    "canonical": "Compression Molding; Injection Molding; Interior Assembly; Polymer Production"
+  },
+  {
+    "row_id": 44,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "CNC Machining; Milling; Interior Assembly; Injection Molding",
+    "canonical": "CNC Machining; Injection Molding; Interior Assembly; Milling"
+  },
+  {
+    "row_id": 47,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "CNC Machining; Turning; Grinding",
+    "canonical": "CNC Machining; Grinding; Turning"
+  },
+  {
+    "row_id": 48,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Composite Manufacturing; Composite Layup",
+    "canonical": "Composite Layup; Composite Manufacturing"
+  },
+  {
+    "row_id": 49,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Polymer Production; Compression Molding; Injection Molding",
+    "canonical": "Compression Molding; Injection Molding; Polymer Production"
+  },
+  {
+    "row_id": 50,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Injection Molding; CNC Machining; Turning; Grinding",
+    "canonical": "CNC Machining; Grinding; Injection Molding; Turning"
+  },
+  {
+    "row_id": 52,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Injection Molding; Battery Recycling Logistics; Refining; Material Blending",
+    "canonical": "Battery Recycling Logistics; Injection Molding; Material Blending; Refining"
+  },
+  {
+    "row_id": 53,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Battery Recycling Logistics; Refining; Material Blending",
+    "canonical": "Battery Recycling Logistics; Material Blending; Refining"
+  },
+  {
+    "row_id": 54,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "CNC Machining; Turning; Grinding",
+    "canonical": "CNC Machining; Grinding; Turning"
+  },
+  {
+    "row_id": 55,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Composite Manufacturing; Composite Layup",
+    "canonical": "Composite Layup; Composite Manufacturing"
+  },
+  {
+    "row_id": 56,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Polymer Production; Compression Molding",
+    "canonical": "Compression Molding; Polymer Production"
+  },
+  {
+    "row_id": 58,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Battery Module Assembly; Battery Pack Assembly; Cell Testing; Battery Recycling Logistics; Refining",
+    "canonical": "Battery Module Assembly; Battery Pack Assembly; Battery Recycling Logistics; Cell Testing; Refining"
+  },
+  {
+    "row_id": 59,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Powder Coating; Polymer Production; Compression Molding",
+    "canonical": "Compression Molding; Polymer Production; Powder Coating"
+  },
+  {
+    "row_id": 60,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Stamping; Body-in-White Assembly",
+    "canonical": "Body-in-White Assembly; Stamping"
+  },
+  {
+    "row_id": 61,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Interior Assembly; Injection Molding",
+    "canonical": "Injection Molding; Interior Assembly"
+  },
+  {
+    "row_id": 62,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Connector Manufacturing; PCB Assembly; SMT Assembly; Interior Assembly; Injection Molding",
+    "canonical": "Connector Manufacturing; Injection Molding; Interior Assembly; PCB Assembly; SMT Assembly"
+  },
+  {
+    "row_id": 64,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "CNC Machining; Turning; Grinding",
+    "canonical": "CNC Machining; Grinding; Turning"
+  },
+  {
+    "row_id": 65,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Compression Molding; Polymer Production; Interior Assembly; Injection Molding",
+    "canonical": "Compression Molding; Injection Molding; Interior Assembly; Polymer Production"
+  },
+  {
+    "row_id": 66,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Interior Assembly; Injection Molding",
+    "canonical": "Injection Molding; Interior Assembly"
+  },
+  {
+    "row_id": 67,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Rolling; Stamping; CNC Machining; Milling",
+    "canonical": "CNC Machining; Milling; Rolling; Stamping"
+  },
+  {
+    "row_id": 68,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Cell Assembly; Formation Cycling; Cell Testing; Powder Coating",
+    "canonical": "Cell Assembly; Cell Testing; Formation Cycling; Powder Coating"
+  },
+  {
+    "row_id": 69,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Stamping; Body-in-White Assembly; CNC Machining; Turning; Grinding",
+    "canonical": "Body-in-White Assembly; CNC Machining; Grinding; Stamping; Turning"
+  },
+  {
+    "row_id": 71,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Injection Molding; Stamping; Body-in-White Assembly; CNC Machining; Turning",
+    "canonical": "Body-in-White Assembly; CNC Machining; Injection Molding; Stamping; Turning"
+  },
+  {
+    "row_id": 73,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Stamping; Body-in-White Assembly",
+    "canonical": "Body-in-White Assembly; Stamping"
+  },
+  {
+    "row_id": 76,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Cell Assembly; Formation Cycling; Cell Testing",
+    "canonical": "Cell Assembly; Cell Testing; Formation Cycling"
+  },
+  {
+    "row_id": 77,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Material Blending; Electrode Coating",
+    "canonical": "Electrode Coating; Material Blending"
+  },
+  {
+    "row_id": 78,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Cell Assembly; Formation Cycling; Cell Testing",
+    "canonical": "Cell Assembly; Cell Testing; Formation Cycling"
+  },
+  {
+    "row_id": 80,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Cell Assembly; Battery Module Assembly; Battery Pack Assembly; Formation Cycling; Cell Testing",
+    "canonical": "Battery Module Assembly; Battery Pack Assembly; Cell Assembly; Cell Testing; Formation Cycling"
+  },
+  {
+    "row_id": 81,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Polymer Production; Compression Molding",
+    "canonical": "Compression Molding; Polymer Production"
+  },
+  {
+    "row_id": 83,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Body-in-White Assembly; Powertrain Installation; Interior Assembly; End-of-Line Testing; Battery Module Assembly",
+    "canonical": "Battery Module Assembly; Body-in-White Assembly; End-of-Line Testing; Interior Assembly; Powertrain Installation"
+  },
+  {
+    "row_id": 85,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Body-in-White Assembly; Powertrain Installation; Interior Assembly; End-of-Line Testing; Polymer Production",
+    "canonical": "Body-in-White Assembly; End-of-Line Testing; Interior Assembly; Polymer Production; Powertrain Installation"
+  },
+  {
+    "row_id": 88,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Stamping; Body-in-White Assembly",
+    "canonical": "Body-in-White Assembly; Stamping"
+  },
+  {
+    "row_id": 91,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Stamping; Body-in-White Assembly",
+    "canonical": "Body-in-White Assembly; Stamping"
+  },
+  {
+    "row_id": 92,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Compression Molding; Polymer Production; Interior Assembly; Injection Molding",
+    "canonical": "Compression Molding; Injection Molding; Interior Assembly; Polymer Production"
+  },
+  {
+    "row_id": 94,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Anode Material Production; Battery Material Processing; Refining; Injection Molding; Interior Assembly",
+    "canonical": "Anode Material Production; Battery Material Processing; Injection Molding; Interior Assembly; Refining"
+  },
+  {
+    "row_id": 95,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Body-in-White Assembly; Powertrain Installation; Interior Assembly; End-of-Line Testing",
+    "canonical": "Body-in-White Assembly; End-of-Line Testing; Interior Assembly; Powertrain Installation"
+  },
+  {
+    "row_id": 96,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Stamping; Body-in-White Assembly; Interior Assembly; Injection Molding",
+    "canonical": "Body-in-White Assembly; Injection Molding; Interior Assembly; Stamping"
+  },
+  {
+    "row_id": 97,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Polymer Production; Compression Molding; Stamping; Body-in-White Assembly; Interior Assembly",
+    "canonical": "Body-in-White Assembly; Compression Molding; Interior Assembly; Polymer Production; Stamping"
+  },
+  {
+    "row_id": 100,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Stamping; Body-in-White Assembly",
+    "canonical": "Body-in-White Assembly; Stamping"
+  },
+  {
+    "row_id": 102,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "CNC Machining; Turning; Grinding",
+    "canonical": "CNC Machining; Grinding; Turning"
+  },
+  {
+    "row_id": 103,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Polymer Production; Compression Molding",
+    "canonical": "Compression Molding; Polymer Production"
+  },
+  {
+    "row_id": 104,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Welding; Stamping; CNC Machining; Milling",
+    "canonical": "CNC Machining; Milling; Stamping; Welding"
+  },
+  {
+    "row_id": 105,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "CNC Machining; Turning; Grinding",
+    "canonical": "CNC Machining; Grinding; Turning"
+  },
+  {
+    "row_id": 107,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Polymer Production; Compression Molding; CNC Machining; Turning; Grinding",
+    "canonical": "CNC Machining; Compression Molding; Grinding; Polymer Production; Turning"
+  },
+  {
+    "row_id": 108,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Composite Manufacturing; Composite Layup",
+    "canonical": "Composite Layup; Composite Manufacturing"
+  },
+  {
+    "row_id": 109,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Welding; Stamping; CNC Machining; Milling",
+    "canonical": "CNC Machining; Milling; Stamping; Welding"
+  },
+  {
+    "row_id": 110,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Interior Assembly; Injection Molding; Drive Unit Assembly; Sensor Integration",
+    "canonical": "Drive Unit Assembly; Injection Molding; Interior Assembly; Sensor Integration"
+  },
+  {
+    "row_id": 111,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Polymer Production; Compression Molding",
+    "canonical": "Compression Molding; Polymer Production"
+  },
+  {
+    "row_id": 113,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "CNC Machining; Turning; Grinding",
+    "canonical": "CNC Machining; Grinding; Turning"
+  },
+  {
+    "row_id": 114,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "CNC Machining; Milling; Interior Assembly; Injection Molding",
+    "canonical": "CNC Machining; Injection Molding; Interior Assembly; Milling"
+  },
+  {
+    "row_id": 117,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Polymer Production; Compression Molding",
+    "canonical": "Compression Molding; Polymer Production"
+  },
+  {
+    "row_id": 119,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Charger Assembly; Cable Manufacturing; Connector Manufacturing",
+    "canonical": "Cable Manufacturing; Charger Assembly; Connector Manufacturing"
+  },
+  {
+    "row_id": 121,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Interior Assembly; Injection Molding",
+    "canonical": "Injection Molding; Interior Assembly"
+  },
+  {
+    "row_id": 122,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Interior Assembly; Injection Molding",
+    "canonical": "Injection Molding; Interior Assembly"
+  },
+  {
+    "row_id": 124,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Interior Assembly; Injection Molding",
+    "canonical": "Injection Molding; Interior Assembly"
+  },
+  {
+    "row_id": 126,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Welding; Stamping; CNC Machining; Milling",
+    "canonical": "CNC Machining; Milling; Stamping; Welding"
+  },
+  {
+    "row_id": 127,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Interior Assembly; Injection Molding",
+    "canonical": "Injection Molding; Interior Assembly"
+  },
+  {
+    "row_id": 128,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Stamping; Body-in-White Assembly; Interior Assembly; Injection Molding",
+    "canonical": "Body-in-White Assembly; Injection Molding; Interior Assembly; Stamping"
+  },
+  {
+    "row_id": 130,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Connector Manufacturing; PCB Assembly; SMT Assembly; Interior Assembly; Injection Molding",
+    "canonical": "Connector Manufacturing; Injection Molding; Interior Assembly; PCB Assembly; SMT Assembly"
+  },
+  {
+    "row_id": 132,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Welding; Stamping",
+    "canonical": "Stamping; Welding"
+  },
+  {
+    "row_id": 133,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Body-in-White Assembly; Powertrain Installation; Interior Assembly; End-of-Line Testing; Welding",
+    "canonical": "Body-in-White Assembly; End-of-Line Testing; Interior Assembly; Powertrain Installation; Welding"
+  },
+  {
+    "row_id": 134,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "CNC Machining; Turning; Grinding",
+    "canonical": "CNC Machining; Grinding; Turning"
+  },
+  {
+    "row_id": 135,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Polymer Production; Compression Molding",
+    "canonical": "Compression Molding; Polymer Production"
+  },
+  {
+    "row_id": 138,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Welding; Stamping; CNC Machining; Milling",
+    "canonical": "CNC Machining; Milling; Stamping; Welding"
+  },
+  {
+    "row_id": 140,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Stamping; Body-in-White Assembly",
+    "canonical": "Body-in-White Assembly; Stamping"
+  },
+  {
+    "row_id": 141,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Composite Manufacturing; Composite Layup; CNC Machining; Milling",
+    "canonical": "CNC Machining; Composite Layup; Composite Manufacturing; Milling"
+  },
+  {
+    "row_id": 143,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Interior Assembly; Injection Molding",
+    "canonical": "Injection Molding; Interior Assembly"
+  },
+  {
+    "row_id": 146,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Stamping; Body-in-White Assembly; Welding",
+    "canonical": "Body-in-White Assembly; Stamping; Welding"
+  },
+  {
+    "row_id": 149,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Interior Assembly; Injection Molding",
+    "canonical": "Injection Molding; Interior Assembly"
+  },
+  {
+    "row_id": 152,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Vehicle Calibration; End-of-Line Testing; Battery Installation; Powertrain Installation",
+    "canonical": "Battery Installation; End-of-Line Testing; Powertrain Installation; Vehicle Calibration"
+  },
+  {
+    "row_id": 154,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Interior Assembly; Injection Molding",
+    "canonical": "Injection Molding; Interior Assembly"
+  },
+  {
+    "row_id": 155,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Interior Assembly; Injection Molding",
+    "canonical": "Injection Molding; Interior Assembly"
+  },
+  {
+    "row_id": 156,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Welding; Stamping",
+    "canonical": "Stamping; Welding"
+  },
+  {
+    "row_id": 157,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Welding; Stamping",
+    "canonical": "Stamping; Welding"
+  },
+  {
+    "row_id": 158,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Interior Assembly; Injection Molding",
+    "canonical": "Injection Molding; Interior Assembly"
+  },
+  {
+    "row_id": 160,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Rolling; Electroplating; Injection Molding",
+    "canonical": "Electroplating; Injection Molding; Rolling"
+  },
+  {
+    "row_id": 161,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Welding; Stamping; CNC Machining; Milling",
+    "canonical": "CNC Machining; Milling; Stamping; Welding"
+  },
+  {
+    "row_id": 162,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Stamping; Body-in-White Assembly; CNC Machining; Milling",
+    "canonical": "Body-in-White Assembly; CNC Machining; Milling; Stamping"
+  },
+  {
+    "row_id": 163,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Cell Assembly; Battery Module Assembly; Battery Pack Assembly; Formation Cycling; Cell Testing",
+    "canonical": "Battery Module Assembly; Battery Pack Assembly; Cell Assembly; Cell Testing; Formation Cycling"
+  },
+  {
+    "row_id": 166,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Welding; Stamping; CNC Machining; Milling; Connector Manufacturing",
+    "canonical": "CNC Machining; Connector Manufacturing; Milling; Stamping; Welding"
+  },
+  {
+    "row_id": 168,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Composite Manufacturing; Composite Layup",
+    "canonical": "Composite Layup; Composite Manufacturing"
+  },
+  {
+    "row_id": 169,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Welding; Stamping",
+    "canonical": "Stamping; Welding"
+  },
+  {
+    "row_id": 170,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Battery Recycling Logistics; Refining; Material Blending; Injection Molding; Interior Assembly",
+    "canonical": "Battery Recycling Logistics; Injection Molding; Interior Assembly; Material Blending; Refining"
+  },
+  {
+    "row_id": 172,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Body-in-White Assembly; Powertrain Installation; Interior Assembly; End-of-Line Testing; Battery Installation",
+    "canonical": "Battery Installation; Body-in-White Assembly; End-of-Line Testing; Interior Assembly; Powertrain Installation"
+  },
+  {
+    "row_id": 173,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Powder Coating; Body-in-White Assembly; Battery Installation; Powertrain Installation; End-of-Line Testing",
+    "canonical": "Battery Installation; Body-in-White Assembly; End-of-Line Testing; Powder Coating; Powertrain Installation"
+  },
+  {
+    "row_id": 177,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Body-in-White Assembly; Powertrain Installation; Interior Assembly; End-of-Line Testing",
+    "canonical": "Body-in-White Assembly; End-of-Line Testing; Interior Assembly; Powertrain Installation"
+  },
+  {
+    "row_id": 178,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Composite Manufacturing; Composite Layup; Battery Module Assembly; Battery Pack Assembly; Cell Testing",
+    "canonical": "Battery Module Assembly; Battery Pack Assembly; Cell Testing; Composite Layup; Composite Manufacturing"
+  },
+  {
+    "row_id": 180,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Interior Assembly; Injection Molding",
+    "canonical": "Injection Molding; Interior Assembly"
+  },
+  {
+    "row_id": 185,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Body-in-White Assembly; Powertrain Installation; Interior Assembly; End-of-Line Testing; Stamping",
+    "canonical": "Body-in-White Assembly; End-of-Line Testing; Interior Assembly; Powertrain Installation; Stamping"
+  },
+  {
+    "row_id": 186,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Stamping; Body-in-White Assembly; CNC Machining; Turning; Grinding",
+    "canonical": "Body-in-White Assembly; CNC Machining; Grinding; Stamping; Turning"
+  },
+  {
+    "row_id": 187,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Stamping; Body-in-White Assembly",
+    "canonical": "Body-in-White Assembly; Stamping"
+  },
+  {
+    "row_id": 188,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Stamping; Body-in-White Assembly",
+    "canonical": "Body-in-White Assembly; Stamping"
+  },
+  {
+    "row_id": 189,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Stamping; Body-in-White Assembly",
+    "canonical": "Body-in-White Assembly; Stamping"
+  },
+  {
+    "row_id": 190,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "CNC Machining; Turning; Grinding; Drive Unit Assembly; Sensor Integration",
+    "canonical": "CNC Machining; Drive Unit Assembly; Grinding; Sensor Integration; Turning"
+  },
+  {
+    "row_id": 191,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Stamping; Body-in-White Assembly",
+    "canonical": "Body-in-White Assembly; Stamping"
+  },
+  {
+    "row_id": 192,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Body-in-White Assembly; Powertrain Installation; Interior Assembly; End-of-Line Testing; Injection Molding",
+    "canonical": "Body-in-White Assembly; End-of-Line Testing; Injection Molding; Interior Assembly; Powertrain Installation"
+  },
+  {
+    "row_id": 193,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Stamping; Body-in-White Assembly",
+    "canonical": "Body-in-White Assembly; Stamping"
+  },
+  {
+    "row_id": 195,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Stamping; Body-in-White Assembly; Welding",
+    "canonical": "Body-in-White Assembly; Stamping; Welding"
+  },
+  {
+    "row_id": 196,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Wire Harness Manufacturing; Wiring Harness Installation; Connector Manufacturing; PCB Assembly; SMT Assembly",
+    "canonical": "Connector Manufacturing; PCB Assembly; SMT Assembly; Wire Harness Manufacturing; Wiring Harness Installation"
+  },
+  {
+    "row_id": 198,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Connector Manufacturing; PCB Assembly; SMT Assembly; Sensor Manufacturing; Sensor Integration",
+    "canonical": "Connector Manufacturing; PCB Assembly; Sensor Integration; Sensor Manufacturing; SMT Assembly"
+  },
+  {
+    "row_id": 199,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Wire Harness Manufacturing; Wiring Harness Installation; Interior Assembly; Injection Molding",
+    "canonical": "Injection Molding; Interior Assembly; Wire Harness Manufacturing; Wiring Harness Installation"
+  },
+  {
+    "row_id": 200,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Body-in-White Assembly; Powertrain Installation; Interior Assembly; End-of-Line Testing",
+    "canonical": "Body-in-White Assembly; End-of-Line Testing; Interior Assembly; Powertrain Installation"
+  },
+  {
+    "row_id": 202,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Polymer Production; Compression Molding; Connector Manufacturing; PCB Assembly; SMT Assembly",
+    "canonical": "Compression Molding; Connector Manufacturing; PCB Assembly; Polymer Production; SMT Assembly"
+  },
+  {
+    "row_id": 204,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Connector Manufacturing; PCB Assembly; SMT Assembly; Converter Manufacturing; Inverter Manufacturing",
+    "canonical": "Connector Manufacturing; Converter Manufacturing; Inverter Manufacturing; PCB Assembly; SMT Assembly"
+  },
+  {
+    "row_id": 205,
+    "source_column": "Processes",
+    "field": "processes",
+    "raw": "Connector Manufacturing; PCB Assembly; SMT Assembly; Converter Manufacturing; Inverter Manufacturing",
+    "canonical": "Connector Manufacturing; Converter Manufacturing; Inverter Manufacturing; PCB Assembly; SMT Assembly"
+  },
+  {
+    "row_id": 3,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Telematics Services; Data Analytics",
+    "canonical": "Data Analytics; Telematics Services"
+  },
+  {
+    "row_id": 10,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Manufacturing Engineering; Electrical Engineering; Systems Integration Engineering",
+    "canonical": "Electrical Engineering; Manufacturing Engineering; Systems Integration Engineering"
+  },
+  {
+    "row_id": 17,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Vehicle Engineering; Manufacturing Engineering",
+    "canonical": "Manufacturing Engineering; Vehicle Engineering"
+  },
+  {
+    "row_id": 25,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Vehicle Engineering; Manufacturing Engineering",
+    "canonical": "Manufacturing Engineering; Vehicle Engineering"
+  },
+  {
+    "row_id": 27,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Vehicle Engineering; Manufacturing Engineering",
+    "canonical": "Manufacturing Engineering; Vehicle Engineering"
+  },
+  {
+    "row_id": 43,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Manufacturing Engineering; Customer Support; Asset Management",
+    "canonical": "Asset Management; Customer Support; Manufacturing Engineering"
+  },
+  {
+    "row_id": 52,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Manufacturing Engineering; Battery Collection; Battery Repurposing; Circular Economy Consulting",
+    "canonical": "Battery Collection; Battery Repurposing; Circular Economy Consulting; Manufacturing Engineering"
+  },
+  {
+    "row_id": 58,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Battery Engineering; Battery Collection; Battery Repurposing; Circular Economy Consulting",
+    "canonical": "Battery Collection; Battery Engineering; Battery Repurposing; Circular Economy Consulting"
+  },
+  {
+    "row_id": 69,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Manufacturing Engineering; Electrical Engineering",
+    "canonical": "Electrical Engineering; Manufacturing Engineering"
+  },
+  {
+    "row_id": 83,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Vehicle Engineering; Manufacturing Engineering; Battery Engineering",
+    "canonical": "Battery Engineering; Manufacturing Engineering; Vehicle Engineering"
+  },
+  {
+    "row_id": 85,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Vehicle Engineering; Manufacturing Engineering",
+    "canonical": "Manufacturing Engineering; Vehicle Engineering"
+  },
+  {
+    "row_id": 94,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Battery Engineering; Procurement; Manufacturing Engineering",
+    "canonical": "Battery Engineering; Manufacturing Engineering; Procurement"
+  },
+  {
+    "row_id": 95,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Vehicle Engineering; Manufacturing Engineering",
+    "canonical": "Manufacturing Engineering; Vehicle Engineering"
+  },
+  {
+    "row_id": 116,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Warehousing; Inventory Management; Supplier Management",
+    "canonical": "Inventory Management; Supplier Management; Warehousing"
+  },
+  {
+    "row_id": 119,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "EVSE Installation; Equipment Commissioning; Preventive Maintenance",
+    "canonical": "Equipment Commissioning; EVSE Installation; Preventive Maintenance"
+  },
+  {
+    "row_id": 121,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Manufacturing Engineering; Customer Support; Asset Management",
+    "canonical": "Asset Management; Customer Support; Manufacturing Engineering"
+  },
+  {
+    "row_id": 123,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Warehousing; Inventory Management; Supplier Management",
+    "canonical": "Inventory Management; Supplier Management; Warehousing"
+  },
+  {
+    "row_id": 127,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Manufacturing Engineering; Customer Support; Asset Management",
+    "canonical": "Asset Management; Customer Support; Manufacturing Engineering"
+  },
+  {
+    "row_id": 133,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Vehicle Engineering; Manufacturing Engineering",
+    "canonical": "Manufacturing Engineering; Vehicle Engineering"
+  },
+  {
+    "row_id": 143,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Manufacturing Engineering; Customer Support; Asset Management",
+    "canonical": "Asset Management; Customer Support; Manufacturing Engineering"
+  },
+  {
+    "row_id": 148,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Customer Support; Asset Management",
+    "canonical": "Asset Management; Customer Support"
+  },
+  {
+    "row_id": 149,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Manufacturing Engineering; Customer Support; Asset Management",
+    "canonical": "Asset Management; Customer Support; Manufacturing Engineering"
+  },
+  {
+    "row_id": 150,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Vehicle Engineering; Market Research; Manufacturing Engineering",
+    "canonical": "Manufacturing Engineering; Market Research; Vehicle Engineering"
+  },
+  {
+    "row_id": 152,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Vehicle Engineering; Manufacturing Engineering",
+    "canonical": "Manufacturing Engineering; Vehicle Engineering"
+  },
+  {
+    "row_id": 166,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Manufacturing Engineering; Electrical Engineering",
+    "canonical": "Electrical Engineering; Manufacturing Engineering"
+  },
+  {
+    "row_id": 172,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Vehicle Engineering; Manufacturing Engineering",
+    "canonical": "Manufacturing Engineering; Vehicle Engineering"
+  },
+  {
+    "row_id": 174,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Warehousing; Inventory Management; Supplier Management; Manufacturing Engineering",
+    "canonical": "Inventory Management; Manufacturing Engineering; Supplier Management; Warehousing"
+  },
+  {
+    "row_id": 177,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Vehicle Engineering; Manufacturing Engineering",
+    "canonical": "Manufacturing Engineering; Vehicle Engineering"
+  },
+  {
+    "row_id": 178,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Thermal Modeling; Battery Engineering",
+    "canonical": "Battery Engineering; Thermal Modeling"
+  },
+  {
+    "row_id": 185,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Vehicle Engineering; Manufacturing Engineering; Warehousing; Inventory Management",
+    "canonical": "Inventory Management; Manufacturing Engineering; Vehicle Engineering; Warehousing"
+  },
+  {
+    "row_id": 192,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Vehicle Engineering; Manufacturing Engineering",
+    "canonical": "Manufacturing Engineering; Vehicle Engineering"
+  },
+  {
+    "row_id": 197,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Manufacturing Engineering; Electrical Engineering; Warehousing; Inventory Management",
+    "canonical": "Electrical Engineering; Inventory Management; Manufacturing Engineering; Warehousing"
+  },
+  {
+    "row_id": 198,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Electrical Engineering; Telematics Services; Data Analytics",
+    "canonical": "Data Analytics; Electrical Engineering; Telematics Services"
+  },
+  {
+    "row_id": 199,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Electrical Engineering; Manufacturing Engineering; Warehousing; Inventory Management",
+    "canonical": "Electrical Engineering; Inventory Management; Manufacturing Engineering; Warehousing"
+  },
+  {
+    "row_id": 200,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Vehicle Engineering; Manufacturing Engineering",
+    "canonical": "Manufacturing Engineering; Vehicle Engineering"
+  },
+  {
+    "row_id": 202,
+    "source_column": "Services",
+    "field": "services",
+    "raw": "Manufacturing Engineering; Electrical Engineering; Embedded Software Development",
+    "canonical": "Electrical Engineering; Embedded Software Development; Manufacturing Engineering"
+  },
+  {
+    "row_id": 5,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 8,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 16,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 21,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 25,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 26,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": "ASI Chain of Custody; EN 15088; EcoVadis; IATF 16949; ISO 14001; ISO 45001; ISO 50001; ISO 9001",
+    "canonical": "ASI Chain of Custody; EcoVadis; EN 15088; IATF 16949; ISO 14001; ISO 45001; ISO 50001; ISO 9001"
+  },
+  {
+    "row_id": 31,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 34,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 40,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 41,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 43,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 52,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": "FDA Registration; IATF 16949; ISO 13485; ISO 9001; cGMP",
+    "canonical": "cGMP; FDA Registration; IATF 16949; ISO 13485; ISO 9001"
+  },
+  {
+    "row_id": 69,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 74,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 81,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 92,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 94,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 111,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 121,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 133,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 143,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 153,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 160,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 165,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 166,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 168,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 170,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 172,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 176,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 177,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 179,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 182,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 183,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 188,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 192,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 195,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": null,
+    "canonical": "None identified after search"
+  },
+  {
+    "row_id": 202,
+    "source_column": "Certifications",
+    "field": "certifications",
+    "raw": "IATF 16949; ISO 14001; ISO 45001; ISO 9001; OEKO-TEX Standard 100; bluesign",
+    "canonical": "bluesign; IATF 16949; ISO 14001; ISO 45001; ISO 9001; OEKO-TEX Standard 100"
+  }
+]

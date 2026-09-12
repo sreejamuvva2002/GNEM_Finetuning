@@ -1,0 +1,17 @@
+{
+  "processes": {
+    "rows_checked": 205,
+    "mismatches": [],
+    "comparison": "casefolded membership under declared normalization; raw spellings/order separately preserved"
+  },
+  "services": {
+    "rows_checked": 205,
+    "mismatches": [],
+    "comparison": "casefolded membership under declared normalization; raw spellings/order separately preserved"
+  },
+  "certifications": {
+    "rows_checked": 205,
+    "mismatches": [],
+    "comparison": "casefolded membership under declared normalization; raw spellings/order separately preserved"
+  }
+}

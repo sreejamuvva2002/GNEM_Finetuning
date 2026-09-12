@@ -1,0 +1,15 @@
+{
+  "count": 6,
+  "statuses": {
+    "MICRO_COUNT": "correct",
+    "MICRO_TOPK": "correct",
+    "MICRO_EMPTY": "correct",
+    "MICRO_COMPOSITION": "correct",
+    "MICRO_GROUP": "correct",
+    "MICRO_MULTI": "correct"
+  },
+  "gold_self_checks_passed": 6,
+  "development_micro_only": true,
+  "model_revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+  "runner_sha256": "1a34933d93865c89c55713deec2a174404771350d232aa2ceda68fe01fc7050c"
+}

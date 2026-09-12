@@ -1,0 +1,12 @@
+{
+  "dev_fact_v3.jsonl": 255,
+  "dev_structured_v3.jsonl": 51,
+  "probe_fact_recall_v3.jsonl": 2820,
+  "probe_fact_paraphrase_v3.jsonl": 2820,
+  "probe_structured_train_v3.jsonl": 1306,
+  "probe_value_exposure_v3.jsonl": 130,
+  "probe_operation_heldout_v3.jsonl": 15,
+  "probe_composition_heldout_v3.jsonl": 401,
+  "probe_structured_paraphrase_v3.jsonl": 1305,
+  "probe_no_match_v3.jsonl": 20
+}

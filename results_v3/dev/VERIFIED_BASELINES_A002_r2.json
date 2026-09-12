@@ -1,0 +1,915 @@
+{
+  "regrade_id": "r2",
+  "parser_version": "answer_parser_A002.2",
+  "parser_sha256": "d728d239135ddf1c682b8621ed08692cafd356382b7a2abfb9f82a578513f458",
+  "sql_grader_version": "grade_v3.2_A002",
+  "sql_grader_sha256": "c7775cdcf69f11705eb35a172202cc917648fa6df149a13c8cb8d217e63cfb04",
+  "regrader_sha256": "2327d4985f4ba03326c22ccfed522090912a3df2dffc2c8a09cbd93a7d8abc84",
+  "supersedes": "results_v3/dev/VERIFIED_BASELINES_A002.json",
+  "model_inference_repeated": false,
+  "q42_approval": "pending_by_user",
+  "final_training_runs_completed": 0,
+  "conditions": {
+    "base": {
+      "verification": {
+        "verify_version": "eval_verify_v3.1",
+        "n_records": 306,
+        "expected_count": 306,
+        "unique_example_ids": 306,
+        "exactly_one_status": true,
+        "scored": 306,
+        "failed": 0,
+        "families": [
+          "dev_structured",
+          "factual_recall"
+        ],
+        "grader_sha256": "d728d239135ddf1c682b8621ed08692cafd356382b7a2abfb9f82a578513f458",
+        "passed": true
+      },
+      "overall": {
+        "n": 306,
+        "correct": 13,
+        "statuses": {
+          "incorrect": 293,
+          "correct": 13
+        },
+        "semantic_exact_score": 0.042483660130718956,
+        "strict_contract_correct": 0.042483660130718956,
+        "output_contract_compliance_rate": 0.9803921568627451
+      },
+      "by_family": {
+        "factual_recall": {
+          "n": 255,
+          "correct": 0,
+          "statuses": {
+            "incorrect": 255
+          },
+          "semantic_exact_score": 0.0,
+          "strict_contract_correct": 0.0,
+          "output_contract_compliance_rate": 0.9764705882352941
+        },
+        "dev_structured": {
+          "n": 51,
+          "correct": 13,
+          "statuses": {
+            "incorrect": 38,
+            "correct": 13
+          },
+          "semantic_exact_score": 0.2549019607843137,
+          "strict_contract_correct": 0.2549019607843137,
+          "output_contract_compliance_rate": 1.0
+        }
+      },
+      "by_attribute": {
+        "category": {
+          "n": 17,
+          "correct": 0,
+          "statuses": {
+            "incorrect": 17
+          },
+          "semantic_exact_score": 0.0,
+          "strict_contract_correct": 0.0,
+          "output_contract_compliance_rate": 1.0
+        },
+        "industry_group": {
+          "n": 17,
+          "correct": 0,
+          "statuses": {
+            "incorrect": 17
+          },
+          "semantic_exact_score": 0.0,
+          "strict_contract_correct": 0.0,
+          "output_contract_compliance_rate": 1.0
+        },
+        "location": {
+          "n": 17,
+          "correct": 0,
+          "statuses": {
+            "incorrect": 17
+          },
+          "semantic_exact_score": 0.0,
+          "strict_contract_correct": 0.0,
+          "output_contract_compliance_rate": 1.0
+        },
+        "address": {
+          "n": 17,
+          "correct": 0,
+          "statuses": {
+            "incorrect": 17
+          },
+          "semantic_exact_score": 0.0,
+          "strict_contract_correct": 0.0,
+          "output_contract_compliance_rate": 1.0
+        },
+        "primary_facility_type": {
+          "n": 17,
+          "correct": 0,
+          "statuses": {
+            "incorrect": 17
+          },
+          "semantic_exact_score": 0.0,
+          "strict_contract_correct": 0.0,
+          "output_contract_compliance_rate": 1.0
+        },
+        "ev_supply_chain_role": {
+          "n": 17,
+          "correct": 0,
+          "statuses": {
+            "incorrect": 17
+          },
+          "semantic_exact_score": 0.0,
+          "strict_contract_correct": 0.0,
+          "output_contract_compliance_rate": 1.0
+        },
+        "primary_oems": {
+          "n": 17,
+          "correct": 0,
+          "statuses": {
+            "incorrect": 17
+          },
+          "semantic_exact_score": 0.0,
+          "strict_contract_correct": 0.0,
+          "output_contract_compliance_rate": 0.7058823529411765
+        },
+        "supplier_or_affiliation_type": {
+          "n": 17,
+          "correct": 0,
+          "statuses": {
+            "incorrect": 17
+          },
+          "semantic_exact_score": 0.0,
+          "strict_contract_correct": 0.0,
+          "output_contract_compliance_rate": 1.0
+        },
+        "employment": {
+          "n": 17,
+          "correct": 0,
+          "statuses": {
+            "incorrect": 17
+          },
+          "semantic_exact_score": 0.0,
+          "strict_contract_correct": 0.0,
+          "output_contract_compliance_rate": 1.0
+        },
+        "product_or_service": {
+          "n": 17,
+          "correct": 0,
+          "statuses": {
+            "incorrect": 17
+          },
+          "semantic_exact_score": 0.0,
+          "strict_contract_correct": 0.0,
+          "output_contract_compliance_rate": 1.0
+        },
+        "ev_battery_relevant": {
+          "n": 17,
+          "correct": 0,
+          "statuses": {
+            "incorrect": 17
+          },
+          "semantic_exact_score": 0.0,
+          "strict_contract_correct": 0.0,
+          "output_contract_compliance_rate": 1.0
+        },
+        "classification_method": {
+          "n": 17,
+          "correct": 0,
+          "statuses": {
+            "incorrect": 17
+          },
+          "semantic_exact_score": 0.0,
+          "strict_contract_correct": 0.0,
+          "output_contract_compliance_rate": 1.0
+        },
+        "processes": {
+          "n": 17,
+          "correct": 0,
+          "statuses": {
+            "incorrect": 17
+          },
+          "semantic_exact_score": 0.0,
+          "strict_contract_correct": 0.0,
+          "output_contract_compliance_rate": 1.0
+        },
+        "services": {
+          "n": 17,
+          "correct": 0,
+          "statuses": {
+            "incorrect": 17
+          },
+          "semantic_exact_score": 0.0,
+          "strict_contract_correct": 0.0,
+          "output_contract_compliance_rate": 1.0
+        },
+        "certifications": {
+          "n": 17,
+          "correct": 0,
+          "statuses": {
+            "incorrect": 17
+          },
+          "semantic_exact_score": 0.0,
+          "strict_contract_correct": 0.0,
+          "output_contract_compliance_rate": 0.9411764705882353
+        }
+      },
+      "status_changes": [],
+      "source_predictions_sha256": "7b995c725733cf2c9b76d4eb8bcf868b3f109284ecbe59f4062d61101eb6def1",
+      "grader_sha256": "d728d239135ddf1c682b8621ed08692cafd356382b7a2abfb9f82a578513f458",
+      "r1_overall": {
+        "n": 306,
+        "correct": 13,
+        "statuses": {
+          "incorrect": 293,
+          "correct": 13
+        },
+        "exact_score": 0.042483660130718956
+      },
+      "predictions_sha256": "217a11a4142b58b7f0321953ccdffeb3913f7bdd9d3ce13a104b9f32be1e92ed",
+      "telemetry_sha256": "65cda3bbe6c72ea45610cdec6629d3cbd553250e2d9ad6b4724cd62355fede95"
+    },
+    "base_ctx_oracle": {
+      "verification": {
+        "verify_version": "eval_verify_v3.1",
+        "n_records": 255,
+        "expected_count": 255,
+        "unique_example_ids": 255,
+        "exactly_one_status": true,
+        "scored": 255,
+        "failed": 0,
+        "families": [
+          "factual_recall"
+        ],
+        "grader_sha256": "d728d239135ddf1c682b8621ed08692cafd356382b7a2abfb9f82a578513f458",
+        "passed": true
+      },
+      "overall": {
+        "n": 255,
+        "correct": 245,
+        "statuses": {
+          "correct": 245,
+          "incorrect": 10
+        },
+        "semantic_exact_score": 0.9607843137254902,
+        "strict_contract_correct": 0.8392156862745098,
+        "output_contract_compliance_rate": 0.984313725490196
+      },
+      "by_family": {
+        "factual_recall": {
+          "n": 255,
+          "correct": 245,
+          "statuses": {
+            "correct": 245,
+            "incorrect": 10
+          },
+          "semantic_exact_score": 0.9607843137254902,
+          "strict_contract_correct": 0.8392156862745098,
+          "output_contract_compliance_rate": 0.984313725490196
+        }
+      },
+      "by_attribute": {
+        "category": {
+          "n": 17,
+          "correct": 17,
+          "statuses": {
+            "correct": 17
+          },
+          "semantic_exact_score": 1.0,
+          "strict_contract_correct": 1.0,
+          "output_contract_compliance_rate": 1.0
+        },
+        "industry_group": {
+          "n": 17,
+          "correct": 17,
+          "statuses": {
+            "correct": 17
+          },
+          "semantic_exact_score": 1.0,
+          "strict_contract_correct": 1.0,
+          "output_contract_compliance_rate": 1.0
+        },
+        "location": {
+          "n": 17,
+          "correct": 17,
+          "statuses": {
+            "correct": 17
+          },
+          "semantic_exact_score": 1.0,
+          "strict_contract_correct": 0.9411764705882353,
+          "output_contract_compliance_rate": 0.9411764705882353
+        },
+        "address": {
+          "n": 17,
+          "correct": 17,
+          "statuses": {
+            "correct": 17
+          },
+          "semantic_exact_score": 1.0,
+          "strict_contract_correct": 1.0,
+          "output_contract_compliance_rate": 1.0
+        },
+        "primary_facility_type": {
+          "n": 17,
+          "correct": 17,
+          "statuses": {
+            "correct": 17
+          },
+          "semantic_exact_score": 1.0,
+          "strict_contract_correct": 1.0,
+          "output_contract_compliance_rate": 1.0
+        },
+        "ev_supply_chain_role": {
+          "n": 17,
+          "correct": 17,
+          "statuses": {
+            "correct": 17
+          },
+          "semantic_exact_score": 1.0,
+          "strict_contract_correct": 0.8823529411764706,
+          "output_contract_compliance_rate": 1.0
+        },
+        "primary_oems": {
+          "n": 17,
+          "correct": 17,
+          "statuses": {
+            "correct": 17
+          },
+          "semantic_exact_score": 1.0,
+          "strict_contract_correct": 0.8823529411764706,
+          "output_contract_compliance_rate": 0.8823529411764706
+        },
+        "supplier_or_affiliation_type": {
+          "n": 17,
+          "correct": 17,
+          "statuses": {
+            "correct": 17
+          },
+          "semantic_exact_score": 1.0,
+          "strict_contract_correct": 0.23529411764705882,
+          "output_contract_compliance_rate": 0.9411764705882353
+        },
+        "employment": {
+          "n": 17,
+          "correct": 17,
+          "statuses": {
+            "correct": 17
+          },
+          "semantic_exact_score": 1.0,
+          "strict_contract_correct": 1.0,
+          "output_contract_compliance_rate": 1.0
+        },
+        "product_or_service": {
+          "n": 17,
+          "correct": 17,
+          "statuses": {
+            "correct": 17
+          },
+          "semantic_exact_score": 1.0,
+          "strict_contract_correct": 0.29411764705882354,
+          "output_contract_compliance_rate": 1.0
+        },
+        "ev_battery_relevant": {
+          "n": 17,
+          "correct": 7,
+          "statuses": {
+            "incorrect": 10,
+            "correct": 7
+          },
+          "semantic_exact_score": 0.4117647058823529,
+          "strict_contract_correct": 0.35294117647058826,
+          "output_contract_compliance_rate": 1.0
+        },
+        "classification_method": {
+          "n": 17,
+          "correct": 17,
+          "statuses": {
+            "correct": 17
+          },
+          "semantic_exact_score": 1.0,
+          "strict_contract_correct": 1.0,
+          "output_contract_compliance_rate": 1.0
+        },
+        "processes": {
+          "n": 17,
+          "correct": 17,
+          "statuses": {
+            "correct": 17
+          },
+          "semantic_exact_score": 1.0,
+          "strict_contract_correct": 1.0,
+          "output_contract_compliance_rate": 1.0
+        },
+        "services": {
+          "n": 17,
+          "correct": 17,
+          "statuses": {
+            "correct": 17
+          },
+          "semantic_exact_score": 1.0,
+          "strict_contract_correct": 1.0,
+          "output_contract_compliance_rate": 1.0
+        },
+        "certifications": {
+          "n": 17,
+          "correct": 17,
+          "statuses": {
+            "correct": 17
+          },
+          "semantic_exact_score": 1.0,
+          "strict_contract_correct": 1.0,
+          "output_contract_compliance_rate": 1.0
+        }
+      },
+      "status_changes": [
+        {
+          "example_id": "FR_4_supplier_or_affiliation_type",
+          "attribute": "supplier_or_affiliation_type",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Automotive supply chain participant\\\"\"",
+          "gold": "Automotive supply chain participant",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_4_product_or_service",
+          "attribute": "product_or_service",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Door locks, ignition locks, side mirrors and door handles\\\"\"",
+          "gold": "Door locks, ignition locks, side mirrors and door handles",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_7_supplier_or_affiliation_type",
+          "attribute": "supplier_or_affiliation_type",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Automotive supply chain participant\\\"\"",
+          "gold": "Automotive supply chain participant",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_7_product_or_service",
+          "attribute": "product_or_service",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Automotive floor mats made of purchased wire\\\"\"",
+          "gold": "Automotive floor mats made of purchased wire",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_16_product_or_service",
+          "attribute": "product_or_service",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Tires for light trucks, SUVs and commercial vehicles\\\"\"",
+          "gold": "Tires for light trucks, SUVs and commercial vehicles",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_19_supplier_or_affiliation_type",
+          "attribute": "supplier_or_affiliation_type",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Automotive supply chain participant\\\"\"",
+          "gold": "Automotive supply chain participant",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_19_product_or_service",
+          "attribute": "product_or_service",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Aluminum extrusions\\\"\"",
+          "gold": "Aluminum extrusions",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_77_ev_supply_chain_role",
+          "attribute": "ev_supply_chain_role",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Battery Pack\\\"\"",
+          "gold": "Battery Pack",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_77_product_or_service",
+          "attribute": "product_or_service",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Lithium-ion battery materials\\\"\"",
+          "gold": "Lithium-ion battery materials",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_79_supplier_or_affiliation_type",
+          "attribute": "supplier_or_affiliation_type",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Automotive supply chain participant\\\"\"",
+          "gold": "Automotive supply chain participant",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_79_product_or_service",
+          "attribute": "product_or_service",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Modules and storage systems\\\"\"",
+          "gold": "Modules and storage systems",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_81_supplier_or_affiliation_type",
+          "attribute": "supplier_or_affiliation_type",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Automotive supply chain participant\\\"\"",
+          "gold": "Automotive supply chain participant",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_102_supplier_or_affiliation_type",
+          "attribute": "supplier_or_affiliation_type",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Automotive supply chain participant\\\"\"",
+          "gold": "Automotive supply chain participant",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_108_supplier_or_affiliation_type",
+          "attribute": "supplier_or_affiliation_type",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Automotive supply chain participant\\\"\"",
+          "gold": "Automotive supply chain participant",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_108_product_or_service",
+          "attribute": "product_or_service",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Ceramic fiber insulation blankets\\\"\"",
+          "gold": "Ceramic fiber insulation blankets",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_113_supplier_or_affiliation_type",
+          "attribute": "supplier_or_affiliation_type",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Automotive supply chain participant\\\"\"",
+          "gold": "Automotive supply chain participant",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_113_product_or_service",
+          "attribute": "product_or_service",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Precision turned parts for the automotive industry\\\"\"",
+          "gold": "Precision turned parts for the automotive industry",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_117_supplier_or_affiliation_type",
+          "attribute": "supplier_or_affiliation_type",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Automotive supply chain participant\\\"\"",
+          "gold": "Automotive supply chain participant",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_124_supplier_or_affiliation_type",
+          "attribute": "supplier_or_affiliation_type",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Automotive supply chain participant\\\"\"",
+          "gold": "Automotive supply chain participant",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_124_product_or_service",
+          "attribute": "product_or_service",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Window regulators and door frames\\\"\"",
+          "gold": "Window regulators and door frames",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_132_location",
+          "attribute": "location",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "{\"location\": \"Rome, Floyd County\"}",
+          "gold": "Rome, Floyd County",
+          "format_repairs": [
+            "named_object_unwrap"
+          ],
+          "output_contract_compliant": false
+        },
+        {
+          "example_id": "FR_132_supplier_or_affiliation_type",
+          "attribute": "supplier_or_affiliation_type",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Automotive supply chain participant\\\"\"",
+          "gold": "Automotive supply chain participant",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_132_product_or_service",
+          "attribute": "product_or_service",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Single axle trailers\\\"\"",
+          "gold": "Single axle trailers",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_194_primary_oems",
+          "attribute": "primary_oems",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\"Not specified\"\"",
+          "gold": "Not specified",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": false
+        },
+        {
+          "example_id": "FR_194_supplier_or_affiliation_type",
+          "attribute": "supplier_or_affiliation_type",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Not specified\\\"\"",
+          "gold": "Not specified",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_194_product_or_service",
+          "attribute": "product_or_service",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Automotive parts contract manufacturing (assemblies/components)\\\"\"",
+          "gold": "Automotive parts contract manufacturing (assemblies/components)",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_194_ev_battery_relevant",
+          "attribute": "ev_battery_relevant",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Yes\\\"\"",
+          "gold": "Yes",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_201_ev_supply_chain_role",
+          "attribute": "ev_supply_chain_role",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Power electronics, sensors, and EV systems\\\"\"",
+          "gold": "Power electronics, sensors, and EV systems",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        },
+        {
+          "example_id": "FR_201_primary_oems",
+          "attribute": "primary_oems",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\"Not applicable\"\"",
+          "gold": "Not applicable",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": false
+        },
+        {
+          "example_id": "FR_201_supplier_or_affiliation_type",
+          "attribute": "supplier_or_affiliation_type",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\"Not specified\"\"",
+          "gold": "Not specified",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": false
+        },
+        {
+          "example_id": "FR_201_product_or_service",
+          "attribute": "product_or_service",
+          "from": "incorrect",
+          "to": "correct",
+          "raw_output": "\"\\\"Automotive supplier division (mobility solutions: ADAS, powertrain, electronics)\\\"\"",
+          "gold": "Automotive supplier division (mobility solutions: ADAS, powertrain, electronics)",
+          "format_repairs": [
+            "surplus_quote_strip"
+          ],
+          "output_contract_compliant": true
+        }
+      ],
+      "source_predictions_sha256": "d9ca763127f1a18c5097fbbf498704a12e6b40c30e2fa5b96f8208d4f23548eb",
+      "grader_sha256": "d728d239135ddf1c682b8621ed08692cafd356382b7a2abfb9f82a578513f458",
+      "r1_overall": {
+        "n": 255,
+        "correct": 214,
+        "statuses": {
+          "correct": 214,
+          "incorrect": 41
+        },
+        "exact_score": 0.8392156862745098
+      },
+      "predictions_sha256": "5f2ee992d8c38b4fb47ca2714c3d8055df34caa8d0f795bd4c5e646a0069a01e",
+      "telemetry_sha256": "4fabbd0d7d498a081fa8422e680fc5d6bc6be956fce13fa0706bd000164dad04"
+    },
+    "base_sql": {
+      "verification": {
+        "verify_version": "eval_verify_v3.1",
+        "n_records": 51,
+        "expected_count": 51,
+        "unique_example_ids": 51,
+        "exactly_one_status": true,
+        "scored": 51,
+        "failed": 0,
+        "families": [
+          "dev_structured"
+        ],
+        "grader_sha256": "c7775cdcf69f11705eb35a172202cc917648fa6df149a13c8cb8d217e63cfb04",
+        "passed": true
+      },
+      "overall": {
+        "n": 51,
+        "correct": 51,
+        "statuses": {
+          "correct": 51
+        },
+        "semantic_exact_score": 1.0,
+        "strict_contract_correct": 1.0,
+        "output_contract_compliance_rate": null
+      },
+      "by_family": {
+        "dev_structured": {
+          "n": 51,
+          "correct": 51,
+          "statuses": {
+            "correct": 51
+          },
+          "semantic_exact_score": 1.0,
+          "strict_contract_correct": 1.0,
+          "output_contract_compliance_rate": null
+        }
+      },
+      "by_attribute": {},
+      "status_changes": [],
+      "source_predictions_sha256": "67099bf561db60e54df2cfbf7bf970e113f9c5ca0fc7248217dbd2bf8d28c462",
+      "grader_sha256": "c7775cdcf69f11705eb35a172202cc917648fa6df149a13c8cb8d217e63cfb04",
+      "r1_overall": {
+        "n": 51,
+        "correct": 51,
+        "statuses": {
+          "correct": 51
+        },
+        "exact_score": 1.0
+      },
+      "predictions_sha256": "de2bd51efe8d3d872392f0835dab8d3ad6875e53a0c247f5684cf28c6e2e9efa",
+      "telemetry_sha256": "c7bc5ed4b6f9bc45ae95fc488c00211dac6b0c1cec54ba335677f3c24fb2b89a"
+    },
+    "base_sql_5shot": {
+      "verification": {
+        "verify_version": "eval_verify_v3.1",
+        "n_records": 51,
+        "expected_count": 51,
+        "unique_example_ids": 51,
+        "exactly_one_status": true,
+        "scored": 51,
+        "failed": 0,
+        "families": [
+          "dev_structured"
+        ],
+        "grader_sha256": "c7775cdcf69f11705eb35a172202cc917648fa6df149a13c8cb8d217e63cfb04",
+        "passed": true
+      },
+      "overall": {
+        "n": 51,
+        "correct": 51,
+        "statuses": {
+          "correct": 51
+        },
+        "semantic_exact_score": 1.0,
+        "strict_contract_correct": 0.27450980392156865,
+        "output_contract_compliance_rate": null
+      },
+      "by_family": {
+        "dev_structured": {
+          "n": 51,
+          "correct": 51,
+          "statuses": {
+            "correct": 51
+          },
+          "semantic_exact_score": 1.0,
+          "strict_contract_correct": 0.27450980392156865,
+          "output_contract_compliance_rate": null
+        }
+      },
+      "by_attribute": {},
+      "status_changes": [],
+      "source_predictions_sha256": "940d4499c2f5d5adcf7f0950cbb49625b8e3b60409689a7d6d6533936c621904",
+      "grader_sha256": "c7775cdcf69f11705eb35a172202cc917648fa6df149a13c8cb8d217e63cfb04",
+      "r1_overall": {
+        "n": 51,
+        "correct": 51,
+        "statuses": {
+          "correct": 51
+        },
+        "exact_score": 1.0
+      },
+      "predictions_sha256": "3d79ef5d2ecfd60639e9deadaf33b5f964844b779cb97f3725db4457fc487569",
+      "telemetry_sha256": "635a6ef6e426a054dd1aa33cb5a98f5846db911deb44fac9b145652bc393f168"
+    }
+  }
+}

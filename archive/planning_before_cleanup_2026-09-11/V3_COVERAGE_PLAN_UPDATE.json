@@ -1,0 +1,8 @@
+{
+  "change": "User requires every Excel field in training coverage; explicit testing/held-out data exclusions permitted; no unexplained omissions.",
+  "document": "V3_UPDATED_REVIEW_AND_PLAN.md",
+  "previous_sha256": "a7bf90eb8c40ccdce78c0d18511eeee8f43e9c33bee5d5d55adaa3d02791b3bf",
+  "updated_sha256": "3dfd9e4454162f117095b39127a647a587c0b2f72a4fe78d5ef49a18ef943b3e",
+  "note": "The earlier review manifest records the original audit-time document. Audit evidence is unchanged; this manifest records the subsequent user-directed plan amendment.",
+  "training_datasets_changed": false
+}

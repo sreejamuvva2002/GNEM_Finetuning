@@ -1,0 +1,66 @@
+{
+  "A_cpt": {
+    "adapter_sha256": "10b25f9687c37c2f5de5c2303dfb08ab77c95c7888686bc7788cb5d0de872c2f",
+    "all_tensors_finite": true,
+    "all_lora_B_updated": true,
+    "max_logit_difference_from_base": 0.25,
+    "reload_logits_identical": true,
+    "optimizer_steps": 2
+  },
+  "B_facts": {
+    "adapter_sha256": "7f48d7176e182c7fe91ce1aca942f2ffa212c98779daecf6c19a62c267252a5b",
+    "all_tensors_finite": true,
+    "all_lora_B_updated": true,
+    "max_logit_difference_from_base": 0.21875,
+    "reload_logits_identical": true,
+    "optimizer_steps": 2
+  },
+  "C_answers": {
+    "adapter_sha256": "b30a1b39cbdd207044f5c10af95e5770b06a1ae3a87e723dec8c2173422ee4a8",
+    "all_tensors_finite": true,
+    "all_lora_B_updated": true,
+    "max_logit_difference_from_base": 0.2353515625,
+    "reload_logits_identical": true,
+    "optimizer_steps": 2
+  },
+  "D_sql": {
+    "adapter_sha256": "d5ddea10e25511553fc24b73255f5093d9058259ecb0281c952b3a77ce95195d",
+    "all_tensors_finite": true,
+    "all_lora_B_updated": true,
+    "max_logit_difference_from_base": 0.28125,
+    "reload_logits_identical": true,
+    "optimizer_steps": 2
+  },
+  "BC": {
+    "adapter_sha256": "7f48d7176e182c7fe91ce1aca942f2ffa212c98779daecf6c19a62c267252a5b",
+    "all_tensors_finite": true,
+    "all_lora_B_updated": true,
+    "max_logit_difference_from_base": 0.21875,
+    "reload_logits_identical": true,
+    "optimizer_steps": 2
+  },
+  "BD_controlled": {
+    "adapter_sha256": "dc6a61b351ee6624b67cf2b6a453a2c15667a5150fd26d506d6c38b2bc0877d3",
+    "all_tensors_finite": true,
+    "all_lora_B_updated": true,
+    "max_logit_difference_from_base": 0.234375,
+    "reload_logits_identical": true,
+    "optimizer_steps": 2
+  },
+  "D_repeat_budgetmatched": {
+    "adapter_sha256": "4fa1db5732e1d8696ee7bb0897b40f43e21d9c979539ef3f38a2c3fd5965d7b3",
+    "all_tensors_finite": true,
+    "all_lora_B_updated": true,
+    "max_logit_difference_from_base": 0.1953125,
+    "reload_logits_identical": true,
+    "optimizer_steps": 2
+  },
+  "BD_full": {
+    "adapter_sha256": "dc6a61b351ee6624b67cf2b6a453a2c15667a5150fd26d506d6c38b2bc0877d3",
+    "all_tensors_finite": true,
+    "all_lora_B_updated": true,
+    "max_logit_difference_from_base": 0.234375,
+    "reload_logits_identical": true,
+    "optimizer_steps": 2
+  }
+}

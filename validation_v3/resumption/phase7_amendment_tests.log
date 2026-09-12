@@ -1,0 +1,11 @@
+test_actual_expensive_query_is_interrupted (__main__.AmendmentTests.test_actual_expensive_query_is_interrupted) ... ok
+test_deadline_preserves_scope_guard (__main__.AmendmentTests.test_deadline_preserves_scope_guard) ... ok
+test_scalar_alias_semantics_and_strict_schema (__main__.AmendmentTests.test_scalar_alias_semantics_and_strict_schema) ... ok
+test_sql_looking_literal_is_data (__main__.AmendmentTests.test_sql_looking_literal_is_data) ... ok
+test_timeout_configuration (__main__.AmendmentTests.test_timeout_configuration) ... ok
+test_timeout_status (__main__.AmendmentTests.test_timeout_status) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.054s
+
+OK

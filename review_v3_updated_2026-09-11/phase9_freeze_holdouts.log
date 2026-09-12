@@ -1,0 +1,60 @@
+  [PASS] registry matches deterministic recomputation from frozen inputs (recompute-and-compare)
+  [PASS] frozen_inputs_unchanged: canonical, split and DB hashes match
+  [PASS] initial_row_band_candidate_count_processes: 26 == 26 (README stage-1 row-band pool)
+  [PASS] post_split_filter_eligible_count_processes: 13 eligible after split minima (distinct from the 26 row-band candidates)
+  [PASS] initial_row_band_candidate_count_services: 13 == 13 (README stage-1 row-band pool)
+  [PASS] post_split_filter_eligible_count_services: 7 eligible after split minima (distinct from the 13 row-band candidates)
+  [PASS] initial_row_band_candidate_count_certifications: 8 == 8 (README stage-1 row-band pool)
+  [PASS] post_split_filter_eligible_count_certifications: 2 eligible after split minima (distinct from the 8 row-band candidates)
+  [PASS] count_processes: 4 == 4: Battery Module Assembly, Battery Pack Assembly, Battery Recycling Logistics, Refining
+  [PASS] band_processes: all within (3, 15)
+  [PASS] min_train_support_processes: all train >= 2
+  [PASS] min_dev_support_processes: all dev >= 1 (mandatory)
+  [PASS] min_test_support_processes: all test >= 1 (eligibility only)
+  [PASS] selection_is_collateral_minimal_processes: no feasible combination has smaller union train-row loss
+  [PASS] coverage_floor_processes: 95.95% >= 85.0%
+  [PASS] per_value_threshold_processes: every value individually >= 85.0%
+  [PASS] multi_company_support_processes: no held-out value lives in a single company
+  [PASS] count_services: 3 == 3: Battery Collection, Battery Repurposing, Circular Economy Consulting
+  [PASS] band_services: all within (3, 15)
+  [PASS] min_train_support_services: all train >= 2
+  [PASS] min_dev_support_services: all dev >= 1 (mandatory)
+  [PASS] min_test_support_services: all test >= 1 (eligibility only)
+  [PASS] selection_is_collateral_minimal_services: no feasible combination has smaller union train-row loss
+  [PASS] coverage_floor_services: 98.65% >= 85.0%
+  [PASS] per_value_threshold_services: every value individually >= 85.0%
+  [PASS] multi_company_support_services: no held-out value lives in a single company
+  [PASS] count_certifications: 2 == 2: AS9100, ISO/IEC 17025
+  [PASS] band_certifications: all within (3, 15)
+  [PASS] min_train_support_certifications: all train >= 2
+  [PASS] min_dev_support_certifications: all dev >= 1 (mandatory)
+  [PASS] min_test_support_certifications: all test >= 1 (eligibility only)
+  [PASS] selection_is_collateral_minimal_certifications: no feasible combination has smaller union train-row loss
+  [PASS] coverage_floor_certifications: 89.43% >= 85.0%
+  [PASS] per_value_threshold_certifications: every value individually >= 85.0%
+  [PASS] multi_company_support_certifications: no held-out value lives in a single company
+  [PASS] composition_arity: ['certifications', 'processes']
+  [PASS] composition_components_train_visible: each component independently present in training
+  [PASS] composition_collateral_scope_recorded: component literals stay train-visible unless separately value-held-out
+  [PASS] operation_classification_deterministic: one family per task by frozen precedence, including the GROUP/**/BY evasion attempt
+  [PASS] operation_multi_family_detected: a GROUP BY + ORDER BY/LIMIT task is seen as two held-out families and is excluded from training (fail closed)
+  [PASS] operation_all_three_held_out: README Phase 22 requires all three constructs at 0 occurrences
+  [PASS] allowed_operations_per_field_present: README:388 'allowed operations per field' contract is frozen in the registry
+  [PASS] training_eligible_is_semantic_minus_heldout: field_training_eligible_operations[f] == field_semantic_operations[f] - HELD_OUT_OPERATIONS for every field (exact set equality)
+  [PASS] no_held_out_family_ever_training_eligible: no field's training-eligible set contains a held-out family
+  [PASS] named_field_restrictions_sourced_from_readme: Primary OEMs / Address / row_id restrictions frozen verbatim from README
+  [PASS] fingerprint_same_for_equivalent: wording/format-insensitive
+  [PASS] fingerprint_differs_on_value: values_used differs
+  [PASS] fingerprint_differs_on_answer_type: answer_type differs
+  [PASS] fingerprint_differs_on_and_vs_or: lfp2 correction: AND and OR over the same predicates must differ (lfp1 collided these)
+  [PASS] fingerprint_same_on_commutative_reorder: reordered AND operands hash identically (same logical task)
+  [PASS] fingerprint_missing_components_fails_closed: missing logical_components raises rather than hashing a weaker skeleton
+  [PASS] multi_part_serialization_frozen: explicit parts[]; Phase 7 stand-in could not express multi-operation parts
+  [PASS] multipart_result_representation_frozen: keyed independent per-part execution results, not a shared discriminator-column table
+  [PASS] all 52 Phase 9 gates re-verified
+  [FAIL] ledger content drifted: ['arms']
+  [PASS] cost CSV content matches fresh recomputation
+  [PASS] audit doc content matches fresh recomputation
+
+PHASE 9 --check FAILED: 1 problem(s)
+  - ledger content drifted: ['arms']

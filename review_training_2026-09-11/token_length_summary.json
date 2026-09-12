@@ -1,0 +1,150 @@
+[
+  {
+    "variant": "B_facts",
+    "parsed_rows": 1461,
+    "parse_errors": [
+      {
+        "line": 15,
+        "error": "Expecting ':' delimiter: line 1 column 387 (char 386)"
+      },
+      {
+        "line": 16,
+        "error": "Extra data: line 1 column 639 (char 638)"
+      },
+      {
+        "line": 17,
+        "error": "Expecting value: line 1 column 1 (char 0)"
+      }
+    ],
+    "dataset_sha256": "1bdf37b47350ae00f169de395a7dae5ea9ef05d103926ec318288945abc48ca7",
+    "prompt_min": 59,
+    "prompt_max": 69,
+    "full_min": 68,
+    "full_max": 152,
+    "over_1024": 0,
+    "zero_answer_after_right_cut": 0,
+    "raw_answer_tokens": 24368,
+    "retained_answer_tokens": 24368,
+    "nonprefix": 0
+  },
+  {
+    "variant": "D_sql",
+    "parsed_rows": 647,
+    "parse_errors": [],
+    "dataset_sha256": "c42c25e07ed0bc946a9902e69d9445450f230b954950395867f10fa87b0e8826",
+    "prompt_min": 944,
+    "prompt_max": 968,
+    "full_min": 962,
+    "full_max": 1016,
+    "over_1024": 0,
+    "zero_answer_after_right_cut": 0,
+    "raw_answer_tokens": 16992,
+    "retained_answer_tokens": 16992,
+    "nonprefix": 0
+  },
+  {
+    "variant": "D_sql_k0",
+    "parsed_rows": 672,
+    "parse_errors": [],
+    "dataset_sha256": "f9ff4a563d6252d87733af030fa0af83ce36ea8937862d2da453dbd487dbf9b1",
+    "prompt_min": 944,
+    "prompt_max": 1066,
+    "full_min": 962,
+    "full_max": 1122,
+    "over_1024": 25,
+    "zero_answer_after_right_cut": 25,
+    "raw_answer_tokens": 18329,
+    "retained_answer_tokens": 16992,
+    "nonprefix": 0
+  },
+  {
+    "variant": "D_sql_k5",
+    "parsed_rows": 672,
+    "parse_errors": [],
+    "dataset_sha256": "28752223cc914790e46e644223fb4da3986b63e0da8eabf1d35cc2b8ccf48014",
+    "prompt_min": 944,
+    "prompt_max": 1082,
+    "full_min": 962,
+    "full_max": 1189,
+    "over_1024": 25,
+    "zero_answer_after_right_cut": 25,
+    "raw_answer_tokens": 18591,
+    "retained_answer_tokens": 16992,
+    "nonprefix": 0
+  },
+  {
+    "variant": "D_sql_k25",
+    "parsed_rows": 672,
+    "parse_errors": [],
+    "dataset_sha256": "2591962323a24fe482c8cb961e03ef6895a6a823e999604c1418fc7960d04c61",
+    "prompt_min": 944,
+    "prompt_max": 1084,
+    "full_min": 962,
+    "full_max": 1196,
+    "over_1024": 25,
+    "zero_answer_after_right_cut": 25,
+    "raw_answer_tokens": 19666,
+    "retained_answer_tokens": 16992,
+    "nonprefix": 0
+  },
+  {
+    "variant": "BD_facts_sql",
+    "parsed_rows": 2111,
+    "parse_errors": [],
+    "dataset_sha256": "a0de88b1a4897a5204580100f03ebcdcd5f737dc23f37921d926c30deb54d69d",
+    "prompt_min": 59,
+    "prompt_max": 968,
+    "full_min": 68,
+    "full_max": 1016,
+    "over_1024": 0,
+    "zero_answer_after_right_cut": 0,
+    "raw_answer_tokens": 41405,
+    "retained_answer_tokens": 41405,
+    "nonprefix": 0
+  },
+  {
+    "variant": "C_answers",
+    "parsed_rows": 647,
+    "parse_errors": [],
+    "dataset_sha256": "41d46fdb5a11c73427e22bfeb8a371e93b383f7dce4c7482d8e5c853ba567d01",
+    "prompt_min": 59,
+    "prompt_max": 83,
+    "full_min": 70,
+    "full_max": 250,
+    "over_1024": 0,
+    "zero_answer_after_right_cut": 0,
+    "raw_answer_tokens": 14333,
+    "retained_answer_tokens": 14333,
+    "nonprefix": 0
+  },
+  {
+    "variant": "BC_facts_answers",
+    "parsed_rows": 2111,
+    "parse_errors": [],
+    "dataset_sha256": "9f9d6272d511873dc70752998140fa7502c301a1b88d413eb48adcd5a29adf8f",
+    "prompt_min": 59,
+    "prompt_max": 83,
+    "full_min": 68,
+    "full_max": 250,
+    "over_1024": 0,
+    "zero_answer_after_right_cut": 0,
+    "raw_answer_tokens": 38746,
+    "retained_answer_tokens": 38746,
+    "nonprefix": 0
+  },
+  {
+    "variant": "A_cpt",
+    "parsed_rows": 498,
+    "parse_errors": [],
+    "dataset_sha256": "dec37cb3c6969ede46c6aee8e86430633b512468b1618037ba5d27bf0027b1fc",
+    "prompt_min": 0,
+    "prompt_max": 0,
+    "full_min": 73,
+    "full_max": 165,
+    "over_1024": 0,
+    "zero_answer_after_right_cut": 0,
+    "raw_answer_tokens": 45213,
+    "retained_answer_tokens": 45213,
+    "nonprefix": 0
+  }
+]

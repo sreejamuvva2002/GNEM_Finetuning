@@ -1,0 +1,45 @@
+{
+  "classification": {
+    "dev_fact_v3.jsonl": "dev",
+    "dev_structured_v3.jsonl": "dev",
+    "probe_fact_recall_v3.jsonl": "sealed_inputs",
+    "probe_fact_paraphrase_v3.jsonl": "sealed_inputs",
+    "probe_structured_train_v3.jsonl": "sealed_inputs",
+    "probe_value_exposure_v3.jsonl": "sealed_inputs",
+    "probe_operation_heldout_v3.jsonl": "sealed_inputs",
+    "probe_composition_heldout_v3.jsonl": "sealed_inputs",
+    "probe_structured_paraphrase_v3.jsonl": "sealed_inputs",
+    "probe_no_match_v3.jsonl": "sealed_inputs"
+  },
+  "counts": {
+    "dev_fact_v3.jsonl": 255,
+    "dev_structured_v3.jsonl": 51,
+    "probe_fact_recall_v3.jsonl": 2820,
+    "probe_fact_paraphrase_v3.jsonl": 2820,
+    "probe_structured_train_v3.jsonl": 1306,
+    "probe_value_exposure_v3.jsonl": 130,
+    "probe_operation_heldout_v3.jsonl": 15,
+    "probe_composition_heldout_v3.jsonl": 401,
+    "probe_structured_paraphrase_v3.jsonl": 1305,
+    "probe_no_match_v3.jsonl": 20
+  },
+  "sha256": {
+    "dev_fact_v3.jsonl": "c00abaedde82cc7e6cef7728a8aa87eefeb36fcefbff0fabf178da8996d25307",
+    "dev_structured_v3.jsonl": "a50262fb61af9f2c057b1c428023d3f16b89920aaed4ce028badb1c3a887b804",
+    "probe_fact_recall_v3.jsonl": "7d4ca76e02d71d44a32a0f3cf21356555778dbdddefe19e86b4837a7054483b8",
+    "probe_fact_paraphrase_v3.jsonl": "f24db063deb04a48b75b405df83c2dfbef08db0c84f802c8a83c476c91d50116",
+    "probe_structured_train_v3.jsonl": "6fe9ee24d162ae036081ad5ac23821df098c659de31f049fa0c13f951540bf9c",
+    "probe_value_exposure_v3.jsonl": "b2ec4eca92138e371cd8635d1d115f1599547ab888b27ca404eb1ed1a647fc9f",
+    "probe_operation_heldout_v3.jsonl": "740a7ec3af569e13c716d7ab263e6b6c1750cec8ed8c4d2f514dfbecb4128be6",
+    "probe_composition_heldout_v3.jsonl": "752b8d912a0a3ba725a42e5280aa48fd772bbda9833111adb3aedf5b7f6e4d00",
+    "probe_structured_paraphrase_v3.jsonl": "a66ee356bbe3297f43323d5321863a11e5c2a462e5567988fba2702304f9b26d",
+    "probe_no_match_v3.jsonl": "f72017c3cbc0fa164647c4357d27a0ec633a8ac0cfc5952f7e42875e4490cb46"
+  },
+  "registry_sha256": "b200df3c300fe4298c8e35ba8a4b011d1bb367319a92111b114b6f72428890e9",
+  "model_inference_performed": false,
+  "limitations": [
+    "Phase 27 prompts/sanity and Phase 28 business benchmark still required",
+    "Exposure strata describe source records, not equal per-arm supervision",
+    "Multipart business evaluation remains in Phase 28; this builder handles single-query probes"
+  ]
+}

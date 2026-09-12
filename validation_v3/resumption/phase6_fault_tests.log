@@ -1,0 +1,19 @@
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+  [PASS] fault:omitted_scope: TypeError: render_oracle_context() missing 2 required positional arguments:
+  [PASS] fault:none_scope: ScopeError: KB scope is required and must be named explicitly; got Non
+  [PASS] fault:invalid_scope: ScopeError: KB scope is required and must be named explicitly; got 'fu
+  [PASS] fault:row_outside_requested_scope: test row 5 rejected: row_id 5 is not present in scope 'train_kb'; a row o
+  [PASS] fault:prompt_over_budget: Gate: oversized: 32767 input + 1024 reserved = 33791 exceeds usable context 
+  [PASS] fault:budget_boundary_exact: 31744 accepted, 31745 rejected
+  [PASS] fault:attempted_silent_truncation: scanner flagged 2 occurrence(s)
+  [PASS] fault:truncation_scan_no_false_positive_on_prose: docstring/comment describing the rule is not flagged
+  [PASS] fault:forbidden_metadata_injection: split_group injection detected
+  [PASS] fault:gold_answer_annotation_injection: explicit 'Gold answer:' annotation detected
+  [PASS] fault:gold_sql_injection: gold_sql annotation detected
+  [PASS] fault:generated_qa_injection: generated_qa annotation detected
+  [PASS] fault:evaluation_metadata_injection: answer_type/target_columns detected
+  [PASS] fault:raw_kb_value_matching_answer_is_NOT_leakage: context legitimately contains Employment 860 with zero artifact markers
+  [PASS] fault:frozen_db_hash_drift: Gate: Phase 5 database drifted
+  [PASS] fault:frozen_canonical_hash_drift: IntegrityError: canonical records drifted
+
+All 16 fault checks passed.

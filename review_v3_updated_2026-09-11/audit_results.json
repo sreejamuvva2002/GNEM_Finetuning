@@ -1,0 +1,433 @@
+{
+  "inventory": {
+    "files": 178,
+    "prior_entries": 81,
+    "prior_matches": 81,
+    "prior_mismatches": [],
+    "prior_missing": []
+  },
+  "v2_evidence_hash_verification": {
+    "files": 94,
+    "mismatches": []
+  },
+  "workbook": {
+    "sha256": "a8a4ca5c72211e7e2e32bbf418873f86677b7fb1264d2c657955b3fee008b034",
+    "matches_frozen_source": true,
+    "zip_members": [
+      "[Content_Types].xml",
+      "_rels/.rels",
+      "xl/workbook.xml",
+      "xl/_rels/workbook.xml.rels",
+      "xl/worksheets/sheet1.xml",
+      "xl/worksheets/sheet2.xml",
+      "xl/theme/theme1.xml",
+      "xl/styles.xml",
+      "xl/sharedStrings.xml",
+      "docProps/core.xml",
+      "docProps/app.xml"
+    ],
+    "sheets": [
+      {
+        "name": "GNEM Combined",
+        "state": "visible",
+        "value_cells": 3618,
+        "formula_count": 0,
+        "hidden_rows": 0,
+        "hyperlinks": 0
+      },
+      {
+        "name": "Certification Key",
+        "state": "visible",
+        "value_cells": 0,
+        "formula_count": 0,
+        "hidden_rows": 0,
+        "hyperlinks": 0
+      }
+    ],
+    "headers": [
+      "Record No.",
+      "Company",
+      "Category",
+      "Industry Group",
+      "Location",
+      "Address",
+      "Primary Facility Type",
+      "EV Supply Chain Role",
+      "Primary OEMs",
+      "Supplier or Affiliation Type",
+      "Employment",
+      "Product / Service",
+      "Processes",
+      "Services",
+      "EV / Battery Relevant",
+      "Classification Method",
+      "Certifications",
+      "Certification Count"
+    ],
+    "records": 205,
+    "exact_names": 193,
+    "comments_or_external_or_embeddings": []
+  },
+  "cell_preservation": {
+    "compared_cells": 3690,
+    "canonical_rows": 205,
+    "canonical_fields": 18,
+    "row_ids_match": true,
+    "changed_cells": 277,
+    "unlogged_changes": [],
+    "columns": [
+      {
+        "source_column": "Record No.",
+        "field": "row_id",
+        "rows": 205,
+        "source_nonblank": 205,
+        "canonical_changed": 0
+      },
+      {
+        "source_column": "Company",
+        "field": "company",
+        "rows": 205,
+        "source_nonblank": 205,
+        "canonical_changed": 0
+      },
+      {
+        "source_column": "Category",
+        "field": "category",
+        "rows": 205,
+        "source_nonblank": 205,
+        "canonical_changed": 3
+      },
+      {
+        "source_column": "Industry Group",
+        "field": "industry_group",
+        "rows": 205,
+        "source_nonblank": 205,
+        "canonical_changed": 0
+      },
+      {
+        "source_column": "Location",
+        "field": "location",
+        "rows": 205,
+        "source_nonblank": 202,
+        "canonical_changed": 3
+      },
+      {
+        "source_column": "Address",
+        "field": "address",
+        "rows": 205,
+        "source_nonblank": 204,
+        "canonical_changed": 1
+      },
+      {
+        "source_column": "Primary Facility Type",
+        "field": "primary_facility_type",
+        "rows": 205,
+        "source_nonblank": 205,
+        "canonical_changed": 11
+      },
+      {
+        "source_column": "EV Supply Chain Role",
+        "field": "ev_supply_chain_role",
+        "rows": 205,
+        "source_nonblank": 205,
+        "canonical_changed": 0
+      },
+      {
+        "source_column": "Primary OEMs",
+        "field": "primary_oems",
+        "rows": 205,
+        "source_nonblank": 179,
+        "canonical_changed": 26
+      },
+      {
+        "source_column": "Supplier or Affiliation Type",
+        "field": "supplier_or_affiliation_type",
+        "rows": 205,
+        "source_nonblank": 179,
+        "canonical_changed": 26
+      },
+      {
+        "source_column": "Employment",
+        "field": "employment",
+        "rows": 205,
+        "source_nonblank": 205,
+        "canonical_changed": 0
+      },
+      {
+        "source_column": "Product / Service",
+        "field": "product_or_service",
+        "rows": 205,
+        "source_nonblank": 205,
+        "canonical_changed": 0
+      },
+      {
+        "source_column": "Processes",
+        "field": "processes",
+        "rows": 205,
+        "source_nonblank": 205,
+        "canonical_changed": 134
+      },
+      {
+        "source_column": "Services",
+        "field": "services",
+        "rows": 205,
+        "source_nonblank": 205,
+        "canonical_changed": 36
+      },
+      {
+        "source_column": "EV / Battery Relevant",
+        "field": "ev_battery_relevant",
+        "rows": 205,
+        "source_nonblank": 205,
+        "canonical_changed": 0
+      },
+      {
+        "source_column": "Classification Method",
+        "field": "classification_method",
+        "rows": 205,
+        "source_nonblank": 205,
+        "canonical_changed": 0
+      },
+      {
+        "source_column": "Certifications",
+        "field": "certifications",
+        "rows": 205,
+        "source_nonblank": 171,
+        "canonical_changed": 37
+      },
+      {
+        "source_column": "Certification Count",
+        "field": "certification_count",
+        "rows": 205,
+        "source_nonblank": 205,
+        "canonical_changed": 0
+      }
+    ]
+  },
+  "database": {
+    "integrity": "ok",
+    "tables": {
+      "companies": {
+        "columns": [
+          "row_id",
+          "company",
+          "category",
+          "industry_group",
+          "location",
+          "address",
+          "primary_facility_type",
+          "ev_supply_chain_role",
+          "primary_oems",
+          "supplier_or_affiliation_type",
+          "employment",
+          "product_or_service",
+          "ev_battery_relevant",
+          "classification_method",
+          "city",
+          "county"
+        ],
+        "rows": 205
+      },
+      "certifications": {
+        "columns": [
+          "row_id",
+          "company",
+          "standard_family"
+        ],
+        "rows": 662
+      },
+      "processes": {
+        "columns": [
+          "row_id",
+          "company",
+          "process"
+        ],
+        "rows": 555
+      },
+      "services": {
+        "columns": [
+          "row_id",
+          "company",
+          "service"
+        ],
+        "rows": 290
+      }
+    }
+  },
+  "scopes": {
+    "train_kb": {
+      "rows": 148,
+      "exact_names": 141
+    },
+    "train_dev_kb": {
+      "rows": 165,
+      "exact_names": 158
+    },
+    "full_kb": {
+      "rows": 205,
+      "exact_names": 193
+    }
+  },
+  "model_fields": {
+    "included": [
+      "row_id",
+      "company",
+      "category",
+      "industry_group",
+      "location",
+      "address",
+      "primary_facility_type",
+      "ev_supply_chain_role",
+      "primary_oems",
+      "supplier_or_affiliation_type",
+      "employment",
+      "product_or_service",
+      "processes",
+      "services",
+      "ev_battery_relevant",
+      "classification_method",
+      "certifications",
+      "city",
+      "county"
+    ],
+    "excluded_source_fields": [
+      "certification_count"
+    ]
+  },
+  "factual_generation": {
+    "examples": 2011,
+    "skip_reasons": {
+      "holdout_value_present": 21,
+      "sentinel_or_empty": 60,
+      "multirow_conflict": 23
+    },
+    "conflicts_all_splits": 50,
+    "generated_matches_current": true,
+    "attributes": {
+      "category": 141,
+      "industry_group": 141,
+      "location": 139,
+      "address": 140,
+      "primary_facility_type": 141,
+      "ev_supply_chain_role": 138,
+      "primary_oems": 125,
+      "supplier_or_affiliation_type": 125,
+      "employment": 137,
+      "product_or_service": 136,
+      "ev_battery_relevant": 137,
+      "classification_method": 141,
+      "processes": 130,
+      "services": 138,
+      "certifications": 102
+    }
+  },
+  "pool_train_gold": {
+    "executed": 1090,
+    "mismatches": []
+  },
+  "training": {
+    "train_A_cpt_v3.jsonl": {
+      "examples": 148,
+      "message_counts": {
+        "0": 148
+      },
+      "answer_types": {
+        "not_declared": 148
+      },
+      "duplicate_example_ids": 0
+    },
+    "train_BC_facts_answers_v3.jsonl": {
+      "examples": 3019,
+      "message_counts": {
+        "3": 3019
+      },
+      "answer_types": {
+        "scalar": 1921,
+        "set": 1098
+      },
+      "duplicate_example_ids": 0
+    },
+    "train_BD_controlled_v3.jsonl": {
+      "examples": 2787,
+      "message_counts": {
+        "3": 2787
+      },
+      "answer_types": {
+        "scalar": 1736,
+        "set": 1051
+      },
+      "duplicate_example_ids": 0
+    },
+    "train_BD_facts_sql_v3.jsonl": {
+      "examples": 3019,
+      "message_counts": {
+        "3": 3019
+      },
+      "answer_types": {
+        "scalar": 1921,
+        "set": 1098
+      },
+      "duplicate_example_ids": 0
+    },
+    "train_B_facts_v3.jsonl": {
+      "examples": 2011,
+      "message_counts": {
+        "3": 2011
+      },
+      "answer_types": {
+        "scalar": 1641,
+        "set": 370
+      },
+      "duplicate_example_ids": 0
+    },
+    "train_C_answers_v3.jsonl": {
+      "examples": 1008,
+      "message_counts": {
+        "3": 1008
+      },
+      "answer_types": {
+        "set": 728,
+        "scalar": 280
+      },
+      "duplicate_example_ids": 0
+    },
+    "train_D_repeat_budgetmatched_v3.jsonl": {
+      "examples": 2017,
+      "message_counts": {
+        "3": 2017
+      },
+      "answer_types": {
+        "scalar": 561,
+        "set": 1456
+      },
+      "duplicate_example_ids": 0
+    },
+    "train_D_sql_v3.jsonl": {
+      "examples": 1008,
+      "message_counts": {
+        "3": 1008
+      },
+      "answer_types": {
+        "set": 728,
+        "scalar": 280
+      },
+      "duplicate_example_ids": 0
+    }
+  },
+  "D_operations": {
+    "COUNT": 280,
+    "SUM": 0,
+    "AVG": 0,
+    "MIN": 0,
+    "MAX": 0,
+    "GROUP BY": 0,
+    "HAVING": 0,
+    "LIMIT": 0,
+    "OR": 0,
+    "NOT": 0,
+    "WITH": 0,
+    "UNION": 0
+  },
+  "join_arity_mismatch": 313,
+  "revision": "8e7196e0e58d6ebcb35d7a14944146039f4c912f"
+}

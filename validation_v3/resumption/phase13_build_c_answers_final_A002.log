@@ -1,0 +1,16 @@
+  [PASS] nonzero_items: 1311 C items
+  [PASS] every_item_traces_to_pool_task_id: every C item's task_id is present in STRUCTURED_TASK_POOL_v3.jsonl
+  [PASS] unique_example_ids: 1311 unique ids
+  [PASS] every_target_equals_train_kb_gold: every item's gold_value is byte-identical to its pool task's train_kb_gold
+  [PASS] zero_entity_dependent_items_carrying_full_kb_answer: no entity_dependent item's target coincides with full_kb_gold (train_kb_gold and full_kb_gold differ by definition for these, so equality here would itself indicate a wiring bug)
+  [PASS] no_held_out_operation_family_eligible: no eligible item carries a held-out operation_family (argmax_topk/group_by/limit_only)
+  [PASS] no_held_out_value_eligible: no eligible item's values_used intersects a held-out value
+  [PASS] only_set_or_scalar_answer_types: every eligible item is answer_type set or scalar (the only types reachable once argmax_topk/group_by are excluded)
+  [PASS] no_sql_text_in_items: no C item carries a gold_sql field
+  [PASS] no_dev_or_test_gold_fields_present: no C item carries full_kb_gold or train_dev_kb_gold (README:508)
+  [PASS] zero_heldout_or_dev_companies_present: 0 of 52 dev/test companies appear in rendered C text (train_kb_gold structurally cannot name one)
+  [PASS] exposure_count_zero: 0 held-out literals across 2623 rendered strings
+
+All Phase 13 gates passed.
+  datasets_v3/train_C_answers_v3.jsonl  sha256 e887a8cf0c3f576c8a137ae3f4af2c93001da01e457f6c422d72497f9ce5c6e3
+  items 1311 of 1326 pool tasks (15 ineligible)

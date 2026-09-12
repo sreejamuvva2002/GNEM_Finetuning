@@ -91,9 +91,7 @@ def main() -> int:
 
     render_texts = []
     for i in b_items + c_items:
-        render_texts.append(i["messages"][0]["content"])
-        render_texts.append(i["messages"][1]["content"])
-        render_texts.append(i["messages"][2]["content"])
+        render_texts.extend(m["content"] for m in i["messages"])
     rep = H.scan_strings(render_texts, reg)
     H.assert_value_scan_verified(rep)
     check("exposure_count_zero_rescanned", rep["total_exposures"] == 0,

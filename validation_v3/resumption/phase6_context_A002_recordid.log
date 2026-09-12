@@ -1,0 +1,29 @@
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+  [PASS] phase5_db_sha_unchanged: 7437c746cb118f3d5bb9edcc34f500e0c9f764358a19fa05766dc526d63bb08b
+  [PASS] phase2_3_4_hashes_unchanged: canonical 42851c0a2e93… · split a59d673ac9ac… · kb_v3 2f13bc61212c…
+  [PASS] real_tokenizer_loaded_at_pinned_revision: Qwen/Qwen2.5-14B-Instruct @ cf98f3b3bbb4… (Qwen2Tokenizer, local_files_only=True)
+  [PASS] tokenizer_json_sha_matches_expected: c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539
+  [PASS] real_chat_template_used: tokenizer.chat_template applied via apply_chat_template
+  [PASS] advertised_limit_not_used_for_budget: tokenizer advertises 131072; budget uses 32768 from config.json
+  [PASS] usable_context_equation: min(32768, 32768) = 32768
+  [PASS] max_input_tokens_reserves_generation: 32768 - 1024 = 31744
+  [PASS] all_205_rows_rendered: 205 contexts
+  [PASS] all_fixture_prompts_within_budget: 615 fixture prompts, all satisfying input + 1024 <= 32768
+  [PASS] no_gold_answer_or_evaluation_artifacts: no gold-answer/gold-SQL/generated-QA/answer_type/target_columns/correctness annotation in any context
+  [PASS] no_infrastructure_metadata_in_context: split/split_group/certification_count/lat/long/graph absent
+  [PASS] no_physical_scoped_view_names_in_context: none of 12 Phase 5 view names appear
+  [PASS] raw_kb_facts_preserved_in_context: canonical values render verbatim; evidence that answers a question is expected in an oracle-context baseline and is NOT leakage
+  [PASS] zero_certification_rows_render_frozen_sentinel: 34 row(s) render the frozen state; no certification fact manufactured
+  [PASS] multivalued_fields_rendered_exactly_once: 0 row(s) rendering a multi-valued field more than once
+  [PASS] rendering_deterministic_in_process: byte-identical on repeat render
+  [PASS] rendering_deterministic_across_process: fresh interpreter reproduces byte-identical output
+  [PASS] explicit_scope_required: None/unknown/case-variant/non-string all rejected
+  [PASS] cross_scope_row_request_rejected: all 40 test rows rejected under scope='train_kb'
+  [PASS] in_scope_rows_still_render: 148 train rows renderable under train_kb
+  [PASS] no_silent_truncation_in_phase6_paths: no truncation=True / max_length slicing / clipping
+
+All Phase 6 gates passed.
+  renderer ctx_oracle_v3.1_A002_record_id  sha256 6b84ccf6c3b0868c4f73efbd5adcd236de1c35341e6d905a43bd69c45b197ab5
+  usable_context 32768 = min(32768, 32768) · max_new_tokens 1024 · max input 31744
+  worst context: row 196 261 tokens · worst fixture prompt: row 196 324 tokens
+  margin: 31420 tokens

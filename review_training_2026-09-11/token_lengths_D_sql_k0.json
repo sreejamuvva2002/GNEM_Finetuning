@@ -1,0 +1,4706 @@
+[
+  {
+    "prompt": 945,
+    "full": 963,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 970,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 967,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 967,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 970,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 967,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 969,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 967,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 973,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 971,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 969,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 969,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 967,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 973,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 969,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 971,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 973,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 969,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 972,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 976,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 970,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 969,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 969,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 976,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 968,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 973,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 968,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 968,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 970,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 970,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 967,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 971,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 973,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 970,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 968,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 970,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 970,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 986,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 976,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 982,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 984,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 978,
+    "retained_answer_right": 25,
+    "answer_tokens": 25,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 959,
+    "full": 990,
+    "retained_answer_right": 31,
+    "answer_tokens": 31,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 976,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 968,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 986,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 979,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 958,
+    "full": 988,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 981,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 981,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 971,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 976,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 970,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 966,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 968,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 968,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 967,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 971,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 969,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 971,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 972,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 971,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 968,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 964,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 945,
+    "full": 965,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 966,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 963,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 966,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 963,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 963,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 966,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 945,
+    "full": 964,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 969,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 963,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 964,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 963,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 945,
+    "full": 964,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 964,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 945,
+    "full": 964,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 945,
+    "full": 965,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 945,
+    "full": 964,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 963,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 963,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 963,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 945,
+    "full": 965,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 963,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 963,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 945,
+    "full": 964,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 966,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 967,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 962,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 963,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 962,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 962,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 962,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 963,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 966,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 963,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 963,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 962,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 963,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 945,
+    "full": 964,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 963,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 945,
+    "full": 964,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 945,
+    "full": 964,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 966,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 945,
+    "full": 964,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 945,
+    "full": 964,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 962,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 944,
+    "full": 963,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 945,
+    "full": 965,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 973,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 969,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 969,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 968,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 972,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 972,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 969,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 971,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 969,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 975,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 973,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 971,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 971,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 969,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 977,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 977,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 977,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 975,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 971,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 973,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 975,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 974,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 976,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 978,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 972,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 970,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 971,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 979,
+    "retained_answer_right": 25,
+    "answer_tokens": 25,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 970,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 975,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 980,
+    "retained_answer_right": 25,
+    "answer_tokens": 25,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 970,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 972,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 972,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 959,
+    "full": 988,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 978,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 958,
+    "full": 986,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 980,
+    "retained_answer_right": 25,
+    "answer_tokens": 25,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 984,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 978,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 982,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 972,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 961,
+    "full": 992,
+    "retained_answer_right": 31,
+    "answer_tokens": 31,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 978,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 970,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 959,
+    "full": 989,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 981,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 960,
+    "full": 991,
+    "retained_answer_right": 31,
+    "answer_tokens": 31,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 983,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 972,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 984,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 983,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 973,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 978,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 958,
+    "full": 986,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 972,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 972,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 969,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 969,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 973,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 975,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 971,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 971,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 972,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 970,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 972,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 970,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 966,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 966,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 966,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 967,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 968,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 965,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 968,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 965,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 965,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 968,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 971,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 965,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 966,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 965,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 965,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 966,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 966,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 966,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 966,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 967,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 966,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 965,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 965,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 965,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 967,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 965,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 965,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 965,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 966,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 968,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 969,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 964,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 965,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 964,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 964,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 964,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 964,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 965,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 968,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 968,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 965,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 965,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 964,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 965,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 966,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 965,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 966,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 968,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 966,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 966,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 965,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 967,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 966,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 966,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 967,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 967,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 968,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 965,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 968,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 968,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 966,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 971,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 965,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 966,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 965,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 965,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 966,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 966,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 966,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 966,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 967,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 966,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 965,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 965,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 965,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 967,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 965,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 966,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 968,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 964,
+    "retained_answer_right": 16,
+    "answer_tokens": 16,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 965,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 964,
+    "retained_answer_right": 16,
+    "answer_tokens": 16,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 964,
+    "retained_answer_right": 16,
+    "answer_tokens": 16,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 964,
+    "retained_answer_right": 16,
+    "answer_tokens": 16,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 965,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 968,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 968,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 965,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 964,
+    "retained_answer_right": 16,
+    "answer_tokens": 16,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 965,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 966,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 965,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 966,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 968,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 966,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 966,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 964,
+    "retained_answer_right": 16,
+    "answer_tokens": 16,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 965,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 965,
+    "retained_answer_right": 17,
+    "answer_tokens": 17,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 965,
+    "retained_answer_right": 16,
+    "answer_tokens": 16,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 973,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 969,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 969,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 972,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 972,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 980,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 972,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 972,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 978,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 959,
+    "full": 984,
+    "retained_answer_right": 25,
+    "answer_tokens": 25,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 960,
+    "full": 986,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 980,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 959,
+    "full": 984,
+    "retained_answer_right": 25,
+    "answer_tokens": 25,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 980,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 978,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 958,
+    "full": 982,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 972,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 978,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 970,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 961,
+    "full": 989,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 981,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 958,
+    "full": 983,
+    "retained_answer_right": 25,
+    "answer_tokens": 25,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 972,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 959,
+    "full": 984,
+    "retained_answer_right": 25,
+    "answer_tokens": 25,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 959,
+    "full": 983,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 973,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 972,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 960,
+    "full": 986,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 969,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 973,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 973,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 971,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 971,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 969,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 977,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 977,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 975,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 971,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 976,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 971,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 971,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 979,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 970,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 980,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 970,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 969,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 977,
+    "retained_answer_right": 25,
+    "answer_tokens": 25,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 980,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 984,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 958,
+    "full": 987,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 984,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 981,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 981,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 984,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 980,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 984,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 984,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 962,
+    "full": 995,
+    "retained_answer_right": 33,
+    "answer_tokens": 33,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 984,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 964,
+    "full": 1000,
+    "retained_answer_right": 36,
+    "answer_tokens": 36,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 961,
+    "full": 993,
+    "retained_answer_right": 32,
+    "answer_tokens": 32,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 962,
+    "full": 996,
+    "retained_answer_right": 34,
+    "answer_tokens": 34,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 963,
+    "full": 998,
+    "retained_answer_right": 35,
+    "answer_tokens": 35,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 960,
+    "full": 992,
+    "retained_answer_right": 32,
+    "answer_tokens": 32,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 962,
+    "full": 995,
+    "retained_answer_right": 33,
+    "answer_tokens": 33,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 962,
+    "full": 996,
+    "retained_answer_right": 34,
+    "answer_tokens": 34,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 964,
+    "full": 999,
+    "retained_answer_right": 35,
+    "answer_tokens": 35,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 960,
+    "full": 992,
+    "retained_answer_right": 32,
+    "answer_tokens": 32,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 959,
+    "full": 990,
+    "retained_answer_right": 31,
+    "answer_tokens": 31,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 961,
+    "full": 993,
+    "retained_answer_right": 32,
+    "answer_tokens": 32,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 961,
+    "full": 994,
+    "retained_answer_right": 33,
+    "answer_tokens": 33,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 963,
+    "full": 997,
+    "retained_answer_right": 34,
+    "answer_tokens": 34,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 966,
+    "full": 1004,
+    "retained_answer_right": 38,
+    "answer_tokens": 38,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 968,
+    "full": 1007,
+    "retained_answer_right": 39,
+    "answer_tokens": 39,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 959,
+    "full": 990,
+    "retained_answer_right": 31,
+    "answer_tokens": 31,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 982,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 982,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 964,
+    "full": 1000,
+    "retained_answer_right": 36,
+    "answer_tokens": 36,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 960,
+    "full": 993,
+    "retained_answer_right": 33,
+    "answer_tokens": 33,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 962,
+    "full": 996,
+    "retained_answer_right": 34,
+    "answer_tokens": 34,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 965,
+    "full": 1002,
+    "retained_answer_right": 37,
+    "answer_tokens": 37,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 961,
+    "full": 995,
+    "retained_answer_right": 34,
+    "answer_tokens": 34,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 984,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 962,
+    "full": 996,
+    "retained_answer_right": 34,
+    "answer_tokens": 34,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 962,
+    "full": 995,
+    "retained_answer_right": 33,
+    "answer_tokens": 33,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 964,
+    "full": 998,
+    "retained_answer_right": 34,
+    "answer_tokens": 34,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 984,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 958,
+    "full": 987,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 985,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 959,
+    "full": 988,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 983,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 958,
+    "full": 986,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 983,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 983,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 958,
+    "full": 986,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 982,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 961,
+    "full": 995,
+    "retained_answer_right": 34,
+    "answer_tokens": 34,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 966,
+    "full": 1005,
+    "retained_answer_right": 39,
+    "answer_tokens": 39,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 962,
+    "full": 998,
+    "retained_answer_right": 36,
+    "answer_tokens": 36,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 967,
+    "full": 1007,
+    "retained_answer_right": 40,
+    "answer_tokens": 40,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 959,
+    "full": 992,
+    "retained_answer_right": 33,
+    "answer_tokens": 33,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 962,
+    "full": 998,
+    "retained_answer_right": 36,
+    "answer_tokens": 36,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 960,
+    "full": 994,
+    "retained_answer_right": 34,
+    "answer_tokens": 34,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 964,
+    "full": 1002,
+    "retained_answer_right": 38,
+    "answer_tokens": 38,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 959,
+    "full": 992,
+    "retained_answer_right": 33,
+    "answer_tokens": 33,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 960,
+    "full": 994,
+    "retained_answer_right": 34,
+    "answer_tokens": 34,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 960,
+    "full": 994,
+    "retained_answer_right": 34,
+    "answer_tokens": 34,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 961,
+    "full": 996,
+    "retained_answer_right": 35,
+    "answer_tokens": 35,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 966,
+    "full": 1006,
+    "retained_answer_right": 40,
+    "answer_tokens": 40,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 959,
+    "full": 992,
+    "retained_answer_right": 33,
+    "answer_tokens": 33,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 961,
+    "full": 997,
+    "retained_answer_right": 36,
+    "answer_tokens": 36,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 962,
+    "full": 997,
+    "retained_answer_right": 35,
+    "answer_tokens": 35,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 983,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 986,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 958,
+    "full": 989,
+    "retained_answer_right": 31,
+    "answer_tokens": 31,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 958,
+    "full": 989,
+    "retained_answer_right": 31,
+    "answer_tokens": 31,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 958,
+    "full": 990,
+    "retained_answer_right": 32,
+    "answer_tokens": 32,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 958,
+    "full": 989,
+    "retained_answer_right": 31,
+    "answer_tokens": 31,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 987,
+    "retained_answer_right": 31,
+    "answer_tokens": 31,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 979,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 960,
+    "full": 993,
+    "retained_answer_right": 33,
+    "answer_tokens": 33,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 987,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 961,
+    "full": 995,
+    "retained_answer_right": 34,
+    "answer_tokens": 34,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 989,
+    "retained_answer_right": 32,
+    "answer_tokens": 32,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 987,
+    "retained_answer_right": 31,
+    "answer_tokens": 31,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 958,
+    "full": 991,
+    "retained_answer_right": 33,
+    "answer_tokens": 33,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 983,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 985,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 983,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 985,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 983,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 958,
+    "full": 991,
+    "retained_answer_right": 33,
+    "answer_tokens": 33,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 985,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 987,
+    "retained_answer_right": 31,
+    "answer_tokens": 31,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 989,
+    "retained_answer_right": 32,
+    "answer_tokens": 32,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 985,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 961,
+    "full": 995,
+    "retained_answer_right": 34,
+    "answer_tokens": 34,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 987,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 959,
+    "full": 991,
+    "retained_answer_right": 32,
+    "answer_tokens": 32,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 958,
+    "full": 989,
+    "retained_answer_right": 31,
+    "answer_tokens": 31,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 988,
+    "retained_answer_right": 31,
+    "answer_tokens": 31,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 988,
+    "retained_answer_right": 31,
+    "answer_tokens": 31,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 987,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 962,
+    "full": 997,
+    "retained_answer_right": 35,
+    "answer_tokens": 35,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 987,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 983,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 959,
+    "full": 990,
+    "retained_answer_right": 31,
+    "answer_tokens": 31,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 981,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 958,
+    "full": 988,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 981,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 958,
+    "full": 988,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 958,
+    "full": 988,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 958,
+    "full": 988,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 983,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 979,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 977,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 984,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 981,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 984,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 980,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 985,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 978,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 982,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 985,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 979,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 978,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 982,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 983,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 978,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 978,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 982,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 980,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 979,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 983,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 978,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 982,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 975,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 982,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 983,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 983,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 979,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 983,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 980,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 979,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 982,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 978,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 982,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 975,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 978,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 982,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 984,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 980,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 984,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 984,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 982,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 975,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 979,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 981,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 985,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 982,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 978,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 978,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 977,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 978,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 981,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 977,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 981,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 981,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 977,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 978,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 982,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 981,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 981,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 978,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 982,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 978,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 977,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 981,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 982,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 983,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 975,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 982,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 980,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 976,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 982,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 981,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 985,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 983,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 983,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 983,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 977,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 975,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 982,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 980,
+    "retained_answer_right": 28,
+    "answer_tokens": 28,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 984,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 972,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 970,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 972,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 979,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 976,
+    "retained_answer_right": 25,
+    "answer_tokens": 25,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 979,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 985,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 974,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 988,
+    "retained_answer_right": 31,
+    "answer_tokens": 31,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 975,
+    "retained_answer_right": 25,
+    "answer_tokens": 25,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 968,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 974,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 945,
+    "full": 964,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 974,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 974,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 974,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 974,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 974,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 974,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 980,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 984,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 980,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 978,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 978,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 979,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 966,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 966,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 970,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 966,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 945,
+    "full": 963,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 974,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 974,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 945,
+    "full": 964,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 976,
+    "retained_answer_right": 25,
+    "answer_tokens": 25,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 972,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 972,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 967,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 972,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 970,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 972,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 979,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 979,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 985,
+    "retained_answer_right": 30,
+    "answer_tokens": 30,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 974,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 988,
+    "retained_answer_right": 31,
+    "answer_tokens": 31,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 969,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 975,
+    "retained_answer_right": 25,
+    "answer_tokens": 25,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 968,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 974,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 945,
+    "full": 964,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 974,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 974,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 974,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 974,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 974,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 974,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 980,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 984,
+    "retained_answer_right": 29,
+    "answer_tokens": 29,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 980,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 978,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 978,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 978,
+    "retained_answer_right": 26,
+    "answer_tokens": 26,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 979,
+    "retained_answer_right": 27,
+    "answer_tokens": 27,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 972,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 966,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 966,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 970,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 966,
+    "retained_answer_right": 20,
+    "answer_tokens": 20,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 970,
+    "retained_answer_right": 22,
+    "answer_tokens": 22,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 945,
+    "full": 963,
+    "retained_answer_right": 18,
+    "answer_tokens": 18,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 974,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 974,
+    "retained_answer_right": 24,
+    "answer_tokens": 24,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 945,
+    "full": 964,
+    "retained_answer_right": 19,
+    "answer_tokens": 19,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 976,
+    "retained_answer_right": 25,
+    "answer_tokens": 25,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 972,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 972,
+    "retained_answer_right": 23,
+    "answer_tokens": 23,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 967,
+    "retained_answer_right": 21,
+    "answer_tokens": 21,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 1002,
+    "retained_answer_right": 49,
+    "answer_tokens": 49,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 998,
+    "retained_answer_right": 47,
+    "answer_tokens": 47,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 998,
+    "retained_answer_right": 47,
+    "answer_tokens": 47,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 996,
+    "retained_answer_right": 46,
+    "answer_tokens": 46,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 1002,
+    "retained_answer_right": 49,
+    "answer_tokens": 49,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 947,
+    "full": 990,
+    "retained_answer_right": 43,
+    "answer_tokens": 43,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 946,
+    "full": 988,
+    "retained_answer_right": 42,
+    "answer_tokens": 42,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 1009,
+    "retained_answer_right": 52,
+    "answer_tokens": 52,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 1005,
+    "retained_answer_right": 50,
+    "answer_tokens": 50,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 1006,
+    "retained_answer_right": 51,
+    "answer_tokens": 51,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 1002,
+    "retained_answer_right": 49,
+    "answer_tokens": 49,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 1006,
+    "retained_answer_right": 51,
+    "answer_tokens": 51,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 995,
+    "retained_answer_right": 46,
+    "answer_tokens": 46,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 998,
+    "retained_answer_right": 47,
+    "answer_tokens": 47,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 960,
+    "full": 1016,
+    "retained_answer_right": 56,
+    "answer_tokens": 56,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 950,
+    "full": 996,
+    "retained_answer_right": 46,
+    "answer_tokens": 46,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 1006,
+    "retained_answer_right": 51,
+    "answer_tokens": 51,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 1002,
+    "retained_answer_right": 49,
+    "answer_tokens": 49,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 1002,
+    "retained_answer_right": 49,
+    "answer_tokens": 49,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 999,
+    "retained_answer_right": 47,
+    "answer_tokens": 47,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 1003,
+    "retained_answer_right": 49,
+    "answer_tokens": 49,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 1006,
+    "retained_answer_right": 51,
+    "answer_tokens": 51,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 1005,
+    "retained_answer_right": 50,
+    "answer_tokens": 50,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 1001,
+    "retained_answer_right": 48,
+    "answer_tokens": 48,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 1001,
+    "retained_answer_right": 48,
+    "answer_tokens": 48,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 1001,
+    "retained_answer_right": 48,
+    "answer_tokens": 48,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 1001,
+    "retained_answer_right": 48,
+    "answer_tokens": 48,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 999,
+    "retained_answer_right": 47,
+    "answer_tokens": 47,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 1007,
+    "retained_answer_right": 51,
+    "answer_tokens": 51,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 958,
+    "full": 1011,
+    "retained_answer_right": 53,
+    "answer_tokens": 53,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 956,
+    "full": 1007,
+    "retained_answer_right": 51,
+    "answer_tokens": 51,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 1006,
+    "retained_answer_right": 51,
+    "answer_tokens": 51,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 952,
+    "full": 999,
+    "retained_answer_right": 47,
+    "answer_tokens": 47,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 951,
+    "full": 997,
+    "retained_answer_right": 46,
+    "answer_tokens": 46,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 949,
+    "full": 993,
+    "retained_answer_right": 44,
+    "answer_tokens": 44,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 948,
+    "full": 990,
+    "retained_answer_right": 42,
+    "answer_tokens": 42,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 1001,
+    "retained_answer_right": 48,
+    "answer_tokens": 48,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 1003,
+    "retained_answer_right": 49,
+    "answer_tokens": 49,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 1009,
+    "retained_answer_right": 52,
+    "answer_tokens": 52,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 1005,
+    "retained_answer_right": 50,
+    "answer_tokens": 50,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 1005,
+    "retained_answer_right": 50,
+    "answer_tokens": 50,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 1005,
+    "retained_answer_right": 50,
+    "answer_tokens": 50,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 1005,
+    "retained_answer_right": 50,
+    "answer_tokens": 50,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 1009,
+    "retained_answer_right": 52,
+    "answer_tokens": 52,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 1009,
+    "retained_answer_right": 52,
+    "answer_tokens": 52,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 1003,
+    "retained_answer_right": 49,
+    "answer_tokens": 49,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 960,
+    "full": 1016,
+    "retained_answer_right": 56,
+    "answer_tokens": 56,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 1005,
+    "retained_answer_right": 50,
+    "answer_tokens": 50,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 957,
+    "full": 1009,
+    "retained_answer_right": 52,
+    "answer_tokens": 52,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 1005,
+    "retained_answer_right": 50,
+    "answer_tokens": 50,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 1005,
+    "retained_answer_right": 50,
+    "answer_tokens": 50,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 1005,
+    "retained_answer_right": 50,
+    "answer_tokens": 50,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 1003,
+    "retained_answer_right": 49,
+    "answer_tokens": 49,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 958,
+    "full": 1011,
+    "retained_answer_right": 53,
+    "answer_tokens": 53,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 953,
+    "full": 1001,
+    "retained_answer_right": 48,
+    "answer_tokens": 48,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 955,
+    "full": 1005,
+    "retained_answer_right": 50,
+    "answer_tokens": 50,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 954,
+    "full": 1003,
+    "retained_answer_right": 49,
+    "answer_tokens": 49,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1064,
+    "full": 1117,
+    "retained_answer_right": 0,
+    "answer_tokens": 53,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1064,
+    "full": 1117,
+    "retained_answer_right": 0,
+    "answer_tokens": 53,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1063,
+    "full": 1116,
+    "retained_answer_right": 0,
+    "answer_tokens": 53,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1063,
+    "full": 1116,
+    "retained_answer_right": 0,
+    "answer_tokens": 53,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1063,
+    "full": 1117,
+    "retained_answer_right": 0,
+    "answer_tokens": 54,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1063,
+    "full": 1116,
+    "retained_answer_right": 0,
+    "answer_tokens": 53,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1064,
+    "full": 1117,
+    "retained_answer_right": 0,
+    "answer_tokens": 53,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1064,
+    "full": 1118,
+    "retained_answer_right": 0,
+    "answer_tokens": 54,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1064,
+    "full": 1117,
+    "retained_answer_right": 0,
+    "answer_tokens": 53,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1064,
+    "full": 1117,
+    "retained_answer_right": 0,
+    "answer_tokens": 53,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1064,
+    "full": 1118,
+    "retained_answer_right": 0,
+    "answer_tokens": 54,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1065,
+    "full": 1119,
+    "retained_answer_right": 0,
+    "answer_tokens": 54,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1065,
+    "full": 1119,
+    "retained_answer_right": 0,
+    "answer_tokens": 54,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1063,
+    "full": 1116,
+    "retained_answer_right": 0,
+    "answer_tokens": 53,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1063,
+    "full": 1116,
+    "retained_answer_right": 0,
+    "answer_tokens": 53,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1065,
+    "full": 1119,
+    "retained_answer_right": 0,
+    "answer_tokens": 54,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1063,
+    "full": 1116,
+    "retained_answer_right": 0,
+    "answer_tokens": 53,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1064,
+    "full": 1117,
+    "retained_answer_right": 0,
+    "answer_tokens": 53,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1065,
+    "full": 1119,
+    "retained_answer_right": 0,
+    "answer_tokens": 54,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1064,
+    "full": 1117,
+    "retained_answer_right": 0,
+    "answer_tokens": 53,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1063,
+    "full": 1116,
+    "retained_answer_right": 0,
+    "answer_tokens": 53,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1065,
+    "full": 1119,
+    "retained_answer_right": 0,
+    "answer_tokens": 54,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1064,
+    "full": 1117,
+    "retained_answer_right": 0,
+    "answer_tokens": 53,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1066,
+    "full": 1122,
+    "retained_answer_right": 0,
+    "answer_tokens": 56,
+    "prefix_matches": true
+  },
+  {
+    "prompt": 1065,
+    "full": 1119,
+    "retained_answer_right": 0,
+    "answer_tokens": 54,
+    "prefix_matches": true
+  }
+]

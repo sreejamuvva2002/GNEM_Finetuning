@@ -10,15 +10,15 @@ Phase 6 — context renderer and token budget for **`base_ctx_oracle`**.
 datasets_v3/gnem_v3.sqlite   7437c746cb118f3d5bb9edcc34f500e0c9f764358a19fa05766dc526d63bb08b
 canonical_records_v3.jsonl   42851c0a2e93209ac5d37e73ce07447009e038b9db625004212722d7738e6488
 company_split_groups_v3.csv  a59d673ac9acafd1f70f60cf560491c32d8d11bacdab3c9bc5d77016b536b701
-finetune/kb_v3.py            67207659abe46cea7c090157a7ebeafce92196c7ffd4175eafe1d03ad83614ba
+finetune/kb_v3.py            2f13bc61212c7bd65103cb0c9f2a31c482e1589ec6f0fae47df9fe08ef9c7100
 ```
 
 ## Renderer
 
 ```text
-version   ctx_oracle_v3.0
+version   ctx_oracle_v3.1_A002_record_id
 file      finetune/context_renderer_v3.py
-sha256    5660721414ece97528e77452ade9fa2416c9cf37ce119b797532bd9df2065402
+sha256    6b84ccf6c3b0868c4f73efbd5adcd236de1c35341e6d905a43bd69c45b197ab5
 ```
 
 The hash is computed **externally**, over the finalized file; a renderer cannot contain its own final hash.
@@ -27,7 +27,7 @@ The hash is computed **externally**, over the finalized file; a renderer cannot 
 
 ```json
 {
-  "renderer_version": "ctx_oracle_v3.0",
+  "renderer_version": "ctx_oracle_v3.1_A002_record_id",
   "scalar_field_order": [
     "company",
     "category",
@@ -132,7 +132,7 @@ The tokenizer advertising 131072 while the model supports 32768 is exactly the m
 
 | family | applicability | status | cases | min | median | p95 | max | +max_new | usable | margin | result |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| `base_ctx_oracle` | factual probes only | **implemented & measured** | 615 | 197 | 234 | 280 | 316 | 1340 | 32768 | 31428 | PASS |
+| `base_ctx_oracle` | factual probes only | **implemented & measured** | 615 | 204 | 241 | 288 | 324 | 1348 | 32768 | 31420 | PASS |
 
 ### What is validated now vs. later
 
@@ -145,10 +145,10 @@ The tokenizer advertising 131072 while the model supports 32768 is exactly the m
 **To be revalidated later:** every actual factual probe/question when it is generated. Those questions do not exist yet, so Phase 6 makes **no claim** that they are validated. Later probe generation must run every real prompt through this same budget checker.
 
 ```text
-worst-case rendered context tokens   253
+worst-case rendered context tokens   261
 fixed template/system overhead       60
 maximum input allowance              31744
-remaining future question allowance  31431
+remaining future question allowance  31423
 ```
 
 ## Worst-case rendered row
@@ -157,11 +157,11 @@ The true maximum under the frozen KB — not a smaller, cleaner example. No gold
 
 ```text
 largest rendered context   row_id 196  WIKA USA
-                           253 context tokens
+                           261 context tokens
 largest fixture prompt     row_id 196  WIKA USA
-                           316 complete-prompt tokens
-                           + 1024 reserved = 1340
-remaining margin           31428 tokens
+                           324 complete-prompt tokens
+                           + 1024 reserved = 1348
+remaining margin           31420 tokens
 ```
 
 ## Oracle retrieval is not answer leakage
@@ -188,7 +188,7 @@ Phase 7 separately owns removing the historical evaluator's `truncation=True, ma
 | check | result | detail |
 |---|---|---|
 | `phase5_db_sha_unchanged` | PASS | 7437c746cb118f3d5bb9edcc34f500e0c9f764358a19fa05766dc526d63bb08b |
-| `phase2_3_4_hashes_unchanged` | PASS | canonical 42851c0a2e93… · split a59d673ac9ac… · kb_v3 67207659abe4… |
+| `phase2_3_4_hashes_unchanged` | PASS | canonical 42851c0a2e93… · split a59d673ac9ac… · kb_v3 2f13bc61212c… |
 | `real_tokenizer_loaded_at_pinned_revision` | PASS | Qwen/Qwen2.5-14B-Instruct @ cf98f3b3bbb4… (Qwen2Tokenizer, local_files_only=True) |
 | `tokenizer_json_sha_matches_expected` | PASS | c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539 |
 | `real_chat_template_used` | PASS | tokenizer.chat_template applied via apply_chat_template |

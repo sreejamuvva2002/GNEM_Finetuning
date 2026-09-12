@@ -1,0 +1,85 @@
+  [PASS] frozen_db_sha_unchanged: 7437c746cb118f3d5bb9edcc34f500e0c9f764358a19fa05766dc526d63bb08b
+  [PASS] omitted_scope_rejected: TypeError: run_sql() missing 1 required positional argument: 'scope'
+  [PASS] scope_rejected_None: ScopeError
+  [PASS] scope_rejected_'full': ScopeError
+  [PASS] scope_rejected_'FULL_KB': ScopeError
+  [PASS] scope_rejected_int: ScopeError
+  [PASS] scope_rejected_'train': ScopeError
+  [PASS] db_path_required: ConfigError: db_path must be supplied explicitly by the experiment/runt
+  [PASS] scope_train_kb_companies: 148 == 148
+  [PASS] scope_train_dev_kb_companies: 165 == 165
+  [PASS] scope_full_kb_companies: 205 == 205
+  [PASS] child_membership_train_kb: all child row_ids within 148 scoped parents
+  [PASS] child_membership_train_dev_kb: all child row_ids within 165 scoped parents
+  [PASS] child_membership_full_kb: all child row_ids within 205 scoped parents
+  [PASS] train_kb_excludes_dev_and_test: train 148 ⊂ train_dev 165 ⊂ full 205; 0 of 40 test rows visible in train_kb
+  [PASS] full_bypass_matrix_blocked: 46 vectors blocked (4 base tables, 12 physical views, 19 CTE-name collisions, 4 schema tables, pragma TVFs, PRAGMA/ATTACH, quoted/comment forms)
+  [PASS] cte_name_collision_blocked_structurally: 19 CTE-name-collision vectors denied by the structural layer with lexical validation disabled
+  [PASS] structural_layers_alone_block_all_bypasses: lexical layer disabled; 46 vectors still denied by the EXPLAIN pre-check + per-object authorizer
+  [PASS] structural_layers_allow_legitimate_sql: bare/alias/CTE/nested-CTE/subquery/quoted/3-table-join all permitted
+  [PASS] all_write_operations_rejected: 10 mutating operations rejected
+  [PASS] db_sha_unchanged_after_write_attempts: 7437c746cb118f3d5bb9edcc34f500e0c9f764358a19fa05766dc526d63bb08b
+  [PASS] no_row_cap_returns_all_205: 205 rows returned, not 200
+  [PASS] no_row_cap_on_child_table: 662 certification rows returned, not 200
+  [PASS] no_geo_import: no geo registration anywhere in the executor path
+  [PASS] no_max_rows_cap: no max_rows and no fetchmany; fetchall only
+  [PASS] no_prompt_truncation: no truncation=True / max_length= in Phase 7 paths
+  [PASS] no_v2_db_fallback: no v2 database fallback
+  [PASS] phase6_budget_reused_not_reinvented: usable 32768, reserved 1024, max input 31744 (frozen in Phase 6)
+  [PASS] execute_pair_uses_one_scope: one scope argument drives both executions; a mismatch is not expressible
+  [PASS] scope_mismatch_raises: ScopeError: scope mismatch: prediction executed in 'full_kb' but gold in 'trai
+  [PASS] metadata_missing_answer_type: GraderMetadataError
+  [PASS] metadata_missing_target_columns: GraderMetadataError
+  [PASS] metadata_invalid_answer_type: GraderMetadataError
+  [PASS] metadata_empty_target_columns: GraderMetadataError
+  [PASS] metadata_non-list_target_columns: GraderMetadataError
+  [PASS] metadata_scalar_with_2_columns: GraderMetadataError
+  [PASS] set_order_irrelevant: set: 2 distinct predicted vs 2 gold
+  [PASS] set_duplicates_deduped: set: 2 distinct predicted vs 2 gold
+  [PASS] set_missing_member_incorrect: set: 1 distinct predicted vs 2 gold
+  [PASS] scalar_exact_match: scalar: 5 vs 5
+  [PASS] scalar_multi_row_rejected: scalar requires exactly one row, prediction returned 2
+  [PASS] scalar_empty_rejected: scalar requires exactly one row, prediction returned 0
+  [PASS] topk_exact_order_correct: top_k: length 3 vs 3, order preserved
+  [PASS] topk_wrong_order_incorrect: top_k: length 3 vs 3, order differs
+  [PASS] topk_wrong_length_incorrect: top_k: length 2 vs 3, order differs
+  [PASS] topk_never_set_deduped: top_k: length 4 vs 3, order differs
+  [PASS] multipart_all_parts_correct: multi_part: all parts correct
+  [PASS] multipart_partial_is_not_correct: multi_part: 1/2 parts wrong (county) -- partial is not correct
+  [PASS] metrics_differ_semantic_right_schema_wrong: task=1.0 schema=0.0
+  [PASS] metrics_agree_when_both_right: both 1.0
+  [PASS] schema_right_values_wrong: task=0.0 schema=1.0
+  [PASS] degenerate_empty_string: status=generation_failure (expected generation_failure), task=0.0
+  [PASS] degenerate_whitespace_only: status=generation_failure (expected generation_failure), task=0.0
+  [PASS] degenerate_None: status=generation_failure (expected generation_failure), task=0.0
+  [PASS] degenerate_refusal: status=invalid_output (expected invalid_output), task=0.0
+  [PASS] degenerate_refusal_as_AI: status=invalid_output (expected invalid_output), task=0.0
+  [PASS] degenerate_irrelevant_noise: status=parse_failure (expected parse_failure), task=0.0
+  [PASS] degenerate_malformed_SQL: status=SQL_error (expected SQL_error), task=0.0
+  [PASS] degenerate_incomplete_SQL: status=SQL_error (expected SQL_error), task=0.0
+  [PASS] degenerate_write_attempt: status=parse_failure (expected parse_failure), task=0.0
+  [PASS] degenerate_bypass_attempt: status=SQL_error (expected SQL_error), task=0.0
+  [PASS] degenerate_truncated_output: status=truncated_output (expected truncated_output), task=0.0
+  [PASS] v2_regression_empty_pred_empty_gold_not_1_0: status=generation_failure, task=0.0 (v2 grade.py:170 returned 1.0 here)
+  [PASS] valid_query_empty_result_still_graded: status=correct -- a real query is graded, not short-circuited
+  [PASS] truncated_output_never_parsed: status=truncated_output: truncated_output: prediction not parsed or executed
+  [PASS] every_status_in_frozen_vocabulary: 13 outcomes, all within 8 frozen statuses
+  [PASS] multipart_heterogeneous_all_correct: multi_part: count:correct; companies:correct
+  [PASS] multipart_one_part_wrong_is_incorrect: multi_part: count:correct; companies:incorrect
+  [PASS] multipart_omitted_statement_is_parse_failure: multi_part part 'companies' failed with parse_failure: omitted required statement (all parts: count:correct; companies:parse_failure)
+  [PASS] multipart_truncation_checked_before_any_split_or_execution: truncated_output: prediction not parsed or executed (whole-response check, before any part is split or any executor is called)
+  [PASS] multipart_extra_statement_correct_but_schema_fails: multi_part: count:correct; companies:correct (extra undeclared statement(s) present -- fails strict schema only)
+  [PASS] multipart_missing_parts_metadata_fails_closed: GraderMetadataError: multi_part item is missing required 'parts' metadata -- fail
+  [PASS] multipart_positional_pairing_is_literal_not_smart: swapped statement order grades against the wrong declared part rather than being silently reordered: status=incorrect
+  [PASS] multipart_duplicate_part_id_fails_closed: GraderMetadataError: duplicate part_id(s) in declared parts: ['count', 'count']
+  [PASS] multipart_semicolon_in_literal_not_a_boundary: quote-aware statement splitting confirmed
+  [PASS] multipart_semicolon_in_bracket_identifier_not_a_boundary: a semicolon inside a bracket-quoted identifier [a;b] must not be mistaken for a statement boundary
+  [PASS] multipart_string_gold_sql_fails_closed: GraderMetadataError: answer_type is 'multi_part' but gold_sql is not a part_id-keyed dict -
+  [PASS] dict_gold_sql_requires_multipart_answer_type: GraderMetadataError: gold_sql is a part_id-keyed dict but answer_type is not 'multi_part' -
+  [PASS] multipart_part_empty_target_columns_fails_closed: GraderMetadataError: part 'p1': invalid target_columns []; expected a non-empty list of col
+  [PASS] single_query_timeout_classified_correctly: status=timeout (expected timeout, not SQL_error)
+  [PASS] multipart_timeout_classified_correctly: status=timeout (expected timeout, not SQL_error)
+
+All Phase 7 gates passed (81 checks).
+  executor sqlexec_v3.0  sha256 a6c06b71dd97541997bedc2202e1980ab2e4cdd721aaf20ff43eacfda876c461
+  grader   grade_v3.1  sha256 1051a161ac848ad058dda424417e296571404e6fd5dbe10174994cea7df0c6aa

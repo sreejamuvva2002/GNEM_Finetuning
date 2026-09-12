@@ -1,0 +1,10 @@
+  [PASS] fault:frozen_hash_drift: IntegrityError: canonical records drifted
+  [PASS] fault:orphan_child_row: caught by ['processes_row_count_matches_canonical', 'processes_terms_verbatim_from_canonical', 'processes_zero_orphans']
+  [PASS] fault:sentinel_emitted_as_certification: caught by ['sentinel_never_stored_as_a_credential', 'sentinel_yields_zero_certification_rows']
+  [PASS] fault:wrong_scoped_view_membership: caught by ['train_kb_processes_leaks_no_dev_or_test_child_rows', 'train_kb_services_leaks_no_dev_or_test_child_rows', 'view_train_kb_companies_row_count']
+  [PASS] fault:forbidden_schema_field_certification_count: caught by ['companies_columns_match_frozen_schema', 'no_forbidden_columns_anywhere', 'no_view_exposes_forbidden_column']
+  [PASS] fault:forbidden_schema_field_split_group: caught by ['no_forbidden_columns_anywhere', 'no_view_exposes_forbidden_column']
+  [PASS] fault:child_parent_company_mismatch: caught by ['processes_child_parent_company_match']
+  [PASS] fault:altered_term_breaks_round_trip: caught by ['round_trip_reconstructs_canonical_exactly', 'services_terms_verbatim_from_canonical']
+
+All 8 faults correctly caught.

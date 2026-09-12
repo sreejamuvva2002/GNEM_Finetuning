@@ -1,0 +1,15 @@
+{
+  "snapshots": [
+    {
+      "original": "README.md",
+      "snapshot": "docs/PHASE_PROTOCOL_REFERENCE.md",
+      "sha256": "d67002e02d750ac45edad4fc8b8428c9da8f34956542cfd46a9d400b6822190d"
+    },
+    {
+      "original": "CLAUDE.md",
+      "snapshot": "docs/EXECUTION_RULES_REFERENCE.md",
+      "sha256": "946023eb5588e86c85ad6b8d81e360d292529c600e454b7d6c3f4b5a87898c18"
+    }
+  ],
+  "reason": "Current overview consolidated; historical scientific requirements retained; unused superseded omission/sampling helpers removed"
+}

@@ -19,12 +19,10 @@ B and D example surviving the split, holdout and exposure-ledger exclusions"
 construction (Phases 11/14), so BD_full is their deterministic union, exactly
 like Phase 15's BC -- no new exclusion logic here.
 
-TOKEN COUNTING uses the real pinned Qwen tokenizer (finetune/
-phase10_build_a_cpt.load_real_tokenizer, reused verbatim -- same hash-verified
-loader, no estimator, no substitution). Supervised completion tokens =
-len(tokenize(full chat text)) - len(tokenize(prompt-only text with
-add_generation_prompt=True)) -- the standard way to isolate what an
-assistant-only-loss mask actually trains on.
+TOKEN COUNTING uses training_tokens_v3.encode_chat and counts shifted labels
+that are not -100. The annotated template must reproduce the pinned model's
+text exactly; overlength or zero-label examples fail instead of being dropped.
+A-002 preserves all examples and repeats the smaller source to balance tokens.
 
 WHAT'S FROZEN vs WHAT'S NOT. README asks for "optimizer steps, effective
 passes" in the report. Those require a batch size and epoch count, which are
@@ -51,6 +49,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from training_tokens_v3 import encode_chat, supervised_tokens
+
 import holdout_v3 as H                                    # noqa: E402
 from phase10_build_a_cpt import (EXPECTED_TOKENIZER_JSON_SHA,  # noqa: E402
                                  load_real_tokenizer)
@@ -72,13 +72,8 @@ class Gate(Exception):
 
 
 def completion_and_total_tokens(tok, messages: list[dict]) -> tuple[int, int]:
-    full_text = tok.apply_chat_template(messages, tokenize=False,
-                                        add_generation_prompt=False)
-    prompt_text = tok.apply_chat_template(messages[:-1], tokenize=False,
-                                          add_generation_prompt=True)
-    full_n = len(tok(full_text, add_special_tokens=False)["input_ids"])
-    prompt_n = len(tok(prompt_text, add_special_tokens=False)["input_ids"])
-    return full_n - prompt_n, full_n
+    encoded = encode_chat(tok, messages)
+    return supervised_tokens(encoded), len(encoded["input_ids"])
 
 
 def load(path: Path) -> list[dict]:
@@ -94,24 +89,6 @@ def with_tokens(tok, items: list[dict]) -> list[dict]:
         j["_total_tokens"] = total
         out.append(j)
     return out
-
-
-def greedy_fill(items_sorted: list[dict], budget: int) -> list[dict]:
-    """Deterministic prefix fill: add items (in the given fixed order) until
-    the running completion-token total would first meet or exceed `budget`,
-    then keep whichever of {stop just before, stop just after} lands closer
-    to `budget` -- a documented, reproducible sampling rule, not a random
-    draw (README asks for '~50/50', not an exact split)."""
-    running, taken = 0, []
-    for it in items_sorted:
-        if running >= budget:
-            break
-        taken.append(it)
-        running += it["_completion_tokens"]
-    if len(taken) > 1 and abs(running - budget) > abs(
-            (running - taken[-1]["_completion_tokens"]) - budget):
-        taken = taken[:-1]
-    return taken
 
 
 def repeat_to_budget(items_sorted: list[dict], budget: int) -> list[dict]:
@@ -131,6 +108,7 @@ def repeat_to_budget(items_sorted: list[dict], budget: int) -> list[dict]:
             cycle += 1
         copy = dict(src)
         copy["example_id"] = f"{src['example_id']}__rep{i // n}"
+        copy["source_example_id"] = src["example_id"]
         out.append(copy)
         running += src["_completion_tokens"]
         i += 1
@@ -154,17 +132,15 @@ def build():
     # BD_full: deterministic union, exactly like Phase 15's BC.
     bd_full = b_sorted + d_sorted
 
-    # BD_controlled: ~50/50 by supervised completion tokens. The smaller
-    # standalone total is the natural anchor (using it in full, since
-    # upsampling B would mean repeating FACTUAL QA -- not what README asks
-    # for; only D gets a repeat variant, by name, in this phase).
-    if b_total_comp <= d_total_comp:
+    # A-002: larger source is retained once; repeat the smaller source.
+    # No eligible observation is removed for budget matching.
+    if b_total_comp >= d_total_comp:
         anchor, anchor_total, other_sorted = b_sorted, b_total_comp, d_sorted
         anchor_name, other_name = "B", "D"
     else:
         anchor, anchor_total, other_sorted = d_sorted, d_total_comp, b_sorted
         anchor_name, other_name = "D", "B"
-    other_sample = greedy_fill(other_sorted, anchor_total)
+    other_sample = repeat_to_budget(other_sorted, anchor_total)
     bd_controlled = (anchor + other_sample if anchor_name == "B"
                      else other_sample + anchor)
     controlled_total = anchor_total + sum(i["_completion_tokens"]
@@ -266,8 +242,8 @@ def main() -> int:
           f"{len(st['bd_full'])} items = {len(st['b'])} B + {len(st['d'])} D, "
           f"no additions or omissions")
 
-    controlled_b = [i for i in st["bd_controlled"] if i["example_id"] in b_ids]
-    controlled_d = [i for i in st["bd_controlled"] if i["example_id"] in d_ids]
+    controlled_b = [i for i in st["bd_controlled"] if i.get("source_example_id", i["example_id"]) in b_ids]
+    controlled_d = [i for i in st["bd_controlled"] if i.get("source_example_id", i["example_id"]) in d_ids]
     check("bd_controlled_items_are_genuine_b_or_d",
           len(controlled_b) + len(controlled_d) == len(st["bd_controlled"]),
           f"{len(controlled_b)} from B + {len(controlled_d)} from D = "
@@ -283,7 +259,7 @@ def main() -> int:
     check("bd_controlled_uses_full_anchor_arm",
           (len(controlled_b) == len(st["b"]) if st["anchor_name"] == "B"
            else len(controlled_d) == len(st["d"])),
-          f"the smaller-total arm ({st['anchor_name']}) is used in full "
+          f"the larger-total arm ({st['anchor_name']}) is used in full "
           f"({len(st['b']) if st['anchor_name']=='B' else len(st['d'])} items), "
           f"never subsampled downward")
 
@@ -314,7 +290,8 @@ def main() -> int:
     sha_rep = write_jsonl(OUT_REPEAT, st["d_repeat"])
 
     manifest = {
-        "generator": GENERATOR_VERSION,
+        "generator": "bd_v3.1_A002",
+        "token_accounting": "training_tokens_v3.encode_chat; shifted nonignored labels; no truncation",
         "tokenizer": {"model": "Qwen/Qwen2.5-14B-Instruct",
                      "revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
                      "tokenizer_json_sha256": st["tok_sha"]},
@@ -343,10 +320,7 @@ def main() -> int:
             "total_tokens": sum(i["_total_tokens"] for i in st["bd_controlled"]),
             "b_example_ids": [i["example_id"] for i in controlled_b],
             "d_example_ids": [i["example_id"] for i in controlled_d],
-            "sampling_method": "deterministic prefix fill over the non-anchor "
-                               "arm, sorted by example_id, stopped at the "
-                               "nearest completion-token match to the anchor "
-                               "arm's total",
+            "sampling_method": "A-002: retain every source; repeat the smaller arm in sorted ID order to match the larger arm within one whole example",
         },
         "d_repeat_budgetmatched": {
             "artifact": "datasets_v3/train_D_repeat_budgetmatched_v3.jsonl",
@@ -356,7 +330,7 @@ def main() -> int:
             "target_budget": st["controlled_total"],
             "example_ids": [i["example_id"] for i in st["d_repeat"]],
             "source_task_id_by_example_id": {
-                i["example_id"]: i["example_id"].split("__rep")[0]
+                i["example_id"]: i["task_id"]
                 for i in st["d_repeat"]},
             "sampling_method": "D cycled from its example_id-sorted order, "
                                "repeating (rep-cycle suffix __repN on each "
@@ -370,14 +344,9 @@ def main() -> int:
                                "merely the method",
         },
         "optimizer_steps_and_effective_passes": (
-            "NOT computed here. steps = total_supervised_tokens / "
-            "(batch_size * assistant_only_loss ? completion_tokens_per_step : "
-            "total_tokens_per_step); both batch_size and epoch count are "
-            "dev-tuned hyperparameters (CLAUDE.md 'Dev policy') not yet "
-            "frozen by this repository, fixed during README's 'Phases 33-39 "
-            "-- Full training'. Reporting a specific step count now would "
-            "require inventing those parameters -- deferred to that actual "
-            "training config rather than fabricated here."),
+            "Computed by the actual trainer after batching, accumulation and epoch configuration; "
+            "supervised token totals are not optimizer-step counts. Record actual retained examples "
+            "and optimizer steps, including partial final accumulation groups."),
     }
     OUT_MANIFEST.write_text(json.dumps(manifest, indent=2, sort_keys=True,
                                        ensure_ascii=False) + "\n", encoding="utf-8")
@@ -498,21 +467,19 @@ def _audit(st, controlled_b, controlled_d, checks, sha_full, sha_ctrl, sha_rep):
          "not expected to match, and are not treated as a target here.\n",
          "## BD_controlled\n", "```text",
          f"B   {len(controlled_b):5d} examples   "
-         f"{sum(i['_completion_tokens'] for i in controlled_b):7d} tokens (full B, anchor arm)",
+         f"{sum(i['_completion_tokens'] for i in controlled_b):7d} tokens (all B sources retained; repetitions if needed)",
          f"D   {len(controlled_d):5d} examples   "
-         f"{sum(i['_completion_tokens'] for i in controlled_d):7d} tokens (subsampled)",
+         f"{sum(i['_completion_tokens'] for i in controlled_d):7d} tokens (all D sources retained; repetitions if needed)",
          "```\n",
          "## D_repeat_budgetmatched\n", "```text",
          f"{len(st['d_repeat']):5d} examples (D cycled/repeated)   "
          f"{sum(i['_completion_tokens'] for i in st['d_repeat']):7d} tokens",
          "```\n",
          "## Optimizer steps / effective passes\n",
-         "Not computed. Both batch_size and epoch count are dev-tuned "
-         "hyperparameters (CLAUDE.md 'Dev policy'; fixed during README's "
-         "'Phases 33-39 — Full training') not yet frozen — reporting a step "
-         "count now would require inventing them. See "
-         "BD_SAMPLING_MANIFEST_v3.json's "
-         "`optimizer_steps_and_effective_passes` note for the formula.\n",
+         "Current single-device trainer defaults: batch size 1, accumulation 8, three epochs. "
+         "Transformers 4.56.2 uses ceil(examples/8) updates per epoch: BD_full 1,299, "
+         "BD_controlled 1,317, D_repeat 1,020 total planned steps. These are configured "
+         "estimates, not observed runs or approved final hyperparameters. See PRE_TRAINING_GATES_A002.md.\n",
          "## Validation\n", "| check | result | detail |", "|---|---|---|"]
     for n, ok, d in checks:
         L.append(f"| `{n}` | {'PASS' if ok else 'FAIL'} | {d} |")

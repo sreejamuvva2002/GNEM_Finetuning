@@ -1,0 +1,30 @@
+{"example_id": "SANITY_ADD_0", "family": "general_sanity", "gold_value": "9", "question": "What is 2 + 7? Answer with the number only."}
+{"example_id": "SANITY_ADD_1", "family": "general_sanity", "gold_value": "11", "question": "What is 3 + 8? Answer with the number only."}
+{"example_id": "SANITY_ADD_2", "family": "general_sanity", "gold_value": "13", "question": "What is 4 + 9? Answer with the number only."}
+{"example_id": "SANITY_ADD_3", "family": "general_sanity", "gold_value": "15", "question": "What is 5 + 10? Answer with the number only."}
+{"example_id": "SANITY_ADD_4", "family": "general_sanity", "gold_value": "17", "question": "What is 6 + 11? Answer with the number only."}
+{"example_id": "SANITY_ADD_5", "family": "general_sanity", "gold_value": "19", "question": "What is 7 + 12? Answer with the number only."}
+{"example_id": "SANITY_ADD_6", "family": "general_sanity", "gold_value": "21", "question": "What is 8 + 13? Answer with the number only."}
+{"example_id": "SANITY_ADD_7", "family": "general_sanity", "gold_value": "23", "question": "What is 9 + 14? Answer with the number only."}
+{"example_id": "SANITY_ADD_8", "family": "general_sanity", "gold_value": "25", "question": "What is 10 + 15? Answer with the number only."}
+{"example_id": "SANITY_ADD_9", "family": "general_sanity", "gold_value": "27", "question": "What is 11 + 16? Answer with the number only."}
+{"example_id": "SANITY_COPY_0", "family": "general_sanity", "gold_value": "battery", "question": "Repeat this word exactly: battery"}
+{"example_id": "SANITY_COPY_1", "family": "general_sanity", "gold_value": "supplier", "question": "Repeat this word exactly: supplier"}
+{"example_id": "SANITY_COPY_2", "family": "general_sanity", "gold_value": "Georgia", "question": "Repeat this word exactly: Georgia"}
+{"example_id": "SANITY_COPY_3", "family": "general_sanity", "gold_value": "process", "question": "Repeat this word exactly: process"}
+{"example_id": "SANITY_COPY_4", "family": "general_sanity", "gold_value": "service", "question": "Repeat this word exactly: service"}
+{"example_id": "SANITY_COPY_5", "family": "general_sanity", "gold_value": "company", "question": "Repeat this word exactly: company"}
+{"example_id": "SANITY_COPY_6", "family": "general_sanity", "gold_value": "record", "question": "Repeat this word exactly: record"}
+{"example_id": "SANITY_COPY_7", "family": "general_sanity", "gold_value": "factory", "question": "Repeat this word exactly: factory"}
+{"example_id": "SANITY_COPY_8", "family": "general_sanity", "gold_value": "material", "question": "Repeat this word exactly: material"}
+{"example_id": "SANITY_COPY_9", "family": "general_sanity", "gold_value": "quality", "question": "Repeat this word exactly: quality"}
+{"example_id": "SANITY_MAX_0", "family": "general_sanity", "gold_value": "3", "question": "Which number is larger, 2 or 3? Answer with that number only."}
+{"example_id": "SANITY_MAX_1", "family": "general_sanity", "gold_value": "9", "question": "Which number is larger, 9 or 4? Answer with that number only."}
+{"example_id": "SANITY_MAX_2", "family": "general_sanity", "gold_value": "8", "question": "Which number is larger, 1 or 8? Answer with that number only."}
+{"example_id": "SANITY_MAX_3", "family": "general_sanity", "gold_value": "7", "question": "Which number is larger, 7 or 6? Answer with that number only."}
+{"example_id": "SANITY_MAX_4", "family": "general_sanity", "gold_value": "11", "question": "Which number is larger, 11 or 2? Answer with that number only."}
+{"example_id": "SANITY_MAX_5", "family": "general_sanity", "gold_value": "12", "question": "Which number is larger, 5 or 12? Answer with that number only."}
+{"example_id": "SANITY_MAX_6", "family": "general_sanity", "gold_value": "20", "question": "Which number is larger, 20 or 3? Answer with that number only."}
+{"example_id": "SANITY_MAX_7", "family": "general_sanity", "gold_value": "13", "question": "Which number is larger, 8 or 13? Answer with that number only."}
+{"example_id": "SANITY_MAX_8", "family": "general_sanity", "gold_value": "15", "question": "Which number is larger, 15 or 4? Answer with that number only."}
+{"example_id": "SANITY_MAX_9", "family": "general_sanity", "gold_value": "14", "question": "Which number is larger, 6 or 14? Answer with that number only."}

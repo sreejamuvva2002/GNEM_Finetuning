@@ -38,7 +38,7 @@ FROZEN = {
     "datasets_v3/gnem_v3.sqlite":
         "7437c746cb118f3d5bb9edcc34f500e0c9f764358a19fa05766dc526d63bb08b",
     "finetune/sqlexec_v3.py":
-        "a6c06b71dd97541997bedc2202e1980ab2e4cdd721aaf20ff43eacfda876c461",
+        "dfe5d8a882f730c05351643c167ad47203159383b88ef21020353f27f4443588",
     # Updated for the Phase 9 correction (multi-part grading, D.9/D.17/D.20).
     # Only these two are actually pinned here as an executable preflight gate
     # -- eval_records_v3.py/eval_verify_v3.py are pinned separately, only in
@@ -46,7 +46,7 @@ FROZEN = {
     # executable gate); an earlier version of this comment/plan conflated the
     # two lists.
     "finetune/grade_v3.py":
-        "1051a161ac848ad058dda424417e296571404e6fd5dbe10174994cea7df0c6aa",
+        "c7775cdcf69f11705eb35a172202cc917648fa6df149a13c8cb8d217e63cfb04",
     "finetune/phase7_grader_tests.py":
         "bcdbdbb67211321c8ebd50e2d5a8eeb6908c5fb7b7b692a8cf028ba76b16d8b6",
 }
@@ -257,6 +257,16 @@ def main() -> int:
     check("stats_effect_size_and_holm",
           stats_demo["effect_size"] is not None and stats_demo["holm_monotonic"],
           "effect size computed; Holm adjustment monotonic")
+    for constant in (-1.0, 0.0, 1.0):
+        differences = [constant] * 3
+        encoded = json.dumps({"mean_difference": ST.mean(differences),
+                              "standardized_effect": ST.effect_size(differences)},
+                             allow_nan=False)
+        result = json.loads(encoded)
+        check(f"stats_constant_{constant}_effect_undefined",
+              result["standardized_effect"] is None
+              and result["mean_difference"] == constant,
+              "zero variance has undefined standardized effect; raw difference retained")
     check("stats_mcnemar_present_cited", stats_demo["mcnemar"]["n_discordant"] >= 0,
           "McNemar implemented as secondary evidence (README:973)")
     check("stats_split_group_weighting_cited",

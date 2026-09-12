@@ -1,30 +1,12 @@
-"""Phase 10 -- build `train_A_cpt_v3.jsonl`.
+"""Phase 10: complete, source-qualified training-record passages under A-002.
 
-README Phase 10: one canonical plain-text passage per row (the Phase 0 decision;
-v2's three renderings are retired). Real factual fields only. No
-`Certification Count` target; no sentence that turns a sentinel into a
-substantive fact; held-out values omitted per the exposure ledger.
+Every eligible record includes all source attributes except internal Certification
+Count. Missingness is explicit evidence of a source limitation. Repeated records
+remain attributable observations, not presumed separate facilities. No deliberate
+value withholding or silent list truncation is permitted. Training uses train_kb;
+leak_audit_v3 separately verifies held-out company exclusion.
 
-OMIT THE ITEM, NEVER TRUNCATE THE TRUTH. If a row's multi-valued field contains
-a held-out value, the WHOLE field is omitted from that row's passage. Emitting
-the remaining terms would teach an incomplete fact.
-
-SENTINELS ARE NOT FACTS. `Not specified`, `Not applicable` and `None identified
-after search` are never rendered as substantive claims -- the sentence is simply
-not written. `None identified after search` means zero credential evidence in
-this frozen dataset, not a real-world negative.
-
-Train-side only: A is built from `train_kb` through the frozen Phase 4 contract.
-The hard assert README demands is that no dev or test company appears anywhere
-in the plain text, which carries no split metadata and is where a leak hides
-best -- checked via `leak_audit_v3`, a separate validation-only module, so this
-generator's own source never contains a `full_kb`/`train_dev_kb` literal (see
-the Phase 4 static check re-run below).
-
-Budget is reported in LM TOKENS (packing=True, full-sequence LM loss) and never
-placed on the chat arms' completion-token axis, using the real pinned Qwen
-tokenizer -- no estimator, no substitution (finetune/phase6_context_budget.py
-precedent).
+LM token budgets are distinct from the chat arms' assistant-label budgets.
 """
 
 from __future__ import annotations
@@ -42,7 +24,7 @@ import leak_audit_v3 as LA    # noqa: E402
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "datasets_v3" / "train_A_cpt_v3.jsonl"
 OUT_AUDIT = ROOT / "validation_v3" / "DATASET_A_CPT_v3.md"
-GENERATOR_VERSION = "a_cpt_v3.1"
+GENERATOR_VERSION = "a_cpt_v3.2_A002"
 
 TOKENIZER_ID = "Qwen/Qwen2.5-14B-Instruct"
 TOKENIZER_REVISION = "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8"
@@ -79,34 +61,24 @@ class Gate(Exception):
     """A Phase 10 invariant failed. No artifact is written."""
 
 
-def omitted_fields(rec, held) -> set[str]:
-    """Multi-valued fields the exposure policy removes from this row entirely."""
-    out = set()
-    for f in H.MULTIVALUED:
-        ts = set(H.terms(getattr(rec, f), f))
-        if ts & set(held[f]):
-            out.add(f)
-    return out
-
-
 def render_passage(rec, held) -> tuple[str, set[str]]:
     """One canonical passage. Deterministic field order, fixed sentences."""
-    drop = omitted_fields(rec, held)
-    parts = [f"{rec.company} is a company in the Georgia new-energy mobility "
-             f"supply chain."]
-    for field, tmpl in SCALAR_SENTENCES:
-        v = getattr(rec, field)
-        if v is None or (isinstance(v, str) and v.strip() in SENTINELS):
-            continue          # a sentinel is never rendered as a substantive fact
-        parts.append(tmpl.format(company=rec.company, v=v))
-    for field, tmpl in MULTI_SENTENCES:
-        if field in drop:
-            continue          # omit the whole field, never truncate the truth
-        v = getattr(rec, field)
-        if not v or v.strip() in SENTINELS:
-            continue
-        parts.append(tmpl.format(v=v))
-    return " ".join(parts), drop
+    if any(held.values()):
+        raise Gate("A-002 forbids deliberate value omissions")
+    fields = ("company",) + tuple(f for f, _ in SCALAR_SENTENCES + MULTI_SENTENCES)
+    parts = [f"Source record {rec.row_id} in the GNEM dataset. These are recorded observations; "
+             "repeated company records may disagree and do not establish separate facilities."]
+    for field in fields:
+        value = getattr(rec, field)
+        label = field.replace("_", " ")
+        if value is None or str(value).strip() in SENTINELS:
+            parts.append(f"Recorded {label}: {value}. This indicates missing or inapplicable "
+                         "source evidence, not proof of real-world absence.")
+        else:
+            parts.append(f"Recorded {label}: {value}.")
+    parts.append("Employment scope and date are not established here; recorded certifications "
+                 "do not independently establish current validity or customer qualification.")
+    return " ".join(parts), set()
 
 
 def build():
@@ -163,7 +135,7 @@ def load_real_tokenizer():
 
 
 def lm_token_counts(tok, texts: list[str]) -> dict:
-    """A trains under packing=True with full-sequence LM loss -- plain
+    """A uses manual stream chunking with full-sequence LM loss -- plain
     tokenization of the passage text, no chat template, no special tokens
     reserved for a turn structure that doesn't apply here."""
     lens = [len(tok(t, add_special_tokens=False)["input_ids"]) for t in texts]
@@ -208,7 +180,7 @@ def main() -> int:
     # sentinels never become substantive facts
     blob = "\n".join(texts)
     sent_hits = sorted(s for s in SENTINELS if s in blob)
-    check("no_sentinel_rendered_as_fact", not sent_hits,
+    check("sentinel_evidence_qualified", all("not proof of real-world absence" in t for t in texts if any(v in t for v in SENTINELS)),
           "Not specified / Not applicable / None identified after search absent"
           if not sent_hits else f"{sent_hits}")
 
@@ -308,10 +280,10 @@ def _audit(reg, rows, dropped, cov, checks, sha, tok, rep, static_rep):
          "That is a design consequence, never a finding about CPT.\n",
          "## Budget — LM tokens\n", "```text",
          f"tokenizer     {TOKENIZER_ID} @ {TOKENIZER_REVISION[:12]}",
-         f"total LM tokens   {tok['total']}",
+         f"passage tokens before EOS   {tok['total']}",
          f"min / median / p95 / max   {tok['min']} / {tok['median']} / "
          f"{tok['p95']} / {tok['max']}", "```\n",
-         "A trains under `packing=True` with **full-sequence LM loss**, a different "
+         f"Trainer appends one EOS per passage: {tok['total'] + len(rows)} input tokens, maximum passage length {tok['max'] + 1}. Manual 1,024-token stream chunking is used with **full-sequence LM loss**, a different "
          "objective from the chat variants' `assistant_only_loss=True`. This budget "
          "is reported in LM tokens and is **never** placed on the "
          "completion-token axis.\n",
@@ -322,9 +294,8 @@ def _audit(reg, rows, dropped, cov, checks, sha, tok, rep, static_rep):
         L.append(f"| `{f}` | {dropped[f]} | {cov[f]:.1f}% | "
                  f"{reg['value_holdouts'][f]['train_rows_lost']} |")
     L += ["",
-          "A row whose multi-valued field contains a held-out value has that **whole "
-          "field** omitted from its passage. Emitting the surviving terms would teach "
-          "an incomplete fact.\n",
+          "A-002 removes deliberate value exclusions. Every training-record field is "
+          "rendered, including source-qualified missingness. Complete lists are retained.\n",
           "## Exposure\n", "```text",
           f"strings scanned   {rep['strings_scanned']}   (final rendered passages)",
           f"exposure_count    {rep['total_exposures']}",

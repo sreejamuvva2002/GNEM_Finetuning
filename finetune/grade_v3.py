@@ -47,7 +47,7 @@ from dataclasses import dataclass, field
 
 import sqlexec_v3 as X
 
-GRADER_VERSION = "grade_v3.1"
+GRADER_VERSION = "grade_v3.2_A002"
 
 # Frozen answer types (README Phase 7).
 ANSWER_TYPES = ("set", "scalar", "top_k", "multi_part")
@@ -393,7 +393,14 @@ def compare_results(pred_res: X.SQLResult, gold_res: X.SQLResult,
         return GradeResult("invalid_output", 0.0, strict,
                            f"gold result lacks target column {e}")
     try:
-        pred_proj = _project(pred_res, target_columns)
+        # A-002: a single returned cell has an unambiguous semantic value.
+        # Aliases still affect the independently computed strict-schema score.
+        if (answer_type == "scalar" and len(target_columns) == 1
+                and len(pred_res.columns) == 1 and len(pred_res.rows) == 1
+                and len(pred_res.rows[0]) == 1):
+            pred_proj = list(pred_res.rows)
+        else:
+            pred_proj = _project(pred_res, target_columns)
     except KeyError as e:
         return GradeResult("incorrect", 0.0, strict,
                            f"prediction result lacks target column {e}")

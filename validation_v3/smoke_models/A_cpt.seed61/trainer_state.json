@@ -1,0 +1,73 @@
+{
+  "best_global_step": 2,
+  "best_metric": 5.388942718505859,
+  "best_model_checkpoint": "/home/sm11926/GNEM_Finetuning/validation_v3/smoke_models/A_cpt.seed61/checkpoint-2",
+  "epoch": 0.25,
+  "eval_steps": 2,
+  "global_step": 2,
+  "is_hyper_param_search": false,
+  "is_local_process_zero": true,
+  "is_world_process_zero": true,
+  "log_history": [
+    {
+      "epoch": 0.125,
+      "grad_norm": 0.6106626391410828,
+      "learning_rate": 0.0,
+      "loss": 1.3461,
+      "step": 1
+    },
+    {
+      "epoch": 0.25,
+      "grad_norm": 0.6727298498153687,
+      "learning_rate": 0.0001,
+      "loss": 1.4563,
+      "step": 2
+    },
+    {
+      "epoch": 0.25,
+      "eval_loss": 5.388942718505859,
+      "eval_runtime": 0.2883,
+      "eval_samples_per_second": 13.875,
+      "eval_steps_per_second": 13.875,
+      "step": 2
+    },
+    {
+      "epoch": 0.25,
+      "step": 2,
+      "total_flos": 173618277384192.0,
+      "train_loss": 1.4011839628219604,
+      "train_runtime": 5.2851,
+      "train_samples_per_second": 0.378,
+      "train_steps_per_second": 0.378
+    },
+    {
+      "epoch": 0.25,
+      "eval_loss": 5.388942718505859,
+      "eval_runtime": 0.2867,
+      "eval_samples_per_second": 13.951,
+      "eval_steps_per_second": 13.951,
+      "step": 2
+    }
+  ],
+  "logging_steps": 1,
+  "max_steps": 2,
+  "num_input_tokens_seen": 0,
+  "num_train_epochs": 1,
+  "save_steps": 2,
+  "stateful_callbacks": {
+    "TrainerControl": {
+      "args": {
+        "should_epoch_stop": false,
+        "should_evaluate": false,
+        "should_log": false,
+        "should_save": true,
+        "should_training_stop": true
+      },
+      "attributes": {}
+    }
+  },
+  "total_flos": 173618277384192.0,
+  "train_batch_size": 1,
+  "trial_name": null,
+  "trial_params": null
+}

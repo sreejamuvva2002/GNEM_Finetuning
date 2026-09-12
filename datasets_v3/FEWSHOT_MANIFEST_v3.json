@@ -1,0 +1,549 @@
+{
+  "examples": [
+    {
+      "answer_type": "set",
+      "entity_dependent": true,
+      "fields_used": [
+        "category"
+      ],
+      "full_kb_gold": {
+        "columns": [
+          "company"
+        ],
+        "rows": [
+          [
+            "Kia Georgia Inc."
+          ],
+          [
+            "Minebea AccessSolutions USA Inc."
+          ],
+          [
+            "Superior Essex Inc."
+          ],
+          [
+            "Suzuki Manufacturing of America Corp."
+          ],
+          [
+            "TCI Powder Coatings"
+          ],
+          [
+            "TDK Components USA Inc."
+          ],
+          [
+            "TE Connectivity"
+          ],
+          [
+            "TI Fluid Systems"
+          ],
+          [
+            "Teklas USA"
+          ],
+          [
+            "Textron Specialized Vehicles"
+          ],
+          [
+            "Thermal Ceramics Inc."
+          ],
+          [
+            "Thomson Plastics Inc."
+          ]
+        ]
+      },
+      "gold_sql": "SELECT DISTINCT company FROM companies WHERE category = 'OEM' ORDER BY company",
+      "join_arity": 0,
+      "logical_components": {
+        "field": "category",
+        "op": "eq",
+        "value": "OEM"
+      },
+      "logical_fingerprint": "lfp2:97d87baeb7228b4939d0c181146d76a8",
+      "operation_family": "filter",
+      "question": "List every company whose category is OEM.",
+      "required_constructs": [
+        "ORDER BY",
+        "WHERE"
+      ],
+      "split": "train",
+      "target_columns": [
+        "company"
+      ],
+      "task_id": "D_v3_filter_category_00000",
+      "train_dev_kb_gold": {
+        "columns": [
+          "company"
+        ],
+        "rows": [
+          [
+            "Kia Georgia Inc."
+          ],
+          [
+            "Minebea AccessSolutions USA Inc."
+          ],
+          [
+            "Suzuki Manufacturing of America Corp."
+          ],
+          [
+            "TCI Powder Coatings"
+          ],
+          [
+            "TDK Components USA Inc."
+          ],
+          [
+            "TE Connectivity"
+          ],
+          [
+            "Teklas USA"
+          ],
+          [
+            "Textron Specialized Vehicles"
+          ],
+          [
+            "Thermal Ceramics Inc."
+          ],
+          [
+            "Thomson Plastics Inc."
+          ]
+        ]
+      },
+      "train_kb_gold": {
+        "columns": [
+          "company"
+        ],
+        "rows": [
+          [
+            "Kia Georgia Inc."
+          ],
+          [
+            "Minebea AccessSolutions USA Inc."
+          ],
+          [
+            "Suzuki Manufacturing of America Corp."
+          ],
+          [
+            "TDK Components USA Inc."
+          ],
+          [
+            "TE Connectivity"
+          ],
+          [
+            "Teklas USA"
+          ],
+          [
+            "Textron Specialized Vehicles"
+          ],
+          [
+            "Thermal Ceramics Inc."
+          ],
+          [
+            "Thomson Plastics Inc."
+          ]
+        ]
+      },
+      "values_used": [
+        "OEM"
+      ]
+    },
+    {
+      "answer_type": "scalar",
+      "entity_dependent": true,
+      "fields_used": [
+        "category"
+      ],
+      "full_kb_gold": {
+        "columns": [
+          "n"
+        ],
+        "rows": [
+          [
+            12
+          ]
+        ]
+      },
+      "gold_sql": "SELECT COUNT(DISTINCT company) AS n FROM companies WHERE category = 'OEM'",
+      "join_arity": 0,
+      "logical_components": {
+        "field": "category",
+        "op": "eq",
+        "value": "OEM"
+      },
+      "logical_fingerprint": "lfp2:8820ec573d4c2e6004817aa3c44c33bf",
+      "operation_family": "filter",
+      "question": "How many companies have category equal to OEM?",
+      "required_constructs": [
+        "WHERE"
+      ],
+      "split": "train",
+      "target_columns": [
+        "n"
+      ],
+      "task_id": "D_v3_count_category_00001",
+      "train_dev_kb_gold": {
+        "columns": [
+          "n"
+        ],
+        "rows": [
+          [
+            10
+          ]
+        ]
+      },
+      "train_kb_gold": {
+        "columns": [
+          "n"
+        ],
+        "rows": [
+          [
+            9
+          ]
+        ]
+      },
+      "values_used": [
+        "OEM"
+      ]
+    },
+    {
+      "answer_type": "set",
+      "entity_dependent": true,
+      "fields_used": [
+        "category"
+      ],
+      "full_kb_gold": {
+        "columns": [
+          "company"
+        ],
+        "rows": [
+          [
+            "TI Fluid Systems"
+          ],
+          [
+            "TN Americas Holding Inc."
+          ],
+          [
+            "Tie Down Engineering"
+          ],
+          [
+            "Toyota Industries Group (TACG-TICA)"
+          ],
+          [
+            "Trenton Pressing"
+          ],
+          [
+            "YKK USA Inc."
+          ],
+          [
+            "Yazaki North America"
+          ],
+          [
+            "ZF Gainesville LLC"
+          ]
+        ]
+      },
+      "gold_sql": "SELECT DISTINCT company FROM companies WHERE category = 'OEM (Footprint)' ORDER BY company",
+      "join_arity": 0,
+      "logical_components": {
+        "field": "category",
+        "op": "eq",
+        "value": "OEM (Footprint)"
+      },
+      "logical_fingerprint": "lfp2:d7a97808c13279a3f9aa8970353992c2",
+      "operation_family": "filter",
+      "question": "List every company whose category is OEM (Footprint).",
+      "required_constructs": [
+        "ORDER BY",
+        "WHERE"
+      ],
+      "split": "train",
+      "target_columns": [
+        "company"
+      ],
+      "task_id": "D_v3_filter_category_00002",
+      "train_dev_kb_gold": {
+        "columns": [
+          "company"
+        ],
+        "rows": [
+          [
+            "TN Americas Holding Inc."
+          ],
+          [
+            "Toyota Industries Group (TACG-TICA)"
+          ],
+          [
+            "Trenton Pressing"
+          ],
+          [
+            "YKK USA Inc."
+          ],
+          [
+            "Yazaki North America"
+          ]
+        ]
+      },
+      "train_kb_gold": {
+        "columns": [
+          "company"
+        ],
+        "rows": [
+          [
+            "TN Americas Holding Inc."
+          ],
+          [
+            "Toyota Industries Group (TACG-TICA)"
+          ],
+          [
+            "Trenton Pressing"
+          ],
+          [
+            "YKK USA Inc."
+          ]
+        ]
+      },
+      "values_used": [
+        "OEM (Footprint)"
+      ]
+    },
+    {
+      "answer_type": "scalar",
+      "entity_dependent": true,
+      "fields_used": [
+        "category"
+      ],
+      "full_kb_gold": {
+        "columns": [
+          "n"
+        ],
+        "rows": [
+          [
+            8
+          ]
+        ]
+      },
+      "gold_sql": "SELECT COUNT(DISTINCT company) AS n FROM companies WHERE category = 'OEM (Footprint)'",
+      "join_arity": 0,
+      "logical_components": {
+        "field": "category",
+        "op": "eq",
+        "value": "OEM (Footprint)"
+      },
+      "logical_fingerprint": "lfp2:606e3e52c7195d9768870e13534cc1be",
+      "operation_family": "filter",
+      "question": "How many companies have category equal to OEM (Footprint)?",
+      "required_constructs": [
+        "WHERE"
+      ],
+      "split": "train",
+      "target_columns": [
+        "n"
+      ],
+      "task_id": "D_v3_count_category_00003",
+      "train_dev_kb_gold": {
+        "columns": [
+          "n"
+        ],
+        "rows": [
+          [
+            5
+          ]
+        ]
+      },
+      "train_kb_gold": {
+        "columns": [
+          "n"
+        ],
+        "rows": [
+          [
+            4
+          ]
+        ]
+      },
+      "values_used": [
+        "OEM (Footprint)"
+      ]
+    },
+    {
+      "answer_type": "set",
+      "entity_dependent": true,
+      "fields_used": [
+        "category"
+      ],
+      "full_kb_gold": {
+        "columns": [
+          "company"
+        ],
+        "rows": [
+          [
+            "Trenton Pressing Inc."
+          ],
+          [
+            "Valeo"
+          ],
+          [
+            "Vanguard National Trailer Corp."
+          ],
+          [
+            "Vernay"
+          ],
+          [
+            "Vista Metals Corp."
+          ],
+          [
+            "Voestalpine Automotive Body Parts Inc."
+          ],
+          [
+            "Volvo Cars USA"
+          ],
+          [
+            "Volvo Group North America"
+          ],
+          [
+            "WIKA USA"
+          ],
+          [
+            "Wabash National Corp."
+          ],
+          [
+            "Wheelabrator Group Inc."
+          ],
+          [
+            "Woodbridge Foam Corp."
+          ],
+          [
+            "Woory Industrial Co."
+          ],
+          [
+            "Yachiyo Manufacturing of America LLC"
+          ],
+          [
+            "Yamaha Motor Manufacturing Corp."
+          ],
+          [
+            "ZF Gainesville LLC"
+          ]
+        ]
+      },
+      "gold_sql": "SELECT DISTINCT company FROM companies WHERE category = 'OEM Supply Chain' ORDER BY company",
+      "join_arity": 0,
+      "logical_components": {
+        "field": "category",
+        "op": "eq",
+        "value": "OEM Supply Chain"
+      },
+      "logical_fingerprint": "lfp2:e6e329c710141d9429759ce27e0d5e7b",
+      "operation_family": "filter",
+      "question": "List every company whose category is OEM Supply Chain.",
+      "required_constructs": [
+        "ORDER BY",
+        "WHERE"
+      ],
+      "split": "train",
+      "target_columns": [
+        "company"
+      ],
+      "task_id": "D_v3_filter_category_00004",
+      "train_dev_kb_gold": {
+        "columns": [
+          "company"
+        ],
+        "rows": [
+          [
+            "Trenton Pressing Inc."
+          ],
+          [
+            "Valeo"
+          ],
+          [
+            "Vanguard National Trailer Corp."
+          ],
+          [
+            "Vernay"
+          ],
+          [
+            "Vista Metals Corp."
+          ],
+          [
+            "Voestalpine Automotive Body Parts Inc."
+          ],
+          [
+            "Volvo Group North America"
+          ],
+          [
+            "WIKA USA"
+          ],
+          [
+            "Wabash National Corp."
+          ],
+          [
+            "Wheelabrator Group Inc."
+          ],
+          [
+            "Woory Industrial Co."
+          ],
+          [
+            "Yachiyo Manufacturing of America LLC"
+          ],
+          [
+            "Yamaha Motor Manufacturing Corp."
+          ]
+        ]
+      },
+      "train_kb_gold": {
+        "columns": [
+          "company"
+        ],
+        "rows": [
+          [
+            "Trenton Pressing Inc."
+          ],
+          [
+            "Valeo"
+          ],
+          [
+            "Vanguard National Trailer Corp."
+          ],
+          [
+            "Vernay"
+          ],
+          [
+            "Vista Metals Corp."
+          ],
+          [
+            "Voestalpine Automotive Body Parts Inc."
+          ],
+          [
+            "Volvo Group North America"
+          ],
+          [
+            "WIKA USA"
+          ],
+          [
+            "Wheelabrator Group Inc."
+          ],
+          [
+            "Woory Industrial Co."
+          ],
+          [
+            "Yachiyo Manufacturing of America LLC"
+          ],
+          [
+            "Yamaha Motor Manufacturing Corp."
+          ]
+        ]
+      },
+      "values_used": [
+        "OEM Supply Chain"
+      ]
+    }
+  ],
+  "prompt_sha256": "a806773b08bc91829324ee2fba39edfe24ff2c1d41623fc250eb545914cbe96e",
+  "sanity_limit": "A basic 30-item regression screen, not a broad general-capability benchmark",
+  "sanity_sha256": "83a3e13f484a2bfa8fe22255025d6bf72ca5cf661fd6b26a116959ba88379893",
+  "source": "STRUCTURED_TASK_POOL_v3.jsonl",
+  "source_sha256": "fb158d92eb56060020b2e33fd6ddf9338c94f8c8ea61926ce0dfdc6a7cc988a7",
+  "task_ids": [
+    "D_v3_filter_category_00000",
+    "D_v3_count_category_00001",
+    "D_v3_filter_category_00002",
+    "D_v3_count_category_00003",
+    "D_v3_filter_category_00004"
+  ]
+}

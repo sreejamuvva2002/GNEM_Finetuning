@@ -1,0 +1,94 @@
+  [PASS] phase7_frozen_hashes_unchanged: DB, executor, grader and Phase 7 tests all match
+  [PASS] record_schema_carries_retention_fields: 21 fields incl. every README Phase 40 retention field; never scores alone
+  [PASS] status_vocabulary_sourced_from_phase7: 8 statuses imported from the frozen grader, not redeclared
+  [PASS] verify_accepts_good_fixture: 18 records, 18 unique ids, exactly-one-status holds
+  [PASS] denominator_invariant_scored_plus_failed: scored 12 + failed 6 == expected 18
+  [PASS] all_eight_statuses_represented: ['SQL_error', 'correct', 'generation_failure', 'incorrect', 'invalid_output', 'parse_failure', 'timeout', 'truncated_output']
+  [PASS] failures_counted_in_denominator: denominator 18 includes all 6 failures
+  [PASS] metrics_distinct_task_ok_schema_wrong: task=1.0 schema=0.0
+  [PASS] metrics_distinct_task_wrong_schema_ok: task=0.0 schema=1.0
+  [PASS] metrics_not_merged: primary 0.444 != secondary 0.611
+  [PASS] per_family_metrics_data_driven: 4 families discovered from records: ['factual_recall', 'no_match', 'structured_heldin', 'structured_paraphrase']
+  [PASS] new_family_needs_no_code_edit: a previously unseen family appears with no REPORT_ORDER edit
+  [PASS] error_analysis_distinguishes_classes: 10 failures grouped by status, family and answer_type
+  [PASS] stats_per_seed_and_mean_sd: per-seed {11: 0.8, 22: 0.84, 33: 0.82}, mean±SD n=3
+  [PASS] stats_refuses_baseline_sd: a deterministic baseline is refused an SD (README:976-979)
+  [PASS] stats_paired_bootstrap_deterministic: identical CI across runs at seed 20260824
+  [PASS] stats_effect_size_and_holm: effect size computed; Holm adjustment monotonic
+  [PASS] stats_mcnemar_present_cited: McNemar implemented as secondary evidence (README:973)
+  [PASS] stats_split_group_weighting_cited: average within split_group then across groups; aggregate item excluded as undefined (CLAUDE.md:847-854)
+  [PASS] stats_hierarchical_bootstrap_deferred: not implemented: absent from the live protocol, so deferred not invented
+  [PASS] regrade_preserves_raw_and_gold: raw prediction, gold and question carried through untouched
+  [PASS] regrade_records_grader_provenance: every regraded record stamped grade_v3.1
+  [PASS] regrade_reproduces_metrics: status distribution identical after regrade
+  [PASS] sql_fixtures_use_phase7_executor: SQL fixture path calls the approved Phase 7 executor (train_kb=148); no second execution implementation exists
+  [PASS] no_duplicate_sql_execution_in_stack: no module in the reporting stack opens its own database connection
+  [PASS] seal01_sealed_artifact_with_dev_family_denied: SealError: artifact 'fx_sealed_devlook' is classified SEALED by (records claim family=factual_recall)
+  [PASS] seal02_sealed_artifact_with_future_family_denied: SealError: artifact 'fx_sealed_future' is classified SEALED by 
+  [PASS] seal03_unregistered_artifact_fails_closed: SealError: artifact is not a registered dev artifact (unregiste -- unknown never becomes dev
+  [PASS] seal04_classification_before_parsing: SealError: artifact 'fx_sealed_unparseable' is classified SEALE -- unparseable bytes never reached a JSON parser
+  [PASS] seal05_sealed_metadata_does_not_parse_records: metadata returned for an UNPARSEABLE sealed artifact; item_count came from the trusted manifest. Raw bytes are read for hash verification; records are never parsed
+  [PASS] seal06_metadata_exposes_no_family: keys: ['artifact_id', 'artifact_kind', 'artifact_path', 'item_count', 'provenance', 'records_parsed', 'schema_version', 'sha256']
+  [PASS] seal07_metadata_exposes_no_condition: no condition field
+  [PASS] seal08_metadata_exposes_no_score_status_error: no status, score, error or answer-type distribution
+  [PASS] seal09_relative_and_absolute_paths_same_identity: absolute, relative and dotted spellings all classify sealed
+  [PASS] seal10_symlink_to_sealed_remains_sealed: SealError: artifact 'fx_sealed_devlook' is classified SEALED by -- symlink resolves to the sealed artifact
+  [PASS] seal11_copied_artifact_fails_closed: SealError: artifact is not a registered dev artifact (unregiste -- identical bytes at an unregistered path stay unknown
+  [PASS] seal11b_hash_mismatch_fails_closed: SealError: artifact is not a registered dev artifact (unregiste -- registered path, unregistered bytes
+  [PASS] seal12_registered_dev_artifact_loads: 18 dev records loaded via the trusted authority
+  [PASS] trust01_caller_cannot_supply_authority: load_dev_results(path) -> 'list[EvalRecord]' and sealed_metadata(path) -> 'dict' accept no registry/authority/unseal argument
+  [PASS] trust02_authority_is_immutable: no register(); mapping is read-only; attribute assignment raises ManifestError
+  [PASS] trust03_rogue_manifest_not_consulted_by_dev_api: SealError: artifact 'fx_sealed_devlook' is classified SEALED by -- a caller-authored manifest has no supported route into the dev loader
+  [PASS] trust04_conflicting_manifest_rejected: same-path and same-artifact_id conflicts both raise ManifestError; no last-write-wins
+  [PASS] trust05_malformed_manifest_rejected: unknown schema, missing field, extra field and invalid artifact_kind all raise ManifestError
+  [PASS] trust06_manifest_provenance_deterministic: two builds of the same manifest agree on a 64-hex sha256 and on 4 artifacts in deterministic order (value omitted: the synthetic manifest embeds temporary paths)
+  [PASS] trust07_no_authority_fails_closed: an uninitialized authority refuses dev loading rather than defaulting open
+  [PASS] seal14_family_not_used_for_classification: no record field participates in classification; identity is canonical path + registered hash
+  [PASS] no_retired_component_dependency: none of 15 retired concepts appear in executable code; mentioned only in prose explaining their avoidance: ['REPORT_ORDER']
+  [PASS] no_v2_runtime_path: no v2 repository path and no v2 database fallback
+  [PASS] fault_duplicate_example_id: VerificationError: duplicate example_id(s): ['fx01_set_correct']
+  [PASS] fault_expected_count_mismatch: VerificationError: expected 19 records, found 18
+  [PASS] fault_denominator_mismatch: DenominatorError: scored (12) + failed (6) = 18 != expected probe size (23
+  [PASS] fault_unsupported_family_dropped: VerificationError: family/families ['no_match', 'structured_heldin', 'struc
+  [PASS] fault_invalid_status: RecordSchemaError: status 'totally_made_up' is not in the frozen vocabulary
+  [PASS] fault_status_score_contradiction: RecordSchemaError: status 'incorrect' must not carry a perfect task score
+  [PASS] fault_missing_required_field: RecordSchemaError: record missing required field(s): ['family', 'condition'
+  [PASS] fault_stale_result_schema: RecordSchemaError: record carries unsupported field(s) ['legacy_v2_field'];
+  [PASS] fault_mismatched_grader_provenance: VerificationError: records graded by a different grader build: ['1051a161ac
+  [PASS] fault_corrupted_record_missing_provenance: VerificationError: fx01_set_correct: missing required field 'prompt_hash'
+  [PASS] pre_regrade_all_start_unregraded: no record carries a regrade_outcome before regrade() runs
+  [PASS] regrade_recomputes_and_disagrees_with_stale_score: stale score was 'correct'; genuine recomputation from retained evidence (WRONG_COMPANY vs RIGHT_COMPANY) now correctly says 'incorrect' -- proves regrade recomputes rather than re-stamping
+  [PASS] insufficient_evidence_preserves_status_and_scores: status/scores byte-identical to pre-regrade despite no retained execution_result/gold
+  [PASS] insufficient_evidence_preserves_grader_provenance: grader_version/grader_sha256 NOT re-stamped to the current build -- a record must never claim to originate from a grader that never actually evaluated it
+  [PASS] insufficient_evidence_outcome_flagged: regrade_outcome correctly distinguishes this from a real recompute
+  [PASS] multipart_regrade_recomputes_and_disagrees: one part's retained evidence disagrees (WRONG vs B); multi-part regrade correctly recomputes to 'incorrect'
+  [PASS] multipart_missing_one_part_is_insufficient_not_partial: a single part lacking retained evidence makes the WHOLE item insufficient_evidence, never a partial recompute; original score preserved untouched
+  [PASS] assert_fully_regraded_rejects_mixed_batch: VerificationError: 2 record(s) are not fully regraded under the current grader (1051a161a
+  [PASS] assert_fully_regraded_accepts_genuine_full_coverage: a batch where every record is genuinely recomputed under the current grader passes
+  [PASS] assert_fully_regraded_rejects_never_regraded: VerificationError: 1 record(s) are not fully regraded under the current grader (1051a161a
+  [PASS] assert_fully_regraded_rejects_stale_grader_build: VerificationError: 1 record(s) are not fully regraded under the current grader (1051a161a
+  [PASS] regrade_coverage_accounts_for_every_record: {'recomputed': 2, 'insufficient_evidence': 2, 'not_yet_regraded': 0, 'total': 4}
+  [PASS] full_path_reload_preserves_records: serialized/reloaded records are unregraded, matching what was written
+  [PASS] full_path_verify_passes_structurally: structural verification passes on the regraded mixed batch (verify does not itself judge regrade completeness)
+  [PASS] full_path_report_shows_mixed_coverage: {'recomputed': 2, 'insufficient_evidence': 2, 'not_yet_regraded': 0, 'total': 4}
+  [PASS] full_path_cannot_certify_fully_regraded: VerificationError: 2 record(s) are not fully regraded under the current grader (1051a161a
+  [PASS] stale_grader_fixture_actually_recomputed: the fixture must reach regrade_outcome='recomputed' (real evidence present) so the certification check below isolates grader-IDENTITY rejection specifically, not merely insufficient-evidence rejection: got 'recomputed'
+  [PASS] report_certification_checks_grader_identity_not_just_counts: a record 'recomputed' under a stale grader build must NOT certify as fully regraded under the current one: fully_regraded_certified=False
+  [PASS] report_renders_not_fully_regraded_for_stale_grader: the rendered report text must say NOT fully regraded, not falsely claim certification
+  [PASS] report_certifies_when_genuinely_fully_regraded: a record recomputed under the actual current grader build correctly certifies as fully regraded
+  [PASS] report_omits_certification_when_not_requested: omitting expected_grader_sha256 makes no fully-regraded claim either way (safer default than assuming completeness)
+  [PASS] fresh_grading_penalizes_extra_statement: task=1.0 schema=0.0
+  [PASS] regrade_preserves_extra_statement_penalty: regrading from retained evidence (with extra_present retained alongside per-part evidence) reproduces the SAME strict-schema penalty fresh grading applied: task=1.0 schema=0.0
+  [PASS] missing_extra_present_flag_absent_is_insufficient_not_a_pass: an absent extra_present flag proves nothing about whether an extra statement was present at original grading time -- it must never default to 'confirmed no extra statement': got regrade_outcome='insufficient_evidence'
+  [PASS] missing_extra_present_flag_null_is_insufficient_not_a_pass: an null extra_present flag proves nothing about whether an extra statement was present at original grading time -- it must never default to 'confirmed no extra statement': got regrade_outcome='insufficient_evidence'
+  [PASS] regrade_validates_per_part_metadata_before_comparing: a declared part with empty target_columns must fail closed on regrade exactly as it does on fresh grading, not silently project zero columns and certify 999=='correct' against gold 1: status=invalid_output task=0.0
+  [PASS] regrade_validated_failure_still_passes_structural_verify: an invalid_output outcome is still a structurally valid record (exactly one frozen status, required fields present)
+  [PASS] report_does_not_falsely_certify_invalid_multipart_regrade: the record IS genuinely recomputed (recomputed correctly to an explicit invalid_output failure, not silently passed as correct) -- certification here correctly reflects a real, honest recomputation outcome, not a false 'correct': {'correct': 0, 'incorrect': 0, 'generation_failure': 0, 'parse_failure': 0, 'SQL_error': 0, 'timeout': 0, 'truncated_output': 0, 'invalid_output': 1}
+  [PASS] assert_fully_regraded_rejects_stale_regrader_build: VerificationError: 1 record(s) are not fully regraded under the current grader (1051a161a
+  [PASS] assert_fully_regraded_accepts_current_regrader: a record genuinely produced by the current regrade() build passes (assert_fully_regraded returns None / does not raise)
+  [PASS] fresh_grading_rejects_duplicate_part_id: fresh grading correctly refuses a duplicate declared part_id
+  [PASS] regrade_rejects_duplicate_part_id_same_as_fresh_grading: a duplicate declared part_id must fail closed on regrade exactly as it does on fresh grading, not silently compare the same retained evidence twice and certify it correct: status=invalid_output task=0.0
+  [PASS] evalrecord_rejects_recomputed_without_regrader_sha256: RecordSchemaError: regrade_outcome is 'recomputed' but regrader_sha256 is None -- a record cannot c
+All Phase 8 gates passed (91 checks).
+  fixtures 18 · families 4 · statuses 8/8
+  skeleton validation_v3/fixtures_v3/REPORT_v3.md  (synthetic)

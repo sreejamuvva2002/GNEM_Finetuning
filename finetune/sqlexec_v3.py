@@ -70,11 +70,14 @@ Not ported from v2 `finetune/sqlexec.py`: the unconditional
 from __future__ import annotations
 
 import re
+import math
+import time
 import sqlite3
 from dataclasses import dataclass
 from pathlib import Path
 
-EXECUTOR_VERSION = "sqlexec_v3.0"
+EXECUTOR_VERSION = "sqlexec_v3.1_A002"
+DEFAULT_TIMEOUT_SECONDS = 5.0
 
 KB_SCOPES = ("train_kb", "train_dev_kb", "full_kb")
 LOGICAL_TABLES = ("companies", "certifications", "processes", "services")
@@ -120,8 +123,10 @@ def _strip_sql_noise(sql: str) -> str:
     """Remove comments and collapse whitespace so trivial obfuscation of the
     lexical layer does not change what it sees. The authorizer does not depend
     on this."""
-    s = re.sub(r"--[^\n]*", " ", sql)
-    s = re.sub(r"/\*.*?\*/", " ", s, flags=re.S)
+    # Lex literal spans before comments: semicolons and SQL-looking words
+    # inside recorded text are data, not additional statements or commands.
+    pattern = r"'(?:(?:'')|[^'])*'|\"(?:(?:\"\")|[^\"])*\"|`[^`]*`|\[[^\]]*\]|--[^\n]*|/\*.*?\*/"
+    s = re.sub(pattern, " ", sql, flags=re.S)
     return re.sub(r"\s+", " ", s).strip()
 
 
@@ -288,7 +293,7 @@ def open_scoped_connection(scope, db_path) -> sqlite3.Connection:
     return con
 
 
-def run_sql(sql, scope, *, db_path=None) -> SQLResult:
+def run_sql(sql, scope, *, db_path=None, timeout_seconds=DEFAULT_TIMEOUT_SECONDS) -> SQLResult:
     """Execute read-only SQL against an EXPLICIT scope.
 
         run_sql(sql)                  -> TypeError (scope is required)
@@ -300,15 +305,37 @@ def run_sql(sql, scope, *, db_path=None) -> SQLResult:
     Returns the COMPLETE result set. No row cap, no truncation.
     """
     scope = _validate_scope(scope)
+    if (isinstance(timeout_seconds, bool) or not isinstance(timeout_seconds, (int, float))
+            or not math.isfinite(timeout_seconds) or timeout_seconds <= 0):
+        raise ConfigError("timeout_seconds must be a finite positive number")
     validate_sql_lexically(sql)          # defence in depth
     con = open_scoped_connection(scope, db_path)
+    # Cooperative SQLite VM deadline covers preparation, execution and fetching.
+    # It does not impose a result cap or silently return partial rows.
+    deadline = time.monotonic() + timeout_seconds
+    expired = False
+
+    def interrupt_if_expired():
+        nonlocal expired
+        expired = time.monotonic() >= deadline
+        return int(expired)
+
+    con.set_progress_handler(interrupt_if_expired, 1000)
     try:
         structural_precheck(con, sql, scope)   # statement-level, primary
         cur = con.execute(sql)                 # per-object authorizer still armed
         cols = tuple(d[0] for d in (cur.description or ()))
         rows = tuple(cur.fetchall())     # fetchall: never fetchmany(200)
+        if interrupt_if_expired():
+            raise TimeoutError("SQL execution exceeded its configured deadline")
         return SQLResult(columns=cols, rows=rows, scope=scope, row_count=len(rows))
+    except SQLPolicyError as e:
+        if expired:
+            raise TimeoutError("SQL preparation exceeded its configured deadline") from e
+        raise
     except sqlite3.DatabaseError as e:
+        if expired:
+            raise TimeoutError("SQL execution exceeded its configured deadline") from e
         if "not authorized" in str(e).lower():
             raise SQLPolicyError(
                 f"query is not an authorized read of scope {scope!r}: {e}") from e

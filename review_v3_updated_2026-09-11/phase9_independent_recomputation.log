@@ -1,0 +1,34 @@
+Phase 9 independent recomputation -- no import of holdout_v3.py
+
+processes
+  row-band pool             26
+  eligible pool             13
+  feasible k-combinations   394
+  independent recompute  -> ('Battery Module Assembly', 'Battery Pack Assembly', 'Battery Recycling Logistics', 'Refining')
+  frozen registry value  -> ('Battery Module Assembly', 'Battery Pack Assembly', 'Battery Recycling Logistics', 'Refining')
+  MATCH                     True
+  union train-row loss      6
+  no eligible candidate beats this selection: True
+
+services
+  row-band pool             13
+  eligible pool             7
+  feasible k-combinations   34
+  independent recompute  -> ('Battery Collection', 'Battery Repurposing', 'Circular Economy Consulting')
+  frozen registry value  -> ('Battery Collection', 'Battery Repurposing', 'Circular Economy Consulting')
+  MATCH                     True
+  union train-row loss      2
+  no eligible candidate beats this selection: True
+
+certifications
+  row-band pool             8
+  eligible pool             2
+  feasible k-combinations   1
+  independent recompute  -> ('AS9100', 'ISO/IEC 17025')
+  frozen registry value  -> ('AS9100', 'ISO/IEC 17025')
+  MATCH                     True
+  union train-row loss      13
+  no eligible candidate beats this selection: True
+
+======================================================================
+ALL THREE ATTRIBUTES MATCH THE FROZEN REGISTRY AND ARE PROVEN OPTIMAL

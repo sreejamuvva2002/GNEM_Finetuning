@@ -1,28 +1,9 @@
-"""Phase 11 -- build `train_B_facts_v3.jsonl`.
+"""Phase 11: full-field factual QA under A-002.
 
-README Phase 11: cell-level factual QA over `train_kb`; processes, services and
-certifications rendered as SET answers. No `Certification Count` target. No QA
-whose answer is a sentinel.
-
-MULTI-ROW CONFLICTS: SKIP, NEVER MERGE (README:456-459, CLAUDE.md #11). Nine
-companies in the frozen KB carry more than one canonical row (different
-facilities under one company name). Location never disambiguates them --
-every multi-row company shares one location across its rows -- but other
-attributes (employment, product/service, processes, ...) often genuinely
-differ per facility. v2 solved this by concatenating the distinct values
-(`"; ".join(uniq)`), which can silently produce incoherent gold like
-`Indirect; No` for `ev_battery_relevant`. v3 does the opposite: a
-(company, attribute) pair with disagreeing values across that company's rows
-is DROPPED entirely, never artificially disambiguated or merged, and recorded
-in `MULTIROW_CONFLICTS_v3.csv`.
-
-SENTINELS ARE NOT FACTS. A candidate value equal to a frozen sentinel (scalar:
-"Not specified" / "Not applicable"; certifications: "None identified after
-search") never becomes a QA target -- the pair is skipped, not asked about.
-
-HELD-OUT VALUES: omit the item, never truncate the truth (same policy as
-Phase 10). A multi-valued field whose value contains a held-out term produces
-no QA for that (company, attribute) pair at all.
+Complete process/service/certification lists are retained. Missing evidence receives
+qualified answers. Conflicting observations receive record-scoped questions and an
+explicit disagreement note, without inventing distinct facilities or merging values.
+Certification Count remains internal. Company holdouts remain excluded from training.
 """
 
 from __future__ import annotations
@@ -43,7 +24,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "datasets_v3" / "train_B_facts_v3.jsonl"
 OUT_CONFLICTS = ROOT / "validation_v3" / "MULTIROW_CONFLICTS_v3.csv"
 OUT_AUDIT = ROOT / "validation_v3" / "DATASET_B_FACTS_v3.md"
-GENERATOR_VERSION = "b_facts_v3.0"
+GENERATOR_VERSION = "b_facts_v3.1_A002"
 
 SCALAR_SENTINELS = {"Not specified", "Not applicable"}
 
@@ -64,7 +45,7 @@ ALL_FIELDS = SCALAR_FIELDS + SET_FIELDS
 QUESTION = {
     "category": "What supply chain category is {c} classified under?",
     "industry_group": "What industry group does {c} belong to?",
-    "location": "Where in Georgia is {c} located?",
+    "location": "What location is recorded for {c}?",
     "address": "What is the street address of {c}?",
     "primary_facility_type": "What is the primary facility type of {c}?",
     "ev_supply_chain_role": "What is {c}'s EV supply chain role?",
@@ -76,7 +57,7 @@ QUESTION = {
     "classification_method": "How was {c} classified?",
     "processes": "What processes does {c} perform?",
     "services": "What services does {c} provide?",
-    "certifications": "Which certification standards does {c} hold?",
+    "certifications": "Which certification standards are recorded for {c}?",
 }
 SCALAR_ANSWER = {
     "category": "{c} is classified in the {v} category.",
@@ -87,7 +68,7 @@ SCALAR_ANSWER = {
     "ev_supply_chain_role": "{c}'s EV supply chain role is {v}.",
     "primary_oems": "{c}'s primary OEMs are recorded as {v}.",
     "supplier_or_affiliation_type": "{c}'s supplier or affiliation type is {v}.",
-    "employment": "{c} employs {v} people.",
+    "employment": "The dataset records employment of {v} for {c}; its scope and date are not established here.",
     "product_or_service": "{c}'s product or service is {v}.",
     "ev_battery_relevant": "EV or battery relevance for {c} is recorded as {v}.",
     "classification_method": "{c} was classified by {v}.",
@@ -95,7 +76,7 @@ SCALAR_ANSWER = {
 SET_ANSWER = {
     "processes": "{c}'s recorded processes are: {v}.",
     "services": "{c}'s recorded services are: {v}.",
-    "certifications": "{c} holds the following certifications: {v}.",
+    "certifications": "The dataset records these certifications for {c}: {v}. This does not independently establish current validity or customer qualification.",
 }
 
 
@@ -117,7 +98,7 @@ def resolve_company_values(rows_for_co: list[dict]) -> tuple[dict, list[str]]:
     that agreed across every row (scalar: exact string equality; set fields:
     identical term-set, order-insensitive). A disagreeing field is entirely
     absent from `values` and listed in `conflicting_fields` instead --
-    skipped, never merged.
+    handled separately with record-scoped supervision, never merged.
     """
     values, conflicts = {}, []
     for f in ALL_FIELDS:
@@ -134,24 +115,14 @@ def resolve_company_values(rows_for_co: list[dict]) -> tuple[dict, list[str]]:
     return values, conflicts
 
 
-def eligible_value(field: str, value, held: dict) -> tuple[bool, str | None]:
-    """Whether this resolved value is a legitimate QA target. Returns
-    (ok, skip_reason). A sentinel or a held-out-tainted set is never a QA
-    target -- README:454, README:404 (omit the item, never truncate)."""
-    if field in SET_FIELDS:
-        terms = H.terms(value, field)
-        if not terms:
-            return False, "sentinel_or_empty"
-        if set(terms) & set(held[field]):
-            return False, "holdout_value_present"
-        return True, None
-    if value is None or (isinstance(value, str) and value.strip() in SCALAR_SENTINELS):
-        return False, "sentinel_or_empty"
-    return True, None
-
-
 def render_item(company: str, field: str, value) -> dict:
-    if field in SET_FIELDS:
+    missing = value is None or str(value).strip() in SCALAR_SENTINELS | {H.CERT_SENTINEL}
+    if missing:
+        answer = (f"For {company}, the dataset records {field.replace('_', ' ')} as {value}. "
+                  "This is missing or inapplicable source evidence, not proof of real-world absence.")
+        gold = str(value)
+        answer_type = "scalar"
+    elif field in SET_FIELDS:
         terms = sorted(set(H.terms(value, field)))
         v_text = "; ".join(terms)
         answer = SET_ANSWER[field].format(c=company, v=v_text)
@@ -209,17 +180,26 @@ def build():
 
     items, skips = [], defaultdict(int)
     for co in sorted(train_by_co):
-        values, conflicts = resolve_company_values(train_by_co[co])
-        for f in conflicts:
-            skips["multirow_conflict"] += 1
+        source_rows = train_by_co[co]
+        values, conflicts = resolve_company_values(source_rows)
         for f in ALL_FIELDS:
-            if f not in values:
-                continue  # conflict, already counted above
-            ok, reason = eligible_value(f, values[f], held)
-            if not ok:
-                skips[reason] += 1
-                continue
-            items.append(render_item(co, f, values[f]))
+            if f in conflicts:
+                for row in source_rows:
+                    item = render_item(co, f, row[f])
+                    item["example_id"] += f"_record_{row['row_id']}"
+                    item["question"] = f"According to source record {row['row_id']}, " + item["question"][0].lower() + item["question"][1:]
+                    item["messages"][1]["content"] = item["question"]
+                    item["messages"][2]["content"] += " Other records for this company disagree; a single company-wide value cannot be established."
+                    item["source_row_ids"] = [row["row_id"]]
+                    item["conflicting_observations"] = True
+                    items.append(item)
+            else:
+                item = render_item(co, f, values[f])
+                item["source_row_ids"] = sorted(r["row_id"] for r in source_rows)
+                item["conflicting_observations"] = False
+                items.append(item)
+    for row in conflict_rows:
+        row["action"] = "record_scoped_training_or_explicit_company_holdout"
     return reg, held, train_recs, items, skips, conflict_rows
 
 
@@ -274,7 +254,7 @@ def main() -> int:
     sentinel_hits = [i["example_id"] for i in items
                     if H.CERT_SENTINEL in i["messages"][2]["content"]
                     or any(s in str(i["gold_value"]) for s in SCALAR_SENTINELS)]
-    check("no_sentinel_answers", not sentinel_hits,
+    check("sentinel_answers_qualified", all("not proof of real-world absence" in i["messages"][2]["content"] for i in items if i["example_id"] in sentinel_hits),
           "no item's gold contains a frozen sentinel"
           if not sentinel_hits else f"{sentinel_hits[:5]}")
 
@@ -298,14 +278,14 @@ def main() -> int:
 
     # exposure ledger satisfied, on the FINAL rendered strings (system prompt
     # included, per README:404).
-    all_strings = [CLOSED_BOOK_SYSTEM] + render_texts
+    all_strings = [m["content"] for item in items for m in item["messages"]]
     rep = H.scan_strings(all_strings, reg)
     H.assert_value_scan_verified(rep)
     check("exposure_count_zero", rep["total_exposures"] == 0,
           f"0 held-out literals across {rep['strings_scanned']} rendered strings")
 
     check("multirow_conflicts_recorded",
-          all(r["action"] == "skipped_company_level_fact" for r in conflict_rows)
+          all(r["action"] == "record_scoped_training_or_explicit_company_holdout" for r in conflict_rows)
           and len(conflict_rows) > 0,
           f"{len(conflict_rows)} conflicting (company, attribute) pairs across "
           f"{len({r['company'] for r in conflict_rows})} multi-row companies")
@@ -338,7 +318,7 @@ def main() -> int:
     OUT_CONFLICTS.parent.mkdir(parents=True, exist_ok=True)
     with OUT_CONFLICTS.open("w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=["company", "attribute", "n_rows",
-                                          "row_ids", "split", "action"])
+                                          "row_ids", "split", "action"], lineterminator="\n")
         w.writeheader()
         for r in conflict_rows:
             w.writerow(r)
@@ -381,12 +361,9 @@ def _audit(reg, items, skips, conflict_rows, per_attr, checks, sha, rep, static_
     for reason, n in sorted(skips.items()):
         L.append(f"| `{reason}` | {n} |")
     L += ["",
-          "`multirow_conflict`: the (company, attribute) pair disagreed across that "
-          "company's rows and was dropped, never merged (README:456-459). "
-          "`sentinel_or_empty`: the resolved value is a frozen sentinel or an empty "
-          "set (no QA is ever asked about a sentinel). `holdout_value_present`: a "
-          "set field's value contains a held-out term, so the WHOLE field is "
-          "omitted for that company (omit the item, never truncate the truth).\n",
+          "A-002 retains missing evidence as qualified answers and conflicting training "
+          "observations as record-scoped QA. No value-based exclusions remain. "
+          "Company holdouts still apply.\n",
           "## Multi-row conflicts (all 9 multi-row companies, all splits)\n",
           f"`validation_v3/MULTIROW_CONFLICTS_v3.csv` — {len(conflict_rows)} "
           f"conflicting (company, attribute) pairs across "
@@ -397,7 +374,7 @@ def _audit(reg, items, skips, conflict_rows, per_attr, checks, sha, rep, static_
           f"belonging to the 5 TRAIN-split multi-row companies — Haering "
           f"Precision USA LP, Lyle Industries Inc., Novelis Inc., Panasonic "
           f"Automotive Systems Co., Sewon America Inc. — are the ones that "
-          f"actually suppress a B item; the other 4 companies are dev/test-"
+          f"receive record-scoped B items; the other 4 companies are dev/test-"
           f"side and produce no B items regardless). This is a real, "
           f"measured deviation from the README estimate, reported here "
           f"rather than silently reconciled — see the commit message for "

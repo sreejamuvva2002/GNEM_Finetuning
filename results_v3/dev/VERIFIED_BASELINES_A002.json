@@ -1,0 +1,415 @@
+{
+  "base": {
+    "verification": {
+      "verify_version": "eval_verify_v3.1",
+      "n_records": 306,
+      "expected_count": 306,
+      "unique_example_ids": 306,
+      "exactly_one_status": true,
+      "scored": 306,
+      "failed": 0,
+      "families": [
+        "dev_structured",
+        "factual_recall"
+      ],
+      "grader_sha256": null,
+      "passed": true
+    },
+    "overall": {
+      "n": 306,
+      "correct": 13,
+      "statuses": {
+        "incorrect": 293,
+        "correct": 13
+      },
+      "exact_score": 0.042483660130718956
+    },
+    "by_family": {
+      "factual_recall": {
+        "n": 255,
+        "correct": 0,
+        "statuses": {
+          "incorrect": 255
+        },
+        "exact_score": 0.0
+      },
+      "dev_structured": {
+        "n": 51,
+        "correct": 13,
+        "statuses": {
+          "incorrect": 38,
+          "correct": 13
+        },
+        "exact_score": 0.2549019607843137
+      }
+    },
+    "by_attribute": {
+      "category": {
+        "n": 17,
+        "correct": 0,
+        "statuses": {
+          "incorrect": 17
+        },
+        "exact_score": 0.0
+      },
+      "industry_group": {
+        "n": 17,
+        "correct": 0,
+        "statuses": {
+          "incorrect": 17
+        },
+        "exact_score": 0.0
+      },
+      "location": {
+        "n": 17,
+        "correct": 0,
+        "statuses": {
+          "incorrect": 17
+        },
+        "exact_score": 0.0
+      },
+      "address": {
+        "n": 17,
+        "correct": 0,
+        "statuses": {
+          "incorrect": 17
+        },
+        "exact_score": 0.0
+      },
+      "primary_facility_type": {
+        "n": 17,
+        "correct": 0,
+        "statuses": {
+          "incorrect": 17
+        },
+        "exact_score": 0.0
+      },
+      "ev_supply_chain_role": {
+        "n": 17,
+        "correct": 0,
+        "statuses": {
+          "incorrect": 17
+        },
+        "exact_score": 0.0
+      },
+      "primary_oems": {
+        "n": 17,
+        "correct": 0,
+        "statuses": {
+          "incorrect": 17
+        },
+        "exact_score": 0.0
+      },
+      "supplier_or_affiliation_type": {
+        "n": 17,
+        "correct": 0,
+        "statuses": {
+          "incorrect": 17
+        },
+        "exact_score": 0.0
+      },
+      "employment": {
+        "n": 17,
+        "correct": 0,
+        "statuses": {
+          "incorrect": 17
+        },
+        "exact_score": 0.0
+      },
+      "product_or_service": {
+        "n": 17,
+        "correct": 0,
+        "statuses": {
+          "incorrect": 17
+        },
+        "exact_score": 0.0
+      },
+      "ev_battery_relevant": {
+        "n": 17,
+        "correct": 0,
+        "statuses": {
+          "incorrect": 17
+        },
+        "exact_score": 0.0
+      },
+      "classification_method": {
+        "n": 17,
+        "correct": 0,
+        "statuses": {
+          "incorrect": 17
+        },
+        "exact_score": 0.0
+      },
+      "processes": {
+        "n": 17,
+        "correct": 0,
+        "statuses": {
+          "incorrect": 17
+        },
+        "exact_score": 0.0
+      },
+      "services": {
+        "n": 17,
+        "correct": 0,
+        "statuses": {
+          "incorrect": 17
+        },
+        "exact_score": 0.0
+      },
+      "certifications": {
+        "n": 17,
+        "correct": 0,
+        "statuses": {
+          "incorrect": 17
+        },
+        "exact_score": 0.0
+      }
+    },
+    "predictions_sha256": "7b995c725733cf2c9b76d4eb8bcf868b3f109284ecbe59f4062d61101eb6def1",
+    "canonical_sha256": "adbcab3735781345848b0a2533469061a6020984c106767c6442d91b621d061a",
+    "telemetry_sha256": "346aea7d87faf8ce8401b30862180691538451c6fe3ef10364733179dc91d0f6"
+  },
+  "base_ctx_oracle": {
+    "verification": {
+      "verify_version": "eval_verify_v3.1",
+      "n_records": 255,
+      "expected_count": 255,
+      "unique_example_ids": 255,
+      "exactly_one_status": true,
+      "scored": 255,
+      "failed": 0,
+      "families": [
+        "factual_recall"
+      ],
+      "grader_sha256": null,
+      "passed": true
+    },
+    "overall": {
+      "n": 255,
+      "correct": 214,
+      "statuses": {
+        "correct": 214,
+        "incorrect": 41
+      },
+      "exact_score": 0.8392156862745098
+    },
+    "by_family": {
+      "factual_recall": {
+        "n": 255,
+        "correct": 214,
+        "statuses": {
+          "correct": 214,
+          "incorrect": 41
+        },
+        "exact_score": 0.8392156862745098
+      }
+    },
+    "by_attribute": {
+      "category": {
+        "n": 17,
+        "correct": 17,
+        "statuses": {
+          "correct": 17
+        },
+        "exact_score": 1.0
+      },
+      "industry_group": {
+        "n": 17,
+        "correct": 17,
+        "statuses": {
+          "correct": 17
+        },
+        "exact_score": 1.0
+      },
+      "location": {
+        "n": 17,
+        "correct": 16,
+        "statuses": {
+          "correct": 16,
+          "incorrect": 1
+        },
+        "exact_score": 0.9411764705882353
+      },
+      "address": {
+        "n": 17,
+        "correct": 17,
+        "statuses": {
+          "correct": 17
+        },
+        "exact_score": 1.0
+      },
+      "primary_facility_type": {
+        "n": 17,
+        "correct": 17,
+        "statuses": {
+          "correct": 17
+        },
+        "exact_score": 1.0
+      },
+      "ev_supply_chain_role": {
+        "n": 17,
+        "correct": 15,
+        "statuses": {
+          "correct": 15,
+          "incorrect": 2
+        },
+        "exact_score": 0.8823529411764706
+      },
+      "primary_oems": {
+        "n": 17,
+        "correct": 15,
+        "statuses": {
+          "correct": 15,
+          "incorrect": 2
+        },
+        "exact_score": 0.8823529411764706
+      },
+      "supplier_or_affiliation_type": {
+        "n": 17,
+        "correct": 4,
+        "statuses": {
+          "incorrect": 13,
+          "correct": 4
+        },
+        "exact_score": 0.23529411764705882
+      },
+      "employment": {
+        "n": 17,
+        "correct": 17,
+        "statuses": {
+          "correct": 17
+        },
+        "exact_score": 1.0
+      },
+      "product_or_service": {
+        "n": 17,
+        "correct": 5,
+        "statuses": {
+          "incorrect": 12,
+          "correct": 5
+        },
+        "exact_score": 0.29411764705882354
+      },
+      "ev_battery_relevant": {
+        "n": 17,
+        "correct": 6,
+        "statuses": {
+          "incorrect": 11,
+          "correct": 6
+        },
+        "exact_score": 0.35294117647058826
+      },
+      "classification_method": {
+        "n": 17,
+        "correct": 17,
+        "statuses": {
+          "correct": 17
+        },
+        "exact_score": 1.0
+      },
+      "processes": {
+        "n": 17,
+        "correct": 17,
+        "statuses": {
+          "correct": 17
+        },
+        "exact_score": 1.0
+      },
+      "services": {
+        "n": 17,
+        "correct": 17,
+        "statuses": {
+          "correct": 17
+        },
+        "exact_score": 1.0
+      },
+      "certifications": {
+        "n": 17,
+        "correct": 17,
+        "statuses": {
+          "correct": 17
+        },
+        "exact_score": 1.0
+      }
+    },
+    "predictions_sha256": "d9ca763127f1a18c5097fbbf498704a12e6b40c30e2fa5b96f8208d4f23548eb",
+    "canonical_sha256": "47d1b1350e2823502d076c5e43782e488b87f9102f4b69fce043cb482bdae6da",
+    "telemetry_sha256": "89170e8e62524fa0df22938cb35f856b70fa70dc6deda385d3de25a52f9af6b3"
+  },
+  "base_sql": {
+    "verification": {
+      "verify_version": "eval_verify_v3.1",
+      "n_records": 51,
+      "expected_count": 51,
+      "unique_example_ids": 51,
+      "exactly_one_status": true,
+      "scored": 51,
+      "failed": 0,
+      "families": [
+        "dev_structured"
+      ],
+      "grader_sha256": null,
+      "passed": true
+    },
+    "overall": {
+      "n": 51,
+      "correct": 51,
+      "statuses": {
+        "correct": 51
+      },
+      "exact_score": 1.0
+    },
+    "by_family": {
+      "dev_structured": {
+        "n": 51,
+        "correct": 51,
+        "statuses": {
+          "correct": 51
+        },
+        "exact_score": 1.0
+      }
+    },
+    "by_attribute": {},
+    "predictions_sha256": "67099bf561db60e54df2cfbf7bf970e113f9c5ca0fc7248217dbd2bf8d28c462",
+    "canonical_sha256": "752d53fdc4215927f3c9871639ea64b94b981cb4082c7e308327b905d9777197",
+    "telemetry_sha256": "297258686c305a00118167f353f8186cfc941186cec30a0d6da2eb64e66bb27e"
+  },
+  "base_sql_5shot": {
+    "verification": {
+      "verify_version": "eval_verify_v3.1",
+      "n_records": 51,
+      "expected_count": 51,
+      "unique_example_ids": 51,
+      "exactly_one_status": true,
+      "scored": 51,
+      "failed": 0,
+      "families": [
+        "dev_structured"
+      ],
+      "grader_sha256": null,
+      "passed": true
+    },
+    "overall": {
+      "n": 51,
+      "correct": 51,
+      "statuses": {
+        "correct": 51
+      },
+      "exact_score": 1.0
+    },
+    "by_family": {
+      "dev_structured": {
+        "n": 51,
+        "correct": 51,
+        "statuses": {
+          "correct": 51
+        },
+        "exact_score": 1.0
+      }
+    },
+    "by_attribute": {},
+    "predictions_sha256": "940d4499c2f5d5adcf7f0950cbb49625b8e3b60409689a7d6d6533936c621904",
+    "canonical_sha256": "38e6d7a2bf688546662ef08aa0dea50f7fca50d0e04fcc8b89e0446285d0c4f9",
+    "telemetry_sha256": "01a92b36e709cf3e2ecb391d984dc9bf7904b04937ed9e1be60b767ddaa15e68"
+  }
+}

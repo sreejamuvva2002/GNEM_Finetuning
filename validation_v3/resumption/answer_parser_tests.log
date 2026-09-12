@@ -1,0 +1,10 @@
+test_empty_or_noise_not_valid_abstention (__main__.ParserTests.test_empty_or_noise_not_valid_abstention) ... ok
+test_extra_certification_rejected (__main__.ParserTests.test_extra_certification_rejected) ... ok
+test_scalar_no_substring_credit (__main__.ParserTests.test_scalar_no_substring_credit) ... ok
+test_truncation_not_correct (__main__.ParserTests.test_truncation_not_correct) ... ok
+test_valid_set (__main__.ParserTests.test_valid_set) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.003s
+
+OK

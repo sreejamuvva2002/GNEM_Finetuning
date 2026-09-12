@@ -1,0 +1,2 @@
+PASS: deterministic A-002 registry; preserved entity/operation/composition holdouts; zero literal exclusions; tamper and missing-anchor rejection.
+Registry SHA256: b200df3c300fe4298c8e35ba8a4b011d1bb367319a92111b114b6f72428890e9

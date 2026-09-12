@@ -10,8 +10,8 @@ Phase 8 — build the v3 evaluation and reporting stack.
 
 ```text
 datasets_v3/gnem_v3.sqlite         7437c746cb118f3d5bb9edcc34f500e0c9f764358a19fa05766dc526d63bb08b
-finetune/sqlexec_v3.py             a6c06b71dd97541997bedc2202e1980ab2e4cdd721aaf20ff43eacfda876c461
-finetune/grade_v3.py               1051a161ac848ad058dda424417e296571404e6fd5dbe10174994cea7df0c6aa
+finetune/sqlexec_v3.py             dfe5d8a882f730c05351643c167ad47203159383b88ef21020353f27f4443588
+finetune/grade_v3.py               c7775cdcf69f11705eb35a172202cc917648fa6df149a13c8cb8d217e63cfb04
 finetune/phase7_grader_tests.py    bcdbdbb67211321c8ebd50e2d5a8eeb6908c5fb7b7b692a8cf028ba76b16d8b6
 ```
 
@@ -19,10 +19,10 @@ finetune/phase7_grader_tests.py    bcdbdbb67211321c8ebd50e2d5a8eeb6908c5fb7b7b69
 
 ```text
 finetune/eval_records_v3.py               2b92d82a49ccd3d8a3a901ce14b33569c665c255ef9120c3fb302cc2f83058f9
-finetune/eval_stats_v3.py                 28add5267e6d77abd589243ab52dcdbbddaa612d7b8b1e733289af08132f9f24
+finetune/eval_stats_v3.py                 eee51e3897a41fee1288adb95da5826dd719cf9df3e2b6ca38e9ea2227a513b5
 finetune/eval_report_v3.py                75113c4372dd2ae76b2e146a5e51774886b5df22cafcda56f09d46b5ec7799fa
 finetune/eval_verify_v3.py                839a04a04e17f293060385b38a48f7dfc293d2a0d1801dbade4d846c5629f665
-finetune/phase8_eval_stack_tests.py       61cbce89309d458450d0040193df17b00a42a64d24865f0ffe4ffeb8dda3d414
+finetune/phase8_eval_stack_tests.py       979a6bc5e1a84ccee35bfc90f97b15c5e8bacd2efeed0273c77cc676c4cf8a99
 ```
 
 Rebuilt v3-native rather than ported. v2's stack is 4,213 lines and `report.py` alone carries 111 retired-concept references; README Phase 8 warns that recreating it "would add risk rather than remove it". Only the statistical METHODS were carried across as concepts, reimplemented against the v3 schema — no v2 file was copied.
@@ -30,11 +30,11 @@ Rebuilt v3-native rather than ported. v2's stack is 4,213 lines and `report.py` 
 ## Fixture manifest
 
 ```text
-validation_v3/fixtures_v3/fixture_records_v3.jsonl   afb1424556a4f75fc8b41f30c1386d346f29d2c7a36321bce60e365ccbdbe3e6
-validation_v3/fixtures_v3/fixtures_manifest_v3.json  b3ee83e35e7114aa430b1ff1037c96ab20583860bbace54d266c98d317379fbf
+validation_v3/fixtures_v3/fixture_records_v3.jsonl   dee9db4ed0990901ee005a457ea28fa2ae466193b8519085eb89aa244f87467a
+validation_v3/fixtures_v3/fixtures_manifest_v3.json  ac7363186c33a9e23cafad38e34c0902447aa9e8676befd08e8fbd5d08a3c14a
 validation_v3/fixtures_v3/summary_v3.json            8f892a730a9413585cb654d641de942721ffcbc9c24808dab704369eeab600de
 validation_v3/fixtures_v3/error_analysis_v3.json     a662aaa3ba75d440eae83ccbc613c08e072ac608688f155c9650eb8e75a95216
-validation_v3/fixtures_v3/REPORT_v3.md               a62a364820a36ca05b7b0560b6802228ac17937c00945a85988a86da22e11c26
+validation_v3/fixtures_v3/REPORT_v3.md               19a62b0a4337026cc21e0d80eea2ef78510f81ca7524c7da2a0c56bb9a1f882e
 fixture item count                                   18
 families                                             factual_recall, no_match, structured_heldin, structured_paraphrase
 ```
@@ -231,11 +231,14 @@ None of 15 retired concepts appear in the stack, and no v2 repository path or v2
 | `stats_refuses_baseline_sd` | PASS | a deterministic baseline is refused an SD (README:976-979) |
 | `stats_paired_bootstrap_deterministic` | PASS | identical CI across runs at seed 20260824 |
 | `stats_effect_size_and_holm` | PASS | effect size computed; Holm adjustment monotonic |
+| `stats_constant_-1.0_effect_undefined` | PASS | zero variance has undefined standardized effect; raw difference retained |
+| `stats_constant_0.0_effect_undefined` | PASS | zero variance has undefined standardized effect; raw difference retained |
+| `stats_constant_1.0_effect_undefined` | PASS | zero variance has undefined standardized effect; raw difference retained |
 | `stats_mcnemar_present_cited` | PASS | McNemar implemented as secondary evidence (README:973) |
 | `stats_split_group_weighting_cited` | PASS | average within split_group then across groups; aggregate item excluded as undefined (CLAUDE.md:847-854) |
 | `stats_hierarchical_bootstrap_deferred` | PASS | not implemented: absent from the live protocol, so deferred not invented |
 | `regrade_preserves_raw_and_gold` | PASS | raw prediction, gold and question carried through untouched |
-| `regrade_records_grader_provenance` | PASS | every regraded record stamped grade_v3.1 |
+| `regrade_records_grader_provenance` | PASS | every regraded record stamped grade_v3.2_A002 |
 | `regrade_reproduces_metrics` | PASS | status distribution identical after regrade |
 | `sql_fixtures_use_phase7_executor` | PASS | SQL fixture path calls the approved Phase 7 executor (train_kb=148); no second execution implementation exists |
 | `no_duplicate_sql_execution_in_stack` | PASS | no module in the reporting stack opens its own database connection |
@@ -270,7 +273,7 @@ None of 15 retired concepts appear in the stack, and no v2 repository path or v2
 | `fault_status_score_contradiction` | PASS | RecordSchemaError: status 'incorrect' must not carry a perfect task score |
 | `fault_missing_required_field` | PASS | RecordSchemaError: record missing required field(s): ['family', 'condition' |
 | `fault_stale_result_schema` | PASS | RecordSchemaError: record carries unsupported field(s) ['legacy_v2_field']; |
-| `fault_mismatched_grader_provenance` | PASS | VerificationError: records graded by a different grader build: ['1051a161ac |
+| `fault_mismatched_grader_provenance` | PASS | VerificationError: records graded by a different grader build: ['c7775cdcf6 |
 | `fault_corrupted_record_missing_provenance` | PASS | VerificationError: fx01_set_correct: missing required field 'prompt_hash' |
 | `pre_regrade_all_start_unregraded` | PASS | no record carries a regrade_outcome before regrade() runs |
 | `regrade_recomputes_and_disagrees_with_stale_score` | PASS | stale score was 'correct'; genuine recomputation from retained evidence (WRONG_COMPANY vs RIGHT_COMPANY) now correctly says 'incorrect' -- proves regrade recomputes rather than re-stamping |
@@ -279,15 +282,15 @@ None of 15 retired concepts appear in the stack, and no v2 repository path or v2
 | `insufficient_evidence_outcome_flagged` | PASS | regrade_outcome correctly distinguishes this from a real recompute |
 | `multipart_regrade_recomputes_and_disagrees` | PASS | one part's retained evidence disagrees (WRONG vs B); multi-part regrade correctly recomputes to 'incorrect' |
 | `multipart_missing_one_part_is_insufficient_not_partial` | PASS | a single part lacking retained evidence makes the WHOLE item insufficient_evidence, never a partial recompute; original score preserved untouched |
-| `assert_fully_regraded_rejects_mixed_batch` | PASS | VerificationError: 2 record(s) are not fully regraded under the current grader (1051a161a |
+| `assert_fully_regraded_rejects_mixed_batch` | PASS | VerificationError: 2 record(s) are not fully regraded under the current grader (c7775cdcf |
 | `assert_fully_regraded_accepts_genuine_full_coverage` | PASS | a batch where every record is genuinely recomputed under the current grader passes |
-| `assert_fully_regraded_rejects_never_regraded` | PASS | VerificationError: 1 record(s) are not fully regraded under the current grader (1051a161a |
-| `assert_fully_regraded_rejects_stale_grader_build` | PASS | VerificationError: 1 record(s) are not fully regraded under the current grader (1051a161a |
+| `assert_fully_regraded_rejects_never_regraded` | PASS | VerificationError: 1 record(s) are not fully regraded under the current grader (c7775cdcf |
+| `assert_fully_regraded_rejects_stale_grader_build` | PASS | VerificationError: 1 record(s) are not fully regraded under the current grader (c7775cdcf |
 | `regrade_coverage_accounts_for_every_record` | PASS | {'recomputed': 2, 'insufficient_evidence': 2, 'not_yet_regraded': 0, 'total': 4} |
 | `full_path_reload_preserves_records` | PASS | serialized/reloaded records are unregraded, matching what was written |
 | `full_path_verify_passes_structurally` | PASS | structural verification passes on the regraded mixed batch (verify does not itself judge regrade completeness) |
 | `full_path_report_shows_mixed_coverage` | PASS | {'recomputed': 2, 'insufficient_evidence': 2, 'not_yet_regraded': 0, 'total': 4} |
-| `full_path_cannot_certify_fully_regraded` | PASS | VerificationError: 2 record(s) are not fully regraded under the current grader (1051a161a |
+| `full_path_cannot_certify_fully_regraded` | PASS | VerificationError: 2 record(s) are not fully regraded under the current grader (c7775cdcf |
 | `stale_grader_fixture_actually_recomputed` | PASS | the fixture must reach regrade_outcome='recomputed' (real evidence present) so the certification check below isolates grader-IDENTITY rejection specifically, not merely insufficient-evidence rejection: got 'recomputed' |
 | `report_certification_checks_grader_identity_not_just_counts` | PASS | a record 'recomputed' under a stale grader build must NOT certify as fully regraded under the current one: fully_regraded_certified=False |
 | `report_renders_not_fully_regraded_for_stale_grader` | PASS | the rendered report text must say NOT fully regraded, not falsely claim certification |
@@ -300,7 +303,7 @@ None of 15 retired concepts appear in the stack, and no v2 repository path or v2
 | `regrade_validates_per_part_metadata_before_comparing` | PASS | a declared part with empty target_columns must fail closed on regrade exactly as it does on fresh grading, not silently project zero columns and certify 999=='correct' against gold 1: status=invalid_output task=0.0 |
 | `regrade_validated_failure_still_passes_structural_verify` | PASS | an invalid_output outcome is still a structurally valid record (exactly one frozen status, required fields present) |
 | `report_does_not_falsely_certify_invalid_multipart_regrade` | PASS | the record IS genuinely recomputed (recomputed correctly to an explicit invalid_output failure, not silently passed as correct) -- certification here correctly reflects a real, honest recomputation outcome, not a false 'correct': {'correct': 0, 'incorrect': 0, 'generation_failure': 0, 'parse_failure': 0, 'SQL_error': 0, 'timeout': 0, 'truncated_output': 0, 'invalid_output': 1} |
-| `assert_fully_regraded_rejects_stale_regrader_build` | PASS | VerificationError: 1 record(s) are not fully regraded under the current grader (1051a161a |
+| `assert_fully_regraded_rejects_stale_regrader_build` | PASS | VerificationError: 1 record(s) are not fully regraded under the current grader (c7775cdcf |
 | `assert_fully_regraded_accepts_current_regrader` | PASS | a record genuinely produced by the current regrade() build passes (assert_fully_regraded returns None / does not raise) |
 | `fresh_grading_rejects_duplicate_part_id` | PASS | fresh grading correctly refuses a duplicate declared part_id |
 | `regrade_rejects_duplicate_part_id_same_as_fresh_grading` | PASS | a duplicate declared part_id must fail closed on regrade exactly as it does on fresh grading, not silently compare the same retained evidence twice and certify it correct: status=invalid_output task=0.0 |
@@ -318,5 +321,5 @@ None of 15 retired concepts appear in the stack, and no v2 repository path or v2
 | `fault_status_score_contradiction` | yes | RecordSchemaError: status 'incorrect' must not carry a perfect task score |
 | `fault_missing_required_field` | yes | RecordSchemaError: record missing required field(s): ['family', 'condition' |
 | `fault_stale_result_schema` | yes | RecordSchemaError: record carries unsupported field(s) ['legacy_v2_field']; |
-| `fault_mismatched_grader_provenance` | yes | VerificationError: records graded by a different grader build: ['1051a161ac |
+| `fault_mismatched_grader_provenance` | yes | VerificationError: records graded by a different grader build: ['c7775cdcf6 |
 | `fault_corrupted_record_missing_provenance` | yes | VerificationError: fx01_set_correct: missing required field 'prompt_hash' |

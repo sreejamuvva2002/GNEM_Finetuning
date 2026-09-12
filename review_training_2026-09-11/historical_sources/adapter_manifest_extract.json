@@ -1,0 +1,958 @@
+{
+  "A_cpt": {
+    "train_meta_sha256": "9a571cadd6099e6feec5e8083b0fb4e8933aa752d77e611c76a46f44edc53de3",
+    "train_meta": {
+      "variant": "A_cpt",
+      "description": "Continued pretraining on raw row passages. Pure knowledge injection, no task format.",
+      "base_model": "Qwen/Qwen2.5-14B-Instruct",
+      "dataset": "train_A_cpt.jsonl",
+      "n_examples": 498,
+      "field": "text",
+      "answer_mode": "direct",
+      "epochs": 4.0,
+      "lr": 0.0001,
+      "lora_r": 32,
+      "max_length": 1024,
+      "train_seconds": 319.4,
+      "peak_vram_gb": 36.43,
+      "trained_at": "2026-08-12T18:08:08+0000",
+      "git_commit": "0eeb0d9d1a9390c03ce752af52ef9ff37f2a4b7e",
+      "git_dirty": true,
+      "base_model_revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+      "dataset_sha256": "dec37cb3c6969ede46c6aee8e86430633b512468b1618037ba5d27bf0027b1fc"
+    },
+    "adapter_config_sha256": "e643b7b100256dc8a8bae7092ba227505ceec6e234a82864babcc4f747c62346",
+    "adapter_config": {
+      "alora_invocation_tokens": null,
+      "alpha_pattern": {},
+      "arrow_config": null,
+      "auto_mapping": null,
+      "base_model_name_or_path": "Qwen/Qwen2.5-14B-Instruct",
+      "bias": "none",
+      "corda_config": null,
+      "ensure_weight_tying": false,
+      "eva_config": null,
+      "exclude_modules": null,
+      "fan_in_fan_out": false,
+      "inference_mode": true,
+      "init_lora_weights": true,
+      "layer_replication": null,
+      "layers_pattern": null,
+      "layers_to_transform": null,
+      "loftq_config": {},
+      "lora_alpha": 64,
+      "lora_bias": false,
+      "lora_dropout": 0.05,
+      "lora_ga_config": null,
+      "megatron_config": null,
+      "megatron_core": "megatron.core",
+      "modules_to_save": null,
+      "monteclora_config": null,
+      "peft_type": "LORA",
+      "peft_version": "0.20.0",
+      "qalora_group_size": 16,
+      "r": 32,
+      "rank_pattern": {},
+      "revision": null,
+      "target_modules": [
+        "q_proj",
+        "v_proj",
+        "gate_proj",
+        "k_proj",
+        "o_proj",
+        "down_proj",
+        "up_proj"
+      ],
+      "target_parameters": null,
+      "task_type": "CAUSAL_LM",
+      "trainable_token_indices": null,
+      "use_bdlora": null,
+      "use_dora": false,
+      "use_qalora": false,
+      "use_rslora": false,
+      "velora_config": null
+    },
+    "adapter_files": {
+      "finetune/adapters_v2/A_cpt/adapter/README.md": {
+        "sha256": "1e272ffb4853be43463f70acf87af6e6c825f3733cd34effcb930c32ed6a2abd",
+        "bytes": 5216
+      },
+      "finetune/adapters_v2/A_cpt/adapter/adapter_config.json": {
+        "sha256": "e643b7b100256dc8a8bae7092ba227505ceec6e234a82864babcc4f747c62346",
+        "bytes": 1158
+      },
+      "finetune/adapters_v2/A_cpt/adapter/adapter_model.safetensors": {
+        "sha256": "376da9b57b5b4c4959120eeb6c66303b8a79f0f38898d5f0776e1f7e506f11c7",
+        "bytes": 550593184
+      },
+      "finetune/adapters_v2/A_cpt/adapter/chat_template.jinja": {
+        "sha256": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f",
+        "bytes": 2507
+      },
+      "finetune/adapters_v2/A_cpt/adapter/tokenizer.json": {
+        "sha256": "3fd169731d2cbde95e10bf356d66d5997fd885dd8dbb6fb4684da3f23b2585d8",
+        "bytes": 11421892
+      },
+      "finetune/adapters_v2/A_cpt/adapter/tokenizer_config.json": {
+        "sha256": "04b1682c59acbd057f4c9072297faa73d56fc9de053094c659cdb4c464f58f86",
+        "bytes": 694
+      },
+      "finetune/adapters_v2/A_cpt/adapter/training_args.bin": {
+        "sha256": "172672c983ad451b9f6df8280f43122b521e07bba2c4640d6cfca4161261c541",
+        "bytes": 5368
+      }
+    }
+  },
+  "BC_facts_answers": {
+    "train_meta_sha256": "226593a21a83a086ad44ffb577595cd7f02f2694c805c84026e4d3facda7dd72",
+    "train_meta": {
+      "variant": "BC_facts_answers",
+      "description": "B + C together. The most generous closed-book recipe.",
+      "base_model": "Qwen/Qwen2.5-14B-Instruct",
+      "dataset": "train_BC_facts_answers.jsonl",
+      "n_examples": 2111,
+      "field": "messages",
+      "answer_mode": "direct",
+      "epochs": 3.0,
+      "lr": 0.0001,
+      "lora_r": 32,
+      "max_length": 1024,
+      "train_seconds": 1798.8,
+      "peak_vram_gb": 36.06,
+      "trained_at": "2026-08-12T20:47:17+0000",
+      "git_commit": "0eeb0d9d1a9390c03ce752af52ef9ff37f2a4b7e",
+      "git_dirty": true,
+      "base_model_revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+      "dataset_sha256": "9f9d6272d511873dc70752998140fa7502c301a1b88d413eb48adcd5a29adf8f"
+    },
+    "adapter_config_sha256": "364967402baa8fb9c3ef6d506d3ae7c17db1eeca85dba93a80582e3ad2c0908a",
+    "adapter_config": {
+      "alora_invocation_tokens": null,
+      "alpha_pattern": {},
+      "arrow_config": null,
+      "auto_mapping": null,
+      "base_model_name_or_path": "Qwen/Qwen2.5-14B-Instruct",
+      "bias": "none",
+      "corda_config": null,
+      "ensure_weight_tying": false,
+      "eva_config": null,
+      "exclude_modules": null,
+      "fan_in_fan_out": false,
+      "inference_mode": true,
+      "init_lora_weights": true,
+      "layer_replication": null,
+      "layers_pattern": null,
+      "layers_to_transform": null,
+      "loftq_config": {},
+      "lora_alpha": 64,
+      "lora_bias": false,
+      "lora_dropout": 0.05,
+      "lora_ga_config": null,
+      "megatron_config": null,
+      "megatron_core": "megatron.core",
+      "modules_to_save": null,
+      "monteclora_config": null,
+      "peft_type": "LORA",
+      "peft_version": "0.20.0",
+      "qalora_group_size": 16,
+      "r": 32,
+      "rank_pattern": {},
+      "revision": null,
+      "target_modules": [
+        "down_proj",
+        "v_proj",
+        "o_proj",
+        "gate_proj",
+        "q_proj",
+        "k_proj",
+        "up_proj"
+      ],
+      "target_parameters": null,
+      "task_type": "CAUSAL_LM",
+      "trainable_token_indices": null,
+      "use_bdlora": null,
+      "use_dora": false,
+      "use_qalora": false,
+      "use_rslora": false,
+      "velora_config": null
+    },
+    "adapter_files": {
+      "finetune/adapters_v2/BC_facts_answers/adapter/README.md": {
+        "sha256": "1e272ffb4853be43463f70acf87af6e6c825f3733cd34effcb930c32ed6a2abd",
+        "bytes": 5216
+      },
+      "finetune/adapters_v2/BC_facts_answers/adapter/adapter_config.json": {
+        "sha256": "364967402baa8fb9c3ef6d506d3ae7c17db1eeca85dba93a80582e3ad2c0908a",
+        "bytes": 1158
+      },
+      "finetune/adapters_v2/BC_facts_answers/adapter/adapter_model.safetensors": {
+        "sha256": "de70a3afe600aed5c5284c79c0d4487eae6b7b284801674964a9f8c63dc5ed93",
+        "bytes": 550593184
+      },
+      "finetune/adapters_v2/BC_facts_answers/adapter/chat_template.jinja": {
+        "sha256": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f",
+        "bytes": 2507
+      },
+      "finetune/adapters_v2/BC_facts_answers/adapter/tokenizer.json": {
+        "sha256": "3fd169731d2cbde95e10bf356d66d5997fd885dd8dbb6fb4684da3f23b2585d8",
+        "bytes": 11421892
+      },
+      "finetune/adapters_v2/BC_facts_answers/adapter/tokenizer_config.json": {
+        "sha256": "04b1682c59acbd057f4c9072297faa73d56fc9de053094c659cdb4c464f58f86",
+        "bytes": 694
+      },
+      "finetune/adapters_v2/BC_facts_answers/adapter/training_args.bin": {
+        "sha256": "f29af66d04d38e6fa04319dd03ed1695db749be6b4dc242d216fbe9e93cdeb2b",
+        "bytes": 5368
+      }
+    }
+  },
+  "BD_facts_sql": {
+    "train_meta_sha256": "55a7723efd6ddf463b9ca102141f9eaf8f69201e50ab2f5174335e89744e33b3",
+    "train_meta": {
+      "variant": "BD_facts_sql",
+      "description": "B + D. Facts in the weights for vocabulary grounding, SQL for anything that needs to be counted.",
+      "base_model": "Qwen/Qwen2.5-14B-Instruct",
+      "dataset": "train_BD_facts_sql.jsonl",
+      "n_examples": 2111,
+      "field": "messages",
+      "answer_mode": "sql",
+      "epochs": 3.0,
+      "lr": 0.0001,
+      "lora_r": 32,
+      "max_length": 1024,
+      "train_seconds": 3835.4,
+      "peak_vram_gb": 36.5,
+      "trained_at": "2026-08-13T09:03:56+0000",
+      "git_commit": "0eeb0d9d1a9390c03ce752af52ef9ff37f2a4b7e",
+      "git_dirty": true,
+      "base_model_revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+      "dataset_sha256": "a0de88b1a4897a5204580100f03ebcdcd5f737dc23f37921d926c30deb54d69d"
+    },
+    "adapter_config_sha256": "3b61be692190694c412185fbbcdb017926f7210d1fb55559a647a2eb20de52f5",
+    "adapter_config": {
+      "alora_invocation_tokens": null,
+      "alpha_pattern": {},
+      "arrow_config": null,
+      "auto_mapping": null,
+      "base_model_name_or_path": "Qwen/Qwen2.5-14B-Instruct",
+      "bias": "none",
+      "corda_config": null,
+      "ensure_weight_tying": false,
+      "eva_config": null,
+      "exclude_modules": null,
+      "fan_in_fan_out": false,
+      "inference_mode": true,
+      "init_lora_weights": true,
+      "layer_replication": null,
+      "layers_pattern": null,
+      "layers_to_transform": null,
+      "loftq_config": {},
+      "lora_alpha": 64,
+      "lora_bias": false,
+      "lora_dropout": 0.05,
+      "lora_ga_config": null,
+      "megatron_config": null,
+      "megatron_core": "megatron.core",
+      "modules_to_save": null,
+      "monteclora_config": null,
+      "peft_type": "LORA",
+      "peft_version": "0.20.0",
+      "qalora_group_size": 16,
+      "r": 32,
+      "rank_pattern": {},
+      "revision": null,
+      "target_modules": [
+        "k_proj",
+        "up_proj",
+        "gate_proj",
+        "o_proj",
+        "down_proj",
+        "q_proj",
+        "v_proj"
+      ],
+      "target_parameters": null,
+      "task_type": "CAUSAL_LM",
+      "trainable_token_indices": null,
+      "use_bdlora": null,
+      "use_dora": false,
+      "use_qalora": false,
+      "use_rslora": false,
+      "velora_config": null
+    },
+    "adapter_files": {
+      "finetune/adapters_v2/BD_facts_sql/adapter/README.md": {
+        "sha256": "1e272ffb4853be43463f70acf87af6e6c825f3733cd34effcb930c32ed6a2abd",
+        "bytes": 5216
+      },
+      "finetune/adapters_v2/BD_facts_sql/adapter/adapter_config.json": {
+        "sha256": "3b61be692190694c412185fbbcdb017926f7210d1fb55559a647a2eb20de52f5",
+        "bytes": 1158
+      },
+      "finetune/adapters_v2/BD_facts_sql/adapter/adapter_model.safetensors": {
+        "sha256": "0c648f9800f1cdff08d74fd68936e088599df448807bdd069546de0856bfd882",
+        "bytes": 550593184
+      },
+      "finetune/adapters_v2/BD_facts_sql/adapter/chat_template.jinja": {
+        "sha256": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f",
+        "bytes": 2507
+      },
+      "finetune/adapters_v2/BD_facts_sql/adapter/tokenizer.json": {
+        "sha256": "3fd169731d2cbde95e10bf356d66d5997fd885dd8dbb6fb4684da3f23b2585d8",
+        "bytes": 11421892
+      },
+      "finetune/adapters_v2/BD_facts_sql/adapter/tokenizer_config.json": {
+        "sha256": "04b1682c59acbd057f4c9072297faa73d56fc9de053094c659cdb4c464f58f86",
+        "bytes": 694
+      },
+      "finetune/adapters_v2/BD_facts_sql/adapter/training_args.bin": {
+        "sha256": "8757d515e0329cf37cf02bb11beb0db590494e15949a6d765cdb150708749f27",
+        "bytes": 5368
+      }
+    }
+  },
+  "B_facts": {
+    "train_meta_sha256": "fda230c74a6fe800626d76d400ba1efc2f073276ec63863bd8122fc784f37f56",
+    "train_meta": {
+      "variant": "B_facts",
+      "description": "SFT on cell-level fact QA. The classic 'teach it our data' recipe.",
+      "base_model": "Qwen/Qwen2.5-14B-Instruct",
+      "dataset": "train_B_facts.jsonl",
+      "n_examples": 1464,
+      "field": "messages",
+      "answer_mode": "direct",
+      "epochs": 3.0,
+      "lr": 0.0001,
+      "lora_r": 32,
+      "max_length": 1024,
+      "train_seconds": 1245.9,
+      "peak_vram_gb": 35.99,
+      "trained_at": "2026-08-12T19:38:43+0000",
+      "git_commit": "0eeb0d9d1a9390c03ce752af52ef9ff37f2a4b7e",
+      "git_dirty": true,
+      "base_model_revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+      "dataset_sha256": "377a5bc74e5fd73089f3a291528ae5163d58d0831406841d644303f169139494"
+    },
+    "adapter_config_sha256": "efd128932c0645ec25b90c94a1b397b0abd5a63676ad6d65650b3b647ea658c3",
+    "adapter_config": {
+      "alora_invocation_tokens": null,
+      "alpha_pattern": {},
+      "arrow_config": null,
+      "auto_mapping": null,
+      "base_model_name_or_path": "Qwen/Qwen2.5-14B-Instruct",
+      "bias": "none",
+      "corda_config": null,
+      "ensure_weight_tying": false,
+      "eva_config": null,
+      "exclude_modules": null,
+      "fan_in_fan_out": false,
+      "inference_mode": true,
+      "init_lora_weights": true,
+      "layer_replication": null,
+      "layers_pattern": null,
+      "layers_to_transform": null,
+      "loftq_config": {},
+      "lora_alpha": 64,
+      "lora_bias": false,
+      "lora_dropout": 0.05,
+      "lora_ga_config": null,
+      "megatron_config": null,
+      "megatron_core": "megatron.core",
+      "modules_to_save": null,
+      "monteclora_config": null,
+      "peft_type": "LORA",
+      "peft_version": "0.20.0",
+      "qalora_group_size": 16,
+      "r": 32,
+      "rank_pattern": {},
+      "revision": null,
+      "target_modules": [
+        "gate_proj",
+        "q_proj",
+        "o_proj",
+        "k_proj",
+        "down_proj",
+        "up_proj",
+        "v_proj"
+      ],
+      "target_parameters": null,
+      "task_type": "CAUSAL_LM",
+      "trainable_token_indices": null,
+      "use_bdlora": null,
+      "use_dora": false,
+      "use_qalora": false,
+      "use_rslora": false,
+      "velora_config": null
+    },
+    "adapter_files": {
+      "finetune/adapters_v2/B_facts/adapter/README.md": {
+        "sha256": "1e272ffb4853be43463f70acf87af6e6c825f3733cd34effcb930c32ed6a2abd",
+        "bytes": 5216
+      },
+      "finetune/adapters_v2/B_facts/adapter/adapter_config.json": {
+        "sha256": "efd128932c0645ec25b90c94a1b397b0abd5a63676ad6d65650b3b647ea658c3",
+        "bytes": 1158
+      },
+      "finetune/adapters_v2/B_facts/adapter/adapter_model.safetensors": {
+        "sha256": "5ed601e7b83251a729b8afde1a843b7a8f71acc67bc64bf7e3f3a827bdc33553",
+        "bytes": 550593184
+      },
+      "finetune/adapters_v2/B_facts/adapter/chat_template.jinja": {
+        "sha256": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f",
+        "bytes": 2507
+      },
+      "finetune/adapters_v2/B_facts/adapter/tokenizer.json": {
+        "sha256": "3fd169731d2cbde95e10bf356d66d5997fd885dd8dbb6fb4684da3f23b2585d8",
+        "bytes": 11421892
+      },
+      "finetune/adapters_v2/B_facts/adapter/tokenizer_config.json": {
+        "sha256": "04b1682c59acbd057f4c9072297faa73d56fc9de053094c659cdb4c464f58f86",
+        "bytes": 694
+      },
+      "finetune/adapters_v2/B_facts/adapter/training_args.bin": {
+        "sha256": "374718a883d8a4b1cdc4d95ef96396f630e43605d3fffa86491795a7ad1813ab",
+        "bytes": 5368
+      }
+    }
+  },
+  "C_answers": {
+    "train_meta_sha256": "25d5896d9b0fa6af238b87aa0981e340275f48d98e91f0fcd13ba5d0d6984a43",
+    "train_meta": {
+      "variant": "C_answers",
+      "description": "SFT on filter/aggregate questions with final answers, closed book. Tests whether reasoning can be trained in directly.",
+      "base_model": "Qwen/Qwen2.5-14B-Instruct",
+      "dataset": "train_C_answers.jsonl",
+      "n_examples": 647,
+      "field": "messages",
+      "answer_mode": "direct",
+      "epochs": 3.0,
+      "lr": 0.0001,
+      "lora_r": 32,
+      "max_length": 1024,
+      "train_seconds": 559.9,
+      "peak_vram_gb": 36.06,
+      "trained_at": "2026-08-12T20:05:39+0000",
+      "git_commit": "0eeb0d9d1a9390c03ce752af52ef9ff37f2a4b7e",
+      "git_dirty": true,
+      "base_model_revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+      "dataset_sha256": "41d46fdb5a11c73427e22bfeb8a371e93b383f7dce4c7482d8e5c853ba567d01"
+    },
+    "adapter_config_sha256": "ce46b71781ce355b45630c57b0d69617aadb38d342b44ca9a2d72159e315ea75",
+    "adapter_config": {
+      "alora_invocation_tokens": null,
+      "alpha_pattern": {},
+      "arrow_config": null,
+      "auto_mapping": null,
+      "base_model_name_or_path": "Qwen/Qwen2.5-14B-Instruct",
+      "bias": "none",
+      "corda_config": null,
+      "ensure_weight_tying": false,
+      "eva_config": null,
+      "exclude_modules": null,
+      "fan_in_fan_out": false,
+      "inference_mode": true,
+      "init_lora_weights": true,
+      "layer_replication": null,
+      "layers_pattern": null,
+      "layers_to_transform": null,
+      "loftq_config": {},
+      "lora_alpha": 64,
+      "lora_bias": false,
+      "lora_dropout": 0.05,
+      "lora_ga_config": null,
+      "megatron_config": null,
+      "megatron_core": "megatron.core",
+      "modules_to_save": null,
+      "monteclora_config": null,
+      "peft_type": "LORA",
+      "peft_version": "0.20.0",
+      "qalora_group_size": 16,
+      "r": 32,
+      "rank_pattern": {},
+      "revision": null,
+      "target_modules": [
+        "gate_proj",
+        "q_proj",
+        "down_proj",
+        "up_proj",
+        "v_proj",
+        "k_proj",
+        "o_proj"
+      ],
+      "target_parameters": null,
+      "task_type": "CAUSAL_LM",
+      "trainable_token_indices": null,
+      "use_bdlora": null,
+      "use_dora": false,
+      "use_qalora": false,
+      "use_rslora": false,
+      "velora_config": null
+    },
+    "adapter_files": {
+      "finetune/adapters_v2/C_answers/adapter/README.md": {
+        "sha256": "1e272ffb4853be43463f70acf87af6e6c825f3733cd34effcb930c32ed6a2abd",
+        "bytes": 5216
+      },
+      "finetune/adapters_v2/C_answers/adapter/adapter_config.json": {
+        "sha256": "ce46b71781ce355b45630c57b0d69617aadb38d342b44ca9a2d72159e315ea75",
+        "bytes": 1158
+      },
+      "finetune/adapters_v2/C_answers/adapter/adapter_model.safetensors": {
+        "sha256": "7336a96e34bf1a33479376736767b751c3fe60d3006a736083f8896b835b6524",
+        "bytes": 550593184
+      },
+      "finetune/adapters_v2/C_answers/adapter/chat_template.jinja": {
+        "sha256": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f",
+        "bytes": 2507
+      },
+      "finetune/adapters_v2/C_answers/adapter/tokenizer.json": {
+        "sha256": "3fd169731d2cbde95e10bf356d66d5997fd885dd8dbb6fb4684da3f23b2585d8",
+        "bytes": 11421892
+      },
+      "finetune/adapters_v2/C_answers/adapter/tokenizer_config.json": {
+        "sha256": "04b1682c59acbd057f4c9072297faa73d56fc9de053094c659cdb4c464f58f86",
+        "bytes": 694
+      },
+      "finetune/adapters_v2/C_answers/adapter/training_args.bin": {
+        "sha256": "942814b71e61807a99aa2319aba6f796790828c13f4140badcfd192be854f1c0",
+        "bytes": 5368
+      }
+    }
+  },
+  "D_sql": {
+    "train_meta_sha256": "21351daa51dfb7e8fe17891a0fe38b268a41077f598c1aaf9a2f6ffb9a8246dd",
+    "train_meta": {
+      "variant": "D_sql",
+      "description": "SFT on question -> SQLite query, executed externally. The model routes; the database computes.",
+      "base_model": "Qwen/Qwen2.5-14B-Instruct",
+      "dataset": "train_D_sql.jsonl",
+      "n_examples": 647,
+      "field": "messages",
+      "answer_mode": "sql",
+      "epochs": 3.0,
+      "lr": 0.0001,
+      "lora_r": 32,
+      "max_length": 1024,
+      "train_seconds": 2611.9,
+      "peak_vram_gb": 36.43,
+      "trained_at": "2026-08-13T07:30:49+0000",
+      "git_commit": "0eeb0d9d1a9390c03ce752af52ef9ff37f2a4b7e",
+      "git_dirty": true,
+      "base_model_revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+      "dataset_sha256": "c42c25e07ed0bc946a9902e69d9445450f230b954950395867f10fa87b0e8826"
+    },
+    "adapter_config_sha256": "2b838a67be303c9396997d24b600f55d9dd7cf8112a618738ed0467d60fa253f",
+    "adapter_config": {
+      "alora_invocation_tokens": null,
+      "alpha_pattern": {},
+      "arrow_config": null,
+      "auto_mapping": null,
+      "base_model_name_or_path": "Qwen/Qwen2.5-14B-Instruct",
+      "bias": "none",
+      "corda_config": null,
+      "ensure_weight_tying": false,
+      "eva_config": null,
+      "exclude_modules": null,
+      "fan_in_fan_out": false,
+      "inference_mode": true,
+      "init_lora_weights": true,
+      "layer_replication": null,
+      "layers_pattern": null,
+      "layers_to_transform": null,
+      "loftq_config": {},
+      "lora_alpha": 64,
+      "lora_bias": false,
+      "lora_dropout": 0.05,
+      "lora_ga_config": null,
+      "megatron_config": null,
+      "megatron_core": "megatron.core",
+      "modules_to_save": null,
+      "monteclora_config": null,
+      "peft_type": "LORA",
+      "peft_version": "0.20.0",
+      "qalora_group_size": 16,
+      "r": 32,
+      "rank_pattern": {},
+      "revision": null,
+      "target_modules": [
+        "q_proj",
+        "gate_proj",
+        "k_proj",
+        "o_proj",
+        "v_proj",
+        "up_proj",
+        "down_proj"
+      ],
+      "target_parameters": null,
+      "task_type": "CAUSAL_LM",
+      "trainable_token_indices": null,
+      "use_bdlora": null,
+      "use_dora": false,
+      "use_qalora": false,
+      "use_rslora": false,
+      "velora_config": null
+    },
+    "adapter_files": {
+      "finetune/adapters_v2/D_sql/adapter/README.md": {
+        "sha256": "1e272ffb4853be43463f70acf87af6e6c825f3733cd34effcb930c32ed6a2abd",
+        "bytes": 5216
+      },
+      "finetune/adapters_v2/D_sql/adapter/adapter_config.json": {
+        "sha256": "2b838a67be303c9396997d24b600f55d9dd7cf8112a618738ed0467d60fa253f",
+        "bytes": 1158
+      },
+      "finetune/adapters_v2/D_sql/adapter/adapter_model.safetensors": {
+        "sha256": "12369e40087eb4a3d7bebef04198f08a3f79652a387bcb009a8314d75e9d2f12",
+        "bytes": 550593184
+      },
+      "finetune/adapters_v2/D_sql/adapter/chat_template.jinja": {
+        "sha256": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f",
+        "bytes": 2507
+      },
+      "finetune/adapters_v2/D_sql/adapter/tokenizer.json": {
+        "sha256": "3fd169731d2cbde95e10bf356d66d5997fd885dd8dbb6fb4684da3f23b2585d8",
+        "bytes": 11421892
+      },
+      "finetune/adapters_v2/D_sql/adapter/tokenizer_config.json": {
+        "sha256": "04b1682c59acbd057f4c9072297faa73d56fc9de053094c659cdb4c464f58f86",
+        "bytes": 694
+      },
+      "finetune/adapters_v2/D_sql/adapter/training_args.bin": {
+        "sha256": "9a4125a30c9c33959259400d09be451ce559e859ca8f3be40b7a0f840bc93206",
+        "bytes": 5368
+      }
+    }
+  },
+  "D_sql_k0": {
+    "train_meta_sha256": "bcf720ba50ddd4c0477e7ff4bee9d7f3e2c64918219de3f95eda83ab81444f34",
+    "train_meta": {
+      "variant": "D_sql_k0",
+      "description": "D_sql + 25 county-proximity examples, none recursive. The dose-response control: same table and example count as k5/k25, zero exposure to WITH RECURSIVE.",
+      "base_model": "Qwen/Qwen2.5-14B-Instruct",
+      "dataset": "train_D_sql_k0.jsonl",
+      "n_examples": 672,
+      "field": "messages",
+      "answer_mode": "sql",
+      "epochs": 3.0,
+      "lr": 0.0001,
+      "lora_r": 32,
+      "max_length": 1024,
+      "train_seconds": 2620.4,
+      "peak_vram_gb": 36.24,
+      "trained_at": "2026-08-13T21:54:27+0000",
+      "git_commit": "02ba8c2985845beed185e5574042416724acf141",
+      "git_dirty": true,
+      "base_model_revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+      "dataset_sha256": "f9ff4a563d6252d87733af030fa0af83ce36ea8937862d2da453dbd487dbf9b1"
+    },
+    "adapter_config_sha256": "7eb78eed6a94ef2e5985a0d6f760a2763d289b221ce04a3b73579053d30835ef",
+    "adapter_config": {
+      "alora_invocation_tokens": null,
+      "alpha_pattern": {},
+      "arrow_config": null,
+      "auto_mapping": null,
+      "base_model_name_or_path": "Qwen/Qwen2.5-14B-Instruct",
+      "bias": "none",
+      "corda_config": null,
+      "ensure_weight_tying": false,
+      "eva_config": null,
+      "exclude_modules": null,
+      "fan_in_fan_out": false,
+      "inference_mode": true,
+      "init_lora_weights": true,
+      "layer_replication": null,
+      "layers_pattern": null,
+      "layers_to_transform": null,
+      "loftq_config": {},
+      "lora_alpha": 64,
+      "lora_bias": false,
+      "lora_dropout": 0.05,
+      "lora_ga_config": null,
+      "megatron_config": null,
+      "megatron_core": "megatron.core",
+      "modules_to_save": null,
+      "monteclora_config": null,
+      "peft_type": "LORA",
+      "peft_version": "0.20.0",
+      "qalora_group_size": 16,
+      "r": 32,
+      "rank_pattern": {},
+      "revision": null,
+      "target_modules": [
+        "q_proj",
+        "up_proj",
+        "v_proj",
+        "gate_proj",
+        "k_proj",
+        "down_proj",
+        "o_proj"
+      ],
+      "target_parameters": null,
+      "task_type": "CAUSAL_LM",
+      "trainable_token_indices": null,
+      "use_bdlora": null,
+      "use_dora": false,
+      "use_qalora": false,
+      "use_rslora": false,
+      "velora_config": null
+    },
+    "adapter_files": {
+      "finetune/adapters_v2/D_sql_k0/adapter/README.md": {
+        "sha256": "1e272ffb4853be43463f70acf87af6e6c825f3733cd34effcb930c32ed6a2abd",
+        "bytes": 5216
+      },
+      "finetune/adapters_v2/D_sql_k0/adapter/adapter_config.json": {
+        "sha256": "7eb78eed6a94ef2e5985a0d6f760a2763d289b221ce04a3b73579053d30835ef",
+        "bytes": 1158
+      },
+      "finetune/adapters_v2/D_sql_k0/adapter/adapter_model.safetensors": {
+        "sha256": "356fdbaab5474c2a6bc150260ec45063e2e19ad46d87e2952bd6c2c13b59d6ed",
+        "bytes": 550593184
+      },
+      "finetune/adapters_v2/D_sql_k0/adapter/chat_template.jinja": {
+        "sha256": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f",
+        "bytes": 2507
+      },
+      "finetune/adapters_v2/D_sql_k0/adapter/tokenizer.json": {
+        "sha256": "3fd169731d2cbde95e10bf356d66d5997fd885dd8dbb6fb4684da3f23b2585d8",
+        "bytes": 11421892
+      },
+      "finetune/adapters_v2/D_sql_k0/adapter/tokenizer_config.json": {
+        "sha256": "04b1682c59acbd057f4c9072297faa73d56fc9de053094c659cdb4c464f58f86",
+        "bytes": 694
+      },
+      "finetune/adapters_v2/D_sql_k0/adapter/training_args.bin": {
+        "sha256": "61e8a791d8e3e06c239fc913765f9a400a41b4cbbc9146ab1ab4787f28d0bf27",
+        "bytes": 5368
+      }
+    }
+  },
+  "D_sql_k25": {
+    "train_meta_sha256": "31112a67afd5b468d6f85415071307f4650e9ad28970bbd1947c94ffd74fd5d4",
+    "train_meta": {
+      "variant": "D_sql_k25",
+      "description": "D_sql + 25 county-proximity examples, all recursive. High dose.",
+      "base_model": "Qwen/Qwen2.5-14B-Instruct",
+      "dataset": "train_D_sql_k25.jsonl",
+      "n_examples": 672,
+      "field": "messages",
+      "answer_mode": "sql",
+      "epochs": 3.0,
+      "lr": 0.0001,
+      "lora_r": 32,
+      "max_length": 1024,
+      "train_seconds": 2702.7,
+      "peak_vram_gb": 36.43,
+      "trained_at": "2026-08-13T21:59:34+0000",
+      "git_commit": "02ba8c2985845beed185e5574042416724acf141",
+      "git_dirty": true,
+      "base_model_revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+      "dataset_sha256": "2591962323a24fe482c8cb961e03ef6895a6a823e999604c1418fc7960d04c61"
+    },
+    "adapter_config_sha256": "45993b86fef12890873bd30db0c68b77fa1172de86039965874ededf427f9fef",
+    "adapter_config": {
+      "alora_invocation_tokens": null,
+      "alpha_pattern": {},
+      "arrow_config": null,
+      "auto_mapping": null,
+      "base_model_name_or_path": "Qwen/Qwen2.5-14B-Instruct",
+      "bias": "none",
+      "corda_config": null,
+      "ensure_weight_tying": false,
+      "eva_config": null,
+      "exclude_modules": null,
+      "fan_in_fan_out": false,
+      "inference_mode": true,
+      "init_lora_weights": true,
+      "layer_replication": null,
+      "layers_pattern": null,
+      "layers_to_transform": null,
+      "loftq_config": {},
+      "lora_alpha": 64,
+      "lora_bias": false,
+      "lora_dropout": 0.05,
+      "lora_ga_config": null,
+      "megatron_config": null,
+      "megatron_core": "megatron.core",
+      "modules_to_save": null,
+      "monteclora_config": null,
+      "peft_type": "LORA",
+      "peft_version": "0.20.0",
+      "qalora_group_size": 16,
+      "r": 32,
+      "rank_pattern": {},
+      "revision": null,
+      "target_modules": [
+        "up_proj",
+        "gate_proj",
+        "k_proj",
+        "down_proj",
+        "o_proj",
+        "v_proj",
+        "q_proj"
+      ],
+      "target_parameters": null,
+      "task_type": "CAUSAL_LM",
+      "trainable_token_indices": null,
+      "use_bdlora": null,
+      "use_dora": false,
+      "use_qalora": false,
+      "use_rslora": false,
+      "velora_config": null
+    },
+    "adapter_files": {
+      "finetune/adapters_v2/D_sql_k25/adapter/README.md": {
+        "sha256": "1e272ffb4853be43463f70acf87af6e6c825f3733cd34effcb930c32ed6a2abd",
+        "bytes": 5216
+      },
+      "finetune/adapters_v2/D_sql_k25/adapter/adapter_config.json": {
+        "sha256": "45993b86fef12890873bd30db0c68b77fa1172de86039965874ededf427f9fef",
+        "bytes": 1158
+      },
+      "finetune/adapters_v2/D_sql_k25/adapter/adapter_model.safetensors": {
+        "sha256": "627aa71de8d47119b322e6b548e316ff8880d154646a2ae12bfd75d1f1fb478c",
+        "bytes": 550593184
+      },
+      "finetune/adapters_v2/D_sql_k25/adapter/chat_template.jinja": {
+        "sha256": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f",
+        "bytes": 2507
+      },
+      "finetune/adapters_v2/D_sql_k25/adapter/tokenizer.json": {
+        "sha256": "3fd169731d2cbde95e10bf356d66d5997fd885dd8dbb6fb4684da3f23b2585d8",
+        "bytes": 11421892
+      },
+      "finetune/adapters_v2/D_sql_k25/adapter/tokenizer_config.json": {
+        "sha256": "04b1682c59acbd057f4c9072297faa73d56fc9de053094c659cdb4c464f58f86",
+        "bytes": 694
+      },
+      "finetune/adapters_v2/D_sql_k25/adapter/training_args.bin": {
+        "sha256": "e9c85f895f349267b1f37e23206c18679e9372ecf62a63fb1c8b1b2ede847c0f",
+        "bytes": 5368
+      }
+    }
+  },
+  "D_sql_k5": {
+    "train_meta_sha256": "3e1ff8352dbae12709652522f9c06dae55cdb261da2d4e0cfcba7562fa9c1617",
+    "train_meta": {
+      "variant": "D_sql_k5",
+      "description": "D_sql + 25 county-proximity examples, 5 of them recursive. Low dose.",
+      "base_model": "Qwen/Qwen2.5-14B-Instruct",
+      "dataset": "train_D_sql_k5.jsonl",
+      "n_examples": 672,
+      "field": "messages",
+      "answer_mode": "sql",
+      "epochs": 3.0,
+      "lr": 0.0001,
+      "lora_r": 32,
+      "max_length": 1024,
+      "train_seconds": 2653.3,
+      "peak_vram_gb": 36.43,
+      "trained_at": "2026-08-13T21:58:43+0000",
+      "git_commit": "02ba8c2985845beed185e5574042416724acf141",
+      "git_dirty": true,
+      "base_model_revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+      "dataset_sha256": "28752223cc914790e46e644223fb4da3986b63e0da8eabf1d35cc2b8ccf48014"
+    },
+    "adapter_config_sha256": "3d80a773b7ba86f1be00f06635aee22b53c00120ecb456285f8ffee834cc5785",
+    "adapter_config": {
+      "alora_invocation_tokens": null,
+      "alpha_pattern": {},
+      "arrow_config": null,
+      "auto_mapping": null,
+      "base_model_name_or_path": "Qwen/Qwen2.5-14B-Instruct",
+      "bias": "none",
+      "corda_config": null,
+      "ensure_weight_tying": false,
+      "eva_config": null,
+      "exclude_modules": null,
+      "fan_in_fan_out": false,
+      "inference_mode": true,
+      "init_lora_weights": true,
+      "layer_replication": null,
+      "layers_pattern": null,
+      "layers_to_transform": null,
+      "loftq_config": {},
+      "lora_alpha": 64,
+      "lora_bias": false,
+      "lora_dropout": 0.05,
+      "lora_ga_config": null,
+      "megatron_config": null,
+      "megatron_core": "megatron.core",
+      "modules_to_save": null,
+      "monteclora_config": null,
+      "peft_type": "LORA",
+      "peft_version": "0.20.0",
+      "qalora_group_size": 16,
+      "r": 32,
+      "rank_pattern": {},
+      "revision": null,
+      "target_modules": [
+        "up_proj",
+        "gate_proj",
+        "q_proj",
+        "down_proj",
+        "v_proj",
+        "o_proj",
+        "k_proj"
+      ],
+      "target_parameters": null,
+      "task_type": "CAUSAL_LM",
+      "trainable_token_indices": null,
+      "use_bdlora": null,
+      "use_dora": false,
+      "use_qalora": false,
+      "use_rslora": false,
+      "velora_config": null
+    },
+    "adapter_files": {
+      "finetune/adapters_v2/D_sql_k5/adapter/README.md": {
+        "sha256": "1e272ffb4853be43463f70acf87af6e6c825f3733cd34effcb930c32ed6a2abd",
+        "bytes": 5216
+      },
+      "finetune/adapters_v2/D_sql_k5/adapter/adapter_config.json": {
+        "sha256": "3d80a773b7ba86f1be00f06635aee22b53c00120ecb456285f8ffee834cc5785",
+        "bytes": 1158
+      },
+      "finetune/adapters_v2/D_sql_k5/adapter/adapter_model.safetensors": {
+        "sha256": "ebe359cdf00167643a31c498dbe2a9af7b56e47b5e9cb61b4cc442ee871e5d39",
+        "bytes": 550593184
+      },
+      "finetune/adapters_v2/D_sql_k5/adapter/chat_template.jinja": {
+        "sha256": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f",
+        "bytes": 2507
+      },
+      "finetune/adapters_v2/D_sql_k5/adapter/tokenizer.json": {
+        "sha256": "3fd169731d2cbde95e10bf356d66d5997fd885dd8dbb6fb4684da3f23b2585d8",
+        "bytes": 11421892
+      },
+      "finetune/adapters_v2/D_sql_k5/adapter/tokenizer_config.json": {
+        "sha256": "04b1682c59acbd057f4c9072297faa73d56fc9de053094c659cdb4c464f58f86",
+        "bytes": 694
+      },
+      "finetune/adapters_v2/D_sql_k5/adapter/training_args.bin": {
+        "sha256": "6a0b0c742c25118170c7dea92c3fffa2dbf64348171ca48d106ff72aaa083f48",
+        "bytes": 5368
+      }
+    }
+  },
+  "seed13": {
+    "adapter_deleted": true,
+    "why": "dropped after evaluation (commit c2d498a); only the adapter_digest in each run's summary.json survives"
+  },
+  "seed29": {
+    "adapter_deleted": true,
+    "why": "dropped after evaluation (commit c2d498a); only the adapter_digest in each run's summary.json survives"
+  },
+  "seed47": {
+    "adapter_deleted": true,
+    "why": "dropped after evaluation (commit c2d498a); only the adapter_digest in each run's summary.json survives"
+  },
+  "seed61": {
+    "adapter_deleted": true,
+    "why": "dropped after evaluation (commit c2d498a); only the adapter_digest in each run's summary.json survives"
+  },
+  "seed79": {
+    "adapter_deleted": true,
+    "why": "dropped after evaluation (commit c2d498a); only the adapter_digest in each run's summary.json survives"
+  }
+}

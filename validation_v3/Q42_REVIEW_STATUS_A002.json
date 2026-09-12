@@ -1,0 +1,7 @@
+{
+  "status": "pending",
+  "user_decision": "Keep Q42 approval pending; continue runtime checks",
+  "full_training_authorized_by_benchmark_gate": false,
+  "benchmark_path": "datasets_v3/probe_42_v3.jsonl",
+  "review_path": "validation_v3/Q42_REVIEW_A002.md"
+}

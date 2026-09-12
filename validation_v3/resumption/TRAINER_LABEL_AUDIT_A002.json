@@ -1,0 +1,37 @@
+{
+  "train_B_facts_v3.jsonl": {
+    "items": 2149,
+    "supervised_tokens": 47202,
+    "max_sequence_length": 150
+  },
+  "train_C_answers_v3.jsonl": {
+    "items": 1311,
+    "supervised_tokens": 21098,
+    "max_sequence_length": 243
+  },
+  "train_D_sql_v3.jsonl": {
+    "items": 1311,
+    "supervised_tokens": 45453,
+    "max_sequence_length": 244
+  },
+  "train_BC_facts_answers_v3.jsonl": {
+    "items": 3460,
+    "supervised_tokens": 68300,
+    "max_sequence_length": 243
+  },
+  "train_BD_facts_sql_v3.jsonl": {
+    "items": 3460,
+    "supervised_tokens": 92655,
+    "max_sequence_length": 244
+  },
+  "train_BD_controlled_v3.jsonl": {
+    "items": 3505,
+    "supervised_tokens": 94407,
+    "max_sequence_length": 244
+  },
+  "train_D_repeat_budgetmatched_v3.jsonl": {
+    "items": 2718,
+    "supervised_tokens": 94432,
+    "max_sequence_length": 244
+  }
+}

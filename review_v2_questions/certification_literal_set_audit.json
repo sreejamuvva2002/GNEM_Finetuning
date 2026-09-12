@@ -1,0 +1,2767 @@
+{
+  "scope": "Original B_facts only; parses exact company-holds template; case/whitespace normalized, no semantic synonym resolution",
+  "total_probe_records": 118,
+  "parsed": 118,
+  "stored_correct_with_extra_entries": 53,
+  "items": [
+    {
+      "question": "Which certification standards does ACM Georgia LLC hold?",
+      "source_line": 1,
+      "stored_correct": 1.0,
+      "answer": "ACM Georgia LLC holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [],
+      "literal_set_correct": true
+    },
+    {
+      "question": "Which certification standards does ADVICS Manufacturing Georgia LLC hold?",
+      "source_line": 2,
+      "stored_correct": 1.0,
+      "answer": "ADVICS Manufacturing Georgia LLC holds: IATF 16949; ISO 14001; ISO 27001; ISO 45001; ISO 9001.",
+      "gold": "ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 45001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does ALBAform Inc. hold?",
+      "source_line": 3,
+      "stored_correct": 1.0,
+      "answer": "ALBAform Inc. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001"
+      ],
+      "unsupported_entries": [
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Adient hold?",
+      "source_line": 4,
+      "stored_correct": 1.0,
+      "answer": "Adient holds: IATF 16949; ISO 14001; ISO 45001; ISO 9001.",
+      "gold": "IATF 16949; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iso 14001",
+        "iso 45001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Apache Mills Inc. hold?",
+      "source_line": 5,
+      "stored_correct": 1.0,
+      "answer": "Apache Mills Inc. holds: ISO 9001; OEKO-TEX STANDARD 100.",
+      "gold": "ISO 9001",
+      "predicted_set": [
+        "iso 9001",
+        "oeko-tex standard 100"
+      ],
+      "gold_set": [
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "oeko-tex standard 100"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Archer Aviation Inc. hold?",
+      "source_line": 6,
+      "stored_correct": 0.0,
+      "answer": "Archer Aviation Inc. holds: AS9100; ISO 9001.",
+      "gold": "FAA Part 145 Certification",
+      "predicted_set": [
+        "as9100",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "faa part 145 certification"
+      ],
+      "unsupported_entries": [
+        "as9100",
+        "iso 9001"
+      ],
+      "missing_entries": [
+        "faa part 145 certification"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Ascend Elements hold?",
+      "source_line": 7,
+      "stored_correct": 1.0,
+      "answer": "Ascend Elements holds: ISO 9001.",
+      "gold": "ISO 9001",
+      "predicted_set": [
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [],
+      "literal_set_correct": true
+    },
+    {
+      "question": "Which certification standards does Aurubis hold?",
+      "source_line": 8,
+      "stored_correct": 0.0,
+      "answer": "Aurubis holds: IATF 16949; ISO 14001; ISO 50001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 45001; ISO 50001; ISO 9001; ISO/IEC 27001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 50001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 50001",
+        "iso 9001",
+        "iso/iec 27001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [
+        "iso 45001",
+        "iso/iec 27001"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Beaver Manufacturing Co. Inc. hold?",
+      "source_line": 9,
+      "stored_correct": 0.0,
+      "answer": "Beaver Manufacturing Co. Inc. holds: ISO 9001.",
+      "gold": "IATF 16949",
+      "predicted_set": [
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949"
+      ],
+      "unsupported_entries": [
+        "iso 9001"
+      ],
+      "missing_entries": [
+        "iatf 16949"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Blue Bird Corp. hold?",
+      "source_line": 10,
+      "stored_correct": 1.0,
+      "answer": "Blue Bird Corp. holds: ISO 9001; TS 16949.",
+      "gold": "ISO 9001",
+      "predicted_set": [
+        "iso 9001",
+        "ts 16949"
+      ],
+      "gold_set": [
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "ts 16949"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Bonnell Aluminum hold?",
+      "source_line": 11,
+      "stored_correct": 1.0,
+      "answer": "Bonnell Aluminum holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [],
+      "literal_set_correct": true
+    },
+    {
+      "question": "Which certification standards does Bosch (Automotive Division) hold?",
+      "source_line": 12,
+      "stored_correct": 1.0,
+      "answer": "Bosch (Automotive Division) holds: IATF 16949; ISO 14001; ISO 27001; ISO 50001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 50001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001"
+      ],
+      "unsupported_entries": [
+        "iso 27001",
+        "iso 50001",
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Bridgestone Bandag hold?",
+      "source_line": 13,
+      "stored_correct": 1.0,
+      "answer": "Bridgestone Bandag holds: ISO 14001; ISO 9001.",
+      "gold": "ISO 9001",
+      "predicted_set": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iso 14001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Carcoustics USA hold?",
+      "source_line": 14,
+      "stored_correct": 0.0,
+      "answer": "Carcoustics USA holds: IATF 16949; ISO 14001; ISO 45001; ISO 9001.",
+      "gold": "DIN EN ISO/IEC 17025; IATF 16949; ISO 14001; TISAX Information Security",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "din en iso/iec 17025",
+        "iatf 16949",
+        "iso 14001",
+        "tisax information security"
+      ],
+      "unsupported_entries": [
+        "iso 45001",
+        "iso 9001"
+      ],
+      "missing_entries": [
+        "din en iso/iec 17025",
+        "tisax information security"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Constellium Automotive USA hold?",
+      "source_line": 15,
+      "stored_correct": 0.0,
+      "answer": "Constellium Automotive USA holds: IATF 16949; ISO 14001; ISO 50001; ISO 9001.",
+      "gold": "EN 15088; IATF 16949; ISO 14001; ISO 45001; ISO 50001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 50001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "en 15088",
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 50001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [
+        "en 15088",
+        "iso 45001"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Continental Automotive hold?",
+      "source_line": 16,
+      "stored_correct": 1.0,
+      "answer": "Continental Automotive holds: IATF 16949; ISO 14001; ISO 27001; ISO 45001; ISO 50001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 45001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 45001",
+        "iso 50001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iso 27001",
+        "iso 50001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does DaeChang Seat Company hold?",
+      "source_line": 17,
+      "stored_correct": 0.0,
+      "answer": "DaeChang Seat Company holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "ISO 14001; TS 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 14001",
+        "ts 16949"
+      ],
+      "unsupported_entries": [
+        "iatf 16949",
+        "iso 9001"
+      ],
+      "missing_entries": [
+        "ts 16949"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Daimler Truck North America hold?",
+      "source_line": 18,
+      "stored_correct": 1.0,
+      "answer": "Daimler Truck North America holds: IATF 16949; ISO 14001; ISO 27001; ISO 37001; ISO 45001; ISO 50001; ISO 9001; ISO/IEC 20000-1.",
+      "gold": "IATF 16949; ISO 14001; ISO 45001; ISO 50001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 37001",
+        "iso 45001",
+        "iso 50001",
+        "iso 9001",
+        "iso/iec 20000-1"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 50001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iso 27001",
+        "iso 37001",
+        "iso/iec 20000-1"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does DeKalb Tool & Die Inc. hold?",
+      "source_line": 19,
+      "stored_correct": 0.0,
+      "answer": "DeKalb Tool & Die Inc. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "ISO 9001; TS 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 9001",
+        "ts 16949"
+      ],
+      "unsupported_entries": [
+        "iatf 16949",
+        "iso 14001"
+      ],
+      "missing_entries": [
+        "ts 16949"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Die-Tech Industries Inc. hold?",
+      "source_line": 20,
+      "stored_correct": 1.0,
+      "answer": "Die-Tech Industries Inc. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iso 14001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Dinex Emissions Inc. hold?",
+      "source_line": 21,
+      "stored_correct": 0.0,
+      "answer": "Dinex Emissions Inc. holds: IATF 16949; ISO 14001; ISO 45001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 45001; ISO 50001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 50001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [
+        "iso 50001"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Dongwon Autopart Technology Georgia LLC hold?",
+      "source_line": 22,
+      "stored_correct": 1.0,
+      "answer": "Dongwon Autopart Technology Georgia LLC holds: IATF 16949; ISO 14001; ISO 45001; ISO 9001.",
+      "gold": "IATF 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949"
+      ],
+      "unsupported_entries": [
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does EVCO Plastics hold?",
+      "source_line": 23,
+      "stored_correct": 0.0,
+      "answer": "EVCO Plastics holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "FDA Registration; ISO 13485; ISO 9001; TS 16949; cGMP",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "cgmp",
+        "fda registration",
+        "iso 13485",
+        "iso 9001",
+        "ts 16949"
+      ],
+      "unsupported_entries": [
+        "iatf 16949",
+        "iso 14001"
+      ],
+      "missing_entries": [
+        "cgmp",
+        "fda registration",
+        "iso 13485",
+        "ts 16949"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Eaton Corp. hold?",
+      "source_line": 24,
+      "stored_correct": 0.0,
+      "answer": "Eaton Corp. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 50001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 50001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [
+        "iso 50001"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Elan Technology Inc. hold?",
+      "source_line": 25,
+      "stored_correct": 0.0,
+      "answer": "Elan Technology Inc. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "ISO 9001; ISO/TS 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 9001",
+        "iso/ts 16949"
+      ],
+      "unsupported_entries": [
+        "iatf 16949",
+        "iso 14001"
+      ],
+      "missing_entries": [
+        "iso/ts 16949"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Enchem America Inc. hold?",
+      "source_line": 26,
+      "stored_correct": 0.0,
+      "answer": "Enchem America Inc. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 37301; ISO 45001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 37301",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [
+        "iso 37301",
+        "iso 45001"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Erdrich USA Inc. hold?",
+      "source_line": 27,
+      "stored_correct": 1.0,
+      "answer": "Erdrich USA Inc. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949"
+      ],
+      "unsupported_entries": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does F&P Georgia Manufacturing hold?",
+      "source_line": 28,
+      "stored_correct": 1.0,
+      "answer": "F&P Georgia Manufacturing holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949"
+      ],
+      "unsupported_entries": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does FOX Factory hold?",
+      "source_line": 29,
+      "stored_correct": 0.0,
+      "answer": "FOX Factory holds: ISO 14001; ISO 9001.",
+      "gold": "ISO 14001; ISO 45001",
+      "predicted_set": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 14001",
+        "iso 45001"
+      ],
+      "unsupported_entries": [
+        "iso 9001"
+      ],
+      "missing_entries": [
+        "iso 45001"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does FREYR Battery hold?",
+      "source_line": 30,
+      "stored_correct": 1.0,
+      "answer": "FREYR Battery holds: IATF 16949; ISO 14001; ISO 45001; ISO 9001.",
+      "gold": "ISO 14001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iatf 16949",
+        "iso 45001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Flambeau Inc. hold?",
+      "source_line": 31,
+      "stored_correct": 1.0,
+      "answer": "Flambeau Inc. holds: IATF 16949; ISO 13485; ISO 14001; ISO 27001; ISO 45001; ISO 9001.",
+      "gold": "IATF 16949; ISO 13485; ISO 14001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 13485",
+        "iso 14001",
+        "iso 27001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 13485",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iso 27001",
+        "iso 45001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Fouts Brothers Fire Equipment hold?",
+      "source_line": 32,
+      "stored_correct": 1.0,
+      "answer": "Fouts Brothers Fire Equipment holds: ISO 9001.",
+      "gold": "ISO 9001",
+      "predicted_set": [
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [],
+      "literal_set_correct": true
+    },
+    {
+      "question": "Which certification standards does Freudenberg-NOK hold?",
+      "source_line": 33,
+      "stored_correct": 1.0,
+      "answer": "Freudenberg-NOK holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949"
+      ],
+      "unsupported_entries": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does GEDIA Georgia LLC hold?",
+      "source_line": 34,
+      "stored_correct": 1.0,
+      "answer": "GEDIA Georgia LLC holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949"
+      ],
+      "unsupported_entries": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Goodyear Tire & Rubber Co. hold?",
+      "source_line": 35,
+      "stored_correct": 0.0,
+      "answer": "Goodyear Tire & Rubber Co. holds: IATF 16949; ISO 14001; ISO 27001; ISO 45001; ISO 9001.",
+      "gold": "AS 9100; IATF 16949; ISO 14001; ISO 45001; ISO 9001; VDA 6.4",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "as 9100",
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001",
+        "vda 6.4"
+      ],
+      "unsupported_entries": [
+        "iso 27001"
+      ],
+      "missing_entries": [
+        "as 9100",
+        "vda 6.4"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Great Dane LP hold?",
+      "source_line": 36,
+      "stored_correct": 1.0,
+      "answer": "Great Dane LP holds: ISO 9001.",
+      "gold": "ISO 9001",
+      "predicted_set": [
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [],
+      "literal_set_correct": true
+    },
+    {
+      "question": "Which certification standards does Great Dane Trailers hold?",
+      "source_line": 37,
+      "stored_correct": 1.0,
+      "answer": "Great Dane Trailers holds: ISO 9001.",
+      "gold": "ISO 9001",
+      "predicted_set": [
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [],
+      "literal_set_correct": true
+    },
+    {
+      "question": "Which certification standards does Grudem hold?",
+      "source_line": 38,
+      "stored_correct": 1.0,
+      "answer": "Grudem holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949"
+      ],
+      "unsupported_entries": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does HELLA Automotive Sales Inc. hold?",
+      "source_line": 39,
+      "stored_correct": 1.0,
+      "answer": "HELLA Automotive Sales Inc. holds: IATF 16949; ISO 14001; ISO 27001; ISO 45001; ISO 50001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 45001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 45001",
+        "iso 50001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iso 27001",
+        "iso 50001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does HEXPOL Compounding Corp. hold?",
+      "source_line": 40,
+      "stored_correct": 1.0,
+      "answer": "HEXPOL Compounding Corp. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "ISO 14001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iatf 16949"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Haering Precision USA LP hold?",
+      "source_line": 41,
+      "stored_correct": 1.0,
+      "answer": "Haering Precision USA LP holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001"
+      ],
+      "unsupported_entries": [
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Hanon Systems USA LLC hold?",
+      "source_line": 42,
+      "stored_correct": 1.0,
+      "answer": "Hanon Systems USA LLC holds: IATF 16949; ISO 14001; ISO 45001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 45001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [],
+      "literal_set_correct": true
+    },
+    {
+      "question": "Which certification standards does Hitachi Astemo Americas Inc. hold?",
+      "source_line": 43,
+      "stored_correct": 1.0,
+      "answer": "Hitachi Astemo Americas Inc. holds: IATF 16949; ISO 14001; ISO 27001; ISO 45001; ISO 50001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 45001",
+        "iso 50001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iso 27001",
+        "iso 45001",
+        "iso 50001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Hollingsworth & Vose Co. hold?",
+      "source_line": 44,
+      "stored_correct": 1.0,
+      "answer": "Hollingsworth & Vose Co. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iso 14001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Honda Development & Manufacturing hold?",
+      "source_line": 45,
+      "stored_correct": 0.0,
+      "answer": "Honda Development & Manufacturing holds: IATF 16949; ISO 14001; ISO 45001; ISO 9001.",
+      "gold": "ISO 14001; ISO 9001; ISO/TS 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 14001",
+        "iso 9001",
+        "iso/ts 16949"
+      ],
+      "unsupported_entries": [
+        "iatf 16949",
+        "iso 45001"
+      ],
+      "missing_entries": [
+        "iso/ts 16949"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Hyundai & LG Energy Solution (LGES) hold?",
+      "source_line": 46,
+      "stored_correct": 0.0,
+      "answer": "Hyundai & LG Energy Solution (LGES) holds: IATF 16949; ISO 14001; ISO 27001; ISO 45001; ISO 9001.",
+      "gold": "IATF 16949; ISO 9001; ISO/IEC 27001; ISO/TS 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 9001",
+        "iso/iec 27001",
+        "iso/ts 16949"
+      ],
+      "unsupported_entries": [
+        "iso 14001",
+        "iso 27001",
+        "iso 45001"
+      ],
+      "missing_entries": [
+        "iso/iec 27001",
+        "iso/ts 16949"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Hyundai Industrial Co. hold?",
+      "source_line": 47,
+      "stored_correct": 0.0,
+      "answer": "Hyundai Industrial Co. holds: IATF 16949; ISO 14001; ISO 45001; ISO 9001.",
+      "gold": "ISO 14001; ISO/TS 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 14001",
+        "iso/ts 16949"
+      ],
+      "unsupported_entries": [
+        "iatf 16949",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "missing_entries": [
+        "iso/ts 16949"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Hyundai MOBIS (Georgia) hold?",
+      "source_line": 48,
+      "stored_correct": 1.0,
+      "answer": "Hyundai MOBIS (Georgia) holds: IATF 16949; ISO 14001; ISO 27001; ISO 45001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 45001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iso 27001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Hyundai Motor Group hold?",
+      "source_line": 49,
+      "stored_correct": 1.0,
+      "answer": "Hyundai Motor Group holds: IATF 16949; ISO 14001; ISO 27001; ISO 37001; ISO 37301; ISO 45001; ISO 50001; ISO 9001.",
+      "gold": "IATF 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 37001",
+        "iso 37301",
+        "iso 45001",
+        "iso 50001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949"
+      ],
+      "unsupported_entries": [
+        "iso 14001",
+        "iso 27001",
+        "iso 37001",
+        "iso 37301",
+        "iso 45001",
+        "iso 50001",
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Hyundai Transys Georgia Powertrain hold?",
+      "source_line": 50,
+      "stored_correct": 0.0,
+      "answer": "Hyundai Transys Georgia Powertrain holds: IATF 16949; ISO 14001; ISO 45001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 26262; ISO 45001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 26262",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [
+        "iso 26262"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Hyundai Transys Georgia Seating Systems hold?",
+      "source_line": 51,
+      "stored_correct": 1.0,
+      "answer": "Hyundai Transys Georgia Seating Systems holds: IATF 16949; ISO 14001; ISO 45001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 45001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001"
+      ],
+      "unsupported_entries": [
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does IMS Gear Georgia Inc. hold?",
+      "source_line": 52,
+      "stored_correct": 1.0,
+      "answer": "IMS Gear Georgia Inc. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949"
+      ],
+      "unsupported_entries": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Inalfa Roof Systems Inc. hold?",
+      "source_line": 53,
+      "stored_correct": 0.0,
+      "answer": "Inalfa Roof Systems Inc. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 27001; OHSAS 18004; VDA 6.3",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "ohsas 18004",
+        "vda 6.3"
+      ],
+      "unsupported_entries": [
+        "iso 9001"
+      ],
+      "missing_entries": [
+        "iso 27001",
+        "ohsas 18004",
+        "vda 6.3"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does JAC Products Inc. hold?",
+      "source_line": 54,
+      "stored_correct": 1.0,
+      "answer": "JAC Products Inc. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001"
+      ],
+      "unsupported_entries": [
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does JTEKT North America Corp. hold?",
+      "source_line": 55,
+      "stored_correct": 0.0,
+      "answer": "JTEKT North America Corp. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "AS9100D; IATF 16949; ISO 14001; ISO 45001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "as9100d",
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [
+        "as9100d",
+        "iso 45001"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Kautex Inc. hold?",
+      "source_line": 56,
+      "stored_correct": 0.0,
+      "answer": "Kautex Inc. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 45001; ISO 50001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 50001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [
+        "iso 45001",
+        "iso 50001"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Kia Georgia Inc. hold?",
+      "source_line": 57,
+      "stored_correct": 0.0,
+      "answer": "Kia Georgia Inc. holds: IATF 16949; ISO 14001; ISO 27001; ISO 45001; ISO 50001; ISO 9001.",
+      "gold": "ISO 14001; ISO/TS 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 45001",
+        "iso 50001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 14001",
+        "iso/ts 16949"
+      ],
+      "unsupported_entries": [
+        "iatf 16949",
+        "iso 27001",
+        "iso 45001",
+        "iso 50001",
+        "iso 9001"
+      ],
+      "missing_entries": [
+        "iso/ts 16949"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Kumho Tire USA Inc. hold?",
+      "source_line": 58,
+      "stored_correct": 0.0,
+      "answer": "Kumho Tire USA Inc. holds: IATF 16949; ISO 14001; ISO 27001; ISO 45001; ISO 9001.",
+      "gold": "EPA Smartway Certified; IATF 16949; ISO 14001; ISO 37001; ISO 37301; ISO 45001; Three-Peak Mountain Snowflake",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "epa smartway certified",
+        "iatf 16949",
+        "iso 14001",
+        "iso 37001",
+        "iso 37301",
+        "iso 45001",
+        "three-peak mountain snowflake"
+      ],
+      "unsupported_entries": [
+        "iso 27001",
+        "iso 9001"
+      ],
+      "missing_entries": [
+        "epa smartway certified",
+        "iso 37001",
+        "iso 37301",
+        "three-peak mountain snowflake"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Kyungshin America Corp. hold?",
+      "source_line": 59,
+      "stored_correct": 1.0,
+      "answer": "Kyungshin America Corp. holds: IATF 16949; ISO 14001; ISO 45001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 45001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [],
+      "literal_set_correct": true
+    },
+    {
+      "question": "Which certification standards does Lear Corporation hold?",
+      "source_line": 60,
+      "stored_correct": 1.0,
+      "answer": "Lear Corporation holds: IATF 16949; ISO 14001; ISO 27001; ISO 45001; ISO 9001.",
+      "gold": "IATF 16949; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iso 14001",
+        "iso 27001",
+        "iso 45001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Lund International Inc./Ventshade Division hold?",
+      "source_line": 61,
+      "stored_correct": 0.0,
+      "answer": "Lund International Inc./Ventshade Division holds: ISO 9001.",
+      "gold": "ISO/TS 16949",
+      "predicted_set": [
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso/ts 16949"
+      ],
+      "unsupported_entries": [
+        "iso 9001"
+      ],
+      "missing_entries": [
+        "iso/ts 16949"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Lyle Industries Inc. hold?",
+      "source_line": 62,
+      "stored_correct": 1.0,
+      "answer": "Lyle Industries Inc. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iatf 16949",
+        "iso 14001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Magna International hold?",
+      "source_line": 63,
+      "stored_correct": 1.0,
+      "answer": "Magna International holds: IATF 16949; ISO 14001; ISO 27001; ISO 45001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iso 27001",
+        "iso 45001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Master Craft Engineering Inc. hold?",
+      "source_line": 64,
+      "stored_correct": 1.0,
+      "answer": "Master Craft Engineering Inc. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iatf 16949",
+        "iso 14001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Maxxis International USA hold?",
+      "source_line": 65,
+      "stored_correct": 0.0,
+      "answer": "Maxxis International USA holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "ISO 14001; ISO 9001; QS-9000",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 14001",
+        "iso 9001",
+        "qs-9000"
+      ],
+      "unsupported_entries": [
+        "iatf 16949"
+      ],
+      "missing_entries": [
+        "qs-9000"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Milliken & Co./Valway Plant hold?",
+      "source_line": 66,
+      "stored_correct": 0.0,
+      "answer": "Milliken & Co./Valway Plant holds: ISO 14001; ISO 9001.",
+      "gold": "ISO 14001; ISO 9001; ISO/IEC 27001",
+      "predicted_set": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 14001",
+        "iso 9001",
+        "iso/iec 27001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [
+        "iso/iec 27001"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Minebea AccessSolutions USA Inc. hold?",
+      "source_line": 67,
+      "stored_correct": 1.0,
+      "answer": "Minebea AccessSolutions USA Inc. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [],
+      "literal_set_correct": true
+    },
+    {
+      "question": "Which certification standards does Mobis Alabama LLC hold?",
+      "source_line": 68,
+      "stored_correct": 1.0,
+      "answer": "Mobis Alabama LLC holds: IATF 16949; ISO 14001; ISO 45001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001"
+      ],
+      "unsupported_entries": [
+        "iso 45001",
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does MollerTech LLC hold?",
+      "source_line": 69,
+      "stored_correct": 1.0,
+      "answer": "MollerTech LLC holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949"
+      ],
+      "unsupported_entries": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Morgan Corp. hold?",
+      "source_line": 70,
+      "stored_correct": 0.0,
+      "answer": "Morgan Corp. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 45001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [
+        "iso 45001"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Murata Electronics North America Inc. hold?",
+      "source_line": 71,
+      "stored_correct": 1.0,
+      "answer": "Murata Electronics North America Inc. holds: IATF 16949; ISO 14001; ISO 27001; ISO 45001; ISO 9001.",
+      "gold": "ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 45001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does NIFCO KTW America Corp. hold?",
+      "source_line": 72,
+      "stored_correct": 0.0,
+      "answer": "NIFCO KTW America Corp. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; Quality Management System",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "quality management system"
+      ],
+      "unsupported_entries": [
+        "iso 9001"
+      ],
+      "missing_entries": [
+        "quality management system"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Neaton Rome Inc. hold?",
+      "source_line": 73,
+      "stored_correct": 0.0,
+      "answer": "Neaton Rome Inc. holds: ISO 9001.",
+      "gold": "IATF 16949; ISO 9001",
+      "predicted_set": [
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [
+        "iatf 16949"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Nidec Elesys Americas Corp. hold?",
+      "source_line": 74,
+      "stored_correct": 1.0,
+      "answer": "Nidec Elesys Americas Corp. holds: IATF 16949; ISO 14001; ISO 27001; ISO 45001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001"
+      ],
+      "unsupported_entries": [
+        "iso 27001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Nile Automotive hold?",
+      "source_line": 75,
+      "stored_correct": 1.0,
+      "answer": "Nile Automotive holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iso 14001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Nivel Parts & Manufacturing Co. LLC hold?",
+      "source_line": 76,
+      "stored_correct": 1.0,
+      "answer": "Nivel Parts & Manufacturing Co. LLC holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949"
+      ],
+      "unsupported_entries": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Novelis Inc. hold?",
+      "source_line": 77,
+      "stored_correct": 0.0,
+      "answer": "Novelis Inc. holds: IATF 16949; ISO 14001; ISO 50001; ISO 9001.",
+      "gold": "Aluminium Stewardship Initiative Chain of Custody; DIN EN ISO 14001; IATF 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 50001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "aluminium stewardship initiative chain of custody",
+        "din en iso 14001",
+        "iatf 16949"
+      ],
+      "unsupported_entries": [
+        "iso 14001",
+        "iso 50001",
+        "iso 9001"
+      ],
+      "missing_entries": [
+        "aluminium stewardship initiative chain of custody",
+        "din en iso 14001"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does OTR Wheel Engineering Inc. hold?",
+      "source_line": 78,
+      "stored_correct": 1.0,
+      "answer": "OTR Wheel Engineering Inc. holds: ISO 9001.",
+      "gold": "ISO 9001",
+      "predicted_set": [
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [],
+      "literal_set_correct": true
+    },
+    {
+      "question": "Which certification standards does Oneda Corp. hold?",
+      "source_line": 79,
+      "stored_correct": 1.0,
+      "answer": "Oneda Corp. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [],
+      "literal_set_correct": true
+    },
+    {
+      "question": "Which certification standards does PIOLAX Corp. hold?",
+      "source_line": 80,
+      "stored_correct": 1.0,
+      "answer": "PIOLAX Corp. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [],
+      "literal_set_correct": true
+    },
+    {
+      "question": "Which certification standards does PPG Industries Inc. hold?",
+      "source_line": 81,
+      "stored_correct": 0.0,
+      "answer": "PPG Industries Inc. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "AS9100D; IATF 16949; ISO 14001; ISO 9001; ISO/IEC 17025; Ontario Regulation 455/09; TRA",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "as9100d",
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001",
+        "iso/iec 17025",
+        "ontario regulation 455/09",
+        "tra"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [
+        "as9100d",
+        "iso/iec 17025",
+        "ontario regulation 455/09",
+        "tra"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Panduit Corp. hold?",
+      "source_line": 82,
+      "stored_correct": 1.0,
+      "answer": "Panduit Corp. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iso 14001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Peerless-Winsmith Inc. hold?",
+      "source_line": 83,
+      "stored_correct": 1.0,
+      "answer": "Peerless-Winsmith Inc. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iatf 16949",
+        "iso 14001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Perkins Small Engines LLC hold?",
+      "source_line": 84,
+      "stored_correct": 0.0,
+      "answer": "Perkins Small Engines LLC holds: ISO 14001; ISO 9001.",
+      "gold": "BS EN ISO 9001; ISO 14001; ISO 9001",
+      "predicted_set": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "bs en iso 9001",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [
+        "bs en iso 9001"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Peterson Spring hold?",
+      "source_line": 85,
+      "stored_correct": 0.0,
+      "answer": "Peterson Spring holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 9001; ISO/TS 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001",
+        "iso/ts 16949"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [
+        "iso/ts 16949"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Pirelli Tire North America LLC hold?",
+      "source_line": 86,
+      "stored_correct": 0.0,
+      "answer": "Pirelli Tire North America LLC holds: IATF 16949; ISO 14001; ISO 27001; ISO 45001; ISO 9001; ISO/TS 16949.",
+      "gold": "IATF 16949; ISO 14001; ISO 37001; ISO 45001; ISO 9001; ISO/IEC 17025; ISO/TS 16949; SA8000; UNI EN 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 45001",
+        "iso 9001",
+        "iso/ts 16949"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 37001",
+        "iso 45001",
+        "iso 9001",
+        "iso/iec 17025",
+        "iso/ts 16949",
+        "sa8000",
+        "uni en 9001"
+      ],
+      "unsupported_entries": [
+        "iso 27001"
+      ],
+      "missing_entries": [
+        "iso 37001",
+        "iso/iec 17025",
+        "sa8000",
+        "uni en 9001"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Rivian Automotive hold?",
+      "source_line": 87,
+      "stored_correct": 0.0,
+      "answer": "Rivian Automotive holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "ISO/IEC 27001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso/iec 27001"
+      ],
+      "unsupported_entries": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "missing_entries": [
+        "iso/iec 27001"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Robert Bosch LLC hold?",
+      "source_line": 88,
+      "stored_correct": 0.0,
+      "answer": "Robert Bosch LLC holds: IATF 16949; ISO 14001; ISO 27001; ISO 37001; ISO 45001; ISO 50001; ISO 9001; ISO/IEC 20000-1.",
+      "gold": "FSC; IATF 16949; ISO 14001; ISO 27001; ISO 45001; ISO 50001; ISO 9001; ISO/IEC 20000-1; TISAX",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 37001",
+        "iso 45001",
+        "iso 50001",
+        "iso 9001",
+        "iso/iec 20000-1"
+      ],
+      "gold_set": [
+        "fsc",
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 45001",
+        "iso 50001",
+        "iso 9001",
+        "iso/iec 20000-1",
+        "tisax"
+      ],
+      "unsupported_entries": [
+        "iso 37001"
+      ],
+      "missing_entries": [
+        "fsc",
+        "tisax"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does SAFT America Inc. hold?",
+      "source_line": 89,
+      "stored_correct": 1.0,
+      "answer": "SAFT America Inc. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [],
+      "literal_set_correct": true
+    },
+    {
+      "question": "Which certification standards does SK Battery America hold?",
+      "source_line": 90,
+      "stored_correct": 1.0,
+      "answer": "SK Battery America holds: IATF 16949; ISO 14001; ISO 45001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001"
+      ],
+      "unsupported_entries": [
+        "iso 45001",
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does SKF USA Inc. hold?",
+      "source_line": 91,
+      "stored_correct": 1.0,
+      "answer": "SKF USA Inc. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949"
+      ],
+      "unsupported_entries": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does SRG Global Inc. hold?",
+      "source_line": 92,
+      "stored_correct": 1.0,
+      "answer": "SRG Global Inc. holds: ISO 14001; ISO 9001.",
+      "gold": "ISO 14001",
+      "predicted_set": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 14001"
+      ],
+      "unsupported_entries": [
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Sejong Georgia LLC hold?",
+      "source_line": 93,
+      "stored_correct": 1.0,
+      "answer": "Sejong Georgia LLC holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949"
+      ],
+      "unsupported_entries": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Seoyon E-HWA hold?",
+      "source_line": 94,
+      "stored_correct": 0.0,
+      "answer": "Seoyon E-HWA holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 45001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001"
+      ],
+      "unsupported_entries": [
+        "iso 9001"
+      ],
+      "missing_entries": [
+        "iso 45001"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Seoyon E-Hwa Interior Systems hold?",
+      "source_line": 95,
+      "stored_correct": 0.0,
+      "answer": "Seoyon E-Hwa Interior Systems holds: IATF 16949; ISO 14001; ISO 45001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 45001; ISO 9001; ISO/TS 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001",
+        "iso/ts 16949"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [
+        "iso/ts 16949"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Sewon America Inc. hold?",
+      "source_line": 96,
+      "stored_correct": 0.0,
+      "answer": "Sewon America Inc. holds: ISO 14001; ISO 9001.",
+      "gold": "ISO 14001; ISO 45001; ISO 9001",
+      "predicted_set": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [
+        "iso 45001"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Solvay Specialty Polymers USA LLC hold?",
+      "source_line": 97,
+      "stored_correct": 0.0,
+      "answer": "Solvay Specialty Polymers USA LLC holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 13485; ISO 9001; ISO/TS 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 13485",
+        "iso 9001",
+        "iso/ts 16949"
+      ],
+      "unsupported_entries": [
+        "iso 14001"
+      ],
+      "missing_entries": [
+        "iso 13485",
+        "iso/ts 16949"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Suhner Manufacturing Corp. hold?",
+      "source_line": 98,
+      "stored_correct": 0.0,
+      "answer": "Suhner Manufacturing Corp. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "AS/EN 9100; IATF 16949; ISO 14001; ISO 45001; ISO 9001; ISO/TS 22163-IRIS",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "as/en 9100",
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001",
+        "iso/ts 22163-iris"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [
+        "as/en 9100",
+        "iso 45001",
+        "iso/ts 22163-iris"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Superior Essex Inc. hold?",
+      "source_line": 99,
+      "stored_correct": 0.0,
+      "answer": "Superior Essex Inc. holds: IATF 16949; ISO 13485; ISO 14001; ISO 45001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; Multi-Attribute Label Certification",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 13485",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "multi-attribute label certification"
+      ],
+      "unsupported_entries": [
+        "iso 13485",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "missing_entries": [
+        "multi-attribute label certification"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does TCI Powder Coatings hold?",
+      "source_line": 100,
+      "stored_correct": 0.0,
+      "answer": "TCI Powder Coatings holds: ISO 14001; ISO 9001.",
+      "gold": "FDA/NSF-51; ISO 9001; QUALICOAT; UL Certification",
+      "predicted_set": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "fda/nsf-51",
+        "iso 9001",
+        "qualicoat",
+        "ul certification"
+      ],
+      "unsupported_entries": [
+        "iso 14001"
+      ],
+      "missing_entries": [
+        "fda/nsf-51",
+        "qualicoat",
+        "ul certification"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does TDK Components USA Inc. hold?",
+      "source_line": 101,
+      "stored_correct": 0.0,
+      "answer": "TDK Components USA Inc. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "ISO 14001; ISO 50001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 14001",
+        "iso 50001"
+      ],
+      "unsupported_entries": [
+        "iatf 16949",
+        "iso 9001"
+      ],
+      "missing_entries": [
+        "iso 50001"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does TE Connectivity hold?",
+      "source_line": 102,
+      "stored_correct": 1.0,
+      "answer": "TE Connectivity holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [],
+      "literal_set_correct": true
+    },
+    {
+      "question": "Which certification standards does TI Fluid Systems hold?",
+      "source_line": 103,
+      "stored_correct": 1.0,
+      "answer": "TI Fluid Systems holds: IATF 16949; ISO 14001; ISO 45001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001"
+      ],
+      "unsupported_entries": [
+        "iso 45001",
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Thermal Ceramics Inc. hold?",
+      "source_line": 104,
+      "stored_correct": 0.0,
+      "answer": "Thermal Ceramics Inc. holds: ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 9001",
+      "predicted_set": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [
+        "iatf 16949"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Trenton Pressing hold?",
+      "source_line": 105,
+      "stored_correct": 1.0,
+      "answer": "Trenton Pressing holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949"
+      ],
+      "unsupported_entries": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Trenton Pressing Inc. hold?",
+      "source_line": 106,
+      "stored_correct": 1.0,
+      "answer": "Trenton Pressing Inc. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949"
+      ],
+      "unsupported_entries": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Valeo hold?",
+      "source_line": 107,
+      "stored_correct": 1.0,
+      "answer": "Valeo holds: IATF 16949; ISO 14001; ISO 27001; ISO 50001; ISO 9001.",
+      "gold": "ISO 14001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 50001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iatf 16949",
+        "iso 27001",
+        "iso 50001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Vernay hold?",
+      "source_line": 108,
+      "stored_correct": 0.0,
+      "answer": "Vernay holds: ISO 14001; ISO 9001.",
+      "gold": "FDA Quality System Regulations; IATF 16949; ISO 13485; ISO 14001; ISO 9001",
+      "predicted_set": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "fda quality system regulations",
+        "iatf 16949",
+        "iso 13485",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [
+        "fda quality system regulations",
+        "iatf 16949",
+        "iso 13485"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Vista Metals Corp. hold?",
+      "source_line": 109,
+      "stored_correct": 0.0,
+      "answer": "Vista Metals Corp. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "AS9100; IATF 16949; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "as9100",
+        "iatf 16949",
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iso 14001"
+      ],
+      "missing_entries": [
+        "as9100"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Volvo Group North America hold?",
+      "source_line": 110,
+      "stored_correct": 0.0,
+      "answer": "Volvo Group North America holds: ISO 14001; ISO 9001.",
+      "gold": "ISO 14001; ISO 45001; ISO 9001",
+      "predicted_set": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [
+        "iso 45001"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does WIKA USA hold?",
+      "source_line": 111,
+      "stored_correct": 0.0,
+      "answer": "WIKA USA holds: ISO 9001.",
+      "gold": "AS9100; EN ISO/IEC 80079-34; ISO 14001; ISO 45001; ISO 9001",
+      "predicted_set": [
+        "iso 9001"
+      ],
+      "gold_set": [
+        "as9100",
+        "en iso/iec 80079-34",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [
+        "as9100",
+        "en iso/iec 80079-34",
+        "iso 14001",
+        "iso 45001"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Wabash National Corp. hold?",
+      "source_line": 112,
+      "stored_correct": 1.0,
+      "answer": "Wabash National Corp. holds: ISO 14001; ISO 9001.",
+      "gold": "ISO 14001",
+      "predicted_set": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 14001"
+      ],
+      "unsupported_entries": [
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Woodbridge Foam Corp. hold?",
+      "source_line": 113,
+      "stored_correct": 1.0,
+      "answer": "Woodbridge Foam Corp. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [],
+      "literal_set_correct": true
+    },
+    {
+      "question": "Which certification standards does Woory Industrial Co. hold?",
+      "source_line": 114,
+      "stored_correct": 1.0,
+      "answer": "Woory Industrial Co. holds: IATF 16949; ISO 14001; ISO 9001.",
+      "gold": "ISO 14001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iatf 16949"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does YKK USA Inc. hold?",
+      "source_line": 115,
+      "stored_correct": 0.0,
+      "answer": "YKK USA Inc. holds: ISO 14001; ISO 9001.",
+      "gold": "ISO 14001; ISO 45001; ISO 9001; OEKO-TEX STANDARD 100; bluesign system",
+      "predicted_set": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "bluesign system",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001",
+        "oeko-tex standard 100"
+      ],
+      "unsupported_entries": [],
+      "missing_entries": [
+        "bluesign system",
+        "iso 45001",
+        "oeko-tex standard 100"
+      ],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Yachiyo Manufacturing of America LLC hold?",
+      "source_line": 116,
+      "stored_correct": 1.0,
+      "answer": "Yachiyo Manufacturing of America LLC holds: IATF 16949; ISO 14001; ISO 45001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001"
+      ],
+      "unsupported_entries": [
+        "iso 45001",
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does Yazaki North America hold?",
+      "source_line": 117,
+      "stored_correct": 1.0,
+      "answer": "Yazaki North America holds: IATF 16949; ISO 14001; ISO 27001; ISO 45001; ISO 50001; ISO 9001.",
+      "gold": "IATF 16949; ISO 14001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 45001",
+        "iso 50001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iatf 16949",
+        "iso 14001"
+      ],
+      "unsupported_entries": [
+        "iso 27001",
+        "iso 45001",
+        "iso 50001",
+        "iso 9001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    },
+    {
+      "question": "Which certification standards does ZF Gainesville LLC hold?",
+      "source_line": 118,
+      "stored_correct": 1.0,
+      "answer": "ZF Gainesville LLC holds: IATF 16949; ISO 14001; ISO 27001; ISO 45001; ISO 9001.",
+      "gold": "ISO 14001; ISO 9001",
+      "predicted_set": [
+        "iatf 16949",
+        "iso 14001",
+        "iso 27001",
+        "iso 45001",
+        "iso 9001"
+      ],
+      "gold_set": [
+        "iso 14001",
+        "iso 9001"
+      ],
+      "unsupported_entries": [
+        "iatf 16949",
+        "iso 27001",
+        "iso 45001"
+      ],
+      "missing_entries": [],
+      "literal_set_correct": false
+    }
+  ]
+}

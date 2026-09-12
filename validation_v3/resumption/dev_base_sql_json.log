@@ -1,0 +1,69 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/8 [00:00<?, ?it/s]Loading checkpoint shards:  12%|█▎        | 1/8 [00:02<00:14,  2.09s/it]Loading checkpoint shards:  25%|██▌       | 2/8 [00:04<00:12,  2.15s/it]Loading checkpoint shards:  38%|███▊      | 3/8 [00:06<00:10,  2.16s/it]Loading checkpoint shards:  50%|█████     | 4/8 [00:08<00:08,  2.18s/it]Loading checkpoint shards:  62%|██████▎   | 5/8 [00:10<00:06,  2.16s/it]Loading checkpoint shards:  75%|███████▌  | 6/8 [00:12<00:04,  2.14s/it]Loading checkpoint shards:  88%|████████▊ | 7/8 [00:15<00:02,  2.16s/it]Loading checkpoint shards: 100%|██████████| 8/8 [00:16<00:00,  1.76s/it]Loading checkpoint shards: 100%|██████████| 8/8 [00:16<00:00,  2.00s/it]
+The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+DEV_S_4_category correct
+DEV_S_4_industry_group correct
+DEV_S_4_primary_facility_type correct
+DEV_S_7_category correct
+DEV_S_7_industry_group correct
+DEV_S_7_primary_facility_type correct
+DEV_S_16_category correct
+DEV_S_16_industry_group correct
+DEV_S_16_primary_facility_type correct
+DEV_S_19_category correct
+DEV_S_19_industry_group correct
+DEV_S_19_primary_facility_type correct
+DEV_S_77_category correct
+DEV_S_77_industry_group correct
+DEV_S_77_primary_facility_type correct
+DEV_S_79_category correct
+DEV_S_79_industry_group correct
+DEV_S_79_primary_facility_type correct
+DEV_S_81_category correct
+DEV_S_81_industry_group correct
+DEV_S_81_primary_facility_type correct
+DEV_S_102_category correct
+DEV_S_102_industry_group correct
+DEV_S_102_primary_facility_type correct
+DEV_S_108_category correct
+DEV_S_108_industry_group correct
+DEV_S_108_primary_facility_type correct
+DEV_S_113_category correct
+DEV_S_113_industry_group correct
+DEV_S_113_primary_facility_type correct
+DEV_S_117_category correct
+DEV_S_117_industry_group correct
+DEV_S_117_primary_facility_type correct
+DEV_S_124_category correct
+DEV_S_124_industry_group correct
+DEV_S_124_primary_facility_type correct
+DEV_S_132_category correct
+DEV_S_132_industry_group correct
+DEV_S_132_primary_facility_type correct
+DEV_S_170_category correct
+DEV_S_170_industry_group correct
+DEV_S_170_primary_facility_type correct
+DEV_S_173_category correct
+DEV_S_173_industry_group correct
+DEV_S_173_primary_facility_type correct
+DEV_S_194_category correct
+DEV_S_194_industry_group correct
+DEV_S_194_primary_facility_type correct
+DEV_S_201_category correct
+DEV_S_201_industry_group correct
+DEV_S_201_primary_facility_type correct
+{
+  "count": 51,
+  "correct": 51,
+  "status_counts": {
+    "correct": 51,
+    "incorrect": 0,
+    "generation_failure": 0,
+    "parse_failure": 0,
+    "SQL_error": 0,
+    "timeout": 0,
+    "truncated_output": 0,
+    "invalid_output": 0
+  },
+  "prediction_sha256": "7c34d796280f698dfb634d32b9fbcacbe0be7dfb9695d6a03ed3dac2d320a326"
+}

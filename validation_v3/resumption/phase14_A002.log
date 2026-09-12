@@ -1,0 +1,15 @@
+  [PASS] nonzero_items: 1075 D items
+  [PASS] every_item_traces_to_pool_task_id: every D item's task_id is present in STRUCTURED_TASK_POOL_v3.jsonl
+  [PASS] unique_example_ids: 1075 unique ids
+  [PASS] gold_100pct_execution: 0 execution failures across 1075 items
+  [PASS] identical_task_id_set_as_C: 1075 task_ids, identical to train_C_answers_v3.jsonl
+  [PASS] byte_equal_question_and_metadata_vs_C: question text and core metadata are byte-identical to C's matching item for every shared task_id
+  [PASS] no_semicolon_string_membership: no gold_sql compares a child field against a semicolon-joined string literal (child tables are queried via JOIN)
+  [PASS] join_counts_recorded: arity 0: 515 · arity 1: 198 · arity 2: 362
+  [PASS] only_eligible_operation_families: operation families present: {'filter': 1075}, none held out
+  [PASS] no_row_id_where_filter: row_id appears only inside JOIN...ON clauses, never a WHERE filter (README:541-543)
+  [PASS] answer_sizes_within_caps: every item's train_kb_gold row count is within the README Phase 14 caps (list/filter 1-40, cross-table 1-25) and satisfies the implicit minimum of 1 for a list-shaped answer
+
+All Phase 14 gates passed.
+  datasets_v3/train_D_sql_v3.jsonl  sha256 f986dc6c1a00cd61d70074a07c8c6e54b757cf6963e7f13e7ef48d1cc3789307
+  items 1075 of 1090 pool tasks

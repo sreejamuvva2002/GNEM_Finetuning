@@ -1,0 +1,51 @@
+  [PASS] canonical_sha_matches_phase2: 42851c0a2e93209ac5d37e73ce07447009e038b9db625004212722d7738e6488
+  [PASS] split_sha_matches_phase3: a59d673ac9acafd1f70f60cf560491c32d8d11bacdab3c9bc5d77016b536b701
+  [PASS] canonical_and_split_row_ids_identical: 205 canonical vs 205 split rows
+  [PASS] train_kb_row_count: 148 == 148
+  [PASS] train_dev_kb_row_count: 165 == 165
+  [PASS] full_kb_row_count: 205 == 205
+  [PASS] train_kb_ids_equal_phase3_train: 148 rows == exact train split
+  [PASS] train_dev_kb_ids_equal_train_union_dev: 165 rows == train ∪ dev
+  [PASS] full_kb_ids_equal_all_205: 205 rows == all canonical row_ids
+  [PASS] scope_nesting_train_sub_traindev_sub_full: train_kb ⊂ train_dev_kb ⊂ full_kb (strict)
+  [PASS] no_dev_rows_in_train_kb: 0 dev rows leaked
+  [PASS] no_test_rows_in_train_kb: 0 test rows leaked
+  [PASS] no_test_rows_in_train_dev_kb: 0 test rows leaked
+  [PASS] all_test_rows_only_via_full_kb: all 40 test rows reachable only through full_kb
+  [PASS] no_company_partially_inside_a_scope: 0 partial companies
+  [PASS] no_split_group_partially_inside_a_scope: 0 partial split groups
+  [PASS] all_18_canonical_fields_mapped: 18 fields
+  [PASS] canonical_values_preserved_byte_for_byte: 0 drifted field(s) across 205 rows
+  [PASS] avs_row16_trailing_space_preserved: '6110 McFarland Station Dr, Alpharetta, GA 30004 '
+  [PASS] employment_populated_all_rows: 205/205
+  [PASS] model_facing_excludes_forbidden_fields: 20 allowlisted fields; split/split_group/lat/long absent; all source fields included under A-002
+  [PASS] model_facing_is_allowlist_not_deletion: projection built from MODEL_FACING_FIELDS
+  [PASS] all_source_fields_model_facing_under_a002: all 18 source fields preserved in model-facing records for all 205 rows
+  [PASS] certification_count_source_values_including_zero_preserved: recorded entry count retained; not a current-validity claim
+  [PASS] no_latitude_longitude_anywhere: no geo columns produced
+  [PASS] derived_geo_is_literal_substring_of_own_location: 0 value(s) not present in their own Location
+  [PASS] address_independence_proven: re-derivation from Location alone is byte-identical
+  [PASS] sentinel_locations_yield_null_geo: 3 sentinel row(s) -> NULL/NULL
+  [PASS] a001_valeo_187: location/address = Not specified, city/county NULL
+  [PASS] a001_volvo_192_193: location = Not applicable, real NJ/NC address preserved, city/county NULL
+  [PASS] hyundai_counties_not_reconciled: 3 distinct counties from 3 Locations despite 1 shared Address
+  [PASS] no_unparseable_real_locations: 0 real Location(s) not fully parseable
+  [PASS] geo_derivation_deterministic: repeat derivation identical
+  [PASS] static_check_reports_coverage_honestly: training generators scanned = 6; forbidden full_kb call sites = 0; proves no forbidden scope literal in 6 scanned file(s)
+
+  [PASS] fault:omitted_scope: TypeError: load_kb() missing 1 required positional argument: 'scope'
+  [PASS] fault:none_scope: ScopeError: KB scope is required and must be named explicitly; got None. Valid scopes: tra
+  [PASS] fault:invalid_scope_string: ScopeError: unknown KB scope 'full'; there is no default scope. Valid scopes: train_kb, tr
+  [PASS] fault:invalid_scope_type: ScopeError: unknown KB scope 123; there is no default scope. Valid scopes: train_kb, train
+  [PASS] fault:case_variant_scope: ScopeError: unknown KB scope 'FULL_KB'; there is no default scope. Valid scopes: train_kb,
+  [PASS] fault:canonical_hash_drift: IntegrityError: canonical records drifted
+  [PASS] fault:split_hash_drift: IntegrityError: split artifact drifted
+  [PASS] fault:incorrect_split_membership: IntegrityError: scope 'train_kb' produced 188 rows, expected 148
+  [PASS] fault:model_facing_leak_detected: ScopeError: model-facing projection would expose split_group
+  [PASS] fault:geography_cannot_depend_on_address: ScopeError: Address '301 Teco Dr, Pendergrass, GA 30567' yields (None, None), never the ro
+
+All Phase 4 gates passed.
+  train_kb      rows=148 companies=141 groups=134
+  train_dev_kb  rows=165 companies=158 groups=151
+  full_kb       rows=205 companies=193 groups=186
+  city derived 202/205 · county derived 202/205 · NULL city 3 · NULL county 3

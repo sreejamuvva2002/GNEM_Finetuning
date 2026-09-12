@@ -1,0 +1,100 @@
+[
+  {
+    "script": "phase5_fault_tests.py",
+    "args": [],
+    "exit_code": 0,
+    "last_lines": [
+      "  [PASS] fault:forbidden_schema_field_split_group: caught by ['no_forbidden_columns_anywhere', 'no_view_exposes_forbidden_column']",
+      "  [PASS] fault:child_parent_company_mismatch: caught by ['processes_child_parent_company_match']",
+      "  [PASS] fault:altered_term_breaks_round_trip: caught by ['round_trip_reconstructs_canonical_exactly', 'services_terms_verbatim_from_canonical']",
+      "",
+      "All 8 faults correctly caught."
+    ]
+  },
+  {
+    "script": "phase6_fault_tests.py",
+    "args": [],
+    "exit_code": 0,
+    "last_lines": [
+      "  [PASS] fault:frozen_db_hash_drift: Gate: Phase 5 database drifted",
+      "  [PASS] fault:frozen_canonical_hash_drift: IntegrityError: canonical records drifted",
+      "",
+      "All 16 fault checks passed.",
+      "[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used."
+    ]
+  },
+  {
+    "script": "phase7_grader_tests.py",
+    "args": [],
+    "exit_code": 0,
+    "last_lines": [
+      "  [PASS] multipart_timeout_classified_correctly: status=timeout (expected timeout, not SQL_error)",
+      "",
+      "All Phase 7 gates passed (81 checks).",
+      "  executor sqlexec_v3.0  sha256 a6c06b71dd97541997bedc2202e1980ab2e4cdd721aaf20ff43eacfda876c461",
+      "  grader   grade_v3.1  sha256 1051a161ac848ad058dda424417e296571404e6fd5dbe10174994cea7df0c6aa"
+    ]
+  },
+  {
+    "script": "phase8_eval_stack_tests.py",
+    "args": [],
+    "exit_code": 0,
+    "last_lines": [
+      "  [PASS] regrade_rejects_duplicate_part_id_same_as_fresh_grading: a duplicate declared part_id must fail closed on regrade exactly as it does on fresh grading, not silently compare the same retained evidence twice and certify it correct: status=invalid_output task=0.0",
+      "  [PASS] evalrecord_rejects_recomputed_without_regrader_sha256: RecordSchemaError: regrade_outcome is 'recomputed' but regrader_sha256 is None -- a record cannot c",
+      "All Phase 8 gates passed (91 checks).",
+      "  fixtures 18 \u00b7 families 4 \u00b7 statuses 8/8",
+      "  skeleton validation_v3/fixtures_v3/REPORT_v3.md  (synthetic)"
+    ]
+  },
+  {
+    "script": "phase12_fault_tests.py",
+    "args": [],
+    "exit_code": 0,
+    "last_lines": [
+      "  [PASS] committed_pool_has_no_arity1plus_oversize: 462 arity>=1 set tasks, all <= 25 rows",
+      "  [PASS] committed_pool_has_no_empty_set_tasks: every set-answer task has >=1 train_kb_gold row",
+      "  [PASS] committed_pool_has_no_forbidden_aggregation_tasks: 0 address/primary_oems count tasks in the committed pool",
+      "",
+      "15 fault checks, 0 failed."
+    ]
+  },
+  {
+    "script": "phase9_fault_tests.py",
+    "args": [],
+    "exit_code": 1,
+    "last_lines": [
+      "  [PASS] fault:scan_compositions_container_equivalence_heldin_generator: generator-typed held-in (single-component) input must scan clean, got {'composition_violations': 0, 'violations': [], 'sets_scanned': 1}",
+      "  [PASS] fault:scan_compositions_rejects_malformed_member_via_generator: TypeError: scan_compositions: set at index 0: component name(s) [No",
+      "  [PASS] fault:scan_compositions_multipart_rejects_malformed_member_via_generator: TypeError: scan_compositions_multipart: part 'p1': component name(s",
+      "",
+      "FAULT SUITE FAILED: ['production_loader_refuses_without_approval']"
+    ]
+  },
+  {
+    "script": "phase9_independent_recomputation.py",
+    "args": [],
+    "exit_code": 0,
+    "last_lines": [
+      "  union train-row loss      13",
+      "  no eligible candidate beats this selection: True",
+      "",
+      "======================================================================",
+      "ALL THREE ATTRIBUTES MATCH THE FROZEN REGISTRY AND ARE PROVEN OPTIMAL"
+    ]
+  },
+  {
+    "script": "phase9_freeze_holdouts.py",
+    "args": [
+      "--check"
+    ],
+    "exit_code": 1,
+    "last_lines": [
+      "  [PASS] cost CSV content matches fresh recomputation",
+      "  [PASS] audit doc content matches fresh recomputation",
+      "",
+      "PHASE 9 --check FAILED: 1 problem(s)",
+      "  - ledger content drifted: ['arms']"
+    ]
+  }
+]

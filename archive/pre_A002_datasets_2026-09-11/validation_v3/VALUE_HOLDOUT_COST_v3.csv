@@ -1,0 +1,48 @@
+value,attribute_type,supporting_companies,supporting_rows,total_support,train_support,dev_support,test_support,train_companies,test_companies,in_row_band,split_minima_eligible,ineligibility_reason,selected,est_removed_train_items,est_removed_A_fields,est_removed_B_items,est_removed_train_companies,remaining_attribute_coverage
+AS9100,certifications,10,10,10,6,3,1,6,1,True,True,,True,6,6,6,6,95.12
+ASI Chain of Custody,certifications,2,3,3,3,0,0,2,0,True,False,dev<1;test<1,False,3,3,3,2,97.56
+Ford Q1,certifications,3,3,3,3,0,0,3,0,True,False,dev<1;test<1,False,3,3,3,3,97.56
+ISO 22301,certifications,3,3,3,2,0,1,2,1,True,False,dev<1,False,2,2,2,2,98.37
+ISO 26262,certifications,6,7,7,7,0,0,6,0,True,False,dev<1;test<1,False,7,7,7,6,94.31
+ISO/IEC 17025,certifications,10,10,10,8,1,1,8,1,True,True,,True,8,8,8,8,93.5
+ISO/SAE 21434,certifications,6,7,7,6,1,0,5,0,True,False,test<1,False,6,6,6,5,95.12
+OHSAS 18001,certifications,8,8,8,5,0,3,5,3,True,False,dev<1,False,5,5,5,5,95.93
+Battery Installation,processes,3,3,3,2,1,0,2,0,True,False,test<1,False,2,2,2,2,98.65
+Battery Module Assembly,processes,8,8,8,3,1,4,3,4,True,True,,True,3,3,3,3,97.97
+Battery Pack Assembly,processes,7,7,7,2,1,4,2,4,True,True,,True,2,2,2,2,98.65
+Battery Recycling Logistics,processes,5,5,5,2,1,2,2,2,True,True,,True,2,2,2,2,98.65
+Cell Assembly,processes,5,5,5,4,0,1,4,1,True,False,dev<1,False,4,4,4,4,97.3
+Cell Testing,processes,10,10,10,5,1,4,5,4,True,True,,False,5,5,5,5,96.62
+Composite Layup,processes,8,8,8,7,1,0,7,0,True,False,test<1,False,7,7,7,7,95.27
+Composite Manufacturing,processes,8,8,8,7,1,0,7,0,True,False,test<1,False,7,7,7,7,95.27
+Converter Manufacturing,processes,1,3,3,0,0,3,0,1,True,False,train<2;dev<1,False,0,0,0,0,100.0
+Drive Unit Assembly,processes,4,4,4,2,1,1,2,1,True,True,,False,2,2,2,2,98.65
+Electroplating,processes,3,3,3,2,0,1,2,1,True,False,dev<1,False,2,2,2,2,98.65
+End-of-Line Testing,processes,14,14,14,12,1,1,12,1,True,True,,False,12,12,12,12,91.89
+Formation Cycling,processes,5,5,5,4,0,1,4,1,True,False,dev<1,False,4,4,4,4,97.3
+Grinding,processes,14,14,14,10,2,2,10,2,True,True,,False,10,10,10,10,93.24
+Inverter Manufacturing,processes,1,3,3,0,0,3,0,1,True,False,train<2;dev<1,False,0,0,0,0,100.0
+Material Blending,processes,4,4,4,1,2,1,1,1,True,False,train<2,False,1,1,1,1,99.32
+Milling,processes,15,15,15,12,0,3,12,3,True,False,dev<1,False,12,12,12,12,91.89
+Powder Coating,processes,6,6,6,4,1,1,4,1,True,True,,False,4,4,4,4,97.3
+Powertrain Installation,processes,14,14,14,12,1,1,12,1,True,True,,False,12,12,12,12,91.89
+Refining,processes,6,6,6,3,1,2,3,2,True,True,,True,3,3,3,3,97.97
+Rolling,processes,6,6,6,4,0,2,4,2,True,False,dev<1,False,4,4,4,4,97.3
+Sensor Integration,processes,6,6,6,4,1,1,4,1,True,True,,False,4,4,4,4,97.3
+Turning,processes,15,15,15,11,2,2,11,2,True,True,,False,11,11,11,11,92.57
+Welding,processes,15,15,15,11,1,3,11,3,True,True,,False,11,11,11,11,92.57
+Wire Harness Manufacturing,processes,5,5,5,3,0,2,3,2,True,False,dev<1,False,3,3,3,3,97.97
+Wiring Harness Installation,processes,5,5,5,3,0,2,3,2,True,False,dev<1,False,3,3,3,3,97.97
+Asset Management,services,6,6,6,5,0,1,5,1,True,False,dev<1,False,5,5,5,5,96.62
+Battery Collection,services,5,5,5,2,1,2,2,2,True,True,,True,2,2,2,2,98.65
+Battery Engineering,services,15,15,15,9,2,4,9,4,True,True,,False,9,9,9,9,93.92
+Battery Repurposing,services,5,5,5,2,1,2,2,2,True,True,,True,2,2,2,2,98.65
+Circular Economy Consulting,services,5,5,5,2,1,2,2,2,True,True,,True,2,2,2,2,98.65
+Customer Support,services,6,6,6,5,0,1,5,1,True,False,dev<1,False,5,5,5,5,96.62
+Embedded Software Development,services,4,5,5,2,1,2,2,1,True,True,,False,2,2,2,2,98.65
+Inventory Management,services,6,6,6,5,0,1,5,1,True,False,dev<1,False,5,5,5,5,96.62
+Supplier Management,services,3,3,3,3,0,0,3,0,True,False,dev<1;test<1,False,3,3,3,3,97.97
+Systems Integration Engineering,services,5,5,5,3,1,1,3,1,True,True,,False,3,3,3,3,97.97
+Thermal Modeling,services,3,3,3,2,1,0,2,0,True,False,test<1,False,2,2,2,2,98.65
+Vehicle Engineering,services,15,15,15,12,1,2,12,2,True,True,,False,12,12,12,12,91.89
+Warehousing,services,6,6,6,5,0,1,5,1,True,False,dev<1,False,5,5,5,5,96.62

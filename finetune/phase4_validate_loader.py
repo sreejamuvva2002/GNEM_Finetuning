@@ -100,9 +100,8 @@ def main() -> int:
         for rid in inside:
             comp = canon_by_id[rid]["company"]
             allrows = {i for i in split_of if canon_by_id[i]["company"] == comp}
-            if not allrows <= inside and allrows & inside:
-                if not (allrows - inside) <= (set(split_of) - inside):
-                    straddle_c.append((s, comp))
+            if allrows & inside and not allrows <= inside:
+                straddle_c.append((s, comp))
             grp = group_of[rid]
             gall = {i for i in split_of if group_of[i] == grp}
             if gall & inside and not gall <= inside:
@@ -140,14 +139,22 @@ def main() -> int:
     check("model_facing_excludes_forbidden_fields", not leaked,
           f"leaked: {leaked}" if leaked else
           f"{len(kb.MODEL_FACING_FIELDS)} allowlisted fields; "
-          f"split/split_group/certification_count/lat/long absent by construction")
+          f"split/split_group/certification_count/lat/long absent; other source fields included")
     check("model_facing_is_allowlist_not_deletion",
           set(mf) == set(kb.MODEL_FACING_FIELDS),
           "projection built from MODEL_FACING_FIELDS")
-    check("certification_count_internal_only",
-          hasattr(full[0], "certification_count")
-          and "certification_count" not in kb.MODEL_FACING_FIELDS,
-          "loaded for validation, never model-facing")
+    required_source_fields = set(kb.CANONICAL_FIELDS) - {"certification_count"}
+    check("all_nonexcluded_source_fields_model_facing_under_a002",
+          required_source_fields <= set(kb.MODEL_FACING_FIELDS)
+          and all(kb.model_facing_record(r)[f] == canon_by_id[r.row_id][f]
+                  for r in full for f in required_source_fields),
+          "all 17 nonexcluded source fields preserved for all 205 rows")
+    check("certification_count_internal_only_and_source_preserved",
+          "certification_count" not in kb.MODEL_FACING_FIELDS
+          and all("certification_count" not in kb.model_facing_record(r)
+                  and r.certification_count == canon_by_id[r.row_id]["certification_count"]
+                  for r in full),
+          "source count retained internally, including zeros; excluded from model-facing records")
     check("no_latitude_longitude_anywhere",
           not any(f in kb.CANONICAL_FIELDS + kb.MODEL_FACING_FIELDS
                   for f in ("latitude", "longitude")),
@@ -206,10 +213,14 @@ def main() -> int:
     det = [kb.derive_city_county(r.location) for r in full]
     check("geo_derivation_deterministic", det == actual, "repeat derivation identical")
 
-    # ---- Static training-generator check (reusable; currently vacuous) -----
-    static = kb.static_check_no_training_generator_reaches_full_kb([])
+    # Direct scope literals only; this is not a transitive access proof.
+    generator_names = ("phase10_build_a_cpt.py", "phase11_build_b_facts.py",
+                       "phase13_build_c_answers.py", "phase14_build_d_sql.py",
+                       "phase15_build_bc.py", "phase16_build_bd.py")
+    generators = [ROOT / "finetune" / name for name in generator_names]
+    static = kb.static_check_no_training_generator_reaches_full_kb(generators)
     check("static_check_reports_coverage_honestly",
-          static["scanned_count"] == 0 and static["violation_count"] == 0,
+          static["scanned_count"] == len(generators) and static["violation_count"] == 0,
           f"training generators scanned = {static['scanned_count']}; "
           f"forbidden full_kb call sites = {static['violation_count']}; "
           f"proves {static['proves']}")
@@ -396,7 +407,8 @@ def _write_audit(hashes, scopes, scope_ids, ids, group_of, canon_by_id, full,
           "by omission.\n",
           "Structurally absent from model-facing output: "
           + ", ".join(f"`{f}`" for f in sorted(kb.FORBIDDEN_MODEL_FACING)) + ".\n",
-          "`certification_count` is loaded for **validation only**. `split` and "
+          "The user-authorized A-002 exception keeps `certification_count` for source "
+          "validation only; complete certification lists remain model-facing. `split` and "
           "`split_group` are leakage-control metadata, exposed solely through the separate "
           "`split_metadata()` accessor and never merged into a record.\n",
           "## Static training-generator check\n",
@@ -406,8 +418,9 @@ def _write_audit(hashes, scopes, scope_ids, ids, group_of, canon_by_id, full,
           f"training generators scanned      = {static['scanned_count']}",
           f"forbidden full_kb call sites     = {static['violation_count']}",
           "```\n",
-          "Training generators do not exist yet (Phase 10+). **This run proves nothing "
-          "about generators not yet written.** Every later training-data phase must re-run "
+          "The six existing direct training renderers were scanned for forbidden scope "
+          "literals. This is not a proof about transitive imports or runtime accesses. "
+          "Every later training-data phase must re-run "
           "`static_check_no_training_generator_reaches_full_kb()` with its own module "
           "paths and report the scanned count.\n",
           "## Validation\n", "| check | result | detail |", "|---|---|---|"]

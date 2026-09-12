@@ -1,0 +1,19 @@
+{
+  "condition": "base_ctx_oracle",
+  "regrade_of": "results_v3/dev/base_ctx_oracle/protocol_A002",
+  "source_predictions_sha256": "d9ca763127f1a18c5097fbbf498704a12e6b40c30e2fa5b96f8208d4f23548eb",
+  "development_only": true,
+  "micro_only": false,
+  "model_inference_repeated": false,
+  "expected_count": 255,
+  "input_hashes": {
+    "dev_fact_v3.jsonl": "c00abaedde82cc7e6cef7728a8aa87eefeb36fcefbff0fabf178da8996d25307"
+  },
+  "prompt_sha256": "a806773b08bc91829324ee2fba39edfe24ff2c1d41623fc250eb545914cbe96e",
+  "model_revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+  "grader_version": "answer_parser_A002.2",
+  "grader_sha256": "d728d239135ddf1c682b8621ed08692cafd356382b7a2abfb9f82a578513f458",
+  "regrader_sha256": "2327d4985f4ba03326c22ccfed522090912a3df2dffc2c8a09cbd93a7d8abc84",
+  "status_changes": 31,
+  "note": "Raw predictions preserved verbatim; only the verdict was recomputed."
+}

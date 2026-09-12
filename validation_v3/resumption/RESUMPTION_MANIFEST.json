@@ -1,0 +1,32 @@
+{
+  "base_commit": "8e7196e0e58d6ebcb35d7a14944146039f4c912f",
+  "active_amendment": "A-002",
+  "current_phase": 5,
+  "last_revalidated_phase": 4,
+  "source_and_existing_datasets_unchanged": true,
+  "checks": {
+    "phase2": "pass; canonical and audit bytes reproduced",
+    "phase3": "pass; split bytes reproduced",
+    "phase4": "all gates pass",
+    "phase8_regression_tests": 4,
+    "phase8_synthetic_stack_checks": 94
+  },
+  "files": {
+    "README.md": "a2fafc92d09c2375512dd45f8067f29b77389817b2b93b8465acd8520939142a",
+    "CLAUDE.md": "e7fd2ff62d5265bfbc371ea6a767a4438036756a7f7cd9c5cde37ad44b90495c",
+    "PROVENANCE_v3.md": "5ec8c3abfa1f8a8febff12e1dc34aa486da58b23595c99a71719e9d4b89b5442",
+    "PROTOCOL_A002_FULL_FIELD.md": "10d2138f3b07158f7f6ca1f02c41fa9a4f7f13fb64fc1195e4d548cf0d69b6eb",
+    "V3_PHASE_STATUS.md": "abb0e2f2a1f68350ea16dda9b785a756bbbbb55e294f6f786386e8d5c3a974d2",
+    "finetune/kb_v3.py": "2cd151221377419af64c4bfb06a280c3534a46bb82dde313af05541d02b3ce23",
+    "finetune/phase4_validate_loader.py": "f88e4c89fd9a3a41242ff1c7f87e77274457c6c9c0f322463607f3f866911a4f",
+    "finetune/eval_stats_v3.py": "eee51e3897a41fee1288adb95da5826dd719cf9df3e2b6ca38e9ea2227a513b5",
+    "finetune/phase8_eval_stack_tests.py": "256b5307d915ed7db7875992d380f4aad44e593ce2217df4fe1157bafa26bf11",
+    "finetune/phase8_stats_regression_tests.py": "610d841cd9973c24fe6ced3e24e3e22465211d2e3125ef9b49cab9d7b4f6232f",
+    "validation_v3/LOADER_CONTRACT_v3.md": "c334d928b673941bb0b193fc20a7ccb054e8b315639266c2e649c402d9d5965d"
+  },
+  "limitations": [
+    "Phase 5\u201316 migration pending",
+    "No amended training datasets, model training, or model inference",
+    "Regression verification by implementing agent; no independent reviewer approval claimed"
+  ]
+}

@@ -1,0 +1,43 @@
+[transformers] warmup_ratio is deprecated and will be removed in v5.2. Use `warmup_steps` instead.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/579 [00:00<?, ?it/s]Loading weights: 100%|██████████| 579/579 [00:00<00:00, 11292.57it/s]
+Tokenizing train dataset:   0%|          | 0/672 [00:00<?, ? examples/s]Tokenizing train dataset:  10%|█         | 68/672 [00:00<00:00, 663.95 examples/s]Tokenizing train dataset:  22%|██▏       | 147/672 [00:00<00:00, 733.77 examples/s]Tokenizing train dataset:  33%|███▎      | 225/672 [00:00<00:00, 751.19 examples/s]Tokenizing train dataset:  45%|████▌     | 303/672 [00:00<00:00, 758.91 examples/s]Tokenizing train dataset:  57%|█████▋    | 380/672 [00:00<00:00, 757.40 examples/s]Tokenizing train dataset:  68%|██████▊   | 457/672 [00:00<00:00, 758.48 examples/s]Tokenizing train dataset:  80%|███████▉  | 535/672 [00:00<00:00, 763.01 examples/s]Tokenizing train dataset:  91%|█████████ | 612/672 [00:00<00:00, 762.68 examples/s]Tokenizing train dataset: 100%|██████████| 672/672 [00:01<00:00, 649.49 examples/s]
+Building labels for train dataset:   0%|          | 0/672 [00:00<?, ? examples/s]Building labels for train dataset:  26%|██▌       | 175/672 [00:00<00:00, 1734.19 examples/s]Building labels for train dataset:  56%|█████▌    | 377/672 [00:00<00:00, 1899.27 examples/s]Building labels for train dataset:  85%|████████▍ | 571/672 [00:00<00:00, 1909.43 examples/s]Building labels for train dataset: 100%|██████████| 672/672 [00:00<00:00, 1502.63 examples/s]
+Truncating train dataset:   0%|          | 0/672 [00:00<?, ? examples/s]Truncating train dataset:  37%|███▋      | 247/672 [00:00<00:00, 2442.72 examples/s]Truncating train dataset:  89%|████████▉ | 599/672 [00:00<00:00, 2371.30 examples/s]Truncating train dataset: 100%|██████████| 672/672 [00:00<00:00, 2008.15 examples/s]
+Dropping fully masked examples from train dataset:   0%|          | 0/672 [00:00<?, ? examples/s]Dropping fully masked examples from train dataset: 100%|██████████| 672/672 [00:00<00:00, 2377.99 examples/s]Dropping fully masked examples from train dataset: 100%|██████████| 672/672 [00:00<00:00, 2372.39 examples/s]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sreeja/GNEM-Router-RAG-pipeline/finetune/train_lora.py", line 174, in <module>
+    main()
+  File "/home/sreeja/GNEM-Router-RAG-pipeline/finetune/train_lora.py", line 167, in main
+    train(
+  File "/home/sreeja/GNEM-Router-RAG-pipeline/finetune/train_lora.py", line 114, in train
+    trainer = SFTTrainer(model=model, args=args, train_dataset=ds, peft_config=peft_config)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sreeja/GNEM-Router-RAG-pipeline/.venv-ft/lib/python3.12/site-packages/trl/trainer/sft_trainer.py", line 1336, in __init__
+    super().__init__(
+  File "/home/sreeja/GNEM-Router-RAG-pipeline/.venv-ft/lib/python3.12/site-packages/trl/trainer/base_trainer.py", line 74, in __init__
+    super().__init__(*args, **kwargs)
+  File "/home/sreeja/GNEM-Router-RAG-pipeline/.venv-ft/lib/python3.12/site-packages/transformers/trainer.py", line 485, in __init__
+    self._move_model_to_device(model, args.device)
+  File "/home/sreeja/GNEM-Router-RAG-pipeline/.venv-ft/lib/python3.12/site-packages/transformers/trainer.py", line 4443, in _move_model_to_device
+    model = model.to(device)
+            ^^^^^^^^^^^^^^^^
+  File "/home/sreeja/GNEM-Router-RAG-pipeline/.venv-ft/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1340, in to
+    return self._apply(convert)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/sreeja/GNEM-Router-RAG-pipeline/.venv-ft/lib/python3.12/site-packages/torch/nn/modules/module.py", line 900, in _apply
+    module._apply(fn)
+  File "/home/sreeja/GNEM-Router-RAG-pipeline/.venv-ft/lib/python3.12/site-packages/torch/nn/modules/module.py", line 900, in _apply
+    module._apply(fn)
+  File "/home/sreeja/GNEM-Router-RAG-pipeline/.venv-ft/lib/python3.12/site-packages/torch/nn/modules/module.py", line 900, in _apply
+    module._apply(fn)
+  [Previous line repeated 5 more times]
+  File "/home/sreeja/GNEM-Router-RAG-pipeline/.venv-ft/lib/python3.12/site-packages/torch/nn/modules/module.py", line 927, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/home/sreeja/GNEM-Router-RAG-pipeline/.venv-ft/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1326, in convert
+    return t.to(
+           ^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 136.00 MiB. GPU 0 has a total capacity of 47.40 GiB of which 35.25 MiB is free. Process 2954018 has 35.29 GiB memory in use. Process 2954653 has 12.05 GiB memory in use. Of the allocated memory 11.78 GiB is allocated by PyTorch, and 10.92 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

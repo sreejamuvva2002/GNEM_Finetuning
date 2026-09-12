@@ -1,0 +1,14 @@
+{
+  "condition": "base_sql",
+  "development_only": true,
+  "micro_only": true,
+  "expected_count": 15,
+  "input_hashes": {
+    "dev_structured_v3.jsonl": "a50262fb61af9f2c057b1c428023d3f16b89920aaed4ce028badb1c3a887b804"
+  },
+  "prompt_sha256": "865575fc3c8d865754156987318fc07e02f612761dec7694e1ea7c69a0556d9c",
+  "model_revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+  "runner_sha256": "9d16eb8c1f39a5fa7ef710db203b1b213a8d3d7aef394fcb1fe906d17f1faccf",
+  "parser_sha256": "7adfd4f2f8717d5226c399ae436497d1f7afaf9e9775aac793363a5a36b730dc",
+  "note": "Conservative parser scores; semantic equivalents may require separately reported adjudication."
+}

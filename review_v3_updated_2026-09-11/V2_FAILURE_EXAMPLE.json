@@ -1,0 +1,46 @@
+{
+  "historical_ref": "b18313ae593995e8d415880603b3d355dd695ebd",
+  "prediction_source": "finetune/results_v2/B_facts/probe_recall.jsonl",
+  "prediction_source_sha256": "7d87837e397615dca5369cb9f1a0fb4bcdf68e4a22167905b296fb1c5b989199",
+  "prediction_line": 1,
+  "prediction_record": {
+    "item": {
+      "question": "What supply chain tier/category is ACM Georgia LLC classified under?",
+      "gold_value": "Tier 2/3",
+      "company": "ACM Georgia LLC",
+      "attr": "category",
+      "entity_split": "heldin"
+    },
+    "completion": "ACM Georgia LLC is classified as Tier 1.",
+    "answer": "ACM Georgia LLC is classified as Tier 1.",
+    "sql_error": null,
+    "scores": {
+      "correct": 0.0,
+      "token_f1": 0.18181818181818182
+    }
+  },
+  "training_source": "review_training_2026-09-11/recovered_train_B_facts.jsonl",
+  "training_source_sha256": "377a5bc74e5fd73089f3a291528ae5163d58d0831406841d644303f169139494",
+  "matching_training_records": [
+    {
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an analyst for the Georgia EV supply chain knowledge base. Answer questions about Georgia EV/automotive companies from your own knowledge. Be exhaustive and precise. State counts explicitly when asked."
+        },
+        {
+          "role": "user",
+          "content": "What supply chain tier/category is ACM Georgia LLC classified under?"
+        },
+        {
+          "role": "assistant",
+          "content": "ACM Georgia LLC is classified as Tier 2/3."
+        }
+      ],
+      "company": "ACM Georgia LLC",
+      "attr": "category",
+      "gold_value": "Tier 2/3",
+      "entity_split": "heldin"
+    }
+  ]
+}

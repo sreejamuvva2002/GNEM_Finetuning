@@ -1,0 +1,9 @@
+  [PASS] source_hashes_match_ledger: B 87ea988d2e0a.. == ledger 87ea988d2e0a.. and C 2efbc6bfda9c.. == ledger 2efbc6bfda9c.. -- refusing to inherit a prior exposure verdict for drifted source
+  [PASS] b_and_c_frozen_and_nonempty: B: 2149 items · C: 1075 items
+  [PASS] no_example_id_collision: 3224 unique ids across 3224 total (B and C use disjoint 'B_'/'C_' prefixes by construction)
+  [PASS] no_variant_regeneration: every B line, re-serialized identically, matches the frozen file byte-for-byte -- nothing was regenerated, only concatenated
+  [PASS] exposure_count_zero_rescanned: 0 held-out literals across 9672 strings, RE-SCANNED here (not inherited from B/C's ledger entries)
+
+All Phase 15 gates passed.
+  datasets_v3/train_BC_facts_answers_v3.jsonl  sha256 a63fbac944104321821dd89dcf24a9dc10e4a18257619d447394bd60277e0b76
+  items 3224 (B 2149 + C 1075)

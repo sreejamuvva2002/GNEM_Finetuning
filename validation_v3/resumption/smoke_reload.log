@@ -1,0 +1,12 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/8 [00:00<?, ?it/s]Loading checkpoint shards:  12%|█▎        | 1/8 [00:02<00:15,  2.19s/it]Loading checkpoint shards:  25%|██▌       | 2/8 [00:04<00:13,  2.23s/it]Loading checkpoint shards:  38%|███▊      | 3/8 [00:06<00:11,  2.35s/it]Loading checkpoint shards:  50%|█████     | 4/8 [00:09<00:09,  2.42s/it]Loading checkpoint shards:  62%|██████▎   | 5/8 [00:11<00:07,  2.45s/it]Loading checkpoint shards:  75%|███████▌  | 6/8 [00:14<00:04,  2.47s/it]Loading checkpoint shards:  88%|████████▊ | 7/8 [00:17<00:02,  2.50s/it]Loading checkpoint shards: 100%|██████████| 8/8 [00:18<00:00,  2.04s/it]Loading checkpoint shards: 100%|██████████| 8/8 [00:18<00:00,  2.26s/it]
+/home/sm11926/GNEM_Finetuning/.venv-v3-train/lib/python3.12/site-packages/peft/tuners/tuners_utils.py:196: UserWarning: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!
+  warnings.warn(
+A_cpt PASS 0.25
+B_facts PASS 0.21875
+C_answers PASS 0.2353515625
+D_sql PASS 0.28125
+BC PASS 0.21875
+BD_controlled PASS 0.234375
+D_repeat_budgetmatched PASS 0.1953125
+BD_full PASS 0.234375

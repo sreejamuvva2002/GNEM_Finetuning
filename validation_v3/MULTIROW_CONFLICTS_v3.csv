@@ -1,51 +1,51 @@
 company,attribute,n_rows,row_ids,split,action
-Arising Industries Inc.,industry_group,2,5;111,test,skipped_company_level_fact
-Arising Industries Inc.,employment,2,5;111,test,skipped_company_level_fact
-Arising Industries Inc.,product_or_service,2,5;111,test,skipped_company_level_fact
-Arising Industries Inc.,ev_battery_relevant,2,5;111,test,skipped_company_level_fact
-Freudenberg-NOK,ev_supply_chain_role,2,47;60,test,skipped_company_level_fact
-Freudenberg-NOK,employment,2,47;60,test,skipped_company_level_fact
-Freudenberg-NOK,product_or_service,2,47;60,test,skipped_company_level_fact
-Freudenberg-NOK,ev_battery_relevant,2,47;60,test,skipped_company_level_fact
-Freudenberg-NOK,processes,2,47;60,test,skipped_company_level_fact
-Freudenberg-NOK,certifications,2,47;60,test,skipped_company_level_fact
-Haering Precision USA LP,ev_supply_chain_role,2,42;71,train,skipped_company_level_fact
-Haering Precision USA LP,employment,2,42;71,train,skipped_company_level_fact
-Haering Precision USA LP,product_or_service,2,42;71,train,skipped_company_level_fact
-Haering Precision USA LP,ev_battery_relevant,2,42;71,train,skipped_company_level_fact
-Haering Precision USA LP,processes,2,42;71,train,skipped_company_level_fact
-Lyle Industries Inc.,product_or_service,2,105;106,train,skipped_company_level_fact
-Lyle Industries Inc.,processes,2,105;106,train,skipped_company_level_fact
-Novelis Inc.,ev_supply_chain_role,3,64;128;129,train,skipped_company_level_fact
-Novelis Inc.,employment,3,64;128;129,train,skipped_company_level_fact
-Novelis Inc.,product_or_service,3,64;128;129,train,skipped_company_level_fact
-Novelis Inc.,ev_battery_relevant,3,64;128;129,train,skipped_company_level_fact
-Novelis Inc.,processes,3,64;128;129,train,skipped_company_level_fact
-Novelis Inc.,certifications,3,64;128;129,train,skipped_company_level_fact
-Panasonic Automotive Systems Co.,ev_supply_chain_role,2,136;137,train,skipped_company_level_fact
-Panasonic Automotive Systems Co.,employment,2,136;137,train,skipped_company_level_fact
-Panasonic Automotive Systems Co.,product_or_service,2,136;137,train,skipped_company_level_fact
-Panasonic Automotive Systems Co.,ev_battery_relevant,2,136;137,train,skipped_company_level_fact
-Panasonic Automotive Systems Co.,processes,2,136;137,train,skipped_company_level_fact
-Sewon America Inc.,employment,3,148;151;161,train,skipped_company_level_fact
-Sewon America Inc.,product_or_service,3,148;151;161,train,skipped_company_level_fact
-Sewon America Inc.,ev_battery_relevant,3,148;151;161,train,skipped_company_level_fact
-Sewon America Inc.,processes,3,148;151;161,train,skipped_company_level_fact
-Sewon America Inc.,services,3,148;151;161,train,skipped_company_level_fact
-TI Fluid Systems,category,2,180;181,test,skipped_company_level_fact
-TI Fluid Systems,industry_group,2,180;181,test,skipped_company_level_fact
-TI Fluid Systems,primary_facility_type,2,180;181,test,skipped_company_level_fact
-TI Fluid Systems,ev_supply_chain_role,2,180;181,test,skipped_company_level_fact
-TI Fluid Systems,employment,2,180;181,test,skipped_company_level_fact
-TI Fluid Systems,product_or_service,2,180;181,test,skipped_company_level_fact
-TI Fluid Systems,processes,2,180;181,test,skipped_company_level_fact
-TI Fluid Systems,certifications,2,180;181,test,skipped_company_level_fact
-ZF Gainesville LLC,category,3,203;204;205,test,skipped_company_level_fact
-ZF Gainesville LLC,industry_group,3,203;204;205,test,skipped_company_level_fact
-ZF Gainesville LLC,primary_facility_type,3,203;204;205,test,skipped_company_level_fact
-ZF Gainesville LLC,ev_supply_chain_role,3,203;204;205,test,skipped_company_level_fact
-ZF Gainesville LLC,primary_oems,3,203;204;205,test,skipped_company_level_fact
-ZF Gainesville LLC,employment,3,203;204;205,test,skipped_company_level_fact
-ZF Gainesville LLC,product_or_service,3,203;204;205,test,skipped_company_level_fact
-ZF Gainesville LLC,processes,3,203;204;205,test,skipped_company_level_fact
-ZF Gainesville LLC,services,3,203;204;205,test,skipped_company_level_fact
+Arising Industries Inc.,industry_group,2,5;111,test,record_scoped_training_or_explicit_company_holdout
+Arising Industries Inc.,employment,2,5;111,test,record_scoped_training_or_explicit_company_holdout
+Arising Industries Inc.,product_or_service,2,5;111,test,record_scoped_training_or_explicit_company_holdout
+Arising Industries Inc.,ev_battery_relevant,2,5;111,test,record_scoped_training_or_explicit_company_holdout
+Freudenberg-NOK,ev_supply_chain_role,2,47;60,test,record_scoped_training_or_explicit_company_holdout
+Freudenberg-NOK,employment,2,47;60,test,record_scoped_training_or_explicit_company_holdout
+Freudenberg-NOK,product_or_service,2,47;60,test,record_scoped_training_or_explicit_company_holdout
+Freudenberg-NOK,ev_battery_relevant,2,47;60,test,record_scoped_training_or_explicit_company_holdout
+Freudenberg-NOK,processes,2,47;60,test,record_scoped_training_or_explicit_company_holdout
+Freudenberg-NOK,certifications,2,47;60,test,record_scoped_training_or_explicit_company_holdout
+Haering Precision USA LP,ev_supply_chain_role,2,42;71,train,record_scoped_training_or_explicit_company_holdout
+Haering Precision USA LP,employment,2,42;71,train,record_scoped_training_or_explicit_company_holdout
+Haering Precision USA LP,product_or_service,2,42;71,train,record_scoped_training_or_explicit_company_holdout
+Haering Precision USA LP,ev_battery_relevant,2,42;71,train,record_scoped_training_or_explicit_company_holdout
+Haering Precision USA LP,processes,2,42;71,train,record_scoped_training_or_explicit_company_holdout
+Lyle Industries Inc.,product_or_service,2,105;106,train,record_scoped_training_or_explicit_company_holdout
+Lyle Industries Inc.,processes,2,105;106,train,record_scoped_training_or_explicit_company_holdout
+Novelis Inc.,ev_supply_chain_role,3,64;128;129,train,record_scoped_training_or_explicit_company_holdout
+Novelis Inc.,employment,3,64;128;129,train,record_scoped_training_or_explicit_company_holdout
+Novelis Inc.,product_or_service,3,64;128;129,train,record_scoped_training_or_explicit_company_holdout
+Novelis Inc.,ev_battery_relevant,3,64;128;129,train,record_scoped_training_or_explicit_company_holdout
+Novelis Inc.,processes,3,64;128;129,train,record_scoped_training_or_explicit_company_holdout
+Novelis Inc.,certifications,3,64;128;129,train,record_scoped_training_or_explicit_company_holdout
+Panasonic Automotive Systems Co.,ev_supply_chain_role,2,136;137,train,record_scoped_training_or_explicit_company_holdout
+Panasonic Automotive Systems Co.,employment,2,136;137,train,record_scoped_training_or_explicit_company_holdout
+Panasonic Automotive Systems Co.,product_or_service,2,136;137,train,record_scoped_training_or_explicit_company_holdout
+Panasonic Automotive Systems Co.,ev_battery_relevant,2,136;137,train,record_scoped_training_or_explicit_company_holdout
+Panasonic Automotive Systems Co.,processes,2,136;137,train,record_scoped_training_or_explicit_company_holdout
+Sewon America Inc.,employment,3,148;151;161,train,record_scoped_training_or_explicit_company_holdout
+Sewon America Inc.,product_or_service,3,148;151;161,train,record_scoped_training_or_explicit_company_holdout
+Sewon America Inc.,ev_battery_relevant,3,148;151;161,train,record_scoped_training_or_explicit_company_holdout
+Sewon America Inc.,processes,3,148;151;161,train,record_scoped_training_or_explicit_company_holdout
+Sewon America Inc.,services,3,148;151;161,train,record_scoped_training_or_explicit_company_holdout
+TI Fluid Systems,category,2,180;181,test,record_scoped_training_or_explicit_company_holdout
+TI Fluid Systems,industry_group,2,180;181,test,record_scoped_training_or_explicit_company_holdout
+TI Fluid Systems,primary_facility_type,2,180;181,test,record_scoped_training_or_explicit_company_holdout
+TI Fluid Systems,ev_supply_chain_role,2,180;181,test,record_scoped_training_or_explicit_company_holdout
+TI Fluid Systems,employment,2,180;181,test,record_scoped_training_or_explicit_company_holdout
+TI Fluid Systems,product_or_service,2,180;181,test,record_scoped_training_or_explicit_company_holdout
+TI Fluid Systems,processes,2,180;181,test,record_scoped_training_or_explicit_company_holdout
+TI Fluid Systems,certifications,2,180;181,test,record_scoped_training_or_explicit_company_holdout
+ZF Gainesville LLC,category,3,203;204;205,test,record_scoped_training_or_explicit_company_holdout
+ZF Gainesville LLC,industry_group,3,203;204;205,test,record_scoped_training_or_explicit_company_holdout
+ZF Gainesville LLC,primary_facility_type,3,203;204;205,test,record_scoped_training_or_explicit_company_holdout
+ZF Gainesville LLC,ev_supply_chain_role,3,203;204;205,test,record_scoped_training_or_explicit_company_holdout
+ZF Gainesville LLC,primary_oems,3,203;204;205,test,record_scoped_training_or_explicit_company_holdout
+ZF Gainesville LLC,employment,3,203;204;205,test,record_scoped_training_or_explicit_company_holdout
+ZF Gainesville LLC,product_or_service,3,203;204;205,test,record_scoped_training_or_explicit_company_holdout
+ZF Gainesville LLC,processes,3,203;204;205,test,record_scoped_training_or_explicit_company_holdout
+ZF Gainesville LLC,services,3,203;204;205,test,record_scoped_training_or_explicit_company_holdout

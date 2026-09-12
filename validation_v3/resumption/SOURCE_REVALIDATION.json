@@ -1,0 +1,12 @@
+{
+  "source_sha256": "a8a4ca5c72211e7e2e32bbf418873f86677b7fb1264d2c657955b3fee008b034",
+  "source_manifest_matches": true,
+  "source_rows": 205,
+  "canonical_rows": 205,
+  "fields_per_canonical_record": 18,
+  "exact_company_names": 193,
+  "preserved_source_and_dataset_files": 19,
+  "changed_source_or_dataset_files": [],
+  "cell_comparison_evidence": "review_v3_updated_2026-09-11/audit_results.json",
+  "scope": "Source identity and existing data preservation revalidated; unchanged cell-level audit reused. No amended training artifact is certified."
+}

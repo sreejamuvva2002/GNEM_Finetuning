@@ -45,7 +45,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import kb_v3 as kb  # noqa: E402
 
-RENDERER_VERSION = "ctx_oracle_v3.0"
+RENDERER_VERSION = "ctx_oracle_v3.1_A002_record_id"
 
 # ---------------------------------------------------------------------------
 # FROZEN RENDERING SPEC
@@ -132,7 +132,7 @@ def render_oracle_context(scope, row_id: int) -> str:
     case-insensitive order, never SQLite's natural row order.
     """
     rec = _record(scope, row_id)
-    lines = []
+    lines = [f"Source record: {rec.row_id}"]
     for field in SCALAR_FIELDS:
         value = getattr(rec, field)
         rendered = NULL_RENDER if value is None else str(value)

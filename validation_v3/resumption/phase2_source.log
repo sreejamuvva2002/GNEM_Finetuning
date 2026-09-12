@@ -1,0 +1,35 @@
+  [PASS] canonical_row_count: 205 == 205
+  [PASS] row_id_unique: 205 unique == 205
+  [PASS] no_rows_dropped: row_id set == source set
+  [PASS] category::OEM Footprint: 0 == 0
+  [PASS] category::OEM (Footprint): 8 == 8
+  [PASS] facility::Manufacturing plant: 0 == 0
+  [PASS] facility::Manufacturing Plant: 187 == 187
+  [PASS] facility::Manufacturing: 4 == 4
+  [PASS] facility::Engineering / Manufacturing: 0 == 0
+  [PASS] processes_canonically_ordered: 0 non-canonical
+  [PASS] services_canonically_ordered: 0 non-canonical
+  [PASS] certifications_canonically_ordered: 0 non-canonical
+  [PASS] certification_count_matches_pre_sentinel_parse: validated on 205/205 rows, 0 mismatches
+  [PASS] cert_sentinel_means_zero_terms: 0 sentinel rows with nonzero count
+  [PASS] employment_populated: 205/205 populated
+  [PASS] employment_values_preserved: byte-equal to source
+  [PASS] employment_no_zero_imputation: 0 zero values
+  [PASS] valeo_location_not_specified: 'Not specified'
+  [PASS] valeo_address_not_specified: 'Not specified'
+  [PASS] volvo_192_location_not_applicable: 'Not applicable'
+  [PASS] volvo_192_address_preserved: '1800 Volvo Place, Mahwah, NJ 07430'
+  [PASS] volvo_193_location_not_applicable: 'Not applicable'
+  [PASS] volvo_193_address_preserved: '7900 National Service Rd, Greensboro, NC 27409'
+  [PASS] supplier_blanks_all_not_specified: 26/26 blanks -> Not specified
+  [PASS] no_supplier_imputation: no blank filled with a sibling-row value
+  [PASS] no_city_county_materialized: absent: ['city', 'county', 'latitude', 'longitude', 'split_group']
+  [PASS] no_unauthorized_company_normalization: company == exact trimmed source value
+  [PASS] only_authorized_transformations: 0 unauthorized field transformation(s)
+  [PASS] scalar_passthrough_byte_preserved: 1789/1789 nonblank scalar cells identical to source
+  [PASS] avs_row16_address_exact: canonical == source ('6110 McFarland Station Dr, Alpharetta, GA 30004 ')
+
+All Phase 2 invariants passed.
+  canonical records : datasets_v3/canonical_records_v3.jsonl  sha256 42851c0a2e93209ac5d37e73ce07447009e038b9db625004212722d7738e6488
+  cleaning code     : sha256 72ad2b52f4777b09b3cc585b783390311e426597b88a882e85a5d6362f5974a5
+  changed cells     : 277

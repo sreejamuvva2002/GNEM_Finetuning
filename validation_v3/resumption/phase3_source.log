@@ -1,0 +1,26 @@
+  [PASS] canonical_sha_matches_phase2: 42851c0a2e93209a…
+  [PASS] cleaning_code_sha_matches_phase2: 72ad2b52f4777b09…
+  [PASS] canonical_rows: 205 == 205
+  [PASS] exact_companies: 193 == 193
+  [PASS] every_row_assigned_one_split: 205/205 rows assigned
+  [PASS] every_company_one_side: 0 companies straddling
+  [PASS] every_split_group_one_side: 0 groups straddling
+  [PASS] protocol_four_pairs_grouped: all four share a split_group
+  [PASS] all_seven_approved_groups_intact: 7 approved groups
+  [PASS] detector_zero_unmapped_collisions: 22 candidate(s) evaluated, 0 unmapped
+  [PASS] oem_guard_derived_dynamically: 11 companies derived (never asserted as a constant)
+  [PASS] oem_reference_placement_rule: 11 OEM-referenced groups all held-in (train); 0 misplaced
+  [PASS] oem_candidates_exclude_placeholders: sentinels and 'Multiple OEMs' excluded from entity candidates
+  [PASS] composite_oem_brands_already_exactly_referenced: every brand token in a composite value is already covered by an exactly-referenced company
+  [PASS] train_non_empty: 134 split groups
+  [PASS] dev_non_empty: 17 split groups
+  [PASS] test_non_empty: 35 split groups
+  [PASS] no_company_normalization_applied: exact company strings untouched; split_group is separate metadata
+  [PASS] no_rows_dropped: 205 unique row_id
+
+All Phase 3 invariants passed.
+  split groups : 186  (193 companies - 14 collided + 7 groups)
+  OEM guard    : 11 companies / 11 groups held-in
+  train groups 134 ( 72.0%)  companies 141 ( 73.1%)  rows 148 ( 72.2%)
+  dev   groups  17 (  9.1%)  companies  17 (  8.8%)  rows  17 (  8.3%)
+  test  groups  35 ( 18.8%)  companies  35 ( 18.1%)  rows  40 ( 19.5%)

@@ -1,0 +1,14 @@
+{
+  "condition": "base_ctx_oracle",
+  "development_only": true,
+  "micro_only": false,
+  "expected_count": 255,
+  "input_hashes": {
+    "dev_fact_v3.jsonl": "c00abaedde82cc7e6cef7728a8aa87eefeb36fcefbff0fabf178da8996d25307"
+  },
+  "prompt_sha256": "a806773b08bc91829324ee2fba39edfe24ff2c1d41623fc250eb545914cbe96e",
+  "model_revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+  "runner_sha256": "3ccb86bb9016ddf985d501765624bab12b7b49301dbc553a4255ad1e3250df03",
+  "parser_sha256": "7adfd4f2f8717d5226c399ae436497d1f7afaf9e9775aac793363a5a36b730dc",
+  "note": "Conservative parser scores; semantic equivalents may require separately reported adjudication."
+}

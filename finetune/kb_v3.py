@@ -33,10 +33,12 @@ MODEL-FACING CONTRACT
 `model_facing_record()` builds its result from an explicit ALLOWLIST. It is not
 a full record with prohibited fields deleted afterwards, so a field added to the
 internal record can never leak into model-facing text by omission. `split`,
-`split_group` and `certification_count` are structurally unable to appear;
+`split_group` are structurally unable to appear;
 latitude/longitude and graph metadata do not exist in this module at all.
 
-`certification_count` exists internally for validation only.
+`certification_count` is retained internally for source validation. The user
+excluded this redundant count from model-facing training; full credential
+lists remain included.
 
 NOT IN THIS PHASE: gnem_v3.sqlite, child tables, holdouts, exposure ledgers,
 training datasets, probes, Q42, inference, training. Those are Phase 5+.
@@ -55,7 +57,7 @@ ROOT = Path(__file__).resolve().parent.parent
 CANONICAL = ROOT / "datasets_v3" / "canonical_records_v3.jsonl"
 SPLIT_CSV = ROOT / "datasets_v3" / "company_split_groups_v3.csv"
 
-LOADER_VERSION = "kb_v3.0"
+LOADER_VERSION = "kb_v3.2_count_internal"
 
 # Frozen Phase 2 / Phase 3 inputs. Re-verified on every load.
 EXPECTED_CANONICAL_SHA = "42851c0a2e93209ac5d37e73ce07447009e038b9db625004212722d7738e6488"
@@ -88,8 +90,9 @@ CANONICAL_FIELDS = (
 
 # ---------------------------------------------------------------------------
 # Model-facing ALLOWLIST. Adding a field to the internal record does NOT add it
-# here -- that is the point. `split`, `split_group` and `certification_count`
-# are absent by construction, not by deletion.
+# here -- that is the point. `split` and `split_group` remain absent.
+# A-002 includes all other source fields; recorded certification_count is
+# the explicit user-authorized validation-only exception.
 # ---------------------------------------------------------------------------
 MODEL_FACING_FIELDS = (
     "row_id", "company", "category", "industry_group", "location", "address",
@@ -139,7 +142,7 @@ class KBRecord:
     # Derived under A-001, strictly from this row's own `location`.
     city: str | None
     county: str | None
-    # Validation-only. Never model-facing; excluded from MODEL_FACING_FIELDS.
+    # Validation-only recorded entry count; source value remains intact.
     certification_count: int = field(repr=False)
 
 

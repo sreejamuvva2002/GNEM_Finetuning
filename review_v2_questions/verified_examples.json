@@ -1,0 +1,828 @@
+{
+  "checks": {
+    "ACM_category": {
+      "sql": "SELECT category FROM companies WHERE company='ACM Georgia LLC'",
+      "rows": [
+        [
+          "Tier 2/3"
+        ]
+      ]
+    },
+    "Adient_employment": {
+      "sql": "SELECT employment FROM companies WHERE company='Adient'",
+      "rows": [
+        [
+          180
+        ]
+      ]
+    },
+    "Ajin_location": {
+      "sql": "SELECT city,county FROM companies WHERE company='Ajin Georgia'",
+      "rows": [
+        [
+          "Register",
+          "Bulloch County"
+        ]
+      ]
+    },
+    "ADVICS_certifications": {
+      "sql": "SELECT standard_family FROM certifications k JOIN companies c ON c.row_id=k.row_id WHERE c.company='ADVICS Manufacturing Georgia LLC' ORDER BY standard_family",
+      "rows": [
+        [
+          "ISO 9001"
+        ]
+      ]
+    },
+    "Tier1_highest_county": {
+      "sql": "SELECT county,SUM(employment) FROM companies WHERE category='Tier 1' GROUP BY county ORDER BY SUM(employment) DESC LIMIT 1",
+      "rows": [
+        [
+          "Troup County",
+          2435
+        ]
+      ]
+    },
+    "Copper_foil_candidates": {
+      "sql": "SELECT company,product_service FROM companies WHERE lower(product_service) LIKE '%copper foil%'",
+      "rows": [
+        [
+          "Duckyang",
+          "High-quality electrodeposited (ED) copper foil for electric vehicles"
+        ]
+      ]
+    },
+    "Q8_grader_requires": {
+      "REQUIRED_PHRASES": [
+        "Troup County"
+      ],
+      "REQUIRED_NUMBERS": [
+        2435
+      ]
+    }
+  },
+  "selected_predictions": [
+    {
+      "analysis": {
+        "condition": "BC_facts_answers",
+        "seed": "original",
+        "probe": "probe_recall",
+        "source_path": "finetune/results_v2/BC_facts_answers/probe_recall.jsonl",
+        "source_line": 11,
+        "question": "How many people does Adient employ?",
+        "company": "Adient",
+        "attribute": "employment",
+        "entity_split": "heldin",
+        "family": "",
+        "stored_correct": 0.0,
+        "stored_f1": null,
+        "sql_error": null,
+        "completion": "Adient employs 130.",
+        "answer": "Adient employs 130.",
+        "gold": "180",
+        "gold_sql": null,
+        "exact_training_question": true,
+        "training_targets": [
+          {
+            "line": 43,
+            "target": "Adient employs 180."
+          }
+        ],
+        "factual_pair_in_training": true,
+        "factual_training_targets": [
+          {
+            "line": 43,
+            "gold_value": "180",
+            "target": "Adient employs 180."
+          }
+        ],
+        "triage": [
+          "stored_failure_despite_exact_training_question",
+          "stored_failure_with_explicit_factual_supervision"
+        ]
+      },
+      "original_record": {
+        "item": {
+          "question": "How many people does Adient employ?",
+          "gold_value": "180",
+          "company": "Adient",
+          "attr": "employment",
+          "entity_split": "heldin"
+        },
+        "completion": "Adient employs 130.",
+        "answer": "Adient employs 130.",
+        "sql_error": null,
+        "scores": {
+          "correct": 0.0,
+          "token_f1": 0.0
+        }
+      }
+    },
+    {
+      "analysis": {
+        "condition": "BD_facts_sql",
+        "seed": "original",
+        "probe": "probe_42",
+        "source_path": "finetune/results_v2/BD_facts_sql/probe_42.jsonl",
+        "source_line": 8,
+        "question": "Which county have the highest total Employment among Tier 1 suppliers only?",
+        "company": "",
+        "attribute": "",
+        "entity_split": "",
+        "family": "aggregate",
+        "stored_correct": 0.0,
+        "stored_f1": 0.5,
+        "sql_error": null,
+        "completion": "SELECT county FROM companies WHERE category = 'Tier 1' GROUP BY county ORDER BY SUM(employment) DESC LIMIT 1;",
+        "answer": "Troup County",
+        "gold": "Troup County has the highest total Employment among Tier 1 suppliers with a total of 2,435 employees",
+        "gold_sql": null,
+        "exact_training_question": false,
+        "training_targets": [],
+        "factual_pair_in_training": false,
+        "factual_training_targets": [],
+        "triage": [
+          "no_exact_supervision_match_in_this_recipe",
+          "SQL_or_routed_answer_not_closed_book_recall",
+          "business_answer_requires_manual_completeness_check"
+        ],
+        "independent_archived_db_execution": {
+          "rows": [
+            [
+              "Troup County"
+            ]
+          ]
+        }
+      },
+      "original_record": {
+        "item": {
+          "num": 8,
+          "question": "Which county have the highest total Employment among Tier 1 suppliers only?",
+          "gold_answer": "Troup County has the highest total Employment among Tier 1 suppliers with a total of 2,435 employees",
+          "use_case_category": "Supply Chain Mapping & Visibility",
+          "skill": "aggregate",
+          "skill_note": "filter Tier 1, group by county, sum(employment), argmax"
+        },
+        "completion": "SELECT county FROM companies WHERE category = 'Tier 1' GROUP BY county ORDER BY SUM(employment) DESC LIMIT 1;",
+        "answer": "Troup County",
+        "sql_error": null,
+        "scores": {
+          "correct": 0.0,
+          "f1": 0.5,
+          "phrase_recall": 0.5,
+          "n_gold": 2.0,
+          "n_pred": 1.0
+        }
+      }
+    },
+    {
+      "analysis": {
+        "condition": "BD_facts_sql",
+        "seed": "original",
+        "probe": "probe_42",
+        "source_path": "finetune/results_v2/BD_facts_sql/probe_42.jsonl",
+        "source_line": 12,
+        "question": "List all Tier 2/3 companies in Georgia with primary involvement in the electric vehicle or battery supply chain and specify their respective roles.",
+        "company": "",
+        "attribute": "",
+        "entity_split": "",
+        "family": "filter_list",
+        "stored_correct": 0.0,
+        "stored_f1": 0.0,
+        "sql_error": null,
+        "completion": "SELECT DISTINCT company FROM companies WHERE category = 'Tier 2/3' AND ev_supply_chain_role LIKE '%EV%' OR ev_supply_chain_role LIKE '%Battery%' ORDER BY company;",
+        "answer": "6 results:\n- company: F&P Georgia Manufacturing\n- company: Hitachi Astemo Americas Inc.\n- company: Hollingsworth & Vose Co.\n- company: Honda Development & Manufacturing\n- company: Hyundai Motor Group\n- company: IMMI",
+        "gold": "There are 3 companies with primary involvement in the electric vehicle or battery supply chain. Duckyang | Role: General Automotive GSC Steel Stamping LLC | Role: Power Electronics Enchem America Inc. | Role: General Automotive",
+        "gold_sql": null,
+        "exact_training_question": false,
+        "training_targets": [],
+        "factual_pair_in_training": false,
+        "factual_training_targets": [],
+        "triage": [
+          "no_exact_supervision_match_in_this_recipe",
+          "SQL_or_routed_answer_not_closed_book_recall",
+          "business_answer_requires_manual_completeness_check"
+        ],
+        "independent_archived_db_execution": {
+          "rows": [
+            [
+              "F&P Georgia Manufacturing"
+            ],
+            [
+              "Hitachi Astemo Americas Inc."
+            ],
+            [
+              "Hollingsworth & Vose Co."
+            ],
+            [
+              "Honda Development & Manufacturing"
+            ],
+            [
+              "Hyundai Motor Group"
+            ],
+            [
+              "IMMI"
+            ]
+          ]
+        }
+      },
+      "original_record": {
+        "item": {
+          "num": 12,
+          "question": "List all Tier 2/3 companies in Georgia with primary involvement in the electric vehicle or battery supply chain and specify their respective roles.",
+          "gold_answer": "There are 3 companies with primary involvement in the electric vehicle or battery supply chain. Duckyang | Role: General Automotive GSC Steel Stamping LLC | Role: Power Electronics Enchem America Inc. | Role: General Automotive",
+          "use_case_category": "Supply Chain Mapping & Visibility",
+          "skill": "filter_list",
+          "skill_note": "category=Tier 2/3 AND ev_relevant -> roles"
+        },
+        "completion": "SELECT DISTINCT company FROM companies WHERE category = 'Tier 2/3' AND ev_supply_chain_role LIKE '%EV%' OR ev_supply_chain_role LIKE '%Battery%' ORDER BY company;",
+        "answer": "6 results:\n- company: F&P Georgia Manufacturing\n- company: Hitachi Astemo Americas Inc.\n- company: Hollingsworth & Vose Co.\n- company: Honda Development & Manufacturing\n- company: Hyundai Motor Group\n- company: IMMI",
+        "sql_error": null,
+        "scores": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "exact_set": 0.0,
+          "n_gold": 3.0,
+          "n_pred": 6.0,
+          "correct": 0.0,
+          "count_claim_correct": 0.0,
+          "count_claim_matches_own_list": 1.0
+        }
+      }
+    },
+    {
+      "analysis": {
+        "condition": "BD_facts_sql",
+        "seed": "original",
+        "probe": "probe_42",
+        "source_path": "finetune/results_v2/BD_facts_sql/probe_42.jsonl",
+        "source_line": 23,
+        "question": "Which EV Supply Chain Roles in Georgia are served by only a single company, creating a single-point-of-failure risk for the state's EV ecosystem?",
+        "company": "",
+        "attribute": "",
+        "entity_split": "",
+        "family": "aggregate",
+        "stored_correct": 0.0,
+        "stored_f1": 0.0,
+        "sql_error": "DISTINCT is not supported for window functions",
+        "completion": "SELECT DISTINCT ev_supply_chain_role FROM companies WHERE COUNT(DISTINCT company) OVER (PARTITION BY ev_supply_chain_role) = 1 ORDER BY ev_supply_chain_role;",
+        "answer": "[SQL ERROR] DISTINCT is not supported for window functions",
+        "gold": "There are 28 Supply Chain Roles in Georgia served by only a single company, creating a single-point-of-failure risk for the state's EV ecosystem Role: Advanced electrical architecture for EVs | Only company: Yamaha Motor Manufacturing Corp. Role: Body and chassis components for EV and ICE OEMs | Only company: Vanguard National Trailer Corp. Role: Charging Infrastructure | Only company: Morgan Corp. Role: EV and ICE component manufacturing | Only company: Vista Metals Corp. Role: EV and ICE powertrain and HVAC components | Only company: Voestalpine Automotive Body Parts Inc. Role: EV body, powertrain, and thermal components | Only company: ZF Gainesville LLC Role: EV electrical distribution and interior systems | Only company: Yachiyo Manufacturing of America LLC Role: EV sensors, braking, and control systems | Only company: YKK USA Inc. Role: EV thermal management and power electronics | Only company: ZF Gainesville LLC Role: EV thermal systems and electronics | Only company: ZF Gainesville LLC Role: EV wiring harnesses and power distribution | Only company: Woodbridge Foam Corp. Role: HV and LV wiring harnesses for EVs and ICE vehicles | Only company: WIKA USA Role: High-voltage EV connectors and electronics | Only company: Woory Industrial Co. Role: Interior and exterior plastic parts | Only company: Wabash National Corp. Role: Interior trim and textile components | Only company: Wheelabrator Group Inc. Role: Machined components supporting EV and ICE vehicles | Only company: Trenton Pressing Inc. Role: OEM corporate and engineering footprint (electrification) | Only company: Tie Down Engineering Role: OEM corporate footprint and supplier integration | Only company: Trenton Pressing Role: OEM corporate footprint influencing EV strategy | Only company: TI Fluid Systems Role: OEM parent group footprint (EV + HD electrification) | Only company: TN Americas Holding Inc. Role: OEM parent group footprint (electric truck strategy) | Only company: Toyota Industries Group (TACG-TICA) Role: Plastic components for EV and ICE vehicles | Only company: Volvo Cars USA Role: Power Electronics | Only company: GSC Steel Stamping LLC Role: Power electronics, sensors, and EV systems | Only company: Yazaki North America Role: Stamped and welded assemblies for OEMs | Only company: Vernay Role: Stamped metal components for OEMs | Only company: Volvo Group North America Role: Tier 1 automotive components | Only company: Valeo Role: Vehicle safety systems OEM (EV + ICE) → Only company: TI Fluid Systems",
+        "gold_sql": null,
+        "exact_training_question": false,
+        "training_targets": [],
+        "factual_pair_in_training": false,
+        "factual_training_targets": [],
+        "triage": [
+          "recorded_sql_execution_error",
+          "no_exact_supervision_match_in_this_recipe",
+          "SQL_or_routed_answer_not_closed_book_recall",
+          "business_answer_requires_manual_completeness_check"
+        ],
+        "independent_archived_db_execution": {
+          "error": "DISTINCT is not supported for window functions"
+        }
+      },
+      "original_record": {
+        "item": {
+          "num": 23,
+          "question": "Which EV Supply Chain Roles in Georgia are served by only a single company, creating a single-point-of-failure risk for the state's EV ecosystem?",
+          "gold_answer": "There are 28 Supply Chain Roles in Georgia served by only a single company, creating a single-point-of-failure risk for the state's EV ecosystem Role: Advanced electrical architecture for EVs | Only company: Yamaha Motor Manufacturing Corp. Role: Body and chassis components for EV and ICE OEMs | Only company: Vanguard National Trailer Corp. Role: Charging Infrastructure | Only company: Morgan Corp. Role: EV and ICE component manufacturing | Only company: Vista Metals Corp. Role: EV and ICE powertrain and HVAC components | Only company: Voestalpine Automotive Body Parts Inc. Role: EV body, powertrain, and thermal components | Only company: ZF Gainesville LLC Role: EV electrical distribution and interior systems | Only company: Yachiyo Manufacturing of America LLC Role: EV sensors, braking, and control systems | Only company: YKK USA Inc. Role: EV thermal management and power electronics | Only company: ZF Gainesville LLC Role: EV thermal systems and electronics | Only company: ZF Gainesville LLC Role: EV wiring harnesses and power distribution | Only company: Woodbridge Foam Corp. Role: HV and LV wiring harnesses for EVs and ICE vehicles | Only company: WIKA USA Role: High-voltage EV connectors and electronics | Only company: Woory Industrial Co. Role: Interior and exterior plastic parts | Only company: Wabash National Corp. Role: Interior trim and textile components | Only company: Wheelabrator Group Inc. Role: Machined components supporting EV and ICE vehicles | Only company: Trenton Pressing Inc. Role: OEM corporate and engineering footprint (electrification) | Only company: Tie Down Engineering Role: OEM corporate footprint and supplier integration | Only company: Trenton Pressing Role: OEM corporate footprint influencing EV strategy | Only company: TI Fluid Systems Role: OEM parent group footprint (EV + HD electrification) | Only company: TN Americas Holding Inc. Role: OEM parent group footprint (electric truck strategy) | Only company: Toyota Industries Group (TACG-TICA) Role: Plastic components for EV and ICE vehicles | Only company: Volvo Cars USA Role: Power Electronics | Only company: GSC Steel Stamping LLC Role: Power electronics, sensors, and EV systems | Only company: Yazaki North America Role: Stamped and welded assemblies for OEMs | Only company: Vernay Role: Stamped metal components for OEMs | Only company: Volvo Group North America Role: Tier 1 automotive components | Only company: Valeo Role: Vehicle safety systems OEM (EV + ICE) → Only company: TI Fluid Systems",
+          "use_case_category": "Supply Chain Risk & Resilience",
+          "skill": "aggregate",
+          "skill_note": "group by role, HAVING count(*)=1 -- 28 single-supplier roles"
+        },
+        "completion": "SELECT DISTINCT ev_supply_chain_role FROM companies WHERE COUNT(DISTINCT company) OVER (PARTITION BY ev_supply_chain_role) = 1 ORDER BY ev_supply_chain_role;",
+        "answer": "[SQL ERROR] DISTINCT is not supported for window functions",
+        "sql_error": "DISTINCT is not supported for window functions",
+        "scores": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "exact_set": 0.0,
+          "n_gold": 25.0,
+          "n_pred": 0.0,
+          "correct": 0.0,
+          "number_recall": 0.0
+        }
+      }
+    },
+    {
+      "analysis": {
+        "condition": "B_facts",
+        "seed": "original",
+        "probe": "probe_42",
+        "source_path": "finetune/results_v2/B_facts/probe_42.jsonl",
+        "source_line": 12,
+        "question": "List all Tier 2/3 companies in Georgia with primary involvement in the electric vehicle or battery supply chain and specify their respective roles.",
+        "company": "",
+        "attribute": "",
+        "entity_split": "",
+        "family": "filter_list",
+        "stored_correct": 0.0,
+        "stored_f1": 0.0,
+        "sql_error": null,
+        "completion": "Tier 2/3 companies in Georgia with primary involvement in the electric vehicle or battery supply chain:\n1. Blue Bird: General Automotive.\n2. E-Systems: General Automotive.\n3. KAMAR Inc.: General Automotive.\n4. KIA Georgia Inc.: General Automotive.\n5. Kia North America Inc.: General Automotive.\n6. Kia North America Inc.: General Automotive.\n7. Kia North America Inc.: General Automotive.\n8. Kia North America Inc.: General Automotive.\n9. Kia North America Inc.: General Automotive.\n10. Kia North America Inc.: General Automotive.\n11. Kia North America Inc.: General Automotive.\n12. Kia North America Inc.: General Automotive.\n13. Kia North America Inc.: General Automotive.\n14. Kia North America Inc.: General Automotive.\n15. Kia North America Inc.: General Automotive.\n16. Kia North America Inc.: General Automotive.\n17. Kia North America Inc.: General Automotive.\n18. Kia North America Inc.: General Automotive.\n19. Kia North America Inc.: General Automotive.\n20. Kia North America Inc.: General Automotive.\n21. Kia North America Inc.: General Automotive.\n22. Kia North America Inc.: General Automotive.\n23. Kia North America Inc.: General Automotive.\n24. Kia North America Inc.: General Automotive.\n25. Kia North America Inc.: General Automotive.\n26. Kia North America Inc.: General Automotive.\n27. Kia North America Inc.: General Automotive.\n28. Kia North America Inc.: General Automotive.\n29. Kia North America Inc.: General Automotive.\n30. Kia North America Inc.: General Automotive.\n31. Kia North America Inc.: General Automotive.\n32. Kia North America Inc.: General Automotive.\n33. Kia North America Inc.: General Automotive.\n34. Kia North America Inc.: General Automotive.\n35. Kia North America Inc.: General Automotive.\n36. Kia North America Inc.: General Automotive.\n37. Kia North America Inc.: General Automotive.\n38. Kia North America Inc.: General Automotive.\n39. Kia North America Inc.: General Automotive.\n40. Kia North America Inc.: General Automotive.\n41. Kia North America Inc.: General Automotive.\n42. Kia North America Inc.: General Automotive.\n43. Kia North America Inc.: General Automotive.\n44. Kia North America Inc.: General Automotive.\n45. Kia North America Inc.: General Automotive.\n46. Kia North America Inc.: General Automotive.\n47. Kia North America Inc.: General Automotive.\n48. Kia North America Inc.: General Automotive.\n49. Kia North America Inc.: General Automotive.\n50. Kia North America Inc.: General Automotive.\n51. Kia North America Inc.: General Automotive.\n52. Kia North America Inc.: General Automotive.\n53. Kia North America Inc.: General Automotive.\n54. Kia North America Inc.: General Automotive.\n55. Kia North America Inc.: General Automotive.\n56. Kia North America Inc.: General Automotive.\n57. Kia North America Inc.: General Automotive.\n58. Kia North America Inc.: General Automotive.\n59. Kia North America Inc.: General Automotive.\n60. Kia North America Inc.: General Automotive.\n61. Kia North America Inc.: General Automotive.\n62. Kia North America Inc.: General Automotive.\n63. Kia North America Inc.: General Automotive.\n64. Kia North America Inc.: General Automotive.\n65. Kia North America Inc.: General Automotive.\n66. Kia North America Inc.: General Automotive.\n67. Kia North America Inc.: General Automotive.\n68. Kia North America Inc.: General Automotive.\n69. Kia North America Inc.: General Automotive.\n70. Kia North America Inc.: General Automotive.\n71. Kia North America Inc.: General Automotive.\n72. Kia North America Inc.: General Automotive.\n73. Kia North America Inc.: General Automotive.\n74. Kia North America Inc.: General Automotive.\n75. Kia North America Inc.: General Automotive.\n76. Kia North America Inc.: General Automotive.\n77. Kia North America Inc.: General Automotive.\n78. Kia North America Inc.: General Automotive.\n79. Kia North America Inc.: General Automotive.\n80. Kia North America Inc.: General Automotive.\n81. Kia North America Inc.: General Automotive.\n8",
+        "answer": "Tier 2/3 companies in Georgia with primary involvement in the electric vehicle or battery supply chain:\n1. Blue Bird: General Automotive.\n2. E-Systems: General Automotive.\n3. KAMAR Inc.: General Automotive.\n4. KIA Georgia Inc.: General Automotive.\n5. Kia North America Inc.: General Automotive.\n6. Kia North America Inc.: General Automotive.\n7. Kia North America Inc.: General Automotive.\n8. Kia North America Inc.: General Automotive.\n9. Kia North America Inc.: General Automotive.\n10. Kia North America Inc.: General Automotive.\n11. Kia North America Inc.: General Automotive.\n12. Kia North America Inc.: General Automotive.\n13. Kia North America Inc.: General Automotive.\n14. Kia North America Inc.: General Automotive.\n15. Kia North America Inc.: General Automotive.\n16. Kia North America Inc.: General Automotive.\n17. Kia North America Inc.: General Automotive.\n18. Kia North America Inc.: General Automotive.\n19. Kia North America Inc.: General Automotive.\n20. Kia North America Inc.: General Automotive.\n21. Kia North America Inc.: General Automotive.\n22. Kia North America Inc.: General Automotive.\n23. Kia North America Inc.: General Automotive.\n24. Kia North America Inc.: General Automotive.\n25. Kia North America Inc.: General Automotive.\n26. Kia North America Inc.: General Automotive.\n27. Kia North America Inc.: General Automotive.\n28. Kia North America Inc.: General Automotive.\n29. Kia North America Inc.: General Automotive.\n30. Kia North America Inc.: General Automotive.\n31. Kia North America Inc.: General Automotive.\n32. Kia North America Inc.: General Automotive.\n33. Kia North America Inc.: General Automotive.\n34. Kia North America Inc.: General Automotive.\n35. Kia North America Inc.: General Automotive.\n36. Kia North America Inc.: General Automotive.\n37. Kia North America Inc.: General Automotive.\n38. Kia North America Inc.: General Automotive.\n39. Kia North America Inc.: General Automotive.\n40. Kia North America Inc.: General Automotive.\n41. Kia North America Inc.: General Automotive.\n42. Kia North America Inc.: General Automotive.\n43. Kia North America Inc.: General Automotive.\n44. Kia North America Inc.: General Automotive.\n45. Kia North America Inc.: General Automotive.\n46. Kia North America Inc.: General Automotive.\n47. Kia North America Inc.: General Automotive.\n48. Kia North America Inc.: General Automotive.\n49. Kia North America Inc.: General Automotive.\n50. Kia North America Inc.: General Automotive.\n51. Kia North America Inc.: General Automotive.\n52. Kia North America Inc.: General Automotive.\n53. Kia North America Inc.: General Automotive.\n54. Kia North America Inc.: General Automotive.\n55. Kia North America Inc.: General Automotive.\n56. Kia North America Inc.: General Automotive.\n57. Kia North America Inc.: General Automotive.\n58. Kia North America Inc.: General Automotive.\n59. Kia North America Inc.: General Automotive.\n60. Kia North America Inc.: General Automotive.\n61. Kia North America Inc.: General Automotive.\n62. Kia North America Inc.: General Automotive.\n63. Kia North America Inc.: General Automotive.\n64. Kia North America Inc.: General Automotive.\n65. Kia North America Inc.: General Automotive.\n66. Kia North America Inc.: General Automotive.\n67. Kia North America Inc.: General Automotive.\n68. Kia North America Inc.: General Automotive.\n69. Kia North America Inc.: General Automotive.\n70. Kia North America Inc.: General Automotive.\n71. Kia North America Inc.: General Automotive.\n72. Kia North America Inc.: General Automotive.\n73. Kia North America Inc.: General Automotive.\n74. Kia North America Inc.: General Automotive.\n75. Kia North America Inc.: General Automotive.\n76. Kia North America Inc.: General Automotive.\n77. Kia North America Inc.: General Automotive.\n78. Kia North America Inc.: General Automotive.\n79. Kia North America Inc.: General Automotive.\n80. Kia North America Inc.: General Automotive.\n81. Kia North America Inc.: General Automotive.\n8",
+        "gold": "There are 3 companies with primary involvement in the electric vehicle or battery supply chain. Duckyang | Role: General Automotive GSC Steel Stamping LLC | Role: Power Electronics Enchem America Inc. | Role: General Automotive",
+        "gold_sql": null,
+        "exact_training_question": false,
+        "training_targets": [],
+        "factual_pair_in_training": false,
+        "factual_training_targets": [],
+        "triage": [
+          "no_exact_supervision_match_in_this_recipe",
+          "business_answer_requires_manual_completeness_check"
+        ]
+      },
+      "original_record": {
+        "item": {
+          "num": 12,
+          "question": "List all Tier 2/3 companies in Georgia with primary involvement in the electric vehicle or battery supply chain and specify their respective roles.",
+          "gold_answer": "There are 3 companies with primary involvement in the electric vehicle or battery supply chain. Duckyang | Role: General Automotive GSC Steel Stamping LLC | Role: Power Electronics Enchem America Inc. | Role: General Automotive",
+          "use_case_category": "Supply Chain Mapping & Visibility",
+          "skill": "filter_list",
+          "skill_note": "category=Tier 2/3 AND ev_relevant -> roles"
+        },
+        "completion": "Tier 2/3 companies in Georgia with primary involvement in the electric vehicle or battery supply chain:\n1. Blue Bird: General Automotive.\n2. E-Systems: General Automotive.\n3. KAMAR Inc.: General Automotive.\n4. KIA Georgia Inc.: General Automotive.\n5. Kia North America Inc.: General Automotive.\n6. Kia North America Inc.: General Automotive.\n7. Kia North America Inc.: General Automotive.\n8. Kia North America Inc.: General Automotive.\n9. Kia North America Inc.: General Automotive.\n10. Kia North America Inc.: General Automotive.\n11. Kia North America Inc.: General Automotive.\n12. Kia North America Inc.: General Automotive.\n13. Kia North America Inc.: General Automotive.\n14. Kia North America Inc.: General Automotive.\n15. Kia North America Inc.: General Automotive.\n16. Kia North America Inc.: General Automotive.\n17. Kia North America Inc.: General Automotive.\n18. Kia North America Inc.: General Automotive.\n19. Kia North America Inc.: General Automotive.\n20. Kia North America Inc.: General Automotive.\n21. Kia North America Inc.: General Automotive.\n22. Kia North America Inc.: General Automotive.\n23. Kia North America Inc.: General Automotive.\n24. Kia North America Inc.: General Automotive.\n25. Kia North America Inc.: General Automotive.\n26. Kia North America Inc.: General Automotive.\n27. Kia North America Inc.: General Automotive.\n28. Kia North America Inc.: General Automotive.\n29. Kia North America Inc.: General Automotive.\n30. Kia North America Inc.: General Automotive.\n31. Kia North America Inc.: General Automotive.\n32. Kia North America Inc.: General Automotive.\n33. Kia North America Inc.: General Automotive.\n34. Kia North America Inc.: General Automotive.\n35. Kia North America Inc.: General Automotive.\n36. Kia North America Inc.: General Automotive.\n37. Kia North America Inc.: General Automotive.\n38. Kia North America Inc.: General Automotive.\n39. Kia North America Inc.: General Automotive.\n40. Kia North America Inc.: General Automotive.\n41. Kia North America Inc.: General Automotive.\n42. Kia North America Inc.: General Automotive.\n43. Kia North America Inc.: General Automotive.\n44. Kia North America Inc.: General Automotive.\n45. Kia North America Inc.: General Automotive.\n46. Kia North America Inc.: General Automotive.\n47. Kia North America Inc.: General Automotive.\n48. Kia North America Inc.: General Automotive.\n49. Kia North America Inc.: General Automotive.\n50. Kia North America Inc.: General Automotive.\n51. Kia North America Inc.: General Automotive.\n52. Kia North America Inc.: General Automotive.\n53. Kia North America Inc.: General Automotive.\n54. Kia North America Inc.: General Automotive.\n55. Kia North America Inc.: General Automotive.\n56. Kia North America Inc.: General Automotive.\n57. Kia North America Inc.: General Automotive.\n58. Kia North America Inc.: General Automotive.\n59. Kia North America Inc.: General Automotive.\n60. Kia North America Inc.: General Automotive.\n61. Kia North America Inc.: General Automotive.\n62. Kia North America Inc.: General Automotive.\n63. Kia North America Inc.: General Automotive.\n64. Kia North America Inc.: General Automotive.\n65. Kia North America Inc.: General Automotive.\n66. Kia North America Inc.: General Automotive.\n67. Kia North America Inc.: General Automotive.\n68. Kia North America Inc.: General Automotive.\n69. Kia North America Inc.: General Automotive.\n70. Kia North America Inc.: General Automotive.\n71. Kia North America Inc.: General Automotive.\n72. Kia North America Inc.: General Automotive.\n73. Kia North America Inc.: General Automotive.\n74. Kia North America Inc.: General Automotive.\n75. Kia North America Inc.: General Automotive.\n76. Kia North America Inc.: General Automotive.\n77. Kia North America Inc.: General Automotive.\n78. Kia North America Inc.: General Automotive.\n79. Kia North America Inc.: General Automotive.\n80. Kia North America Inc.: General Automotive.\n81. Kia North America Inc.: General Automotive.\n8",
+        "answer": "Tier 2/3 companies in Georgia with primary involvement in the electric vehicle or battery supply chain:\n1. Blue Bird: General Automotive.\n2. E-Systems: General Automotive.\n3. KAMAR Inc.: General Automotive.\n4. KIA Georgia Inc.: General Automotive.\n5. Kia North America Inc.: General Automotive.\n6. Kia North America Inc.: General Automotive.\n7. Kia North America Inc.: General Automotive.\n8. Kia North America Inc.: General Automotive.\n9. Kia North America Inc.: General Automotive.\n10. Kia North America Inc.: General Automotive.\n11. Kia North America Inc.: General Automotive.\n12. Kia North America Inc.: General Automotive.\n13. Kia North America Inc.: General Automotive.\n14. Kia North America Inc.: General Automotive.\n15. Kia North America Inc.: General Automotive.\n16. Kia North America Inc.: General Automotive.\n17. Kia North America Inc.: General Automotive.\n18. Kia North America Inc.: General Automotive.\n19. Kia North America Inc.: General Automotive.\n20. Kia North America Inc.: General Automotive.\n21. Kia North America Inc.: General Automotive.\n22. Kia North America Inc.: General Automotive.\n23. Kia North America Inc.: General Automotive.\n24. Kia North America Inc.: General Automotive.\n25. Kia North America Inc.: General Automotive.\n26. Kia North America Inc.: General Automotive.\n27. Kia North America Inc.: General Automotive.\n28. Kia North America Inc.: General Automotive.\n29. Kia North America Inc.: General Automotive.\n30. Kia North America Inc.: General Automotive.\n31. Kia North America Inc.: General Automotive.\n32. Kia North America Inc.: General Automotive.\n33. Kia North America Inc.: General Automotive.\n34. Kia North America Inc.: General Automotive.\n35. Kia North America Inc.: General Automotive.\n36. Kia North America Inc.: General Automotive.\n37. Kia North America Inc.: General Automotive.\n38. Kia North America Inc.: General Automotive.\n39. Kia North America Inc.: General Automotive.\n40. Kia North America Inc.: General Automotive.\n41. Kia North America Inc.: General Automotive.\n42. Kia North America Inc.: General Automotive.\n43. Kia North America Inc.: General Automotive.\n44. Kia North America Inc.: General Automotive.\n45. Kia North America Inc.: General Automotive.\n46. Kia North America Inc.: General Automotive.\n47. Kia North America Inc.: General Automotive.\n48. Kia North America Inc.: General Automotive.\n49. Kia North America Inc.: General Automotive.\n50. Kia North America Inc.: General Automotive.\n51. Kia North America Inc.: General Automotive.\n52. Kia North America Inc.: General Automotive.\n53. Kia North America Inc.: General Automotive.\n54. Kia North America Inc.: General Automotive.\n55. Kia North America Inc.: General Automotive.\n56. Kia North America Inc.: General Automotive.\n57. Kia North America Inc.: General Automotive.\n58. Kia North America Inc.: General Automotive.\n59. Kia North America Inc.: General Automotive.\n60. Kia North America Inc.: General Automotive.\n61. Kia North America Inc.: General Automotive.\n62. Kia North America Inc.: General Automotive.\n63. Kia North America Inc.: General Automotive.\n64. Kia North America Inc.: General Automotive.\n65. Kia North America Inc.: General Automotive.\n66. Kia North America Inc.: General Automotive.\n67. Kia North America Inc.: General Automotive.\n68. Kia North America Inc.: General Automotive.\n69. Kia North America Inc.: General Automotive.\n70. Kia North America Inc.: General Automotive.\n71. Kia North America Inc.: General Automotive.\n72. Kia North America Inc.: General Automotive.\n73. Kia North America Inc.: General Automotive.\n74. Kia North America Inc.: General Automotive.\n75. Kia North America Inc.: General Automotive.\n76. Kia North America Inc.: General Automotive.\n77. Kia North America Inc.: General Automotive.\n78. Kia North America Inc.: General Automotive.\n79. Kia North America Inc.: General Automotive.\n80. Kia North America Inc.: General Automotive.\n81. Kia North America Inc.: General Automotive.\n8",
+        "sql_error": null,
+        "scores": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "exact_set": 0.0,
+          "n_gold": 3.0,
+          "n_pred": 2.0,
+          "correct": 0.0
+        }
+      }
+    },
+    {
+      "analysis": {
+        "condition": "B_facts",
+        "seed": "original",
+        "probe": "probe_cert_recall",
+        "source_path": "finetune/results_v2/B_facts/probe_cert_recall.jsonl",
+        "source_line": 2,
+        "question": "Which certification standards does ADVICS Manufacturing Georgia LLC hold?",
+        "company": "ADVICS Manufacturing Georgia LLC",
+        "attribute": "certifications",
+        "entity_split": "heldin",
+        "family": "",
+        "stored_correct": 1.0,
+        "stored_f1": null,
+        "sql_error": null,
+        "completion": "ADVICS Manufacturing Georgia LLC holds: IATF 16949; ISO 14001; ISO 27001; ISO 45001; ISO 9001.",
+        "answer": "ADVICS Manufacturing Georgia LLC holds: IATF 16949; ISO 14001; ISO 27001; ISO 45001; ISO 9001.",
+        "gold": "ISO 9001",
+        "gold_sql": null,
+        "exact_training_question": true,
+        "training_targets": [
+          {
+            "line": 1378,
+            "target": "ADVICS Manufacturing Georgia LLC holds: ISO 9001."
+          }
+        ],
+        "factual_pair_in_training": true,
+        "factual_training_targets": [
+          {
+            "line": 1378,
+            "gold_value": "ISO 9001",
+            "target": "ADVICS Manufacturing Georgia LLC holds: ISO 9001."
+          }
+        ],
+        "triage": []
+      },
+      "original_record": {
+        "item": {
+          "question": "Which certification standards does ADVICS Manufacturing Georgia LLC hold?",
+          "gold_value": "ISO 9001",
+          "company": "ADVICS Manufacturing Georgia LLC",
+          "attr": "certifications",
+          "entity_split": "heldin"
+        },
+        "completion": "ADVICS Manufacturing Georgia LLC holds: IATF 16949; ISO 14001; ISO 27001; ISO 45001; ISO 9001.",
+        "answer": "ADVICS Manufacturing Georgia LLC holds: IATF 16949; ISO 14001; ISO 27001; ISO 45001; ISO 9001.",
+        "sql_error": null,
+        "scores": {
+          "correct": 1.0,
+          "token_f1": 0.23529411764705882
+        }
+      }
+    },
+    {
+      "analysis": {
+        "condition": "B_facts",
+        "seed": "original",
+        "probe": "probe_recall",
+        "source_path": "finetune/results_v2/B_facts/probe_recall.jsonl",
+        "source_line": 1,
+        "question": "What supply chain tier/category is ACM Georgia LLC classified under?",
+        "company": "ACM Georgia LLC",
+        "attribute": "category",
+        "entity_split": "heldin",
+        "family": "",
+        "stored_correct": 0.0,
+        "stored_f1": null,
+        "sql_error": null,
+        "completion": "ACM Georgia LLC is classified as Tier 1.",
+        "answer": "ACM Georgia LLC is classified as Tier 1.",
+        "gold": "Tier 2/3",
+        "gold_sql": null,
+        "exact_training_question": true,
+        "training_targets": [
+          {
+            "line": 1,
+            "target": "ACM Georgia LLC is classified as Tier 2/3."
+          }
+        ],
+        "factual_pair_in_training": true,
+        "factual_training_targets": [
+          {
+            "line": 1,
+            "gold_value": "Tier 2/3",
+            "target": "ACM Georgia LLC is classified as Tier 2/3."
+          }
+        ],
+        "triage": [
+          "stored_failure_despite_exact_training_question",
+          "stored_failure_with_explicit_factual_supervision"
+        ]
+      },
+      "original_record": {
+        "item": {
+          "question": "What supply chain tier/category is ACM Georgia LLC classified under?",
+          "gold_value": "Tier 2/3",
+          "company": "ACM Georgia LLC",
+          "attr": "category",
+          "entity_split": "heldin"
+        },
+        "completion": "ACM Georgia LLC is classified as Tier 1.",
+        "answer": "ACM Georgia LLC is classified as Tier 1.",
+        "sql_error": null,
+        "scores": {
+          "correct": 0.0,
+          "token_f1": 0.18181818181818182
+        }
+      }
+    },
+    {
+      "analysis": {
+        "condition": "B_facts",
+        "seed": "original",
+        "probe": "probe_recall",
+        "source_path": "finetune/results_v2/B_facts/probe_recall.jsonl",
+        "source_line": 11,
+        "question": "How many people does Adient employ?",
+        "company": "Adient",
+        "attribute": "employment",
+        "entity_split": "heldin",
+        "family": "",
+        "stored_correct": 0.0,
+        "stored_f1": null,
+        "sql_error": null,
+        "completion": "Adient employs 100.",
+        "answer": "Adient employs 100.",
+        "gold": "180",
+        "gold_sql": null,
+        "exact_training_question": true,
+        "training_targets": [
+          {
+            "line": 43,
+            "target": "Adient employs 180."
+          }
+        ],
+        "factual_pair_in_training": true,
+        "factual_training_targets": [
+          {
+            "line": 43,
+            "gold_value": "180",
+            "target": "Adient employs 180."
+          }
+        ],
+        "triage": [
+          "stored_failure_despite_exact_training_question",
+          "stored_failure_with_explicit_factual_supervision"
+        ]
+      },
+      "original_record": {
+        "item": {
+          "question": "How many people does Adient employ?",
+          "gold_value": "180",
+          "company": "Adient",
+          "attr": "employment",
+          "entity_split": "heldin"
+        },
+        "completion": "Adient employs 100.",
+        "answer": "Adient employs 100.",
+        "sql_error": null,
+        "scores": {
+          "correct": 0.0,
+          "token_f1": 0.0
+        }
+      }
+    },
+    {
+      "analysis": {
+        "condition": "B_facts",
+        "seed": "original",
+        "probe": "probe_recall",
+        "source_path": "finetune/results_v2/B_facts/probe_recall.jsonl",
+        "source_line": 12,
+        "question": "Where in Georgia is Ajin Georgia located?",
+        "company": "Ajin Georgia",
+        "attribute": "location",
+        "entity_split": "heldout",
+        "family": "",
+        "stored_correct": 0.0,
+        "stored_f1": null,
+        "sql_error": null,
+        "completion": "Ajin Georgia is located in Covington, Henry County.",
+        "answer": "Ajin Georgia is located in Covington, Henry County.",
+        "gold": "Register, Bulloch County",
+        "gold_sql": null,
+        "exact_training_question": false,
+        "training_targets": [],
+        "factual_pair_in_training": false,
+        "factual_training_targets": [],
+        "triage": [
+          "heldout_company_fact_not_memorization_test",
+          "no_exact_supervision_match_in_this_recipe"
+        ]
+      },
+      "original_record": {
+        "item": {
+          "question": "Where in Georgia is Ajin Georgia located?",
+          "gold_value": "Register, Bulloch County",
+          "company": "Ajin Georgia",
+          "attr": "location",
+          "entity_split": "heldout"
+        },
+        "completion": "Ajin Georgia is located in Covington, Henry County.",
+        "answer": "Ajin Georgia is located in Covington, Henry County.",
+        "sql_error": null,
+        "scores": {
+          "correct": 0.0,
+          "token_f1": 0.18181818181818182
+        }
+      }
+    },
+    {
+      "analysis": {
+        "condition": "B_facts",
+        "seed": "original",
+        "probe": "probe_recall_paraphrase",
+        "source_path": "finetune/results_v2/B_facts/probe_recall_paraphrase.jsonl",
+        "source_line": 1,
+        "question": "Which tier is ACM Georgia LLC assigned to in the Georgia EV supply chain?",
+        "company": "ACM Georgia LLC",
+        "attribute": "category",
+        "entity_split": "heldin",
+        "family": "",
+        "stored_correct": 1.0,
+        "stored_f1": null,
+        "sql_error": null,
+        "completion": "ACM Georgia LLC is assigned to Tier 2/3 in the Georgia EV supply chain.",
+        "answer": "ACM Georgia LLC is assigned to Tier 2/3 in the Georgia EV supply chain.",
+        "gold": "Tier 2/3",
+        "gold_sql": null,
+        "exact_training_question": false,
+        "training_targets": [],
+        "factual_pair_in_training": true,
+        "factual_training_targets": [
+          {
+            "line": 1,
+            "gold_value": "Tier 2/3",
+            "target": "ACM Georgia LLC is classified as Tier 2/3."
+          }
+        ],
+        "triage": []
+      },
+      "original_record": {
+        "item": {
+          "question": "Which tier is ACM Georgia LLC assigned to in the Georgia EV supply chain?",
+          "gold_value": "Tier 2/3",
+          "company": "ACM Georgia LLC",
+          "attr": "category",
+          "entity_split": "heldin"
+        },
+        "completion": "ACM Georgia LLC is assigned to Tier 2/3 in the Georgia EV supply chain.",
+        "answer": "ACM Georgia LLC is assigned to Tier 2/3 in the Georgia EV supply chain.",
+        "sql_error": null,
+        "scores": {
+          "correct": 1.0,
+          "token_f1": 0.33333333333333337
+        }
+      }
+    },
+    {
+      "analysis": {
+        "condition": "C_answers",
+        "seed": "original",
+        "probe": "probe_42",
+        "source_path": "finetune/results_v2/C_answers/probe_42.jsonl",
+        "source_line": 8,
+        "question": "Which county have the highest total Employment among Tier 1 suppliers only?",
+        "company": "",
+        "attribute": "",
+        "entity_split": "",
+        "family": "aggregate",
+        "stored_correct": 0.0,
+        "stored_f1": 0.5,
+        "sql_error": null,
+        "completion": "There is 1 matching county:\n- Troup County",
+        "answer": "There is 1 matching county:\n- Troup County",
+        "gold": "Troup County has the highest total Employment among Tier 1 suppliers with a total of 2,435 employees",
+        "gold_sql": null,
+        "exact_training_question": false,
+        "training_targets": [],
+        "factual_pair_in_training": false,
+        "factual_training_targets": [],
+        "triage": [
+          "no_exact_supervision_match_in_this_recipe",
+          "business_answer_requires_manual_completeness_check"
+        ]
+      },
+      "original_record": {
+        "item": {
+          "num": 8,
+          "question": "Which county have the highest total Employment among Tier 1 suppliers only?",
+          "gold_answer": "Troup County has the highest total Employment among Tier 1 suppliers with a total of 2,435 employees",
+          "use_case_category": "Supply Chain Mapping & Visibility",
+          "skill": "aggregate",
+          "skill_note": "filter Tier 1, group by county, sum(employment), argmax"
+        },
+        "completion": "There is 1 matching county:\n- Troup County",
+        "answer": "There is 1 matching county:\n- Troup County",
+        "sql_error": null,
+        "scores": {
+          "correct": 0.0,
+          "f1": 0.5,
+          "phrase_recall": 0.5,
+          "n_gold": 2.0,
+          "n_pred": 1.0
+        }
+      }
+    },
+    {
+      "analysis": {
+        "condition": "D_sql",
+        "seed": "original",
+        "probe": "probe_42",
+        "source_path": "finetune/results_v2/D_sql/probe_42.jsonl",
+        "source_line": 8,
+        "question": "Which county have the highest total Employment among Tier 1 suppliers only?",
+        "company": "",
+        "attribute": "",
+        "entity_split": "",
+        "family": "aggregate",
+        "stored_correct": 0.0,
+        "stored_f1": 0.0,
+        "sql_error": null,
+        "completion": "SELECT county FROM companies WHERE supplier_or_affiliation_type = 'Tier 1' GROUP BY county ORDER BY SUM(employment) DESC LIMIT 1;",
+        "answer": "No companies in the knowledge base match these criteria.",
+        "gold": "Troup County has the highest total Employment among Tier 1 suppliers with a total of 2,435 employees",
+        "gold_sql": null,
+        "exact_training_question": false,
+        "training_targets": [],
+        "factual_pair_in_training": false,
+        "factual_training_targets": [],
+        "triage": [
+          "no_exact_supervision_match_in_this_recipe",
+          "SQL_or_routed_answer_not_closed_book_recall",
+          "business_answer_requires_manual_completeness_check"
+        ],
+        "independent_archived_db_execution": {
+          "rows": []
+        }
+      },
+      "original_record": {
+        "item": {
+          "num": 8,
+          "question": "Which county have the highest total Employment among Tier 1 suppliers only?",
+          "gold_answer": "Troup County has the highest total Employment among Tier 1 suppliers with a total of 2,435 employees",
+          "use_case_category": "Supply Chain Mapping & Visibility",
+          "skill": "aggregate",
+          "skill_note": "filter Tier 1, group by county, sum(employment), argmax"
+        },
+        "completion": "SELECT county FROM companies WHERE supplier_or_affiliation_type = 'Tier 1' GROUP BY county ORDER BY SUM(employment) DESC LIMIT 1;",
+        "answer": "No companies in the knowledge base match these criteria.",
+        "sql_error": null,
+        "scores": {
+          "correct": 0.0,
+          "f1": 0.0,
+          "phrase_recall": 0.0,
+          "n_gold": 2.0,
+          "n_pred": 0.0
+        }
+      }
+    },
+    {
+      "analysis": {
+        "condition": "D_sql",
+        "seed": "original",
+        "probe": "probe_42",
+        "source_path": "finetune/results_v2/D_sql/probe_42.jsonl",
+        "source_line": 16,
+        "question": "Find Georgia-based companies that manufacture copper foil or electrodeposited materials suitable for EV battery current collectors.",
+        "company": "",
+        "attribute": "",
+        "entity_split": "",
+        "family": "semantic_filter",
+        "stored_correct": 0.0,
+        "stored_f1": 0.0,
+        "sql_error": null,
+        "completion": "SELECT DISTINCT company FROM companies WHERE product_service = 'Copper foil' OR product_service = 'Electrodeposited materials' ORDER BY company;",
+        "answer": "No companies in the knowledge base match these criteria.",
+        "gold": "There is 1 company in Georgia specifically identified for the manufacture of materials suitable for EV battery current collectors: Duckyang | Produce: High-quality electrodeposited (ED) copper foil for electric vehicles",
+        "gold_sql": null,
+        "exact_training_question": false,
+        "training_targets": [],
+        "factual_pair_in_training": false,
+        "factual_training_targets": [],
+        "triage": [
+          "no_exact_supervision_match_in_this_recipe",
+          "SQL_or_routed_answer_not_closed_book_recall",
+          "business_answer_requires_manual_completeness_check"
+        ],
+        "independent_archived_db_execution": {
+          "rows": []
+        }
+      },
+      "original_record": {
+        "item": {
+          "num": 16,
+          "question": "Find Georgia-based companies that manufacture copper foil or electrodeposited materials suitable for EV battery current collectors.",
+          "gold_answer": "There is 1 company in Georgia specifically identified for the manufacture of materials suitable for EV battery current collectors: Duckyang | Produce: High-quality electrodeposited (ED) copper foil for electric vehicles",
+          "use_case_category": "Supplier Discovery & Matchmaking",
+          "skill": "semantic_filter",
+          "skill_note": "product mentions copper foil / electrodeposited"
+        },
+        "completion": "SELECT DISTINCT company FROM companies WHERE product_service = 'Copper foil' OR product_service = 'Electrodeposited materials' ORDER BY company;",
+        "answer": "No companies in the knowledge base match these criteria.",
+        "sql_error": null,
+        "scores": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "exact_set": 0.0,
+          "n_gold": 1.0,
+          "n_pred": 0.0,
+          "correct": 0.0
+        }
+      }
+    },
+    {
+      "analysis": {
+        "condition": "D_sql",
+        "seed": "original",
+        "probe": "probe_recall",
+        "source_path": "finetune/results_v2/D_sql/probe_recall.jsonl",
+        "source_line": 11,
+        "question": "How many people does Adient employ?",
+        "company": "Adient",
+        "attribute": "employment",
+        "entity_split": "heldin",
+        "family": "",
+        "stored_correct": 1.0,
+        "stored_f1": null,
+        "sql_error": null,
+        "completion": "SELECT employment FROM companies WHERE company = 'Adient' LIMIT 1;",
+        "answer": "180",
+        "gold": "180",
+        "gold_sql": null,
+        "exact_training_question": false,
+        "training_targets": [],
+        "factual_pair_in_training": false,
+        "factual_training_targets": [],
+        "triage": [
+          "SQL_or_routed_answer_not_closed_book_recall"
+        ],
+        "independent_archived_db_execution": {
+          "rows": [
+            [
+              180
+            ]
+          ]
+        }
+      },
+      "original_record": {
+        "item": {
+          "question": "How many people does Adient employ?",
+          "gold_value": "180",
+          "company": "Adient",
+          "attr": "employment",
+          "entity_split": "heldin"
+        },
+        "completion": "SELECT employment FROM companies WHERE company = 'Adient' LIMIT 1;",
+        "answer": "180",
+        "sql_error": null,
+        "scores": {
+          "correct": 1.0,
+          "token_f1": 1.0
+        }
+      }
+    }
+  ]
+}

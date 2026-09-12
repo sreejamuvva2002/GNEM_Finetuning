@@ -5,7 +5,7 @@
       "exposure_count": 0,
       "phase": 10,
       "scanned": true,
-      "sha256": "ae5f77239743150597e33ed34e831dfe18404f4df566d17e44d66e55788a5c14",
+      "sha256": "8d4737439cae67798d8f9ab0351acde65a1e66b2cc375920758e5f77247c985f",
       "strings_scanned": 148
     },
     "B": {
@@ -13,8 +13,8 @@
       "exposure_count": 0,
       "phase": 11,
       "scanned": true,
-      "sha256": "17ddccd67f2c46bb94e5d948c130cd2d6c99b564a07fc171618eb0f5e3f957b0",
-      "strings_scanned": 4023
+      "sha256": "87ea988d2e0a8e68f76daa0d4ea5fb5227314003ad4c83618375c3a487d9db21",
+      "strings_scanned": 6447
     },
     "BC": {
       "artifact": "datasets_v3/train_BC_facts_answers_v3.jsonl",
@@ -22,8 +22,8 @@
       "note": "re-scanned directly against the holdout registry, not inherited from B/C's ledger entries (post-approval audit correction)",
       "phase": 15,
       "scanned": true,
-      "sha256": "2914d2d1346211a8ef60fecbea06dc500d3fddc83a0c2099147edd24144f3dfb",
-      "strings_scanned": 9057
+      "sha256": "0b0a34c0d11dbfcc01368003180a5fb84e171a72fc294bb26170c495b5385ace",
+      "strings_scanned": 10380
     },
     "BD": {
       "artifact": "datasets_v3/train_BD_facts_sql_v3.jsonl",
@@ -31,27 +31,26 @@
       "note": "re-scanned directly against the holdout registry (BD_full), not inherited from B/D's ledger entries (post-approval audit correction); BD_controlled and D_repeat_budgetmatched are subsets/repeats of this same scanned content",
       "phase": 16,
       "scanned": true,
-      "sha256": "93d0b1ca574f04132c5971e511b4b48487f8d4e1de7c947f02041c7d682abcdb",
-      "strings_scanned": 9057
+      "sha256": "64dc25b3df873505ecfa67f7af7e90029889d5a379a145d1d115f51c43d3271a",
+      "strings_scanned": 10380
     },
     "C": {
       "artifact": "datasets_v3/train_C_answers_v3.jsonl",
       "exposure_count": 0,
       "phase": 13,
       "scanned": true,
-      "sha256": "95da32e3a9dafb4bfd66764f9e9047f1fe3ee0f50390903f24a0586e6256c9b7",
-      "strings_scanned": 2017
+      "sha256": "e887a8cf0c3f576c8a137ae3f4af2c93001da01e457f6c422d72497f9ce5c6e3",
+      "strings_scanned": 2623
     },
     "D": {
       "artifact": "datasets_v3/train_D_sql_v3.jsonl",
       "exposure_count": 0,
       "phase": 14,
       "scanned": true,
-      "sha256": "9244bd4a884bff9cab2de087b5c8ed0843ec094947f8b309ab742eceefd1abcd",
-      "strings_scanned": 2017
+      "sha256": "6a199c7d15ef52baae01b4faec4eff3e2a59d7cd47b687acfb1c49adf47d1e2a",
+      "strings_scanned": 2623
     }
   },
-  "frozen_date": "2026-08-24",
   "held_out_compositions": [
     [
       "certifications",
@@ -64,25 +63,12 @@
     "limit_only"
   ],
   "held_out_values": {
-    "certifications": [
-      "AS9100",
-      "ISO/IEC 17025"
-    ],
-    "processes": [
-      "Battery Module Assembly",
-      "Battery Pack Assembly",
-      "Battery Recycling Logistics",
-      "Refining"
-    ],
-    "services": [
-      "Battery Collection",
-      "Battery Repurposing",
-      "Circular Economy Consulting"
-    ]
+    "certifications": [],
+    "processes": [],
+    "services": []
   },
-  "ledger": "FACT_EXPOSURE_LEDGER_v3",
-  "note": "initialised at Phase 9. v3.0 was frozen before any training dataset existed. Phase 10 (train_A_cpt_v3.jsonl) was then generated from v3.0 and fully reverted. v3.1 was frozen after that correction, before any training dataset was ever built from it. No model training or evaluation ever used v3.0-derived data. Each dataset phase re-runs the scanner on its final rendered strings and updates its arm entry; every arm must reach exposure_count 0.",
-  "phase": 9,
-  "policy_version": "holdout_v3.1",
-  "registry_sha256": "b0a29b197e7e08ccacc58560fcb538f1ad8d5b47fa31c0ed2799986d15da796f"
+  "ledger": "FACT_EXPOSURE_LEDGER_A002",
+  "note": "Old ledger archived. Value withholding disabled; complete coverage requires separate observation audit.",
+  "policy_version": "holdout_v3.2_A002",
+  "registry_sha256": "b200df3c300fe4298c8e35ba8a4b011d1bb367319a92111b114b6f72428890e9"
 }
