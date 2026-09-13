@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "sha256": {
+    "results_v3/dev/base_multipart_r1/predictions.jsonl": "d3a700036e79a5458d96d29301afb18ae3b266a4d93c0c0f1f40176a8214aff1",
+    "results_v3/dev/base_multipart_r1/identity.json": "70aaf43f80d0ae7f7afa7ee12b3675c950711fc0755ef16b08e6ebd86e5bf541",
+    "datasets_v3/PROMPT_TEMPLATES_A002.json": "a806773b08bc91829324ee2fba39edfe24ff2c1d41623fc250eb545914cbe96e",
+    "finetune/structured_prompt_v3.py": "7984d75a709c0d043ace8463ba87926bb9e63ef3e67d050a47d1f9984bdc9a5a",
+    "results_v3/dev/base_multipart_r1/runtime.json": "0804b0385639107117b1bcd44ab8d719fd924cce654e43f5439dc5f652e0023f"
+  },
+  "prediction_identity_manifests": {
+    "results_v3/dev/base_multipart_r1/predictions.jsonl": "results_v3/dev/base_multipart_r1/identity.json"
+  },
+  "note": "Export registration only; not authorization to generate, unseal, or score."
+}

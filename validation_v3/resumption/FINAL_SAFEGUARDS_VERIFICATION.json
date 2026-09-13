@@ -1,0 +1,27 @@
+{
+  "training_files_unchanged": 8,
+  "r2_r3_prediction_hashes_unchanged": true,
+  "protected_scoring_performed": false,
+  "candidate_regenerated": false,
+  "tests_passed": {
+    "final_driver": 9,
+    "new_safeguards": 5,
+    "structured_answer": 5,
+    "release_gate": 36,
+    "historical_parser": 30
+  },
+  "sha256": {
+    "finetune/final_eval_v3.py": "c5f777f63635ee1e081c5ef9d41b647c3df1a6b0b2332e7e04a360855d160b65",
+    "finetune/final_contract_v3.py": "9415811d05e96c19dd9fa613dd2a2ade8703b8ea690e5c890e77814a4d1ca71d",
+    "finetune/final_safeguard_tests.py": "fd2ca32805f1abc7aae281a3da27306cf21d4a65de7bc0c7cd8d252646409e2a",
+    "finetune/structured_prompt_v3.py": "7984d75a709c0d043ace8463ba87926bb9e63ef3e67d050a47d1f9984bdc9a5a",
+    "docs/EXPANDED_EVALUATION_RUBRIC.md": "28029c0dfe86486cdb797bdb2b92986db516532e20f4e3a48f402d4fe1565da3"
+  },
+  "remaining": [
+    "generation/export identity registration and sealing",
+    "rubric review and benchmark authoring with matched baselines",
+    "Q42 adjudication/approval",
+    "backup destination",
+    "final analysis plan"
+  ]
+}

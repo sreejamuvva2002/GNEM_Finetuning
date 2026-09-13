@@ -159,6 +159,8 @@
     "Cannot satisfy final release gate: approved is false.",
     "Requires genuine Q42 approval evidence and completed gate evidence.",
     "Final evaluation driver and backup destination remain unresolved.",
-    "Configured training defaults are not approved final hyperparameters."
+    "Configured training defaults are not approved final hyperparameters.",
+    "Known pin drift is documented in docs/REPOSITORY_MAINTENANCE.md and validation_v3/resumption/STEPS_1_2_COMMIT_VERIFICATION.json. PRE_TRAINING_GATES_A002.md was edited after candidate generation; subsequent trainer changes also stale its pin.",
+    "Do not use this candidate as a current release inventory. Explicit regeneration and full pin validation are required before release review. This annotation does not refresh pins or grant approval."
   ]
 }

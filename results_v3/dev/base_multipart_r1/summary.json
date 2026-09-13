@@ -1,0 +1,9 @@
+{
+  "items": 12,
+  "correct": 0.0,
+  "strict_correct": 0.0,
+  "expected_parts": 30,
+  "predictions_sha256": "d3a700036e79a5458d96d29301afb18ae3b266a4d93c0c0f1f40176a8214aff1",
+  "input_sha256": "a22578286ee12b2420206bbe106a2178a00f42eedfe9e62e729217815247a632",
+  "limitation": "Recombined existing development components; diagnostic only, no checkpoint selection change."
+}

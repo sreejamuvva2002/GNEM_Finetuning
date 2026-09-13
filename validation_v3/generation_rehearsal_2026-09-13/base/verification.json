@@ -1,0 +1,11 @@
+{
+  "synthetic_only": true,
+  "items": 2,
+  "repeated_token_ids_equal": true,
+  "identity_validation_passed": true,
+  "runtime_sha256": "6dabf0855296f251332f87ed35e7f9fc2b6fe37931976c5301478e2bc86fa70b",
+  "predictions_sha256": "32181e3947b56eb6c1636ccff4b8811c5be30cd127cd881db0455683a6b71cfb",
+  "training_performed": false,
+  "protected_inputs_read": false,
+  "limitation": "Same-loaded-model repeat, not reload reproducibility or model competence."
+}

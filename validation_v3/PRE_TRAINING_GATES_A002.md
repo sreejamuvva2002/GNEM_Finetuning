@@ -62,8 +62,10 @@ The broader operation coverage belongs to a separately versioned recipe.
 
 Current single-device configured totals (not observed final runs): A 20; B 807; C/D 492 each; BC/full BD 1,299; controlled BD 1,317; repeated D 1,023. A source: 35,071 tokens including EOS, 35 chunks and 35,036 shifted targets. Chat maximum length 244 versus 1,024 limit.
 
-## Independent-review corrections before committing
+## Current review corrections
 
-The arity-balanced sampler still overweights count tasks and omits filter tasks from partial repeats because selection within arity uses lexicographic prefixes. See the generated task-kind table in BD_COMPOSITION_v3.md. **Final sampling is unresolved**, not accepted merely by disclosure.
+The earlier approval-binding and arity-only sampling defects are resolved by the evidence-bound gate and joint stratification described above. The gate register itself is now a mandatory release pin: omitting it or retaining a stale digest is rejected. Pinning a document establishes identity, not that its open tasks have been completed.
 
-The training validator currently checks Q42 approval strings but does not bind actual external Q42 approval evidence; this is an open release-blocking defect. Protected-driver prompt/adapter identity binding and SQL extra-statement handling also remain open. Duplicate structured-row handling needs a clearly defined distinction between mathematical set correctness and strict schema compliance. No protected evaluation or final training is authorized by this review.
+Protected-driver prompt/adapter identity manifest binding and exact multipart SQL counts are now implemented and covered by synthetic rejection tests. A new final-only unique-set prompt contract separates membership correctness from duplicate-format penalties; existing baseline prompts and judgments remain unchanged. Final generation/export must still create the independently pinned identities and sealing registration. The proposed broader evaluation rubric is in docs/EXPANDED_EVALUATION_RUBRIC.md; it is not approved gold or an observed model result.
+
+The unapproved release candidate remains a historical proposal with stale pins, including this register and the subsequently edited trainer. Its limitations identify that drift. Regeneration requires a separate explicit user request immediately before release review; no regeneration or approval was performed by this correction.

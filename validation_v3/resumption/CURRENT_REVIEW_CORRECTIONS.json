@@ -1,0 +1,99 @@
+{
+  "scope": "Current release, sampling, parser/evaluation interfaces, eight regression suites, training/source/result hashes and Python syntax. Historical raw logs and weight tensors were not reread in full.",
+  "tests": {
+    "release_gate_tests.py": {
+      "exit_code": 0,
+      "result": [
+        "----------------------------------------------------------------------",
+        "Ran 36 tests in 5.729s",
+        "",
+        "OK"
+      ]
+    },
+    "repetition_tests.py": {
+      "exit_code": 0,
+      "result": [
+        "----------------------------------------------------------------------",
+        "Ran 10 tests in 0.202s",
+        "",
+        "OK"
+      ]
+    },
+    "dev_structured_r2_tests.py": {
+      "exit_code": 0,
+      "result": [
+        "----------------------------------------------------------------------",
+        "Ran 21 tests in 2.953s",
+        "",
+        "OK"
+      ]
+    },
+    "answer_parser_tests.py": {
+      "exit_code": 0,
+      "result": [
+        "----------------------------------------------------------------------",
+        "Ran 30 tests in 0.003s",
+        "",
+        "OK"
+      ]
+    },
+    "structured_answer_tests.py": {
+      "exit_code": 0,
+      "result": [
+        "----------------------------------------------------------------------",
+        "Ran 5 tests in 0.003s",
+        "",
+        "OK"
+      ]
+    },
+    "final_eval_tests.py": {
+      "exit_code": 0,
+      "result": [
+        "----------------------------------------------------------------------",
+        "Ran 9 tests in 0.049s",
+        "",
+        "OK"
+      ]
+    },
+    "trainer_edge_tests.py": {
+      "exit_code": 0,
+      "result": [
+        "----------------------------------------------------------------------",
+        "Ran 3 tests in 0.001s",
+        "",
+        "OK"
+      ]
+    },
+    "training_tokens_tests.py": {
+      "exit_code": 0,
+      "result": [
+        "----------------------------------------------------------------------",
+        "Ran 5 tests in 2.375s",
+        "",
+        "OK"
+      ]
+    }
+  },
+  "integrity": {
+    "training_hashes_verified": 8,
+    "protected_files_unchanged": 80,
+    "intentional_archived_changes": [
+      "datasets_v3/train_D_repeat_budgetmatched_v3.jsonl",
+      "datasets_v3/train_BD_controlled_v3.jsonl",
+      "datasets_v3/BD_SAMPLING_MANIFEST_v3.json"
+    ],
+    "candidate_pin_mismatches": [
+      "finetune/train_v3.py",
+      "validation_v3/PRE_TRAINING_GATES_A002.md"
+    ],
+    "approved_release_exists": false,
+    "syntax_checked": 66
+  },
+  "base_structured_set_empty_responses": {
+    "n": 96,
+    "empty": 96
+  },
+  "candidate_pins_regenerated": false,
+  "committed": false,
+  "pushed": false
+}

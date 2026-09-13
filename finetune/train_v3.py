@@ -48,6 +48,7 @@ REQUIRED_RELEASE_INPUTS=tuple(sorted(
     'finetune/templates/qwen_a002.jinja','finetune/training_tokens_v3.py',
     'finetune/train_v3.py','finetune/phase13_build_c_answers.py',
     'finetune/phase14_build_d_sql.py','finetune/phase11_build_b_facts.py',
+    'validation_v3/PRE_TRAINING_GATES_A002.md',
     Q42_BENCHMARK]))
 
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()

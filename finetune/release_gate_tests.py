@@ -138,6 +138,15 @@ class ReleaseGate(unittest.TestCase):
             with self.assertRaises(RuntimeError, msg=omitted):
                 self.check(r)
 
+    def test_gate_register_cannot_be_omitted_or_replaced(self):
+        name = 'validation_v3/PRE_TRAINING_GATES_A002.md'
+        self.assertIn(name, T.REQUIRED_RELEASE_INPUTS)
+        for omit in (True, False):
+            r = valid_release()
+            if omit: r['sha256'].pop(name)
+            else: r['sha256'][name] = '0' * 64
+            with self.assertRaises(RuntimeError): self.check(r)
+
     def test_drifted_input_refused(self):
         r = valid_release()
         r["sha256"]["datasets_v3/train_B_facts_v3.jsonl"] = "0" * 64

@@ -1,0 +1,17 @@
+{
+  "version": "dev_multipart_r1",
+  "items": 12,
+  "parts": 30,
+  "classification": "dev",
+  "source_sha256": "416f586d405ee0ae1d622448228fdccb9a6222abe82294c5a6521970045a6027",
+  "dataset_sha256": "a22578286ee12b2420206bbe106a2178a00f42eedfe9e62e729217815247a632",
+  "builder_sha256": "c61e8228a4fcf22ff8d0d92295d8f0f9be801f78263480d7a1ac3c5108737366",
+  "database_sha256": "7437c746cb118f3d5bb9edcc34f500e0c9f764358a19fa05766dc526d63bb08b",
+  "sql_parts_verified": 30,
+  "selection": "Sorted non-certification dev components, fixed offsets; six two-part and six three-part tasks.",
+  "limitations": [
+    "All components reused from dev r2; scores are correlated with it.",
+    "Allowed filters/counts only; not broad multipart domain analysis.",
+    "No automatic adoption for training or checkpoint selection."
+  ]
+}

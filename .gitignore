@@ -17,3 +17,6 @@ __pycache__/
 *.pt
 *.pth
 /review_v2_questions/all_predictions.jsonl
+
+# Private update-recovery copies: never publish chat history or local state.
+/.recovery/
