@@ -1,0 +1,58 @@
+{
+  "host": "gylab-asimov1",
+  "timestamp_utc": "2026-09-15T17:00:33.138873+00:00",
+  "conditions": {
+    "base": {
+      "verification": {
+        "synthetic_only": true,
+        "items": 2,
+        "repeated_token_ids_equal": true,
+        "identity_validation_passed": true,
+        "runtime_sha256": "278104e4db7ae0be87cb46679705d49b5b1dff7796b36203dad1153e9db90860",
+        "predictions_sha256": "32181e3947b56eb6c1636ccff4b8811c5be30cd127cd881db0455683a6b71cfb",
+        "training_performed": false,
+        "protected_inputs_read": false,
+        "limitation": "Same-loaded-model repeat, not reload reproducibility or model competence."
+      },
+      "synthetic_outputs": [
+        {
+          "example_id": "synthetic_scalar",
+          "raw_output": "7"
+        },
+        {
+          "example_id": "synthetic_set",
+          "raw_output": "[]"
+        }
+      ]
+    },
+    "diagnostic_D_sql": {
+      "verification": {
+        "synthetic_only": true,
+        "diagnostic_adapter_only": true,
+        "loaded_tensors_match_saved": true,
+        "items": 2,
+        "repeated_token_ids_equal": true,
+        "identity_validation_passed": true,
+        "runtime_sha256": "56791009b436be30addb29193340d7589353deccfa3b33b131e2f8b772e979e8",
+        "predictions_sha256": "92a430cd91bf8631bec3cb7475e2896bb25af00c90b67a0e9189d907f2771d10",
+        "training_performed": false,
+        "protected_inputs_read": false,
+        "limitation": "Same-loaded-model repeat, not reload reproducibility or model competence."
+      },
+      "synthetic_outputs": [
+        {
+          "example_id": "synthetic_scalar",
+          "raw_output": "7"
+        },
+        {
+          "example_id": "synthetic_set",
+          "raw_output": "[]"
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Synthetic runtime verification only, not domain evaluation or final training.",
+    "Repeat checks reuse a loaded model; they do not test full reload reproducibility."
+  ]
+}

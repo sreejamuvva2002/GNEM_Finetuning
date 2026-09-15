@@ -46,6 +46,53 @@ class GateTests(unittest.TestCase):
         G.verify_runtime({'tokenizer':'a'}, {'backend_runtime':{'tokenizer':'a'}})
         for spec in ({},{'backend_runtime':{}},{'backend_runtime':{'tokenizer':'b'}}):
             with self.assertRaises(RuntimeError):G.verify_runtime({'tokenizer':'a'},spec)
+    def test_runtime_rejects_nested_type_substitution(self):
+        actual={'generation':{'do_sample':False,'num_beams':1},'devices':[0]}
+        for changed in (
+            {'generation':{'do_sample':0,'num_beams':1},'devices':[0]},
+            {'generation':{'do_sample':False,'num_beams':True},'devices':[0]},
+            {'generation':{'do_sample':False,'num_beams':1.0},'devices':[0]},
+            {'generation':{'do_sample':False,'num_beams':1},'devices':[False]}):
+            with self.subTest(changed=changed), self.assertRaises(RuntimeError):
+                G.verify_runtime(actual, {'backend_runtime':changed})
+        G.verify_runtime(actual, {'backend_runtime':json.loads(json.dumps(actual))})
+
+    def test_runtime_rejects_non_json_and_missing_values(self):
+        for actual in (None, {'x':float('inf')}, {'x':float('nan')}, {'x':(1,)}, {1:'x'}):
+            with self.subTest(actual=actual), self.assertRaises(RuntimeError):
+                G.verify_runtime(actual, {'backend_runtime':actual})
+        self.assertTrue(G.exact_spec_match({'b':None,'a':[]},{'a':[],'b':None}))
+        self.assertFalse(G.exact_spec_match({'a':None},{}))
+
+    def test_prompt_type_substitution_refused_before_backend(self):
+        config={'decoding':{'do_sample':False,'max_new_tokens':2}}
+        changed={'decoding':{'do_sample':0,'max_new_tokens':2}}
+        (self.root/'datasets_v3/PROMPT_TEMPLATES_A002.json').write_text(json.dumps(config))
+        (self.root/'runtime.json').write_text(json.dumps({'prompt_config':changed}))
+        self.pin()
+        factory=Mock(side_effect=AssertionError('Must not load model'))
+        with self.assertRaisesRegex(RuntimeError,'Prompt/decoding'):
+            G.execute(self.root,self.release,'fixture',factory)
+        factory.assert_not_called()
+
+    def test_environment_identity_drift_refused(self):
+        import copy
+        actual={'environment':{'packages':{'torch':'2.8.0'},'nvidia_driver':'580',
+            'cuda_runtime':'12.8','device':{'name':'A100'},
+            'execution':{'matmul_allow_tf32':False}}}
+        G.verify_runtime(actual, {'backend_runtime':copy.deepcopy(actual)})
+        for section, key, value in [('packages','torch','other'),
+                ('device','name','A6000'),('execution','matmul_allow_tf32',True)]:
+            changed=copy.deepcopy(actual)
+            changed['environment'][section][key]=value
+            with self.assertRaises(RuntimeError):
+                G.verify_runtime(actual, {'backend_runtime':changed})
+        for key in ('nvidia_driver','cuda_runtime','packages','device','execution'):
+            changed=copy.deepcopy(actual)
+            del changed['environment'][key]
+            with self.assertRaises(RuntimeError):
+                G.verify_runtime(actual, {'backend_runtime':changed})
+
     def test_complete_synthetic_generation(self):
         config={'model_revision':'fixture','closed_book_system':'Fixture',
                 'decoding':{'do_sample':False,'max_new_tokens':2},'max_context':20}

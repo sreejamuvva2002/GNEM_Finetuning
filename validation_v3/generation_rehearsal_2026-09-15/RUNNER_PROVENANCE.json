@@ -1,0 +1,27 @@
+{
+  "purpose": "Synthetic runtime checks on restored host; no protected inputs or training.",
+  "copies": [
+    {
+      "original": "finetune/rehearse_generation_v3.py",
+      "original_sha256": "575d68cb55b914fec44940689091ce7a1c28bba9f74f610583e9daf7de548030",
+      "runner": "validation_v3/generation_rehearsal_2026-09-15/rehearse_generation_v3.py",
+      "runner_sha256": "1ef204502fc31416a767993673780c19c29cfc93a5074a1ef7224991303feca2",
+      "changes": [
+        "Repository root resolved from dated directory",
+        "Output date changed to 2026-09-15",
+        "Actual runner hash added to runtime evidence"
+      ]
+    },
+    {
+      "original": "finetune/rehearse_adapter_generation_v3.py",
+      "original_sha256": "e06fb27d71650e2cbf0e40deed1dc52a146ba731eaa345e22f39b50644b14691",
+      "runner": "validation_v3/generation_rehearsal_2026-09-15/rehearse_adapter_generation_v3.py",
+      "runner_sha256": "8043f2df0bdafa76d1bfbdee57fce7a6538c1bad2217efb0c2f0c0097a081348",
+      "changes": [
+        "Repository root resolved from dated directory",
+        "Output date changed to 2026-09-15",
+        "Actual runner hash added to runtime evidence"
+      ]
+    }
+  ]
+}

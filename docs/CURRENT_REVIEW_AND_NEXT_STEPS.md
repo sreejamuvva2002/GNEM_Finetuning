@@ -1,3 +1,48 @@
+# Current checkpoint — 2026-09-15, gylab-asimov1
+
+This section supersedes dated continuation statements below; older evidence is
+retained as history. Final training remains **0/18**. Q42 review is deferred,
+and the training candidate was not regenerated. No release approvals were made.
+
+## Completed since recovery
+
+- Complete backup checksums verified; 30 artifact files and 16 checkpoint links
+  restored without overwriting existing work. See [recovery status](RECOVERY_STATUS_2026-09-15.md).
+- Rebuilt pinned training runtime; downloaded exact base weights/tokenizer;
+  fresh base and diagnostic-adapter synthetic GPU checks passed on A100 hardware.
+- Protected runtime/prompt matching now rejects type substitutions and binds
+  software versions, GPU/CUDA/driver and numerical execution settings. See
+  [generation review](GENERATION_REVIEW_2026-09-15.md). Actual per-run release
+  specifications and complete scoring registration remain unfinished.
+- Multipart baseline audit: 0/12 whole questions, 3/30 parts (3/18 counts,
+  0/12 lists); all formats valid, no truncation. Four lists empty, eight nonempty
+  but incorrect. Historical output bytes and grades remain unchanged.
+- Thirty-two source-validated additional development drafts and scoring anchors
+  are ready in [the human review packet](../validation_v3/dev_review_packet_2026-09-15/REVIEW_PACKET.md).
+  All decisions are blank. No baseline inference or adjudication occurred for
+  these drafts, and they are not training/checkpoint-selection inputs.
+- [Final analysis proposal](FINAL_ANALYSIS_PLAN_DRAFT_2026-09-15.md) maps the
+  18-run schedule, memory-first reporting and historical contrasts. It is not
+  a frozen or approved analysis plan.
+
+## Verification and next work
+
+151 tests across 13 suites passed at this checkpoint. Forty-four tracked inputs
+under datasets_v3/kb plus the schedule and candidate match recovered commit
+2b0a750. Evidence: [preparation checkpoint](../validation_v3/resumption/PREPARATION_CHECKPOINT_2026-09-15.json).
+This does not claim all repository tests or scientific requirements are complete.
+Current edits and new evidence remain uncommitted and unpushed.
+
+Next human dependencies: review the 32 development drafts and their anchors;
+resolve final analysis endpoints/multiplicity and information-access staging;
+choose the broader forgetting battery; verify durable storage for future runs;
+resume Q42 adjudication when the user chooses. Candidate regeneration still
+requires an explicit user request. Independent engineering can continue on
+scoring registration and reviewer-data validation while those decisions remain
+pending. No final training or protected inference is authorized by this handoff.
+
+---
+
 # Current review and next steps
 
 The claim that candidate drift was undocumented is incorrect. Commit 486cdc9 contains an explicit note in docs/REPOSITORY_MAINTENANCE.md and candidate_pin_mismatches in validation_v3/resumption/STEPS_1_2_COMMIT_VERIFICATION.json. The candidate now also carries a visible limitation, without refreshed pins. Gate-register pinning has been promoted from optional to required and omission/drift is regression-tested. Stale paragraphs describing resolved approval-binding and sampling defects were removed.

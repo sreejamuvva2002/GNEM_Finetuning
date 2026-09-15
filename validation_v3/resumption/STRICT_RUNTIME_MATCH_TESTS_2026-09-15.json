@@ -1,0 +1,36 @@
+{
+  "timestamp_utc": "2026-09-15T17:07:09.029920+00:00",
+  "generation_code_sha256": "3adedaf2a82ed79662ac168f953a28af88d9668876db07f3c9adcbdb1f8ff483",
+  "results": [
+    {
+      "suite": "final_generation_tests.py",
+      "returncode": 0,
+      "output": "test_approval_refused_before_backend (__main__.GateTests.test_approval_refused_before_backend) ... ok\ntest_complete_synthetic_generation (__main__.GateTests.test_complete_synthetic_generation) ... ok\ntest_no_real_approval_created (__main__.GateTests.test_no_real_approval_created) ... ok\ntest_prompt_type_substitution_refused_before_backend (__main__.GateTests.test_prompt_type_substitution_refused_before_backend) ... ok\ntest_run_and_path_constraints (__main__.GateTests.test_run_and_path_constraints) ... ok\ntest_runtime_exact_match (__main__.GateTests.test_runtime_exact_match) ... ok\ntest_runtime_rejects_nested_type_substitution (__main__.GateTests.test_runtime_rejects_nested_type_substitution) ... ok\ntest_runtime_rejects_non_json_and_missing_values (__main__.GateTests.test_runtime_rejects_non_json_and_missing_values) ... ok\ntest_stale_approval (__main__.GateTests.test_stale_approval) ... ok\ntest_unpinned_and_changed_code (__main__.GateTests.test_unpinned_and_changed_code) ... ok\ntest_valid_fixture (__main__.GateTests.test_valid_fixture) ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 0.053s\n\nOK\n",
+      "sha256": "9a65acbd45822e4ac0aaec2ee076e012191c9f182910bb653aa219db0eadf042"
+    },
+    {
+      "suite": "generation_core_tests.py",
+      "returncode": 0,
+      "output": "test_backend_budget_violation (__main__.GenerationTests.test_backend_budget_violation) ... ok\ntest_context_and_duplicate_refusal (__main__.GenerationTests.test_context_and_duplicate_refusal) ... ok\ntest_generation_export_evaluator_roundtrip (__main__.GenerationTests.test_generation_export_evaluator_roundtrip) ... ok\ntest_prompt_excludes_gold_and_retains_tokens (__main__.GenerationTests.test_prompt_excludes_gold_and_retains_tokens) ... ok\ntest_truncation_and_alternative_eos (__main__.GenerationTests.test_truncation_and_alternative_eos) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.005s\n\nOK\n",
+      "sha256": "fc08c040e17fed88afee62a5e19f624bfeec6b979117cfaec8e68e0ffdf0dffe"
+    },
+    {
+      "suite": "prediction_export_tests.py",
+      "returncode": 0,
+      "output": "test_adapter_roundtrip_and_drift (__main__.ExportTests.test_adapter_roundtrip_and_drift) ... ok\ntest_bad_identity_rejected (__main__.ExportTests.test_bad_identity_rejected) ... ok\ntest_bad_prompt_and_duplicate_ids_leave_no_export (__main__.ExportTests.test_bad_prompt_and_duplicate_ids_leave_no_export) ... ok\ntest_base_roundtrip_and_no_overwrite (__main__.ExportTests.test_base_roundtrip_and_no_overwrite) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.012s\n\nOK\n",
+      "sha256": "4f08b888d785614205021dacb808f9e502690be64f195da559d01ad0f3c6371a"
+    },
+    {
+      "suite": "final_eval_tests.py",
+      "returncode": 0,
+      "output": "test_authorization_fails_before_missing_files_read (__main__.FinalDriver.test_authorization_fails_before_missing_files_read) ... ok\ntest_declared_probe_scope_used_for_sql (__main__.FinalDriver.test_declared_probe_scope_used_for_sql) ... ok\ntest_failures_not_removed (__main__.FinalDriver.test_failures_not_removed) ... ok\ntest_independent_seed_summary_and_duplicates (__main__.FinalDriver.test_independent_seed_summary_and_duplicates) ... ok\ntest_missing_and_duplicate_ids_rejected (__main__.FinalDriver.test_missing_and_duplicate_ids_rejected) ... ok\ntest_no_real_release_exists (__main__.FinalDriver.test_no_real_release_exists) ... ok\ntest_shapes_serialization_and_denominators (__main__.FinalDriver.test_shapes_serialization_and_denominators) ... ok\ntest_sql_execution_evidence_retained (__main__.FinalDriver.test_sql_execution_evidence_retained) ... ok\ntest_truncation_rejects_correct_prefix (__main__.FinalDriver.test_truncation_rejects_correct_prefix) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 0.068s\n\nOK\n",
+      "sha256": "f59ff3c47d3294e0658754ba9b494793def064328d2fcfbe49e11590830b500b"
+    },
+    {
+      "suite": "final_safeguard_tests.py",
+      "returncode": 0,
+      "output": "test_duplicate_membership_format_separated (__main__.Safeguards.test_duplicate_membership_format_separated) ... ok\ntest_extra_multipart_key_cannot_regain_format_credit (__main__.Safeguards.test_extra_multipart_key_cannot_regain_format_credit) ... ok\ntest_extra_sql_rejected_before_execution (__main__.Safeguards.test_extra_sql_rejected_before_execution) ... ok\ntest_identity_manifest_rejects_substitution (__main__.Safeguards.test_identity_manifest_rejects_substitution) ... ok\ntest_missing_identity_refused (__main__.Safeguards.test_missing_identity_refused) ... ok\ntest_null_and_literal_none_are_distinct_rows (__main__.Safeguards.test_null_and_literal_none_are_distinct_rows) ... ok\ntest_wrong_members_and_rank_duplicates_fail (__main__.Safeguards.test_wrong_members_and_rank_duplicates_fail) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 0.007s\n\nOK\n",
+      "sha256": "425268099446585bc8adac8a37bab875a4c4825ac532ba5a43edaef211493eb6"
+    }
+  ]
+}

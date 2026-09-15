@@ -1,0 +1,15 @@
+{
+  "version": "prediction_export_A002.1",
+  "model_kind": "adapter",
+  "model_revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+  "adapter_path": "validation_v3/rehearsal_models/D_sql.seed61/selected_adapter/adapter_model.safetensors",
+  "prompt_artifact_sha256": "a806773b08bc91829324ee2fba39edfe24ff2c1d41623fc250eb545914cbe96e",
+  "structured_prompt_sha256": "7984d75a709c0d043ace8463ba87926bb9e63ef3e67d050a47d1f9984bdc9a5a",
+  "prompt_hashes": {
+    "synthetic_scalar": "86b11bdd42de5c8744007a9979bd13e4ba808ef620c57274a873303ec337304a",
+    "synthetic_set": "76ec3ec50ca74936d15b78f036b164869f1e90f7d63357cc82fc8495c6ec4ca9"
+  },
+  "expected_count": 2,
+  "predictions_sha256": "92a430cd91bf8631bec3cb7475e2896bb25af00c90b67a0e9189d907f2771d10",
+  "runtime_sha256": "56791009b436be30addb29193340d7589353deccfa3b33b131e2f8b772e979e8"
+}

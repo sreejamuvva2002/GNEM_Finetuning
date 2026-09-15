@@ -1,0 +1,117 @@
+{
+  "timestamp_utc": "2026-09-15T15:08:29.062186+00:00",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "head": "2b0a750637444bcc1981178b64575db2b54523c1",
+  "results": [
+    {
+      "suite": "answer_parser_tests.py",
+      "command": [
+        "/usr/bin/python3",
+        "/home/sm11926/GNEM_Finetuning/finetune/answer_parser_tests.py"
+      ],
+      "suite_sha256": "5634b0d2ae9bb98a026168439cd7b3c121cda616e282b36e125b6733a0a36426",
+      "returncode": 0,
+      "output": "test_array_members_each_get_their_own_budget (__main__.BoundedRepairTests.test_array_members_each_get_their_own_budget) ... ok\ntest_budget_scalar_vs_array_members (__main__.BoundedRepairTests.test_budget_scalar_vs_array_members) ... ok\ntest_double_encoded_scalar_contract_treatment (__main__.BoundedRepairTests.test_double_encoded_scalar_contract_treatment)\nValid JSON string whose CONTENT is quoted. ... ok\ntest_double_quoted_non_json_scalar_is_not_contract_compliant (__main__.BoundedRepairTests.test_double_quoted_non_json_scalar_is_not_contract_compliant)\nThe same defect expressed as INVALID JSON: semantics pass, format fails. ... ok\ntest_excessive_quoting_layers_are_not_repaired (__main__.BoundedRepairTests.test_excessive_quoting_layers_are_not_repaired) ... ok\ntest_matched_typographic_pair_is_stripped (__main__.BoundedRepairTests.test_matched_typographic_pair_is_stripped) ... ok\ntest_mismatched_quotes_are_never_stripped (__main__.BoundedRepairTests.test_mismatched_quotes_are_never_stripped) ... ok\ntest_object_with_requested_key_but_wrong_value_rejected (__main__.BoundedRepairTests.test_object_with_requested_key_but_wrong_value_rejected) ... ok\ntest_repair_never_breaks_a_strictly_correct_answer (__main__.BoundedRepairTests.test_repair_never_breaks_a_strictly_correct_answer) ... ok\ntest_repair_never_rescues_a_wrong_value (__main__.BoundedRepairTests.test_repair_never_rescues_a_wrong_value) ... ok\ntest_requested_key_object_unwrapped (__main__.BoundedRepairTests.test_requested_key_object_unwrapped) ... ok\ntest_target_column_key_object_unwrapped (__main__.BoundedRepairTests.test_target_column_key_object_unwrapped) ... ok\ntest_unrelated_key_object_rejected (__main__.BoundedRepairTests.test_unrelated_key_object_rejected) ... ok\ntest_all_four_correctness_format_combinations_are_reachable (__main__.ContractComplianceIndependenceTests.test_all_four_correctness_format_combinations_are_reachable) ... ok\ntest_compliance_helper_is_pure_text_and_type (__main__.ContractComplianceIndependenceTests.test_compliance_helper_is_pure_text_and_type) ... ok\ntest_compliance_never_consults_gold (__main__.ContractComplianceIndependenceTests.test_compliance_never_consults_gold) ... ok\ntest_correct_json_scalar_both_pass (__main__.ContractComplianceIndependenceTests.test_correct_json_scalar_both_pass) ... ok\ntest_correct_plain_text_semantic_pass_format_fail (__main__.ContractComplianceIndependenceTests.test_correct_plain_text_semantic_pass_format_fail) ... ok\ntest_wrong_json_scalar_format_passes_semantics_fails (__main__.ContractComplianceIndependenceTests.test_wrong_json_scalar_format_passes_semantics_fails) ... ok\ntest_boolean_substitution_rejected (__main__.DeliberatelyNotNormalisedTests.test_boolean_substitution_rejected) ... ok\ntest_extra_set_member_rejected (__main__.DeliberatelyNotNormalisedTests.test_extra_set_member_rejected) ... ok\ntest_missing_set_member_rejected (__main__.DeliberatelyNotNormalisedTests.test_missing_set_member_rejected) ... ok\ntest_repaired_set_still_rejects_extra_member (__main__.DeliberatelyNotNormalisedTests.test_repaired_set_still_rejects_extra_member) ... ok\ntest_empty_or_noise_not_valid_abstention (__main__.ParserTests.test_empty_or_noise_not_valid_abstention) ... ok\ntest_extra_certification_rejected (__main__.ParserTests.test_extra_certification_rejected) ... ok\ntest_scalar_no_substring_credit (__main__.ParserTests.test_scalar_no_substring_credit) ... ok\ntest_truncation_not_correct (__main__.ParserTests.test_truncation_not_correct) ... ok\ntest_valid_set (__main__.ParserTests.test_valid_set) ... ok\ntest_nonstandard_constants_rejected (__main__.StrictJSONConstantsTests.test_nonstandard_constants_rejected) ... ok\ntest_standard_values_remain_compliant (__main__.StrictJSONConstantsTests.test_standard_values_remain_compliant) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 0.007s\n\nOK\n"
+    },
+    {
+      "suite": "structured_answer_tests.py",
+      "command": [
+        "/usr/bin/python3",
+        "/home/sm11926/GNEM_Finetuning/finetune/structured_answer_tests.py"
+      ],
+      "suite_sha256": "1bff9a2163adf8ec45214409303f68b9a950fc85b867e141e3045ba9ee038227",
+      "returncode": 0,
+      "output": "test_multicolumn_set_ignores_order_not_extra_rows (__main__.StructuredAnswers.test_multicolumn_set_ignores_order_not_extra_rows) ... ok\ntest_multipart_requires_all_and_only_requested_parts (__main__.StructuredAnswers.test_multipart_requires_all_and_only_requested_parts) ... ok\ntest_nonstandard_and_truncated_rejected (__main__.StructuredAnswers.test_nonstandard_and_truncated_rejected) ... ok\ntest_public_dispatch_and_prompt_shape (__main__.StructuredAnswers.test_public_dispatch_and_prompt_shape) ... ok\ntest_topk_order_width_and_extras (__main__.StructuredAnswers.test_topk_order_width_and_extras) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.002s\n\nOK\n"
+    },
+    {
+      "suite": "final_eval_tests.py",
+      "command": [
+        "/usr/bin/python3",
+        "/home/sm11926/GNEM_Finetuning/finetune/final_eval_tests.py"
+      ],
+      "suite_sha256": "f59ff3c47d3294e0658754ba9b494793def064328d2fcfbe49e11590830b500b",
+      "returncode": 0,
+      "output": "test_authorization_fails_before_missing_files_read (__main__.FinalDriver.test_authorization_fails_before_missing_files_read) ... ok\ntest_declared_probe_scope_used_for_sql (__main__.FinalDriver.test_declared_probe_scope_used_for_sql) ... ok\ntest_failures_not_removed (__main__.FinalDriver.test_failures_not_removed) ... ok\ntest_independent_seed_summary_and_duplicates (__main__.FinalDriver.test_independent_seed_summary_and_duplicates) ... ok\ntest_missing_and_duplicate_ids_rejected (__main__.FinalDriver.test_missing_and_duplicate_ids_rejected) ... ok\ntest_no_real_release_exists (__main__.FinalDriver.test_no_real_release_exists) ... ok\ntest_shapes_serialization_and_denominators (__main__.FinalDriver.test_shapes_serialization_and_denominators) ... ok\ntest_sql_execution_evidence_retained (__main__.FinalDriver.test_sql_execution_evidence_retained) ... ok\ntest_truncation_rejects_correct_prefix (__main__.FinalDriver.test_truncation_rejects_correct_prefix) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 0.089s\n\nOK\n"
+    },
+    {
+      "suite": "final_safeguard_tests.py",
+      "command": [
+        "/usr/bin/python3",
+        "/home/sm11926/GNEM_Finetuning/finetune/final_safeguard_tests.py"
+      ],
+      "suite_sha256": "425268099446585bc8adac8a37bab875a4c4825ac532ba5a43edaef211493eb6",
+      "returncode": 0,
+      "output": "test_duplicate_membership_format_separated (__main__.Safeguards.test_duplicate_membership_format_separated) ... ok\ntest_extra_multipart_key_cannot_regain_format_credit (__main__.Safeguards.test_extra_multipart_key_cannot_regain_format_credit) ... ok\ntest_extra_sql_rejected_before_execution (__main__.Safeguards.test_extra_sql_rejected_before_execution) ... ok\ntest_identity_manifest_rejects_substitution (__main__.Safeguards.test_identity_manifest_rejects_substitution) ... ok\ntest_missing_identity_refused (__main__.Safeguards.test_missing_identity_refused) ... ok\ntest_null_and_literal_none_are_distinct_rows (__main__.Safeguards.test_null_and_literal_none_are_distinct_rows) ... ok\ntest_wrong_members_and_rank_duplicates_fail (__main__.Safeguards.test_wrong_members_and_rank_duplicates_fail) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 0.007s\n\nOK\n"
+    },
+    {
+      "suite": "generation_core_tests.py",
+      "command": [
+        "/usr/bin/python3",
+        "/home/sm11926/GNEM_Finetuning/finetune/generation_core_tests.py"
+      ],
+      "suite_sha256": "fc08c040e17fed88afee62a5e19f624bfeec6b979117cfaec8e68e0ffdf0dffe",
+      "returncode": 0,
+      "output": "test_backend_budget_violation (__main__.GenerationTests.test_backend_budget_violation) ... ok\ntest_context_and_duplicate_refusal (__main__.GenerationTests.test_context_and_duplicate_refusal) ... ok\ntest_generation_export_evaluator_roundtrip (__main__.GenerationTests.test_generation_export_evaluator_roundtrip) ... ok\ntest_prompt_excludes_gold_and_retains_tokens (__main__.GenerationTests.test_prompt_excludes_gold_and_retains_tokens) ... ok\ntest_truncation_and_alternative_eos (__main__.GenerationTests.test_truncation_and_alternative_eos) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.007s\n\nOK\n"
+    },
+    {
+      "suite": "prediction_export_tests.py",
+      "command": [
+        "/usr/bin/python3",
+        "/home/sm11926/GNEM_Finetuning/finetune/prediction_export_tests.py"
+      ],
+      "suite_sha256": "4f08b888d785614205021dacb808f9e502690be64f195da559d01ad0f3c6371a",
+      "returncode": 0,
+      "output": "test_adapter_roundtrip_and_drift (__main__.ExportTests.test_adapter_roundtrip_and_drift) ... ok\ntest_bad_identity_rejected (__main__.ExportTests.test_bad_identity_rejected) ... ok\ntest_bad_prompt_and_duplicate_ids_leave_no_export (__main__.ExportTests.test_bad_prompt_and_duplicate_ids_leave_no_export) ... ok\ntest_base_roundtrip_and_no_overwrite (__main__.ExportTests.test_base_roundtrip_and_no_overwrite) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.012s\n\nOK\n"
+    },
+    {
+      "suite": "final_generation_tests.py",
+      "command": [
+        "/usr/bin/python3",
+        "/home/sm11926/GNEM_Finetuning/finetune/final_generation_tests.py"
+      ],
+      "suite_sha256": "0ea364cb3d1adc8b3c048d90c2dbe19d2272a174c4b7370229fd4fa0d15e74cf",
+      "returncode": 0,
+      "output": "test_approval_refused_before_backend (__main__.GateTests.test_approval_refused_before_backend) ... ok\ntest_complete_synthetic_generation (__main__.GateTests.test_complete_synthetic_generation) ... ok\ntest_no_real_approval_created (__main__.GateTests.test_no_real_approval_created) ... ok\ntest_run_and_path_constraints (__main__.GateTests.test_run_and_path_constraints) ... ok\ntest_runtime_exact_match (__main__.GateTests.test_runtime_exact_match) ... ok\ntest_stale_approval (__main__.GateTests.test_stale_approval) ... ok\ntest_unpinned_and_changed_code (__main__.GateTests.test_unpinned_and_changed_code) ... ok\ntest_valid_fixture (__main__.GateTests.test_valid_fixture) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.042s\n\nOK\n"
+    },
+    {
+      "suite": "release_gate_tests.py",
+      "command": [
+        "/usr/bin/python3",
+        "/home/sm11926/GNEM_Finetuning/finetune/release_gate_tests.py"
+      ],
+      "suite_sha256": "f4b09f892a2385224dbe2f62fa447496bca8e3805710c283c3d7f3e5fddfea17",
+      "returncode": 0,
+      "output": "test_approval_artifact_must_be_pinned_by_the_release (__main__.ReleaseGate.test_approval_artifact_must_be_pinned_by_the_release) ... ok\ntest_approval_pin_must_match_the_file (__main__.ReleaseGate.test_approval_pin_must_match_the_file) ... ok\ntest_arm_partition_matches_provenance (__main__.ReleaseGate.test_arm_partition_matches_provenance) ... ok\ntest_benchmark_must_be_pinned_by_the_release (__main__.ReleaseGate.test_benchmark_must_be_pinned_by_the_release) ... ok\ntest_drifted_input_refused (__main__.ReleaseGate.test_drifted_input_refused) ... ok\ntest_dropping_a_preregistered_run_refused (__main__.ReleaseGate.test_dropping_a_preregistered_run_refused) ... ok\ntest_duplicate_pairs_refused (__main__.ReleaseGate.test_duplicate_pairs_refused) ... ok\ntest_empty_hash_map_refused (__main__.ReleaseGate.test_empty_hash_map_refused) ... ok\ntest_evidence_must_be_a_json_object (__main__.ReleaseGate.test_evidence_must_be_a_json_object) ... ok\ntest_gate_register_cannot_be_omitted_or_replaced (__main__.ReleaseGate.test_gate_register_cannot_be_omitted_or_replaced) ... ok\ntest_missing_release_is_refused (__main__.ReleaseGate.test_missing_release_is_refused) ... ok\ntest_missing_schedule_refused (__main__.ReleaseGate.test_missing_schedule_refused) ... ok\ntest_no_approval_artifact_exists_in_the_repository (__main__.ReleaseGate.test_no_approval_artifact_exists_in_the_repository) ... ok\ntest_no_release_file_in_repository (__main__.ReleaseGate.test_no_release_file_in_repository) ... ok\ntest_non_integer_or_out_of_range_seeds_refused (__main__.ReleaseGate.test_non_integer_or_out_of_range_seeds_refused) ... ok\ntest_partial_hash_map_refused (__main__.ReleaseGate.test_partial_hash_map_refused) ... ok\ntest_pinned_but_missing_file_refused (__main__.ReleaseGate.test_pinned_but_missing_file_refused) ... ok\ntest_primary_arm_below_three_seeds_refused (__main__.ReleaseGate.test_primary_arm_below_three_seeds_refused) ... ok\ntest_proposal_is_not_an_approved_release (__main__.ReleaseGate.test_proposal_is_not_an_approved_release) ... ok\ntest_q42_not_approved_refused (__main__.ReleaseGate.test_q42_not_approved_refused) ... ok\ntest_release_string_alone_does_not_unlock_training (__main__.ReleaseGate.test_release_string_alone_does_not_unlock_training)\nThe defect this gate exists to close: flipping approved/q42_approval ... ok\ntest_requested_seed_itself_must_be_a_valid_integer (__main__.ReleaseGate.test_requested_seed_itself_must_be_a_valid_integer) ... ok\ntest_schedule_hash_must_match (__main__.ReleaseGate.test_schedule_hash_must_match) ... ok\ntest_schedule_must_match_the_preregistered_proposal (__main__.ReleaseGate.test_schedule_must_match_the_preregistered_proposal)\nCounts and minimums alone let a release run undeclared seeds. ... ok\ntest_schedule_source_required (__main__.ReleaseGate.test_schedule_source_required) ... ok\ntest_stale_approval_naming_other_benchmark_bytes_refused (__main__.ReleaseGate.test_stale_approval_naming_other_benchmark_bytes_refused)\nAn approval of a previous Q42 set must not certify the current one. ... ok\ntest_training_gate_is_no_weaker_than_the_evaluation_gate (__main__.ReleaseGate.test_training_gate_is_no_weaker_than_the_evaluation_gate)\nfinal_eval_v3.authorize() requires the same artifact; so must training. ... ok\ntest_unapproved_or_malformed_evidence_refused (__main__.ReleaseGate.test_unapproved_or_malformed_evidence_refused) ... ok\ntest_unapproved_refused (__main__.ReleaseGate.test_unapproved_refused) ... ok\ntest_unknown_variant_refused (__main__.ReleaseGate.test_unknown_variant_refused) ... ok\ntest_unscheduled_pair_refused (__main__.ReleaseGate.test_unscheduled_pair_refused) ... ok\ntest_valid_external_evidence_accepted (__main__.ReleaseGate.test_valid_external_evidence_accepted) ... ok\ntest_valid_release_accepted (__main__.ReleaseGate.test_valid_release_accepted) ... ok\ntest_valid_release_covers_all_eighteen_runs (__main__.ReleaseGate.test_valid_release_covers_all_eighteen_runs) ... ok\ntest_valid_seed_helper_boundaries (__main__.ReleaseGate.test_valid_seed_helper_boundaries) ... ok\ntest_wrong_total_run_count_refused (__main__.ReleaseGate.test_wrong_total_run_count_refused) ... ok\n\n----------------------------------------------------------------------\nRan 36 tests in 4.014s\n\nOK\n"
+    },
+    {
+      "suite": "repetition_tests.py",
+      "command": [
+        "/usr/bin/python3",
+        "/home/sm11926/GNEM_Finetuning/finetune/repetition_tests.py"
+      ],
+      "suite_sha256": "6a61f7ced653b6d459055e635c895f6ca75ec88d3297522f5ff6a6707ef11387",
+      "returncode": 0,
+      "output": "test_arity_alone_would_not_have_caught_the_kind_skew (__main__.Repetition.test_arity_alone_would_not_have_caught_the_kind_skew)\nA sampler balanced on arity but ordered lexicographically inside it ... ok\ntest_committed_mixtures_cover_every_arity_and_kind (__main__.Repetition.test_committed_mixtures_cover_every_arity_and_kind) ... ok\ntest_committed_mixtures_retain_every_source_exactly (__main__.Repetition.test_committed_mixtures_retain_every_source_exactly) ... ok\ntest_diagnostics_report_deviation_and_rounding (__main__.Repetition.test_diagnostics_report_deviation_and_rounding) ... ok\ntest_every_source_and_every_complete_cycle_retained (__main__.Repetition.test_every_source_and_every_complete_cycle_retained) ... ok\ntest_factual_items_stratify_by_attribute (__main__.Repetition.test_factual_items_stratify_by_attribute) ... ok\ntest_partial_cycle_balanced_jointly_across_arity_and_kind (__main__.Repetition.test_partial_cycle_balanced_jointly_across_arity_and_kind) ... ok\ntest_rejects_degenerate_sources (__main__.Repetition.test_rejects_degenerate_sources) ... ok\ntest_within_stratum_order_is_deterministic (__main__.Repetition.test_within_stratum_order_is_deterministic) ... ok\ntest_within_stratum_order_is_not_lexicographic (__main__.Repetition.test_within_stratum_order_is_not_lexicographic) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.309s\n\nOK\n"
+    },
+    {
+      "suite": "dev_structured_r2_tests.py",
+      "command": [
+        "/usr/bin/python3",
+        "/home/sm11926/GNEM_Finetuning/finetune/dev_structured_r2_tests.py"
+      ],
+      "suite_sha256": "6e837f1c61bf02ff966577fb079253f8d22adaaf9efac7f8ce9aae99b99d7f02",
+      "returncode": 1,
+      "output": "test_anchor_field_is_unambiguous (__main__.DevStructuredR2.test_anchor_field_is_unambiguous)\n`anchor_entity_split` listed the splits of matching records, which reads ... ok\ntest_anchor_row_ids_recomputed_independently (__main__.DevStructuredR2.test_anchor_row_ids_recomputed_independently) ... ok\ntest_answers_are_not_all_singletons (__main__.DevStructuredR2.test_answers_are_not_all_singletons) ... ok\ntest_counts_are_not_all_identical (__main__.DevStructuredR2.test_counts_are_not_all_identical) ... ok\ntest_covers_join_arity_and_both_answer_types (__main__.DevStructuredR2.test_covers_join_arity_and_both_answer_types) ... ok\ntest_detector_reproduces_the_legacy_defect (__main__.DevStructuredR2.test_detector_reproduces_the_legacy_defect) ... ok\ntest_every_gold_reexecutes_exactly (__main__.DevStructuredR2.test_every_gold_reexecutes_exactly) ... ok\ntest_every_task_has_a_development_anchor (__main__.DevStructuredR2.test_every_task_has_a_development_anchor)\nDrawing each value from dev data is not enough: the COMBINED predicate ... ok\ntest_heldout_composition_excluded (__main__.DevStructuredR2.test_heldout_composition_excluded) ... ok\ntest_legacy_artifact_preserved (__main__.DevStructuredR2.test_legacy_artifact_preserved) ... ok\ntest_no_collision_with_training_pool_fewshot_or_probes (__main__.DevStructuredR2.test_no_collision_with_training_pool_fewshot_or_probes) ... ok\ntest_no_company_named_in_a_company_returning_question (__main__.DevStructuredR2.test_no_company_named_in_a_company_returning_question) ... ok\ntest_no_empty_gold (__main__.DevStructuredR2.test_no_empty_gold) ... ok\ntest_no_gold_value_appears_in_its_own_question (__main__.DevStructuredR2.test_no_gold_value_appears_in_its_own_question) ... ok\ntest_no_heldout_operation_construct (__main__.DevStructuredR2.test_no_heldout_operation_construct) ... ok\ntest_no_test_company_in_question_or_gold (__main__.DevStructuredR2.test_no_test_company_in_question_or_gold) ... ok\ntest_predicate_matches_the_declared_fields (__main__.DevStructuredR2.test_predicate_matches_the_declared_fields) ... ok\ntest_split_metadata_corrected (__main__.DevStructuredR2.test_split_metadata_corrected) ... ok\ntest_unique_example_ids (__main__.DevStructuredR2.test_unique_example_ids) ... ok\nsetUpClass (__main__.DevTargetsFitTheTrainer) ... ERROR\n\n======================================================================\nERROR: setUpClass (__main__.DevTargetsFitTheTrainer)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/sm11926/GNEM_Finetuning/finetune/dev_structured_r2_tests.py\", line 219, in setUpClass\n    from transformers import AutoTokenizer\nModuleNotFoundError: No module named 'transformers'\n\n----------------------------------------------------------------------\nRan 19 tests in 0.615s\n\nFAILED (errors=1)\n"
+    },
+    {
+      "suite": "training_tokens_tests.py",
+      "command": [
+        "/usr/bin/python3",
+        "/home/sm11926/GNEM_Finetuning/finetune/training_tokens_tests.py"
+      ],
+      "suite_sha256": "d93135eac994371e2ebfc2c98bbea0b3978c4d8bdab5e445418d46a09d4a0118",
+      "returncode": 5,
+      "output": "setUpClass (__main__.LabelTests) ... ERROR\n\n======================================================================\nERROR: setUpClass (__main__.LabelTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/sm11926/GNEM_Finetuning/finetune/phase10_build_a_cpt.py\", line 106, in load_real_tokenizer\n    from transformers import AutoTokenizer\nModuleNotFoundError: No module named 'transformers'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/sm11926/GNEM_Finetuning/finetune/training_tokens_tests.py\", line 7, in setUpClass\n    def setUpClass(cls):cls.tok,_=load_real_tokenizer()\n                                  ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/sm11926/GNEM_Finetuning/finetune/phase10_build_a_cpt.py\", line 108, in load_real_tokenizer\n    raise Gate(\nphase10_build_a_cpt.Gate: transformers is unavailable, so the real Qwen tokenizer cannot be established. Phase 10 does NOT substitute an estimator. (No module named 'transformers')\n\n----------------------------------------------------------------------\nRan 0 tests in 0.001s\n\nFAILED (errors=1)\n"
+    }
+  ]
+}

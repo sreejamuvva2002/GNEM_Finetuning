@@ -1,0 +1,15 @@
+{
+  "approved": false,
+  "sha256": {
+    "validation_v3/generation_rehearsal_2026-09-15/diagnostic_D_sql/predictions.jsonl": "92a430cd91bf8631bec3cb7475e2896bb25af00c90b67a0e9189d907f2771d10",
+    "validation_v3/generation_rehearsal_2026-09-15/diagnostic_D_sql/identity.json": "9fc4da41d4408998f9d169713cee9925525f78716422a34632c42dd18b76cdc0",
+    "datasets_v3/PROMPT_TEMPLATES_A002.json": "a806773b08bc91829324ee2fba39edfe24ff2c1d41623fc250eb545914cbe96e",
+    "finetune/structured_prompt_v3.py": "7984d75a709c0d043ace8463ba87926bb9e63ef3e67d050a47d1f9984bdc9a5a",
+    "validation_v3/generation_rehearsal_2026-09-15/diagnostic_D_sql/runtime.json": "56791009b436be30addb29193340d7589353deccfa3b33b131e2f8b772e979e8",
+    "validation_v3/rehearsal_models/D_sql.seed61/selected_adapter/adapter_model.safetensors": "da646a88890ceb6ea6c2bfb1fdd88c0f48159f6f9d77bcc66622183dbd72a8df"
+  },
+  "prediction_identity_manifests": {
+    "validation_v3/generation_rehearsal_2026-09-15/diagnostic_D_sql/predictions.jsonl": "validation_v3/generation_rehearsal_2026-09-15/diagnostic_D_sql/identity.json"
+  },
+  "note": "Export registration only; not authorization to generate, unseal, or score."
+}

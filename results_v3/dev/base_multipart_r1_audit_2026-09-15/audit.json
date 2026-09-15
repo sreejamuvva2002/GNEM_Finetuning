@@ -1,0 +1,31 @@
+{
+  "counts": {
+    "questions": 12,
+    "all_parts_correct": 0.0,
+    "strict_questions_correct": 0.0,
+    "question_format_compliant": 12,
+    "truncated_questions": 0,
+    "expected_parts": 30,
+    "correct_parts": 3.0,
+    "scalar_parts": 18,
+    "scalar_correct": 3.0,
+    "part_format_compliant": 30,
+    "set_parts": 12,
+    "set_correct": 0.0,
+    "set_empty_outputs": 4,
+    "set_nonempty_golds": 12
+  },
+  "all_saved_scores_reproduced": true,
+  "source_sha256": {
+    "datasets_v3/dev_multipart_r1_v3.jsonl": "a22578286ee12b2420206bbe106a2178a00f42eedfe9e62e729217815247a632",
+    "results_v3/dev/base_multipart_r1/predictions.jsonl": "d3a700036e79a5458d96d29301afb18ae3b266a4d93c0c0f1f40176a8214aff1",
+    "results_v3/dev/base_multipart_r1/scores.jsonl": "634f0f4b66565cfae8c3983ada875b416429a1b955780229e5ce3b10ce9246a1",
+    "results_v3/dev/base_multipart_r1/summary.json": "19e500e3d6fcf7262c40dc6b9038a99f902a4b8aca3412da75ee4453c93da6cd",
+    "finetune/audit_dev_multipart_r1.py": "4fb8c94b7dd9258ad537890d8a524f0a00983c861a69f5d7a955058afc43b97b"
+  },
+  "limitations": [
+    "Reused development components; not independent unseen-fact evidence.",
+    "Questions and parts are correlated, not independent model runs.",
+    "Audit of existing outputs only; no inference or training change."
+  ]
+}

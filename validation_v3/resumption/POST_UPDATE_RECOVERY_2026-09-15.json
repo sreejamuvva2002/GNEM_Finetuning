@@ -1,0 +1,43 @@
+{
+  "timestamp_utc": "2026-09-15T15:09:09.161974+00:00",
+  "head": "2b0a750637444bcc1981178b64575db2b54523c1",
+  "multipart": {
+    "items": 12,
+    "sql_parts_verified": 30,
+    "matches_builder": true,
+    "manifest_pins": {
+      "source_sha256": true,
+      "dataset_sha256": true,
+      "builder_sha256": true,
+      "database_sha256": true
+    },
+    "baseline_input_and_prediction_hashes_match": true,
+    "saved_summary": {
+      "items": 12,
+      "correct": 0.0,
+      "strict_correct": 0.0,
+      "expected_parts": 30,
+      "predictions_sha256": "d3a700036e79a5458d96d29301afb18ae3b266a4d93c0c0f1f40176a8214aff1",
+      "input_sha256": "a22578286ee12b2420206bbe106a2178a00f42eedfe9e62e729217815247a632",
+      "limitation": "Recombined existing development components; diagnostic only, no checkpoint selection change."
+    }
+  },
+  "missing_repository_paths": [
+    ".recovery/lab_update_2026-09-13",
+    ".venv-v3",
+    ".venv-v3-train",
+    "review_v2_questions/all_predictions.jsonl"
+  ],
+  "repository_safetensors_count": 0,
+  "gpu": "NVIDIA A100 80GB PCIe, 81920 MiB, 580.173.02\nNVIDIA A100 80GB PCIe, 81920 MiB, 580.173.02\n",
+  "approvals_present": {
+    "Q42_HUMAN_APPROVAL_A002.json": false,
+    "GENERATION_RELEASE_A002.json": false,
+    "PHASE40_RELEASE_A002.json": false
+  },
+  "limitations": [
+    "Artifact search limited to repository; external backup location unknown.",
+    "Saved baseline hashes and gold SQL verified; model inference not rerun.",
+    "No training environment restored or protected inputs scored."
+  ]
+}

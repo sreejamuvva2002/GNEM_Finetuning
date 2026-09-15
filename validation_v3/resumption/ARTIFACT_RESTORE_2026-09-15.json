@@ -1,0 +1,282 @@
+{
+  "timestamp_utc": "2026-09-15T16:33:50.892933+00:00",
+  "host": "gylab-asimov1",
+  "source_archive": ".recovery/from_geass.c3xWVR/excluded_artifacts.tar",
+  "archive_checksums_verified_before_restore": {
+    "codex_history.tar.gz": {
+      "bytes": 55568068,
+      "sha256": "a294758cf950648124f44358df2481aba88cb6f7fa88ffbf8cc31e797c989a8d"
+    },
+    "excluded_artifacts.tar": {
+      "bytes": 12011888640,
+      "sha256": "5ba80cf34ed94e57f081f3a4ce612c42d686dd0677c95d4ff7c97a2adb77e3b9"
+    }
+  },
+  "regular_files": 30,
+  "symlinks": 16,
+  "records": [
+    {
+      "path": "archive/smoke_prefix_pilot_2026-09-11/smoke_models/A_cpt.seed61/selected_adapter/adapter_model.safetensors",
+      "bytes": 550593184,
+      "sha256": "10b25f9687c37c2f5de5c2303dfb08ab77c95c7888686bc7788cb5d0de872c2f",
+      "action": "restored"
+    },
+    {
+      "path": "archive/smoke_prefix_pilot_2026-09-11/smoke_models/BC.seed61/selected_adapter/adapter_model.safetensors",
+      "bytes": 550593184,
+      "sha256": "7f48d7176e182c7fe91ce1aca942f2ffa212c98779daecf6c19a62c267252a5b",
+      "action": "restored"
+    },
+    {
+      "path": "archive/smoke_prefix_pilot_2026-09-11/smoke_models/BD_controlled.seed61/selected_adapter/adapter_model.safetensors",
+      "bytes": 550593184,
+      "sha256": "dc6a61b351ee6624b67cf2b6a453a2c15667a5150fd26d506d6c38b2bc0877d3",
+      "action": "restored"
+    },
+    {
+      "path": "archive/smoke_prefix_pilot_2026-09-11/smoke_models/BD_full.seed61/selected_adapter/adapter_model.safetensors",
+      "bytes": 550593184,
+      "sha256": "dc6a61b351ee6624b67cf2b6a453a2c15667a5150fd26d506d6c38b2bc0877d3",
+      "action": "restored"
+    },
+    {
+      "path": "archive/smoke_prefix_pilot_2026-09-11/smoke_models/B_facts.seed61/selected_adapter/adapter_model.safetensors",
+      "bytes": 550593184,
+      "sha256": "7f48d7176e182c7fe91ce1aca942f2ffa212c98779daecf6c19a62c267252a5b",
+      "action": "restored"
+    },
+    {
+      "path": "archive/smoke_prefix_pilot_2026-09-11/smoke_models/C_answers.seed61/selected_adapter/adapter_model.safetensors",
+      "bytes": 550593184,
+      "sha256": "b30a1b39cbdd207044f5c10af95e5770b06a1ae3a87e723dec8c2173422ee4a8",
+      "action": "restored"
+    },
+    {
+      "path": "archive/smoke_prefix_pilot_2026-09-11/smoke_models/D_repeat_budgetmatched.seed61/selected_adapter/adapter_model.safetensors",
+      "bytes": 550593184,
+      "sha256": "4fa1db5732e1d8696ee7bb0897b40f43e21d9c979539ef3f38a2c3fd5965d7b3",
+      "action": "restored"
+    },
+    {
+      "path": "archive/smoke_prefix_pilot_2026-09-11/smoke_models/D_sql.seed61/selected_adapter/adapter_model.safetensors",
+      "bytes": 550593184,
+      "sha256": "d5ddea10e25511553fc24b73255f5093d9058259ecb0281c952b3a77ce95195d",
+      "action": "restored"
+    },
+    {
+      "path": "review_v2_questions/all_predictions.jsonl",
+      "bytes": 158826666,
+      "sha256": "03cb33a38b873aedcad2d2e5d1e984cb214cc74990f75764a87e978bfb075a91",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/rehearsal_models/D_sql.seed61/checkpoint-2/adapter_model.safetensors",
+      "bytes": 550593184,
+      "sha256": "be4536153d4d0fc4e603833c8306613bf5aae5fd7691d1ba32aefabfa54d6035",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/rehearsal_models/D_sql.seed61/checkpoint-2/optimizer.pt",
+      "bytes": 280355749,
+      "sha256": "c9834abaeeea948c039bf3e0996565f98c16fdf3878e6b06e12e3d6062f20fa7",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/rehearsal_models/D_sql.seed61/checkpoint-2/rng_state.pth",
+      "bytes": 14645,
+      "sha256": "a06116fd353b3b31299681f21f10633c5b64fba76139b4ba9616a05df7768502",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/rehearsal_models/D_sql.seed61/checkpoint-2/scheduler.pt",
+      "bytes": 1465,
+      "sha256": "0e849924c81f1f7fcd49fc8000c864e11ad72938464daf76191b8ab7602b1629",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/rehearsal_models/D_sql.seed61/checkpoint-4/adapter_model.safetensors",
+      "bytes": 550593184,
+      "sha256": "91cd994991a4bf306d0d0d8a874487fbc96114d3d10070a9b7610ad8ae3032c3",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/rehearsal_models/D_sql.seed61/checkpoint-4/optimizer.pt",
+      "bytes": 280355749,
+      "sha256": "3fac91260e49d61d9b5f43857005369ba5731e872ff0afcd46a7ba259640b1b4",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/rehearsal_models/D_sql.seed61/checkpoint-4/rng_state.pth",
+      "bytes": 14645,
+      "sha256": "22acef3bac18519a36d25b8c502c9516753f1063256ac0e8666aab799aae9f9e",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/rehearsal_models/D_sql.seed61/checkpoint-4/scheduler.pt",
+      "bytes": 1465,
+      "sha256": "107f2d8f73130c37d16976a6354824c70f0f8a51461421aa6e96f9e000907120",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/rehearsal_models/D_sql.seed61/checkpoint-6/adapter_model.safetensors",
+      "bytes": 550593184,
+      "sha256": "da646a88890ceb6ea6c2bfb1fdd88c0f48159f6f9d77bcc66622183dbd72a8df",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/rehearsal_models/D_sql.seed61/checkpoint-6/optimizer.pt",
+      "bytes": 280355749,
+      "sha256": "7f193d68ba14d35e47819d4fd1145a13aef4ef77d211eaa9fb20a068ddf7ed31",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/rehearsal_models/D_sql.seed61/checkpoint-6/rng_state.pth",
+      "bytes": 14645,
+      "sha256": "53a07b494176cfbe210f207c3904348a48eb599b57081057d91715be5bd829ca",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/rehearsal_models/D_sql.seed61/checkpoint-6/scheduler.pt",
+      "bytes": 1465,
+      "sha256": "2c6d28fdd465ebade1b39a3175c6ea76a924af67397e8363a5e291df8ba40853",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/rehearsal_models/D_sql.seed61/selected_adapter/adapter_model.safetensors",
+      "bytes": 550593184,
+      "sha256": "da646a88890ceb6ea6c2bfb1fdd88c0f48159f6f9d77bcc66622183dbd72a8df",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/smoke_models/A_cpt.seed61/selected_adapter/adapter_model.safetensors",
+      "bytes": 550593184,
+      "sha256": "96c593738287b9344a0b8ef3e9c50497a6cb72ba216e025d8607080dfe9a707f",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/smoke_models/BC.seed61/selected_adapter/adapter_model.safetensors",
+      "bytes": 550593184,
+      "sha256": "48e241be0234b65de9a49e2bd215340c03905c1efa80af83cec14169ef38f116",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/smoke_models/BD_controlled.seed61/selected_adapter/adapter_model.safetensors",
+      "bytes": 550593184,
+      "sha256": "2be99a1df089e3c1d4b80c92205259fc632edc8431199fad2ae82cdff430f099",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/smoke_models/BD_full.seed61/selected_adapter/adapter_model.safetensors",
+      "bytes": 550593184,
+      "sha256": "4f621834196de152ad2ef7592ca0d131c7f26d41bd4df16bafc6cac1264fe1f1",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/smoke_models/B_facts.seed61/selected_adapter/adapter_model.safetensors",
+      "bytes": 550593184,
+      "sha256": "08274b2ca2ebbd27c0b5534e4b13b6bdadd3fabba47680e31ebb98ff66a17186",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/smoke_models/C_answers.seed61/selected_adapter/adapter_model.safetensors",
+      "bytes": 550593184,
+      "sha256": "e52980e3ba111ceaaa2284409333a072df49b5ce6c5faf51a76c199e64f51860",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/smoke_models/D_repeat_budgetmatched.seed61/selected_adapter/adapter_model.safetensors",
+      "bytes": 550593184,
+      "sha256": "dfc3ea8a5f9e6a559bcd507dd6ccbdf998aee88d3a8b281e726388cd42451d24",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/smoke_models/D_sql.seed61/selected_adapter/adapter_model.safetensors",
+      "bytes": 550593184,
+      "sha256": "e7baecdc79f93b955ebc7848f556f13553fe5529b967d02a36f533dab7d2cd90",
+      "action": "restored"
+    },
+    {
+      "path": "archive/smoke_prefix_pilot_2026-09-11/smoke_models/A_cpt.seed61/checkpoint-2/adapter_model.safetensors",
+      "link": "../selected_adapter/adapter_model.safetensors",
+      "action": "restored"
+    },
+    {
+      "path": "archive/smoke_prefix_pilot_2026-09-11/smoke_models/BC.seed61/checkpoint-2/adapter_model.safetensors",
+      "link": "../selected_adapter/adapter_model.safetensors",
+      "action": "restored"
+    },
+    {
+      "path": "archive/smoke_prefix_pilot_2026-09-11/smoke_models/BD_controlled.seed61/checkpoint-2/adapter_model.safetensors",
+      "link": "../selected_adapter/adapter_model.safetensors",
+      "action": "restored"
+    },
+    {
+      "path": "archive/smoke_prefix_pilot_2026-09-11/smoke_models/BD_full.seed61/checkpoint-2/adapter_model.safetensors",
+      "link": "../selected_adapter/adapter_model.safetensors",
+      "action": "restored"
+    },
+    {
+      "path": "archive/smoke_prefix_pilot_2026-09-11/smoke_models/B_facts.seed61/checkpoint-2/adapter_model.safetensors",
+      "link": "../selected_adapter/adapter_model.safetensors",
+      "action": "restored"
+    },
+    {
+      "path": "archive/smoke_prefix_pilot_2026-09-11/smoke_models/C_answers.seed61/checkpoint-2/adapter_model.safetensors",
+      "link": "../selected_adapter/adapter_model.safetensors",
+      "action": "restored"
+    },
+    {
+      "path": "archive/smoke_prefix_pilot_2026-09-11/smoke_models/D_repeat_budgetmatched.seed61/checkpoint-2/adapter_model.safetensors",
+      "link": "../selected_adapter/adapter_model.safetensors",
+      "action": "restored"
+    },
+    {
+      "path": "archive/smoke_prefix_pilot_2026-09-11/smoke_models/D_sql.seed61/checkpoint-2/adapter_model.safetensors",
+      "link": "../selected_adapter/adapter_model.safetensors",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/smoke_models/A_cpt.seed61/checkpoint-2/adapter_model.safetensors",
+      "link": "../selected_adapter/adapter_model.safetensors",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/smoke_models/BC.seed61/checkpoint-2/adapter_model.safetensors",
+      "link": "../selected_adapter/adapter_model.safetensors",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/smoke_models/BD_controlled.seed61/checkpoint-2/adapter_model.safetensors",
+      "link": "../selected_adapter/adapter_model.safetensors",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/smoke_models/BD_full.seed61/checkpoint-2/adapter_model.safetensors",
+      "link": "../selected_adapter/adapter_model.safetensors",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/smoke_models/B_facts.seed61/checkpoint-2/adapter_model.safetensors",
+      "link": "../selected_adapter/adapter_model.safetensors",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/smoke_models/C_answers.seed61/checkpoint-2/adapter_model.safetensors",
+      "link": "../selected_adapter/adapter_model.safetensors",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/smoke_models/D_repeat_budgetmatched.seed61/checkpoint-2/adapter_model.safetensors",
+      "link": "../selected_adapter/adapter_model.safetensors",
+      "action": "restored"
+    },
+    {
+      "path": "validation_v3/smoke_models/D_sql.seed61/checkpoint-2/adapter_model.safetensors",
+      "link": "../selected_adapter/adapter_model.safetensors",
+      "action": "restored"
+    }
+  ],
+  "chat_history": "Archive verified and preserved; active Codex state not modified.",
+  "environments": "Not included in recovery archives; not rebuilt or copied.",
+  "overwrite_policy": "Existing identical files retained; differences abort; new files published with no-overwrite hard links."
+}

@@ -1,0 +1,15 @@
+{
+  "version": "prediction_export_A002.1",
+  "model_kind": "base",
+  "model_revision": "cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8",
+  "adapter_path": null,
+  "prompt_artifact_sha256": "a806773b08bc91829324ee2fba39edfe24ff2c1d41623fc250eb545914cbe96e",
+  "structured_prompt_sha256": "7984d75a709c0d043ace8463ba87926bb9e63ef3e67d050a47d1f9984bdc9a5a",
+  "prompt_hashes": {
+    "synthetic_scalar": "86b11bdd42de5c8744007a9979bd13e4ba808ef620c57274a873303ec337304a",
+    "synthetic_set": "76ec3ec50ca74936d15b78f036b164869f1e90f7d63357cc82fc8495c6ec4ca9"
+  },
+  "expected_count": 2,
+  "predictions_sha256": "32181e3947b56eb6c1636ccff4b8811c5be30cd127cd881db0455683a6b71cfb",
+  "runtime_sha256": "be8a0378aab4cb5987d32b04e544633daefb459dd3baa754ed2f12f0224b3d56"
+}

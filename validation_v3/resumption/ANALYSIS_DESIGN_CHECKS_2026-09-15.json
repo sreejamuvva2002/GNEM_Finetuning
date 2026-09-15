@@ -1,0 +1,17 @@
+{
+  "schedule_sha256": "4dd10c60e53d483ca326aee68e3e3ff6d9135ee728084c305baac1db3e79daf9",
+  "run_counts": {
+    "A_cpt": 1,
+    "B_facts": 3,
+    "C_answers": 3,
+    "D_sql": 3,
+    "BC": 1,
+    "BD_controlled": 3,
+    "D_repeat_budgetmatched": 3,
+    "BD_full": 1
+  },
+  "unique_variant_seed_pairs": 18,
+  "two_sided_three_pair_sign_flip_minimum_p": 0.25,
+  "plan_status": "draft_not_released",
+  "scope": "Schedule shape and exact sign enumeration; not validation of all statistical assumptions."
+}

@@ -20,3 +20,12 @@ __pycache__/
 
 # Private update-recovery copies: never publish chat history or local state.
 /.recovery/
+
+# Recovery upload contains private chat history and archived model artifacts.
+/finetune/lab_update_2026-09-13/
+
+/lab_update_2026-09-13/
+
+/excluded_artifacts.tar
+
+/codex_history.tar.gz

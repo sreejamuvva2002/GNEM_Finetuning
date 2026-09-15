@@ -1,0 +1,13 @@
+{
+  "synthetic_only": true,
+  "diagnostic_adapter_only": true,
+  "loaded_tensors_match_saved": true,
+  "items": 2,
+  "repeated_token_ids_equal": true,
+  "identity_validation_passed": true,
+  "runtime_sha256": "56791009b436be30addb29193340d7589353deccfa3b33b131e2f8b772e979e8",
+  "predictions_sha256": "92a430cd91bf8631bec3cb7475e2896bb25af00c90b67a0e9189d907f2771d10",
+  "training_performed": false,
+  "protected_inputs_read": false,
+  "limitation": "Same-loaded-model repeat, not reload reproducibility or model competence."
+}

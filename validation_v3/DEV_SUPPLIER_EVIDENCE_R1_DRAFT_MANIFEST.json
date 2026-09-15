@@ -1,0 +1,29 @@
+{
+  "version": "dev_supplier_evidence_r1_draft",
+  "items": 16,
+  "alternative_items": 8,
+  "vulnerability_items": 8,
+  "status": "draft_not_adjudicated",
+  "selection": "First eight lexically sorted process terms shared by two dev companies; first two matches and first dev nonmatch by row ID.",
+  "inference_performed": false,
+  "fields": [
+    "company",
+    "row_id",
+    "processes",
+    "employment"
+  ],
+  "sha256": {
+    "datasets_v3/dev_supplier_evidence_r1_draft_v3.jsonl": "79198660834e71ba639735a63302ab246812c4637521573950fe2256ff832a66",
+    "finetune/build_dev_supplier_evidence_v3.py": "d1dee5febb79f2958b6a209f46fcde2f1e1e194d42a8531dc98ef140378abdfe",
+    "datasets_v3/canonical_records_v3.jsonl": "42851c0a2e93209ac5d37e73ce07447009e038b9db625004212722d7738e6488",
+    "datasets_v3/company_split_groups_v3.csv": "a59d673ac9acafd1f70f60cf560491c32d8d11bacdab3c9bc5d77016b536b701",
+    "finetune/holdout_v3.py": "7609bfc9f203d91dc4132a079014f6451a62394c9c3487b477d3eb41dce0bdf2"
+  },
+  "limitations": [
+    "Shared contexts and source rows correlate items.",
+    "Process overlap is only a screening proxy.",
+    "Provided evidence, not memory recall.",
+    "No certification/process composition or held-out grouping/ranking target.",
+    "Human rubric review and unchanged-base baseline still pending."
+  ]
+}

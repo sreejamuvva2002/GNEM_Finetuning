@@ -43,6 +43,53 @@ def generate_records(items, backend, *, prompt_config, condition, seed):
     return records
 
 
+def collect_environment_identity(torch, device):
+    """Record effective software/device settings enforced by runtime matching."""
+    import importlib.metadata
+    import os
+    import platform
+    import subprocess
+    packages = {}
+    for dist in importlib.metadata.distributions():
+        name = dist.metadata['Name'].lower().replace('_', '-').replace('.', '-')
+        if name in packages:
+            raise RuntimeError('Duplicate installed distribution: ' + name)
+        packages[name] = dist.version
+    driver = subprocess.run(
+        ['nvidia-smi', '--query-gpu=driver_version', '--format=csv,noheader'],
+        check=True, capture_output=True, text=True, timeout=15)
+    drivers = sorted(set(line.strip() for line in driver.stdout.splitlines() if line.strip()))
+    if len(drivers) != 1:
+        raise RuntimeError('Cannot establish a single NVIDIA driver version')
+    props = torch.cuda.get_device_properties(device)
+    return {
+        'schema': 'generation_environment_v1',
+        'python': platform.python_version(),
+        'python_implementation': platform.python_implementation(),
+        'platform': platform.platform(),
+        'packages': dict(sorted(packages.items())),
+        'cuda_runtime': torch.version.cuda,
+        'cudnn_version': torch.backends.cudnn.version(),
+        'nvidia_driver': drivers[0],
+        'device': {'type': device.type, 'index': device.index, 'name': props.name,
+                   'capability': [props.major, props.minor],
+                   'total_memory': props.total_memory},
+        'execution': {
+            'deterministic_algorithms': torch.are_deterministic_algorithms_enabled(),
+            'deterministic_warn_only': torch.is_deterministic_algorithms_warn_only_enabled(),
+            'cudnn_deterministic': torch.backends.cudnn.deterministic,
+            'cudnn_benchmark': torch.backends.cudnn.benchmark,
+            'cudnn_allow_tf32': torch.backends.cudnn.allow_tf32,
+            'matmul_allow_tf32': torch.backends.cuda.matmul.allow_tf32,
+            'float32_matmul_precision': torch.get_float32_matmul_precision(),
+            'flash_sdp': torch.backends.cuda.flash_sdp_enabled(),
+            'math_sdp': torch.backends.cuda.math_sdp_enabled(),
+            'mem_efficient_sdp': torch.backends.cuda.mem_efficient_sdp_enabled(),
+            'cudnn_sdp': torch.backends.cuda.cudnn_sdp_enabled(),
+            'cublas_workspace_config': os.environ.get('CUBLAS_WORKSPACE_CONFIG')},
+    }
+
+
 class LocalTransformersBackend:
     """Load the declared unchanged base, optionally with one selected LoRA adapter."""
     def __init__(self, config, adapter_dir=None):
@@ -65,6 +112,7 @@ class LocalTransformersBackend:
             eos_token_id=eos, pad_token_id=self.tokenizer.eos_token_id,
             bos_token_id=self.tokenizer.bos_token_id, use_cache=True)
         self.runtime = {'model_id': config['model_id'], 'model_revision': config['model_revision'],
+                        'environment': collect_environment_identity(torch, self.model.device),
                         'dtype': 'bfloat16', 'attention': 'sdpa', 'device_map': {'': 0},
                         'adapter_directory': str(adapter_dir) if adapter_dir is not None else None,
                         'generation_config': self.generation.to_dict(),

@@ -1,0 +1,14 @@
+{
+  "status": "draft_no_human_decisions",
+  "items": 32,
+  "sha256": {
+    "datasets_v3/dev_ambiguity_r1_draft_v3.jsonl": "fc326fa2c51f9141e5da21dc7810b7edc622788575b0c805d6e286415f3773e8",
+    "datasets_v3/dev_supplier_evidence_r1_draft_v3.jsonl": "79198660834e71ba639735a63302ab246812c4637521573950fe2256ff832a66",
+    "docs/DEV_AMBIGUITY_R1_DRAFT.md": "30b1132bbfcd1bdf1768cabefe36f3b69d67dee1b11d6c55de97e51e25779388",
+    "docs/DEV_SUPPLIER_EVIDENCE_R1_DRAFT.md": "e52d6755ec0b0ce84657edb84071a7db9efef3ba698277e2033bbb1c491d0bb0",
+    "finetune/build_dev_review_packet_v3.py": "3c28fac943da22d2608c55240857212549f9f602c251fccb02b888233505f580",
+    "validation_v3/dev_review_packet_2026-09-15/REVIEW_PACKET.md": "7fda64dbafd134367b666cc7062cfcb146be1a4d65aa75868637198e9f80577b",
+    "validation_v3/dev_review_packet_2026-09-15/REVIEW_DECISIONS.csv": "0b7fc06dd755d859a6ba82a10f4e8ea2b2522c2f9672d5a69591fee6cc48f5d0"
+  },
+  "note": "Decision-sheet hash identifies the blank template; completed reviews must be separately retained with their reviewer provenance."
+}

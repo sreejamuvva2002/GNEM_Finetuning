@@ -1,0 +1,95 @@
+{
+  "observed_at_utc": "2026-09-15T15:10:42.261126+00:00",
+  "hostname": "gylab-asimov1",
+  "username": "sm11926",
+  "repository_path": "/home/sm11926/GNEM_Finetuning",
+  "filesystem": {
+    "command": [
+      "findmnt",
+      "-T",
+      "/home/sm11926/GNEM_Finetuning",
+      "-o",
+      "TARGET,SOURCE,FSTYPE,OPTIONS"
+    ],
+    "returncode": 0,
+    "stdout": "TARGET SOURCE                   FSTYPE OPTIONS\n/home  fast1/labs/Geng_Yuan_Lab zfs    rw,noatime,xattr,posixacl,casesensitive\n",
+    "stderr": ""
+  },
+  "head": {
+    "command": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "returncode": 0,
+    "stdout": "2b0a750637444bcc1981178b64575db2b54523c1\n",
+    "stderr": ""
+  },
+  "worktree": {
+    "command": [
+      "git",
+      "status",
+      "--short"
+    ],
+    "returncode": 0,
+    "stdout": "?? LAB_UPDATE_RECOVERY_2026-09-13.md\n?? validation_v3/resumption/POST_UPDATE_RECOVERY_2026-09-15.json\n?? validation_v3/resumption/POST_UPDATE_TESTS_2026-09-15.json\n",
+    "stderr": ""
+  },
+  "local_path_presence": {
+    ".venv-v3": false,
+    ".venv-v3-train": false,
+    ".recovery": false,
+    "review_v2_questions/all_predictions.jsonl": false
+  },
+  "transfer_utilities": {
+    "ssh": {
+      "command": [
+        "which",
+        "ssh"
+      ],
+      "returncode": 0,
+      "stdout": "/usr/bin/ssh\n",
+      "stderr": ""
+    },
+    "rsync": {
+      "command": [
+        "which",
+        "rsync"
+      ],
+      "returncode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "scp": {
+      "command": [
+        "which",
+        "scp"
+      ],
+      "returncode": 0,
+      "stdout": "/usr/bin/scp\n",
+      "stderr": ""
+    },
+    "tar": {
+      "command": [
+        "which",
+        "tar"
+      ],
+      "returncode": 0,
+      "stdout": "/usr/bin/tar\n",
+      "stderr": ""
+    },
+    "sha256sum": {
+      "command": [
+        "which",
+        "sha256sum"
+      ],
+      "returncode": 0,
+      "stdout": "/usr/bin/sha256sum\n",
+      "stderr": ""
+    }
+  },
+  "scope": "Observations apply only to this host and mounted filesystem. Earlier POST_UPDATE audit absence claims are repository-local, not evidence of loss on another host.",
+  "source_host": "unknown; user reports artifacts survive on previous host, not independently verified here",
+  "transfer_status": "not started; awaiting source SSH endpoint, account, archive path, and connection direction",
+  "environment_status": "No repository environments exist on this destination; no rebuild attempted. Test source environments before deciding how to restore runtime."
+}

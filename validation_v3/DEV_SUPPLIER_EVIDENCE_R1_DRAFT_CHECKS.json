@@ -1,0 +1,12 @@
+{
+  "items": 16,
+  "contexts": 8,
+  "source_values_verified": true,
+  "candidate_membership_verified_by_independent_semicolon_split": true,
+  "dev_only": true,
+  "distinct_companies_per_context": 3,
+  "context_hashes_verified": true,
+  "dataset_sha256": "79198660834e71ba639735a63302ab246812c4637521573950fe2256ff832a66",
+  "inference_performed": false,
+  "human_review": "pending"
+}

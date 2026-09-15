@@ -62,9 +62,31 @@ def authorize_generation(root, release, run_id):
     return run, inputs, adapter, spec, out
 
 
+def exact_spec_match(actual, expected):
+    """Compare JSON specifications without Python's bool/number coercion."""
+    if type(actual) is not type(expected):
+        return False
+    if isinstance(actual, dict):
+        return (all(type(k) is str for k in actual) and
+                all(type(k) is str for k in expected) and
+                actual.keys() == expected.keys() and
+                all(exact_spec_match(actual[k], expected[k]) for k in actual))
+    if isinstance(actual, list):
+        return len(actual) == len(expected) and all(
+            exact_spec_match(a, b) for a, b in zip(actual, expected))
+    if type(actual) not in (str, int, float, bool, type(None)):
+        return False
+    if type(actual) is float:
+        import math
+        if not math.isfinite(actual) or not math.isfinite(expected):
+            return False
+    return actual == expected
+
+
 def verify_runtime(actual, spec):
-    # Exact match, not a permissive subset: omitted requirements must not pass.
-    if not isinstance(spec, dict) or spec.get('backend_runtime') != actual:
+    # Missing, type-substituted, or non-JSON specifications must not pass.
+    if (not isinstance(actual, dict) or not isinstance(spec, dict) or
+            not exact_spec_match(actual, spec.get('backend_runtime'))):
         raise RuntimeError('Loaded runtime differs from approved specification')
 
 
@@ -73,7 +95,7 @@ def execute(root, release, run_id, backend_factory=LocalTransformersBackend):
     run, inputs, adapter, spec_path, out = authorize_generation(root, release, run_id)
     config = json.loads((root / 'datasets_v3/PROMPT_TEMPLATES_A002.json').read_text())
     spec = json.loads(spec_path.read_text())
-    if spec.get('prompt_config') != config:
+    if not exact_spec_match(spec.get('prompt_config'), config):
         raise RuntimeError('Prompt/decoding specification mismatch')
     backend = backend_factory(config, adapter_dir=adapter.parent if adapter else None)
     verify_runtime(backend.runtime, spec)

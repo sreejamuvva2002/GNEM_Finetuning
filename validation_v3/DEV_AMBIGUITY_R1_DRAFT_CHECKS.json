@@ -1,0 +1,12 @@
+{
+  "items": 16,
+  "pairs": 8,
+  "dev_only": true,
+  "identical_context_within_pairs": true,
+  "source_claims_and_control_answers_verified": true,
+  "control_location_not_in_question": true,
+  "ambiguous_question_has_no_named_referent": true,
+  "dataset_sha256": "fc326fa2c51f9141e5da21dc7810b7edc622788575b0c805d6e286415f3773e8",
+  "human_adjudication": "pending",
+  "inference_performed": false
+}
